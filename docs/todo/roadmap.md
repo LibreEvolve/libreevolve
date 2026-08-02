@@ -171,10 +171,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     all eight Table 1 rows, Sections 2.1-2.6, and Figures 1-3. It records 14
     locally implemented, 31 partial, 4 not-implemented, and 6 undemonstrated
     requirements, with live domain TODO ownership for all 41 incomplete rows.
-    `papers/alphaevolve_context_claim_inventory_boundary.json` now adds 44
+    `papers/alphaevolve_context_claim_inventory_boundary.json` now adds 45
     exact-page Abstract, Introduction, Discussion, and collaborator-context
-    dispositions: 6 locally implemented, 11 partial, 4 not implemented, and 23
-    not demonstrated, with live TODO ownership for all 38 gaps.
+    dispositions: 6 locally implemented, 11 partial, 4 not implemented, and 24
+    not demonstrated, with live TODO ownership for all 39 gaps.
     `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` now adds
     44 exact-page Section 3.1, Table 2, Figure 4, and footnote 3 dispositions:
     none locally implemented, 8 partial, 3 not implemented, and 33 not
@@ -218,13 +218,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     exact-page and visible-panel Appendix B/Figures 10-14 dispositions: 95
     partial, 24 not implemented, and 69 not demonstrated, with code and paper
     TODO ownership for all 188 gaps. The bounded claim-level ROADMAP surface
-    therefore covers 844 claims: 30 locally implemented, 278 partial, 110 not
-    implemented, 367 not demonstrated, and 59
+    therefore covers 845 claims: 30 locally implemented, 278 partial, 110 not
+    implemented, 368 not demonstrated, and 59
     source-context-only. The supplemental
     `papers/alphaevolve_citation_use_inventory_boundary.json` adds lexical
     coverage for all 195 retained-TeX citation uses, 240 key links, all 120
     compiled references, and 52 unused BibTeX entries. It does not add claims
-    to the 844-row implementation aggregate because citation semantics and
+    to the 845-row implementation aggregate because citation semantics and
     implementation relevance remain unclassified under active TODO ownership.
     `papers/alphaevolve_tex_source_detail_inventory_boundary.json` separately
     dispositions all 30 retained-source constructs: 22 captions, 5 equation
@@ -270,23 +270,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     TODO proof, phase-priority map, and CI/owner signoff.
   - Current gap: the retained PDF's named sections, figures, tables, and
     appendices now have verified dispositions, local status classes, ROADMAP
-    sections, and phases, and 844 bounded system/context/matrix-result/
+    sections, and phases, and 845 bounded system/context/matrix-result/
     constructive-math/scheduling/kernel-engineering/hardware/compiler/ablation/
     related-work/Appendix-A/Table-3/Figure-9/Appendix-B/Figures-10-14 claims have
     claim-level mappings, citation syntax plus bibliography-key linkage is
     exhaustive for the retained TeX, and all caption/equation-environment/
     footnote constructs have dispositions, all 83 table rows and 240 cells have
     row/cell dispositions, all 8 code listings and 305 source lines have
-    line-level dispositions; all 309 math constructs and all 402 prose sentences
-    have dispositions. The matrix is not
-    exhaustive across the rest of
-    the paper: it
-    cannot cover every sentence-internal clause/proposition; it cannot prove
-    mathematical correctness, image-pixel/citation semantics, capability, or
-    result reproduction or domain-specific TODO
-    ownership for every missing or partial claim; provide a complete
-    application-result claim matrix; or disposition all paper/status sidecar
-    rows.
+    line-level dispositions; all 309 math constructs and 402 prose sentences
+    have dispositions; 93 propositions in 37 Abstract/Introduction sentences
+    are reviewed. The matrix remains incomplete
+    across the rest of the paper: 365 sentences
+    still lack proposition review; it cannot prove
+    local math/image/citation correctness and result reproduction;
+    show TODO ownership for every gap and add an application matrix;
+    disposition every paper/status row;
+    finish independent review;
+    keep owner signoff.
   - Required result: implement the missing readiness fields recorded by the
     exhaustiveness sidecar: whole-paper requirement, citation-semantic, and joined semantic
     figure/table/appendix matrices, application-result claim matrix, status-row to ROADMAP

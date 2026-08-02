@@ -37,8 +37,8 @@
       "AlphaEvolve production scale, result reproduction, or system parity"
     ]
   },
-  "claim_count": 44,
-  "expected_claim_count": 44,
+  "claim_count": 45,
+  "expected_claim_count": 45,
   "category_counts": {
     "abstract_platform": 4,
     "abstract_results": 6,
@@ -47,17 +47,17 @@
     "discussion_limitation": 3,
     "discussion_self_improvement": 4,
     "introduction_method": 13,
-    "introduction_results": 8
+    "introduction_results": 9
   },
   "implementation_status_counts": {
     "implemented_local": 6,
-    "not_demonstrated": 23,
+    "not_demonstrated": 24,
     "not_implemented": 4,
     "partially_implemented": 11
   },
   "implemented_local_count": 6,
-  "implementation_gap_count": 38,
-  "todo_owned_gap_count": 38,
+  "implementation_gap_count": 39,
+  "todo_owned_gap_count": 39,
   "missing_anchor_count": 0,
   "missing_reference_count": 0,
   "claim_records": [
@@ -353,7 +353,7 @@
       "claim_id": "abstract_complex_4x4_matrix_48_multiplications",
       "source_span_id": "abstract",
       "source_page": 1,
-      "source_anchor": "multiply two 4 × 4 complex-valued matrices using 48 scalar multiplications",
+      "source_anchor": "multiply two 4 \u00d7 4 complex-valued matrices using 48 scalar multiplications",
       "source_anchor_present": true,
       "claim": "Reproduce and certify the 48-multiplication complex 4x4 matrix algorithm.",
       "category": "abstract_results",
@@ -717,6 +717,42 @@
       ]
     },
     {
+      "claim_id": "introduction_algorithm_search_outperforms_direct_solution_search",
+      "source_span_id": "section_1",
+      "source_page": 2,
+      "source_anchor": "surprisingly effective strategy compared to searching for the solution directly",
+      "source_anchor_present": true,
+      "claim": "Demonstrate under equal budgets that evolving an instrumental search algorithm outperforms direct solution search.",
+      "category": "introduction_results",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/candidate_abstraction_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_candidate_abstraction_boundary.v1",
+          "boundary_status": "not_configured_as_problem_defined_abstractions",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/candidate_abstraction_bias_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_candidate_abstraction_bias_matrix.v1",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "abstraction",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add abstraction-choice metadata and benchmark evidence for candidate",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
       "claim_id": "introduction_large_code_evolution",
       "source_span_id": "section_1",
       "source_page": 2,
@@ -851,7 +887,7 @@
       "claim_id": "introduction_complex_4x4_matrix_48_multiplications",
       "source_span_id": "section_1",
       "source_page": 3,
-      "source_anchor": "for 4 × 4 matrices, AlphaEvolve improves Strassen (1969)’s algorithm by discovering an algorithm using 48 multiplications",
+      "source_anchor": "for 4 \u00d7 4 matrices, AlphaEvolve improves Strassen (1969)\u2019s algorithm by discovering an algorithm using 48 multiplications",
       "source_anchor_present": true,
       "claim": "Reproduce and certify the Introduction result for multiplying 4x4 complex-valued matrices with 48 multiplications.",
       "category": "introduction_results",
@@ -921,7 +957,7 @@
       "claim_id": "introduction_seventy_five_percent_math_best_known",
       "source_span_id": "section_1",
       "source_page": 3,
-      "source_anchor": "match the best known constructions on ∼75% of them",
+      "source_anchor": "match the best known constructions on \u223c75% of them",
       "source_anchor_present": true,
       "claim": "Reproduce the reported roughly 75 percent best-known match rate across the mathematical problem portfolio.",
       "category": "introduction_results",
@@ -956,7 +992,7 @@
       "claim_id": "introduction_twenty_percent_math_sota_uplift",
       "source_span_id": "section_1",
       "source_page": 3,
-      "source_anchor": "On ∼20% of the problems, AlphaEvolve surpasses the SOTA",
+      "source_anchor": "On \u223c20% of the problems, AlphaEvolve surpasses the SOTA",
       "source_anchor_present": true,
       "claim": "Reproduce the reported roughly 20 percent mathematical state-of-the-art uplift rate.",
       "category": "introduction_results",
@@ -984,7 +1020,7 @@
       "claim_id": "introduction_erdos_minimum_overlap_result",
       "source_span_id": "section_1",
       "source_page": 3,
-      "source_anchor": "improvement on the Minimum Overlap Problem set by Erdős",
+      "source_anchor": "improvement on the Minimum Overlap Problem set by Erd\u0151s",
       "source_anchor_present": true,
       "claim": "Reproduce and independently verify the Minimum Overlap Problem improvement.",
       "category": "introduction_results",

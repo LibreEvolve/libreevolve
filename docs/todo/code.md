@@ -53,9 +53,9 @@ sidecars, tests, and active TODOs.
     implemented, 31 as partial, 4 as not implemented, and 6 as not demonstrated;
     all 41 incomplete requirements resolve to live domain TODO titles. The
     committed `papers/alphaevolve_context_claim_inventory_boundary.json` adds
-    44 anchored Abstract, Introduction, Discussion, and collaborator-context
+    45 anchored Abstract, Introduction, Discussion, and collaborator-context
     claims. It classifies 6 as locally implemented, 11 partial, 4 not
-    implemented, and 23 not demonstrated, and resolves all 38 gaps to live
+    implemented, and 24 not demonstrated, and resolves all 39 gaps to live
     domain TODO titles. The committed
     `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` adds 44
     Section 3.1, Table 2, Figure 4, and footnote 3 claims. It classifies 8 as
@@ -105,8 +105,8 @@ sidecars, tests, and active TODOs.
     exact-page and visible-panel claims across all 13 Appendix B subsections and
     Figures 10-14: 95 partial, 24 not implemented, and 69 not demonstrated,
     with both code and paper TODO ownership for every gap. The twelve bounded
-    inventories therefore cover 844 claims: 30 locally implemented, 278
-    partial, 110 not implemented, 367 not demonstrated, and 59
+    inventories therefore cover 845 claims: 30 locally implemented, 278
+    partial, 110 not implemented, 368 not demonstrated, and 59
     source-context-only. The supplemental
     `papers/alphaevolve_citation_use_inventory_boundary.json` now scans the
     retained 14-file TeX closure and records all 195 logical citation uses, 240
@@ -160,7 +160,7 @@ sidecars, tests, and active TODOs.
     per-phrase evidence-link sufficiency, status-cell semantic verification,
     implemented-benchmark bullet semantic verification, and
     absence-sentence freshness checks as missing evidence.
-  - Current gap: the named source structure and 844 bounded system, context,
+  - Current gap: the named source structure and 845 bounded system, context,
     matrix-result, constructive-math, scheduling, kernel-engineering, and
     hardware-circuit-design, compiler-generated-code, Section 4/Figure 8
     ablation, Section 5 Related Work, Appendix A, Table 3, Figure 9, Appendix B,
@@ -170,10 +170,10 @@ sidecars, tests, and active TODOs.
     constructs have dispositions, all 83 table rows and 240 cells have
     row/cell dispositions,
     all 8 code listings and 305 source lines have line-level dispositions, and
-    all 309 TeX math constructs; 402 prose sentences are dispositioned.
-    However, citation proposition/role/sufficiency and
-    implementation relevance remain unclassified, and there is no AlphaEvolve
-    requirement inventory exhaustive at sentence-internal clauses/propositions,
+    all 309 TeX math constructs and 402 prose sentences have dispositions; 93
+    propositions across 37 Abstract/Introduction sentences are reviewed.
+    Citation roles/sufficiency and implementation relevance remain unclassified,
+    and 365 prose sentences lack proposition review;
     mathematical-correctness, image-pixel or citation-semantic level
     across remaining source details and the other paper
     spans and all code modules, tests, runtime report

@@ -16108,3 +16108,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Boundary: README distinguishes paragraph/sentence disposition from
     sentence-internal clause/proposition semantic exhaustiveness, independent
     review, result reproduction, and AlphaEvolve-scale execution.
+
+- [x] Document scoped Abstract and Introduction proposition coverage.
+  - Status: README now reports 37 reviewed sentences, 93 atomic propositions,
+    81 bounded-claim mappings, 12 context/outlook/interpretation dispositions,
+    one newly bounded direct-search comparison, and four repaired sentence
+    mappings.
+  - Accounting: README reports 845 bounded claims, 786 implementation-relevant
+    claims, 756 implementation gaps, 3.8% strict parity, and 21.5% half-credit
+    parity.
+  - Boundary: README keeps proposition review for the remaining 365 sentences,
+    independent semantic review, mathematical and citation correctness, result
+    reproduction, and AlphaEvolve-scale execution explicitly open.

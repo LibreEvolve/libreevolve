@@ -25,7 +25,7 @@ EXPECTED_BOUNDARY_STATUS = (
     "abstract_introduction_discussion_claim_inventory_complete_without_"
     "results_sections_or_appendix_exhaustiveness"
 )
-EXPECTED_CLAIM_COUNT = 44
+EXPECTED_CLAIM_COUNT = 45
 IMPLEMENTED_STATUS = "implemented_local"
 INCOMPLETE_STATUSES = frozenset(
     {"partially_implemented", "not_implemented", "not_demonstrated"}
@@ -434,6 +434,25 @@ CONTEXT_CLAIM_SPECS = (
         "candidate_workspace_fidelity",
         "near_term",
         ("papers/candidate_abstraction_boundary.json",),
+        ("abstraction",),
+    ),
+    _claim(
+        "introduction_algorithm_search_outperforms_direct_solution_search",
+        "section_1",
+        2,
+        "surprisingly effective strategy compared to searching for the solution directly",
+        (
+            "Demonstrate under equal budgets that evolving an instrumental search "
+            "algorithm outperforms direct solution search."
+        ),
+        "introduction_results",
+        "not_demonstrated",
+        "representative_benchmarks",
+        "longer_term",
+        (
+            "papers/candidate_abstraction_boundary.json",
+            "papers/candidate_abstraction_bias_matrix.json",
+        ),
         ("abstraction",),
     ),
     _claim(

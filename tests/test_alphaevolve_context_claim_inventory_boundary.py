@@ -18,15 +18,15 @@ def test_context_claim_inventory_accepts_pdf_anchored_scope():
     assert boundary["source_artifact"]["identity_ok"] is True
     assert boundary["context_claim_inventory_ready"] is True
     assert boundary["alphaevolve_parity_claim_ready"] is False
-    assert validation.claim_count == 44
+    assert validation.claim_count == 45
     assert validation.implemented_local_count == 6
-    assert validation.implementation_gap_count == 38
+    assert validation.implementation_gap_count == 39
     assert validation.missing_anchor_count == 0
     assert validation.missing_reference_count == 0
-    assert boundary["todo_owned_gap_count"] == 38
+    assert boundary["todo_owned_gap_count"] == 39
     assert boundary["implementation_status_counts"] == {
         "implemented_local": 6,
-        "not_demonstrated": 23,
+        "not_demonstrated": 24,
         "not_implemented": 4,
         "partially_implemented": 11,
     }
@@ -38,7 +38,7 @@ def test_context_claim_inventory_accepts_pdf_anchored_scope():
         "discussion_limitation": 3,
         "discussion_self_improvement": 4,
         "introduction_method": 13,
-        "introduction_results": 8,
+        "introduction_results": 9,
     }
     assert boundary["claim_records"][0]["claim_id"] == (
         "abstract_substantial_llm_capability_uplift"
@@ -59,12 +59,31 @@ def test_context_claim_inventory_gives_every_incomplete_claim_todo_ownership():
         if record["implementation_status"] != "implemented_local"
     ]
 
-    assert len(incomplete) == 38
+    assert len(incomplete) == 39
     assert all(record["active_todo_refs"] for record in incomplete)
     assert all(
         ref["exists"] and ref["required_phrase_present"]
         for record in incomplete
         for ref in record["active_todo_refs"]
+    )
+
+
+def test_context_claim_inventory_bounds_instrumental_search_comparison():
+    boundary = alphaevolve_context_claim_inventory_boundary_record()
+    claims = {record["claim_id"]: record for record in boundary["claim_records"]}
+
+    comparison = claims[
+        "introduction_algorithm_search_outperforms_direct_solution_search"
+    ]
+    assert comparison["implementation_status"] == "not_demonstrated"
+    assert comparison["source_anchor_present"] is True
+    assert {ref["path"] for ref in comparison["evidence_refs"]} == {
+        "papers/candidate_abstraction_bias_matrix.json",
+        "papers/candidate_abstraction_boundary.json",
+    }
+    assert all(
+        ref["exists"] and ref["required_phrase_present"]
+        for ref in comparison["active_todo_refs"]
     )
 
 
@@ -106,7 +125,7 @@ def test_render_context_claim_inventory_summary_reports_shape():
 
     assert "AlphaEvolve context claim inventory boundary" in summary
     assert "| schema_status | ok |" in summary
-    assert "| claim_count | 44 |" in summary
+    assert "| claim_count | 45 |" in summary
     assert "| implemented_local_count | 6 |" in summary
-    assert "| implementation_gap_count | 38 |" in summary
+    assert "| implementation_gap_count | 39 |" in summary
     assert "| missing_anchor_count | 0 |" in summary

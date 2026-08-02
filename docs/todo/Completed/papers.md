@@ -14619,6 +14619,21 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: the paper manifest requires the sidecar and rejects source,
     count, status, reference, ownership, result-reproduction, and parity drift.
 
+- [x] Add a scoped retained-TeX atomic-proposition inventory.
+  - Paper evidence: the retained Abstract and Introduction contain 37
+    grammatical sentences, including compound method, comparison, scope, and
+    result statements that sentence-level disposition alone can hide.
+  - Status: `papers/alphaevolve_tex_proposition_inventory_boundary.json`
+    records 93 exact-quote proposition units, 81 bounded-claim mappings, 12
+    explicit context/outlook/interpretation dispositions, zero unresolved
+    references, one newly bounded comparison claim, and four repaired sentence
+    mappings.
+  - Accounting: the twelve claim inventories now contain 845 claims: 30 local,
+    278 partial, 110 absent, 368 undemonstrated, and 59 source-context-only.
+  - Remaining paper gap: proposition review for 365 prose sentences,
+    independent semantic agreement, citation sufficiency, mathematical and
+    image semantics, result reproduction, and AlphaEvolve parity remain open.
+
 - [x] Inventory retained AlphaEvolve body paragraphs and grammatical sentences.
   - Paper evidence: after excluding the preamble and separately audited table,
     figure, equation, listing, and footnote surfaces, the pinned

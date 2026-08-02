@@ -1807,7 +1807,7 @@ Important limits:
   coverage only, not implementation of those missing readiness fields.
 - ROADMAP source-span disposition evidence maps all 55 PDF-verified named
   AlphaEvolve spans to ROADMAP section ids, phase buckets, sidecars, and TODO
-  links and connects twelve bounded inventories containing 844 claims. It also
+  links and connects twelve bounded inventories containing 845 claims. It also
   records 53 paper-index rows with only the AlphaEvolve source row
   dispositioned by this matrix. This is not a whole-paper source-detail,
   semantic-evidence, or result-reproduction proof.
@@ -1856,16 +1856,24 @@ Important limits:
   sentences. The walk contributed seven new bounded claims; it does not prove
   sentence-internal clause/proposition exhaustiveness, independent semantic
   review, mathematical correctness, or result reproduction.
+- Retained-TeX proposition evidence decomposes all 37 Abstract and Introduction
+  sentences into 93 atomic propositions. Eighty-one map through 94 references
+  to 62 bounded claims, 9 are background context, 2 are author outlook, and 1
+  is a qualified interpretation. It adds the direct-versus-instrumental-search
+  comparison claim and repairs four sentence mappings hidden by TeX rendering.
+  The remaining 365 prose sentences, independent semantic review, mathematical
+  correctness, and result reproduction remain open.
 - ROADMAP source-span coverage evidence now records eight coverage surfaces
   for main-text section walk, figure exhibits, table/capability rows, Appendix
   A matrix targets, Appendix B constructive math, application-result claims,
   paper-status row dispositions, and TODO/non-goal/phase proof. It links the
   existing core source-span disposition input, paper-status row counts, sidecar
-  refs, active TODO refs, validation-gate labels, readiness labels, 844 bounded
+  refs, active TODO refs, validation-gate labels, readiness labels, 845 bounded
   claims through Appendix B and Figures 10-14, and the 30 construct-level TeX
   source-detail dispositions, plus all 83 table rows, 240 table cells, 8 code
   listings, 305 listing source lines, 309 explicit TeX math constructs, 128
-  retained prose paragraphs, and 402 grammatical sentences. The 785
+  retained prose paragraphs, 402 grammatical sentences, and 93 proposition
+  dispositions across the 37 Abstract and Introduction sentences. The 786
   implementation-relevant claims currently yield 3.8% strict implemented
   parity or 21.5% with partial claims counted at half credit. The weighted
   value rises because Appendix B registry metadata is partial, not because its
@@ -1873,7 +1881,7 @@ Important limits:
   the retained TeX, and caption/equation-environment/footnote construct
   dispositions are complete, and all table rows/cells, listing lines, and
   explicit math delimiters and retained prose sentences have dispositions, but
-  this is not a sentence-internal clause/proposition semantic,
+  this is not proposition review for the remaining 365 prose sentences,
   mathematical-correctness, image-pixel, citation-semantic, or independent-
   review audit, joined
   figure/table/appendix reproduction matrix, complete

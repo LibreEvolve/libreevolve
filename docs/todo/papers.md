@@ -19,10 +19,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     local status, and active domain TODO ownership. Its status split is 14
     locally implemented, 31 partially implemented, 4 not implemented, and 6
     not demonstrated; all 41 incomplete rows have live TODO-title checks. The
-    `papers/alphaevolve_context_claim_inventory_boundary.json` adds 44
+    `papers/alphaevolve_context_claim_inventory_boundary.json` adds 45
     exact-page claims from the Abstract, Introduction, Discussion, and one
     Acknowledgements sentence: 6 locally implemented, 11 partial, 4 not
-    implemented, and 23 not demonstrated, with live ownership for all 38 gaps.
+    implemented, and 24 not demonstrated, with live ownership for all 39 gaps.
     `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` adds 44
     exact-page Section 3.1, Table 2, Figure 4, and footnote 3 claims: none
     locally implemented, 8 partial, 3 not implemented, and 33 not demonstrated,
@@ -68,7 +68,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     exact-page and visible-panel claims from all 13 Appendix B subsections and
     Figures 10-14: 95 partial, 24 not implemented, and 69 not demonstrated,
     with live code and paper TODO ownership for every gap. Combined coverage is
-    844 claims: 30 implemented, 278 partial, 110 not implemented, 367 not
+    845 claims: 30 implemented, 278 partial, 110 not implemented, 368 not
     demonstrated, and 59 source-context-only. The supplemental
     `papers/alphaevolve_citation_use_inventory_boundary.json` now inventories
     the retained 14-file `main.tex` closure, all 195 logical citation uses, all
@@ -104,19 +104,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     manifest rejects any inventory sidecar's absence, source/reference
     drift, status drift, stale TODO ownership, result-reproduction overclaims,
     and parity overclaims.
-  - Current gap: the combined 844-claim inventory covers every named source
+  - Current gap: the combined 845-claim inventory covers every named source
     span, the supplemental citation inventory covers citation syntax plus
     bibliography-key linkage, and the source-detail inventory dispositions all
     caption/equation-environment/footnote constructs, while the table-cell
     inventory dispositions all retained rows and cells and the code-listing
     inventory
     dispositions all 8 environments and 305 source lines; the math inventory
-    covers 309 TeX constructs and prose inventory maps all 402 sentences. Each
-    citation's supported proposition, source-sufficiency role, and implementation
-    relevance remain unclassified. Sentence-internal clause/proposition,
-    math/image-pixel/citation semantics, semantic evidence sufficiency, result
-    reproduction, and independent reviewer proof that any bounded inventory is
-    semantically exhaustive also remain open.
+    covers 309 TeX constructs; prose maps 402 sentences, and review
+    covers 93 propositions across 37 Abstract/Introduction sentences. Citation
+    role and implementation relevance remain unclassified. Remaining 365
+    sentence propositions, math/image-pixel/citation semantics, evidence sufficiency,
+    result reproduction, and independent reviewer proof that any bounded inventory
+    is semantically exhaustive also remain open.
   - Required result: extract every remaining implementation-bearing claim,
     assign stable ids and exact source spans, semantically classify every
     citation use, classify implementation and reproduction status, link

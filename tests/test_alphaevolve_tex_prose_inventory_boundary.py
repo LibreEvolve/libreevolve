@@ -86,6 +86,11 @@ def test_tex_prose_inventory_maps_new_claims_and_disambiguates_repeated_anchors(
     }
 
     assert {
+        "abstract_complex_4x4_matrix_48_multiplications",
+        "introduction_algorithm_search_outperforms_direct_solution_search",
+        "introduction_complex_4x4_matrix_48_multiplications",
+        "introduction_erdos_minimum_overlap_result",
+        "introduction_seventy_five_percent_math_best_known",
         "task_metric_maximization_convention",
         "task_problem_specific_abstraction_choice",
         "task_symmetry_guided_abstraction_bias",
@@ -94,6 +99,33 @@ def test_tex_prose_inventory_maps_new_claims_and_disambiguates_repeated_anchors(
         "section3_1_tensor_decomposition_algorithm_representation",
         "section3_1_low_rank_decomposition_search_objective",
     } <= mapped_ids
+    assert {
+        ref["claim_id"] for ref in records[("main.tex", 34, 0)]["claim_refs"]
+    } == {
+        "abstract_complex_4x4_matrix_48_multiplications",
+        "abstract_first_strassen_improvement_56_years",
+    }
+    assert {
+        ref["claim_id"]
+        for ref in records[("introduction.tex", 48, 0)]["claim_refs"]
+    } == {
+        "introduction_complex_4x4_matrix_48_multiplications",
+        "introduction_fourteen_matrix_sota_improvements",
+    }
+    assert {
+        ref["claim_id"]
+        for ref in records[("introduction.tex", 52, 0)]["claim_refs"]
+    } == {
+        "introduction_over_fifty_math_problems_best_known",
+        "introduction_seventy_five_percent_math_best_known",
+    }
+    assert {
+        ref["claim_id"]
+        for ref in records[("introduction.tex", 53, 0)]["claim_refs"]
+    } == {
+        "introduction_erdos_minimum_overlap_result",
+        "introduction_kissing_number_d11_improvement",
+    }
     assert [
         ref["claim_id"] for ref in records[("ablations.tex", 8, 3)]["claim_refs"]
     ] == ["no_context_variant_name"]

@@ -919,10 +919,10 @@ AlphaEvolve reproduction.
   Sections 2.1-2.6, and Figures 1-3, classifies 14 as locally implemented and
   41 as incomplete, and verifies live domain TODO ownership for every
   incomplete requirement. The separate
-  `papers/alphaevolve_context_claim_inventory_boundary.json` adds 44 anchored
+  `papers/alphaevolve_context_claim_inventory_boundary.json` adds 45 anchored
   Abstract, Introduction, Discussion, and collaborator-context claims: 6 are
-  locally implemented, 11 partial, 4 not implemented, and 23 not demonstrated,
-  with live TODO ownership for all 38 gaps. The additional
+  locally implemented, 11 partial, 4 not implemented, and 24 not demonstrated,
+  with live TODO ownership for all 39 gaps. The additional
   `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` dispositions
   44 Section 3.1, Table 2, Figure 4, and footnote 3 claims: 8 are partial, 3
   not implemented, and 33 not demonstrated, with no locally implemented result
@@ -1030,8 +1030,15 @@ AlphaEvolve reproduction.
   and leaves zero unmapped or unresolved. This walk contributed seven new
   bounded claims but does not prove sentence-internal clause/proposition
   exhaustiveness, independent semantic review, or result reproduction. The
-  twelve bounded claim inventories now disposition 844 claims in total: 30
-  locally implemented, 278 partial, 110 not implemented, 367 not demonstrated,
+  supplemental `papers/alphaevolve_tex_proposition_inventory_boundary.json`
+  decomposes all 37 retained Abstract and Introduction sentences into 93
+  atomic propositions: 81 map through 94 references to 62 bounded claims, 9
+  are background context, 2 are author outlook, and 1 is a qualified author
+  interpretation. It bounds the previously missed direct-versus-instrumental-
+  search comparison and repairs four sentence mappings, while leaving the
+  other 365 prose sentences and independent semantic review open. The twelve
+  bounded claim inventories now disposition 845 claims in total: 30 locally
+  implemented, 278 partial, 110 not implemented, 368 not demonstrated,
   and 59
   source-context-only,
   and `papers/status_claim_inventory.json` records checked row-level paper
@@ -1045,18 +1052,19 @@ AlphaEvolve reproduction.
   benchmark coverage bullets plus file character offsets, source-token match
   file offsets, referenced local artifact mention file offsets/existence checks, and limitation-signal term/source-offset
   classification.
-  Across 785 implementation-relevant claims, strict implemented parity is
+  Across 786 implementation-relevant claims, strict implemented parity is
   3.8%, while a half-credit weighting for partial claims is 21.5%. The weighted
   value rises only because Appendix B registry metadata receives partial
   credit; no Appendix B result was reproduced. This is complete named-structure
-  coverage, bounded 844-claim coverage, complete lexical citation linkage, and
+  coverage, bounded 845-claim coverage, complete lexical citation linkage, and
   construct-level disposition of all retained-source captions, equation-
   environment constructs, and semantic footnotes, plus row/cell disposition
   for all 83 rows and 240 cells in Tables 1-3, plus line-level disposition for all 8 retained
   code listings and 305 physical source lines, plus delimiter-level disposition
   for all 309 explicit TeX math constructs, plus paragraph/sentence disposition
-  for all 128 retained prose paragraphs and 402 grammatical sentences. It is
-  not sentence-internal clause/proposition semantic exhaustiveness,
+  for all 128 retained prose paragraphs and 402 grammatical sentences, plus 93
+  atomic-proposition dispositions across the 37 Abstract and Introduction
+  sentences. It is not proposition review for the remaining 365 sentences,
   mathematical-correctness proof, image-pixel or citation-semantic review,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,
   implemented-benchmark bullet semantic verifier,

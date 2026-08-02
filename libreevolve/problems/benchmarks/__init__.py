@@ -390,6 +390,12 @@ from libreevolve.problems.benchmarks.alphaevolve_tex_prose_inventory_boundary im
     render_alphaevolve_tex_prose_inventory_boundary_summary,
     validate_alphaevolve_tex_prose_inventory_boundary,
 )
+from libreevolve.problems.benchmarks.alphaevolve_tex_proposition_inventory_boundary import (
+    ALPHAEVOLVE_TEX_PROPOSITION_INVENTORY_BOUNDARY_SCHEMA,
+    alphaevolve_tex_proposition_inventory_boundary_record,
+    render_alphaevolve_tex_proposition_inventory_boundary_summary,
+    validate_alphaevolve_tex_proposition_inventory_boundary,
+)
 from libreevolve.problems.benchmarks.alphaevolve_compiler_claim_inventory_boundary import (
     ALPHAEVOLVE_COMPILER_CLAIM_INVENTORY_BOUNDARY_SCHEMA,
     alphaevolve_compiler_claim_inventory_boundary_record,
@@ -1302,6 +1308,7 @@ __all__ = [
     "ALPHAEVOLVE_TEX_CODE_LISTING_INVENTORY_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_TEX_MATH_INVENTORY_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_TEX_PROSE_INVENTORY_BOUNDARY_SCHEMA",
+    "ALPHAEVOLVE_TEX_PROPOSITION_INVENTORY_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_COMPILER_CLAIM_INVENTORY_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_CONTEXT_CLAIM_INVENTORY_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_HARDWARE_CLAIM_INVENTORY_BOUNDARY_SCHEMA",
@@ -1548,6 +1555,7 @@ __all__ = [
     "alphaevolve_tex_code_listing_inventory_boundary_record",
     "alphaevolve_tex_math_inventory_boundary_record",
     "alphaevolve_tex_prose_inventory_boundary_record",
+    "alphaevolve_tex_proposition_inventory_boundary_record",
     "alphaevolve_compiler_claim_inventory_boundary_record",
     "alphaevolve_context_claim_inventory_boundary_record",
     "alphaevolve_hardware_claim_inventory_boundary_record",
@@ -1748,6 +1756,7 @@ __all__ = [
     "render_alphaevolve_tex_code_listing_inventory_boundary_summary",
     "render_alphaevolve_tex_math_inventory_boundary_summary",
     "render_alphaevolve_tex_prose_inventory_boundary_summary",
+    "render_alphaevolve_tex_proposition_inventory_boundary_summary",
     "render_alphaevolve_compiler_claim_inventory_boundary_summary",
     "render_alphaevolve_context_claim_inventory_boundary_summary",
     "render_alphaevolve_hardware_claim_inventory_boundary_summary",
@@ -1968,6 +1977,7 @@ __all__ = [
     "validate_alphaevolve_tex_code_listing_inventory_boundary",
     "validate_alphaevolve_tex_math_inventory_boundary",
     "validate_alphaevolve_tex_prose_inventory_boundary",
+    "validate_alphaevolve_tex_proposition_inventory_boundary",
     "validate_alphaevolve_compiler_claim_inventory_boundary",
     "validate_alphaevolve_context_claim_inventory_boundary",
     "validate_alphaevolve_hardware_claim_inventory_boundary",

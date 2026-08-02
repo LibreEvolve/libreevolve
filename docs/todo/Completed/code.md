@@ -19706,6 +19706,24 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     paper-manifest tests validate anchors, counts, references, TODO ownership,
     source wording, drift rejection, and result/parity disclaimers.
 
+- [x] Add scoped AlphaEvolve Abstract and Introduction proposition evidence.
+  - Status: `alphaevolve_tex_proposition_inventory_boundary.py` decomposes all
+    37 retained Abstract and Introduction sentences into 93 atomic
+    propositions with exact quote offsets and hashes. Eighty-one propositions
+    map through 94 resolved references to 62 bounded claims; the other 12 are
+    classified as background context, author outlook, or interpretation.
+  - Claim correction: the context inventory now bounds the paper's comparative
+    claim that evolving an instrumental search algorithm is more effective
+    than direct solution search. The prose mapper also restores four existing
+    claims obscured by TeX math or citation rendering.
+  - Remaining code gap: the other 365 prose sentences, independent semantic
+    review, citation semantics, mathematical correctness, image-pixel review,
+    result reproduction, and whole-paper implementation exhaustiveness remain
+    open.
+  - Verification: focused context, prose, proposition, aggregate, and manifest
+    tests validate source quotes, claim references, counts, drift rejection,
+    TODO ownership, and overclaim gates.
+
 - [x] Add the retained-TeX prose paragraph and sentence disposition inventory.
   - Status: the public boundary parses all 128 retained body paragraphs and 402
     grammatical sentences after masking table, figure, equation, listing, and

@@ -1,7 +1,7 @@
 {
-  "schema": "libreevolve.roadmap_source_span_coverage_boundary.v17",
+  "schema": "libreevolve.roadmap_source_span_coverage_boundary.v18",
   "source_paper_id": "2506.13131",
-  "boundary_status": "named_structure_plus_844_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_309_tex_math_constructs_and_402_tex_prose_sentences_without_sentence_internal_semantic_exhaustiveness",
+  "boundary_status": "named_structure_plus_845_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_309_tex_math_constructs_402_tex_prose_sentences_and_93_propositions_across_37_abstract_introduction_sentences_without_whole_paper_semantic_exhaustiveness",
   "claim_ready": false,
   "named_source_inventory_input": "papers/alphaevolve_source_inventory_boundary.json",
   "named_source_span_disposition_input": "papers/roadmap_source_span_disposition_boundary.json",
@@ -9,14 +9,14 @@
   "paper_status_row_count": 53,
   "paper_status_row_dispositioned_count": 1,
   "coverage_surface_count": 8,
-  "sidecar_ref_count": 67,
+  "sidecar_ref_count": 68,
   "active_todo_ref_count": 15,
   "coverage_surface_records": [
     {
       "surface_id": "main_text_section_walk",
       "source_surface": "AlphaEvolve main-text sections and requirement claims",
-      "current_scope": "PDF-verified named main-text sections plus 55 Table 1/Section 2 system requirements, 44 Abstract/Introduction/Discussion/collaborator claims, 44 Section 3.1/Table 2/Figure 4 matrix-result claims, 63 Section 3.2/Figure 5 constructive-math claims, 45 Section 3.3 opening/Section 3.3.1/Figure 6 scheduling claims, 59 Section 3.3.2/Figure 7 kernel-engineering claims, 35 Section 3.3.3 hardware-circuit-design claims, 44 Section 3.3.4 compiler-generated-code claims, 51 Section 4/Figure 8 ablation claims, 85 Section 5 Related Work claims, 131 Appendix A/Table 3/Figure 9 claims, and 188 Appendix B/Figures 10-14 claims with implementation, context-only, or TODO disposition; all 195 retained-TeX citation uses have lexical key linkage; all 30 retained-source captions, five equation-environment constructs, and semantic footnotes have construct-level dispositions; all 83 table rows and 240 cells have row/cell dispositions; all 8 retained TeX code listing environments and 305 physical source lines have environment/line dispositions; all 309 explicit TeX math constructs have delimiter-level dispositions; and all 128 retained TeX prose paragraphs and 402 grammatical sentences have dispositions",
-      "missing_readiness": "remaining sentence-internal clause/proposition semantic, image-pixel, citation-semantic, implementation-semantic, mathematical-correctness, independent-review, and result-reproduction evidence",
+      "current_scope": "PDF-verified named main-text sections plus 55 Table 1/Section 2 system requirements, 45 Abstract/Introduction/Discussion/collaborator claims, 44 Section 3.1/Table 2/Figure 4 matrix-result claims, 63 Section 3.2/Figure 5 constructive-math claims, 45 Section 3.3 opening/Section 3.3.1/Figure 6 scheduling claims, 59 Section 3.3.2/Figure 7 kernel-engineering claims, 35 Section 3.3.3 hardware-circuit-design claims, 44 Section 3.3.4 compiler-generated-code claims, 51 Section 4/Figure 8 ablation claims, 85 Section 5 Related Work claims, 131 Appendix A/Table 3/Figure 9 claims, and 188 Appendix B/Figures 10-14 claims with implementation, context-only, or TODO disposition; all 195 retained-TeX citation uses have lexical key linkage; all 30 retained-source captions, five equation-environment constructs, and semantic footnotes have construct-level dispositions; all 83 table rows and 240 cells have row/cell dispositions; all 8 retained TeX code listing environments and 305 physical source lines have environment/line dispositions; all 309 explicit TeX math constructs have delimiter-level dispositions; all 128 retained TeX prose paragraphs and 402 grammatical sentences have dispositions; and all 37 Abstract and Introduction sentences have 93 atomic-proposition dispositions",
+      "missing_readiness": "proposition review for the remaining 365 prose sentences plus image-pixel, citation-semantic, implementation-semantic, mathematical-correctness, independent-review, and result-reproduction evidence",
       "sidecar_refs": [
         {
           "path": "papers/roadmap_source_span_disposition_boundary.json",
@@ -93,6 +93,10 @@
         {
           "path": "papers/alphaevolve_tex_prose_inventory_boundary.json",
           "exists": true
+        },
+        {
+          "path": "papers/alphaevolve_tex_proposition_inventory_boundary.json",
+          "exists": true
         }
       ],
       "active_todo_refs": [
@@ -104,7 +108,7 @@
         }
       ],
       "validation_gate": "section-level source-span disposition matrix",
-      "readiness_status": "844_bounded_claims_plus_195_lexical_citation_uses_30_dispositioned_tex_source_details_240_dispositioned_table_cells_305_dispositioned_listing_lines_309_dispositioned_tex_math_constructs_and_402_dispositioned_tex_prose_sentences_without_sentence_internal_clause_or_proposition_semantic_exhaustiveness"
+      "readiness_status": "845_bounded_claims_plus_195_lexical_citation_uses_30_dispositioned_tex_source_details_240_dispositioned_table_cells_305_dispositioned_listing_lines_309_dispositioned_tex_math_constructs_402_dispositioned_tex_prose_sentences_and_93_dispositioned_propositions_across_37_abstract_introduction_sentences_without_remaining_365_sentence_proposition_semantic_exhaustiveness"
     },
     {
       "surface_id": "figure_exhibit_matrix",
@@ -416,7 +420,7 @@
       "active_todo_refs": [
         {
           "path": "docs/todo/roadmap.md",
-          "required_phrase": "paper/status sidecar rows",
+          "required_phrase": "disposition every paper/status row",
           "required_phrase_present": true,
           "exists": true
         },
@@ -473,7 +477,7 @@
     "named_structure_scope": "38_structure_14_figure_3_table_spans",
     "section_2_system_requirement_count": 55,
     "section_2_system_requirement_scope": "table_1_sections_2_1_through_2_6_figures_1_through_3",
-    "context_claim_count": 44,
+    "context_claim_count": 45,
     "context_claim_scope": "abstract_introduction_discussion_and_collaborator_context",
     "matrix_result_claim_count": 44,
     "matrix_result_claim_scope": "section_3_1_table_2_figure_4_and_footnote_3",
@@ -530,7 +534,13 @@
     "tex_prose_claim_mapped_sentence_count": 372,
     "tex_prose_reviewed_nonclaim_sentence_count": 30,
     "tex_prose_unmapped_sentence_count": 0,
-    "tex_prose_inventory": "paragraph_and_sentence_disposition_verified_without_sentence_internal_clause_or_proposition_exhaustiveness"
+    "tex_prose_inventory": "paragraph_and_sentence_disposition_verified_without_sentence_internal_clause_or_proposition_exhaustiveness",
+    "tex_proposition_reviewed_sentence_count": 37,
+    "tex_proposition_count": 93,
+    "tex_proposition_claim_mapped_count": 81,
+    "tex_proposition_context_outlook_interpretation_count": 12,
+    "tex_proposition_remaining_sentence_count": 365,
+    "tex_proposition_inventory": "abstract_introduction_atomic_proposition_disposition_verified_without_remaining_paper_or_independent_semantic_exhaustiveness"
   },
   "required_evidence_fields": [
     "coverage_surface_records",
@@ -546,7 +556,7 @@
     "ci_source_span_exhaustiveness_gate"
   ],
   "missing_evidence": {
-    "claim_level_requirement_inventory": "844_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_305_listing_lines_have_line_dispositions_309_explicit_math_constructs_have_delimiter_dispositions_and_128_paragraphs_402_sentences_have_prose_dispositions_without_sentence_internal_clause_or_proposition_image_pixel_citation_semantic_implementation_semantic_mathematical_correctness_independent_review_or_reproduction_exhaustiveness",
+    "claim_level_requirement_inventory": "845_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_305_listing_lines_have_line_dispositions_309_explicit_math_constructs_have_delimiter_dispositions_128_paragraphs_402_sentences_have_prose_dispositions_and_37_abstract_introduction_sentences_have_93_proposition_dispositions_without_remaining_365_sentence_proposition_image_pixel_citation_semantic_implementation_semantic_mathematical_correctness_independent_review_or_reproduction_exhaustiveness",
     "application_result_claim_matrix": "section_3_3_claim_dispositions_recorded_without_reproduction_phase_priority_or_non_goal_proof",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
     "missing_partial_todo_proof": "not_recorded_locally",
@@ -555,5 +565,5 @@
     "ci_source_span_exhaustiveness_gate": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records a ROADMAP-level AlphaEvolve source-span coverage matrix for all 55 PDF-verified named main-text sections, figures, tables, Appendix A/B spans, and named application sections, plus 844 bounded claim-level records across Table 1, Section 2, the Abstract, Introduction, Discussion, collaborator context, Section 3.1, Table 2, Figure 4, footnote 3, Section 3.2, Figure 5, the Section 3.3 opening, Section 3.3.1, Figure 6, Section 3.3.2, Figure 7, Section 3.3.3, Section 3.3.4, Section 4, Figure 8, and Section 5 Related Work, Appendix A, Table 3, and Figure 9. The Section 5 inventory separates 59 source-context-only literature claims from 26 implementation-relevant claims. The Appendix A inventory records 29 prose/caption claims, all 54 Table 3 rows, and 48 Figure 9 claims. The Appendix B inventory records 188 claims across all 13 subsections and Figures 10-14. It also records lexical source and bibliography linkage for all 195 TeX citation uses, 240 key links, and 120 compiled references without classifying supported propositions, source sufficiency, or implementation relevance. It also records construct-level dispositions for all 30 retained-source captions, displayed equations, and semantic footnotes, plus row- and cell-level dispositions for all 83 rows and 240 cells in Tables 1-3, plus environment- and line-level dispositions for all 8 retained TeX code listing environments and all 305 physical source lines, plus delimiter-level dispositions for all 309 explicit TeX math constructs, split into 291 inline and 18 display constructs, without claiming mathematical correctness or result reproduction, plus paragraph- and sentence-level dispositions for all 128 retained TeX prose paragraphs and all 402 grammatical sentences, with 372 mapped to existing bounded claims, 30 reviewed as nonclaims, and zero unmapped or unresolved sentences. It does not claim sentence-internal clause- or proposition-level semantic exhaustiveness, image-pixel coverage, citation-level proposition exhaustiveness, or independent semantic review. It also records paper-status rows, and TODO/non-goal/phase proof. It does not claim whole-paper claim-level requirement exhaustiveness, a complete application-result claim matrix, status-row to ROADMAP disposition map, missing/partial TODO proof, non-goal decision map, phase-priority map, CI source-span exhaustiveness gate, or owner review signoff."
+  "claim_boundary": "This boundary records a ROADMAP-level AlphaEvolve source-span coverage matrix for all 55 PDF-verified named main-text sections, figures, tables, Appendix A/B spans, and named application sections, plus 845 bounded claim-level records across Table 1, Section 2, the Abstract, Introduction, Discussion, collaborator context, Section 3.1, Table 2, Figure 4, footnote 3, Section 3.2, Figure 5, the Section 3.3 opening, Section 3.3.1, Figure 6, Section 3.3.2, Figure 7, Section 3.3.3, Section 3.3.4, Section 4, Figure 8, and Section 5 Related Work, Appendix A, Table 3, and Figure 9. The Section 5 inventory separates 59 source-context-only literature claims from 26 implementation-relevant claims. The Appendix A inventory records 29 prose/caption claims, all 54 Table 3 rows, and 48 Figure 9 claims. The Appendix B inventory records 188 claims across all 13 subsections and Figures 10-14. It also records lexical source and bibliography linkage for all 195 TeX citation uses, 240 key links, and 120 compiled references without classifying supported propositions, source sufficiency, or implementation relevance. It also records construct-level dispositions for all 30 retained-source captions, displayed equations, and semantic footnotes, plus row- and cell-level dispositions for all 83 rows and 240 cells in Tables 1-3, plus environment- and line-level dispositions for all 8 retained TeX code listing environments and all 305 physical source lines, plus delimiter-level dispositions for all 309 explicit TeX math constructs, split into 291 inline and 18 display constructs, without claiming mathematical correctness or result reproduction, plus paragraph- and sentence-level dispositions for all 128 retained TeX prose paragraphs and all 402 grammatical sentences, with 372 mapped to existing bounded claims, 30 reviewed as nonclaims, and zero unmapped or unresolved sentences, plus 93 atomic propositions across all 37 Abstract and Introduction sentences, with 81 mapped to bounded claims and 12 dispositioned as context, outlook, or interpretation. It does not claim proposition coverage for the remaining 365 prose sentences or independent semantic exhaustiveness, image-pixel coverage, citation-level proposition exhaustiveness, or independent semantic review. It also records paper-status rows, and TODO/non-goal/phase proof. It does not claim whole-paper claim-level requirement exhaustiveness, a complete application-result claim matrix, status-row to ROADMAP disposition map, missing/partial TODO proof, non-goal decision map, phase-priority map, CI source-span exhaustiveness gate, or owner review signoff."
 }

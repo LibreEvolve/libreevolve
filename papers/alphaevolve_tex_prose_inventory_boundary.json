@@ -3359,9 +3359,15 @@
       "claim_refs": [
         {
           "inventory_path": "papers/alphaevolve_context_claim_inventory_boundary.json",
+          "claim_id": "abstract_complex_4x4_matrix_48_multiplications",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_context_claim_inventory_boundary.json",
           "claim_id": "abstract_first_strassen_improvement_56_years",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null
@@ -3710,6 +3716,12 @@
           "claim_id": "introduction_algorithm_discovery_instrumental_goal",
           "resolved": true,
           "match_kind": "normalized_anchor_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_context_claim_inventory_boundary.json",
+          "claim_id": "introduction_algorithm_search_outperforms_direct_solution_search",
+          "resolved": true,
+          "match_kind": "normalized_anchor_mapping"
         }
       ],
       "nonclaim_disposition": null
@@ -3981,7 +3993,13 @@
           "inventory_path": "papers/alphaevolve_context_claim_inventory_boundary.json",
           "claim_id": "introduction_fourteen_matrix_sota_improvements",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_context_claim_inventory_boundary.json",
+          "claim_id": "introduction_complex_4x4_matrix_48_multiplications",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null
@@ -4039,7 +4057,13 @@
           "inventory_path": "papers/alphaevolve_context_claim_inventory_boundary.json",
           "claim_id": "introduction_over_fifty_math_problems_best_known",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_context_claim_inventory_boundary.json",
+          "claim_id": "introduction_seventy_five_percent_math_best_known",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null
@@ -4089,9 +4113,15 @@
       "claim_refs": [
         {
           "inventory_path": "papers/alphaevolve_context_claim_inventory_boundary.json",
+          "claim_id": "introduction_erdos_minimum_overlap_result",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_context_claim_inventory_boundary.json",
           "claim_id": "introduction_kissing_number_d11_improvement",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null

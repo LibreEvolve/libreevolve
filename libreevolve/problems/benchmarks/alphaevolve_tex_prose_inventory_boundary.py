@@ -183,11 +183,21 @@ _DIRECT_CLAIM_MAP: dict[
     ("introduction.tex", 19, 1): _claim_refs(
         "context", "introduction_large_code_evolution"
     ),
+    ("main.tex", 34, 0): _claim_refs(
+        "context",
+        "abstract_complex_4x4_matrix_48_multiplications",
+        "abstract_first_strassen_improvement_56_years",
+    ),
     ("introduction.tex", 45, 0): _claim_refs(
         "context", "abstract_broad_applicability"
     ),
     ("introduction.tex", 47, 0): _claim_refs(
         "related", "alphatensor_limited_matrix_setting"
+    ),
+    ("introduction.tex", 48, 0): _claim_refs(
+        "context",
+        "introduction_fourteen_matrix_sota_improvements",
+        "introduction_complex_4x4_matrix_48_multiplications",
     ),
     ("introduction.tex", 51, 0): _claim_refs(
         "context",
@@ -196,6 +206,16 @@ _DIRECT_CLAIM_MAP: dict[
     ),
     ("introduction.tex", 52, 1): _claim_refs(
         "context", "introduction_twenty_percent_math_sota_uplift"
+    ),
+    ("introduction.tex", 52, 0): _claim_refs(
+        "context",
+        "introduction_over_fifty_math_problems_best_known",
+        "introduction_seventy_five_percent_math_best_known",
+    ),
+    ("introduction.tex", 53, 0): _claim_refs(
+        "context",
+        "introduction_erdos_minimum_overlap_result",
+        "introduction_kissing_number_d11_improvement",
     ),
     ("introduction.tex", 56, 0): _claim_refs(
         "context", "introduction_four_google_compute_stack_results"

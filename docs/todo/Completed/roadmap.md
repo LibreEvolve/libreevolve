@@ -16334,3 +16334,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     independent review, mathematical correctness, image-pixel and citation
     semantics, result reproduction, status/application joins, and owner/CI
     signoff remain open.
+
+- [x] Credit scoped proposition dispositions in ROADMAP evidence.
+  - Status: ROADMAP disposition, coverage, exhaustiveness, and implementation-
+    evidence boundaries now link 93 atomic propositions across all 37 retained
+    Abstract and Introduction sentences, including one new claim and four
+    repaired sentence mappings.
+  - Accounting: aggregate coverage is 845 bounded claims and 786
+    implementation-relevant claims, with 3.8% strict and 21.5% half-credit
+    parity.
+  - Remaining boundary: proposition review for 365 prose sentences,
+    independent review, mathematical/image/citation semantics, result
+    reproduction, joined application evidence, CI gates, and owner signoff
+    remain open.

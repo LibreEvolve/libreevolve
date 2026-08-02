@@ -4496,6 +4496,75 @@ def test_validate_paper_manifest_requires_alphaevolve_tex_prose_inventory_at_rep
     assert "alphaevolve_tex_prose_inventory_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_alphaevolve_tex_proposition_inventory(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = (
+        tmp_path
+        / paper_manifest.ALPHAEVOLVE_TEX_PROPOSITION_INVENTORY_BOUNDARY_FILE
+    )
+    sidecar.parent.mkdir(parents=True, exist_ok=True)
+    sidecar.write_text(
+        json.dumps(
+            paper_manifest.alphaevolve_tex_proposition_inventory_boundary_record(),
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_alphaevolve_tex_proposition_inventory_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = (
+        paper_manifest.alphaevolve_tex_proposition_inventory_boundary_record()
+    )
+    record["whole_paper_semantic_exhaustiveness_claim_ready"] = True
+    record["proposition_count"] = 92
+    sidecar = (
+        tmp_path
+        / paper_manifest.ALPHAEVOLVE_TEX_PROPOSITION_INVENTORY_BOUNDARY_FILE
+    )
+    sidecar.parent.mkdir(parents=True, exist_ok=True)
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert (
+        "alphaevolve_tex_proposition_inventory_boundary_"
+        "whole_paper_semantic_exhaustiveness_claim_ready_overclaim"
+        in codes
+    )
+    assert (
+        "alphaevolve_tex_proposition_inventory_boundary_invalid_proposition_count"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_alphaevolve_tex_proposition_inventory_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert "alphaevolve_tex_proposition_inventory_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_alphaevolve_source_inventory_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

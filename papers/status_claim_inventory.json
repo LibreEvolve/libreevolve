@@ -8986,11 +8986,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1086,
-              "file_text_char_start": 901982,
-              "file_text_char_end": 902818,
-              "line_start": 14622,
-              "line_end": 14634,
+              "block_ordinal": 1087,
+              "file_text_char_start": 902956,
+              "file_text_char_end": 903792,
+              "line_start": 14637,
+              "line_end": 14649,
               "block_sha256": "3e270bf8a0e9b0d24ffcf7edb40fe4dbe9f9cee04de8800c858a3745ab8ce72b",
               "matched_source_tokens": [
                 "2506.13131"

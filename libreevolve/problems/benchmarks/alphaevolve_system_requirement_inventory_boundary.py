@@ -1279,7 +1279,7 @@ def validate_alphaevolve_system_requirement_inventory_boundary(
         if data.get(key) != expected[key]:
             issues.append(_issue(f"invalid_{key}", f"{key} drifted from the bounded system requirement inventory"))
     if len(EXPECTED_REQUIREMENT_IDS) != EXPECTED_REQUIREMENT_COUNT:
-        issues.append(_issue("invalid_spec_count", "system requirement spec count must remain 50"))
+        issues.append(_issue("invalid_spec_count", "system requirement spec count must remain 55"))
     if len(set(EXPECTED_REQUIREMENT_IDS)) != len(EXPECTED_REQUIREMENT_IDS):
         issues.append(_issue("duplicate_requirement_id", "system requirement ids must be unique"))
     unknown_spans = sorted(

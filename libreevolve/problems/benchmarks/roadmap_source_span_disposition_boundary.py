@@ -11,14 +11,14 @@ from libreevolve.problems.benchmarks.alphaevolve_source_inventory_boundary impor
 
 
 ROADMAP_SOURCE_SPAN_DISPOSITION_BOUNDARY_SCHEMA = (
-    "libreevolve.roadmap_source_span_disposition_boundary.v17"
+    "libreevolve.roadmap_source_span_disposition_boundary.v18"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_BOUNDARY_STATUS = (
-    "named_span_dispositions_plus_844_bounded_claims_195_citation_uses_"
+    "named_span_dispositions_plus_845_bounded_claims_195_citation_uses_"
     "30_tex_source_details_240_table_cells_305_listing_lines_309_tex_math_"
-    "constructs_and_402_tex_prose_sentences_without_sentence_internal_"
-    "semantic_exhaustiveness"
+    "constructs_402_tex_prose_sentences_and_93_propositions_across_37_"
+    "abstract_introduction_sentences_without_whole_paper_semantic_exhaustiveness"
 )
 STATUS_CLAIM_INVENTORY_PATH = "papers/status_claim_inventory.json"
 SOURCE_INVENTORY_PATH = "papers/alphaevolve_source_inventory_boundary.json"
@@ -73,6 +73,9 @@ TEX_MATH_INVENTORY_PATH = (
 TEX_PROSE_INVENTORY_PATH = (
     "papers/alphaevolve_tex_prose_inventory_boundary.json"
 )
+TEX_PROPOSITION_INVENTORY_PATH = (
+    "papers/alphaevolve_tex_proposition_inventory_boundary.json"
+)
 SYSTEM_REQUIREMENT_INVENTORY_PATH = (
     "papers/alphaevolve_system_requirement_inventory_boundary.json"
 )
@@ -88,7 +91,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "ci_source_span_exhaustiveness_gate",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "claim_level_requirement_inventory": "844_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_305_listing_lines_have_line_dispositions_309_explicit_math_constructs_have_delimiter_dispositions_and_128_paragraphs_402_sentences_have_prose_dispositions_without_sentence_internal_clause_or_proposition_image_pixel_citation_semantic_implementation_semantic_mathematical_correctness_independent_review_or_reproduction_exhaustiveness",
+    "claim_level_requirement_inventory": "845_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_305_listing_lines_have_line_dispositions_309_explicit_math_constructs_have_delimiter_dispositions_128_paragraphs_402_sentences_have_prose_dispositions_and_37_abstract_introduction_sentences_have_93_proposition_dispositions_without_remaining_365_sentence_proposition_image_pixel_citation_semantic_implementation_semantic_mathematical_correctness_independent_review_or_reproduction_exhaustiveness",
     "application_result_claim_matrix": "not_recorded_locally",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
     "missing_partial_todo_proof": "not_recorded_locally",
@@ -146,6 +149,7 @@ def roadmap_source_span_disposition_boundary_record(
         "tex_code_listing_inventory_input": TEX_CODE_LISTING_INVENTORY_PATH,
         "tex_math_inventory_input": TEX_MATH_INVENTORY_PATH,
         "tex_prose_inventory_input": TEX_PROSE_INVENTORY_PATH,
+        "tex_proposition_inventory_input": TEX_PROPOSITION_INVENTORY_PATH,
         "system_requirement_inventory_input": SYSTEM_REQUIREMENT_INVENTORY_PATH,
         "source_status_inventory_input": STATUS_CLAIM_INVENTORY_PATH,
         "disposition_record_count": len(disposition_records),
@@ -165,7 +169,7 @@ def roadmap_source_span_disposition_boundary_record(
             "appendix_matrix": "appendix_a_appendix_b_and_13_appendix_b_subsections",
             "named_application_sections": "section_3_3_and_4_named_subsections",
             "section_2_system_requirements": "55_pdf_anchored_requirement_dispositions",
-            "context_claims": "44_pdf_anchored_abstract_introduction_discussion_and_collaborator_dispositions",
+            "context_claims": "45_pdf_anchored_abstract_introduction_discussion_and_collaborator_dispositions",
             "matrix_result_claims": "44_pdf_anchored_section_3_1_table_2_figure_4_and_footnote_3_dispositions",
             "math_result_claims": "63_pdf_anchored_section_3_2_and_figure_5_dispositions",
             "scheduling_claims": "45_pdf_anchored_section_3_3_opening_section_3_3_1_and_figure_6_dispositions",
@@ -182,6 +186,7 @@ def roadmap_source_span_disposition_boundary_record(
             "tex_code_listing_lines": "8_environments_305_lines_60_existing_claims_and_zero_unmapped_lines",
             "tex_math_constructs": "309_explicit_math_constructs_291_inline_18_display_and_zero_unmapped_constructs",
             "tex_prose_sentences": "128_paragraphs_402_sentences_372_existing_claim_mappings_30_reviewed_nonclaims_and_zero_unmapped_or_unresolved_sentences",
+            "tex_propositions": "37_abstract_introduction_sentences_93_atomic_propositions_81_existing_claim_mappings_12_context_outlook_or_interpretation_and_zero_unmapped_or_unresolved_propositions",
         },
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
@@ -189,9 +194,9 @@ def roadmap_source_span_disposition_boundary_record(
             "This boundary records ROADMAP dispositions for all 55 PDF-verified "
             "named AlphaEvolve structural spans, including sections, figures, "
             "tables, appendices, source pages, local status, roadmap section, "
-            "phase bucket, sidecars, and active audit TODO links, plus 844 "
+            "phase bucket, sidecars, and active audit TODO links, plus 845 "
             "bounded claim-level records: 55 Table 1/Section 2 system "
-            "requirements and 44 Abstract, Introduction, Discussion, and "
+            "requirements and 45 Abstract, Introduction, Discussion, and "
             "collaborator-context claims, plus 44 Section 3.1, Table 2, "
             "Figure 4, and footnote 3 matrix-result claims, plus 63 Section "
             "3.2 and Figure 5 constructive-math claims, plus 45 Section 3.3 "
@@ -215,11 +220,16 @@ def roadmap_source_span_disposition_boundary_record(
             "18 display constructs, plus paragraph- and sentence-level "
             "dispositions for all 128 retained TeX prose paragraphs and all 402 "
             "grammatical sentences: 372 mapped to existing bounded claims, 30 "
-            "reviewed as nonclaims, and zero unmapped or unresolved. It does not "
+            "reviewed as nonclaims, and zero unmapped or unresolved, plus 93 "
+            "atomic propositions across all 37 Abstract and Introduction "
+            "sentences: 81 mapped to bounded claims and 12 dispositioned as "
+            "context, outlook, or interpretation. It does not cover propositions "
+            "in the remaining 365 prose sentences or provide independent semantic "
+            "review. It does not "
             "classify citation semantics, source "
             "sufficiency, or implementation relevance, and does not "
-            "claim sentence-internal clause- or proposition-level semantic "
-            "exhaustiveness, mathematical correctness, image-pixel coverage, "
+            "claim whole-paper proposition-level semantic exhaustiveness, "
+            "mathematical correctness, image-pixel coverage, "
             "citation-semantic exhaustiveness, independent semantic review, or "
             "result reproduction, a claim-level application-result matrix, complete "
             "paper-index row to ROADMAP disposition map, proof that every "
@@ -274,6 +284,7 @@ def validate_roadmap_source_span_disposition_boundary(
         "tex_code_listing_inventory_input",
         "tex_math_inventory_input",
         "tex_prose_inventory_input",
+        "tex_proposition_inventory_input",
         "system_requirement_inventory_input",
         "source_status_inventory_input",
         "disposition_record_count",
@@ -298,7 +309,7 @@ def validate_roadmap_source_span_disposition_boundary(
         or "all 8 retained TeX code listing environments" not in boundary_text
         or "all 309 explicit TeX math constructs" not in boundary_text
         or "all 128 retained TeX prose paragraphs and all 402" not in boundary_text
-        or "sentence-internal clause- or proposition-level semantic exhaustiveness" not in boundary_text
+        or "remaining 365 prose sentences" not in boundary_text
         or "complete paper-index row to ROADMAP disposition map" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate core anchor dispositions from exhaustive source-span coverage"))

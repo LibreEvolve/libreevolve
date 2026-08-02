@@ -14826,3 +14826,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Remaining paper gap: 207 sentence propositions, independent semantic
     agreement, mathematical/image/citation correctness, result reproduction,
     and AlphaEvolve parity remain unproven.
+
+- [x] Review AlphaEvolve Section 3.3.3 hardware propositions.
+  - Paper evidence: 11 retained sentences cover specialized-hardware context,
+    RTL optimization costs and objectives, Verilog candidate scope, functional
+    verification, the reported unnecessary-bit rewrite, synthesis rediscovery,
+    upcoming-TPU integration, adoption claims, and potential time-to-market
+    effects.
+  - Status: the slice adds 52 propositions, bringing cumulative coverage to 206
+    sentences and 673 propositions; 619 map through 643 references to 286
+    bounded claims and 54 are context, outlook, or interpretation.
+  - Mapping correction: three existing hardware claims omitted by broad prose
+    matching are now linked. No new claim, active TODO, or parity credit is
+    added.
+  - Remaining paper gap: 196 sentence propositions, independent semantic
+    agreement, mathematical/image/citation correctness, result reproduction,
+    and AlphaEvolve parity remain unproven.

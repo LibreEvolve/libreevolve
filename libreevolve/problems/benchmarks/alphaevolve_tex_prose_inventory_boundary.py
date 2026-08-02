@@ -404,6 +404,20 @@ _DIRECT_CLAIM_MAP: dict[
         "key_tpu_arithmetic_circuit_target",
         "matrix_multiplication_unit_context",
     ),
+    ("results.tex", 170, 0): _claim_refs(
+        "hardware",
+        "integrated_into_upcoming_tpu",
+        "gemini_first_direct_tpu_arithmetic_contribution",
+        "alphaevolve_mediated_hardware_contribution",
+        "path_for_future_hardware_contributions",
+    ),
+    ("results.tex", 170, 1): _claim_refs(
+        "hardware",
+        "changes_communicated_directly_in_verilog",
+        "verilog_standard_hardware_engineering_language",
+        "direct_verilog_fosters_trust",
+        "direct_verilog_simplifies_adoption",
+    ),
     ("ablations.tex", 8, 3): _claim_refs(
         "ablation", "no_context_variant_name"
     ),

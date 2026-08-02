@@ -20,8 +20,8 @@ def test_todo_ledger_ownership_boundary_accepts_current_ledger_inventory():
     assert boundary["claim_ready"] is False
     assert boundary["owner_record_count"] == 4
     assert boundary["raw_todo_ledger_active_count"] == 522
-    assert boundary["raw_todo_ledger_completed_count"] == 4851
-    assert boundary["raw_todo_ledger_total_count"] == 5373
+    assert boundary["raw_todo_ledger_completed_count"] == 4855
+    assert boundary["raw_todo_ledger_total_count"] == 5377
     assert boundary["active_ledger_completed_marker_count"] == 0
     assert boundary["completed_ledger_active_marker_count"] == 0
     assert (
@@ -39,14 +39,14 @@ def test_todo_ledger_ownership_boundary_accepts_current_ledger_inventory():
         "duplicate_group_count": 123,
         "duplicate_record_count": 246,
         "inflation_count": 123,
-        "raw_total_count": 5373,
-        "collapsed_total_estimate": 5250,
-        "inflation_percent_of_raw_total": 2.289,
+        "raw_total_count": 5377,
+        "collapsed_total_estimate": 5254,
+        "inflation_percent_of_raw_total": 2.288,
         "canonical_gap_denominator_ready": False,
     }
     assert boundary["exact_duplicate_record_count"] == 246
     assert boundary["exact_duplicate_inflation_count"] == 123
-    assert boundary["exact_duplicate_collapsed_total_estimate"] == 5250
+    assert boundary["exact_duplicate_collapsed_total_estimate"] == 5254
     assert boundary["exact_duplicate_owner_status_report"] == {
         "policy": "exact_normalized_title_duplicate_groups_by_owner_and_status",
         "duplicate_group_count": 123,

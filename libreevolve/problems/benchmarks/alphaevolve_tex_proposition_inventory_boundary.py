@@ -20,16 +20,16 @@ from libreevolve.problems.benchmarks.paper_bibliography import (
 
 
 ALPHAEVOLVE_TEX_PROPOSITION_INVENTORY_BOUNDARY_SCHEMA = (
-    "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v7"
+    "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v8"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "abstract_through_section3_3_2_kernel_proposition_review_complete_without_"
+    "abstract_through_section3_3_3_hardware_proposition_review_complete_without_"
     "remaining_paper_or_independent_semantic_exhaustiveness"
 )
-EXPECTED_REVIEWED_SENTENCE_COUNT = 195
-EXPECTED_PROPOSITION_COUNT = 621
+EXPECTED_REVIEWED_SENTENCE_COUNT = 206
+EXPECTED_PROPOSITION_COUNT = 673
 EXPECTED_REVIEWED_SENTENCE_IDS = tuple(
-    f"tex_prose_sentence_{ordinal:04d}" for ordinal in range(1, 196)
+    f"tex_prose_sentence_{ordinal:04d}" for ordinal in range(1, 207)
 )
 EXPECTED_NEW_BOUNDED_CLAIM_IDS = (
     "introduction_algorithm_search_outperforms_direct_solution_search",
@@ -60,6 +60,9 @@ EXPECTED_REPAIRED_SENTENCE_CLAIM_IDS = (
     "section3_3_2_average_twenty_three_percent_kernel_speedup",
     "section3_3_2_one_percent_gemini_training_reduction",
     "section3_3_2_team_research_engineering_velocity",
+    "direct_verilog_fosters_trust",
+    "direct_verilog_simplifies_adoption",
+    "gemini_first_direct_tpu_arithmetic_contribution",
     "task_problem_specific_abstraction_choice",
 )
 
@@ -942,6 +945,298 @@ _PROPOSITION_SPECS.update(
                 "for problems with non-symmetric solutions it works better to evolve customized search algorithms",
                 "The authors hypothesize that non-symmetric problems favor customized search algorithms.",
                 _ref("system", "task_symmetry_guided_abstraction_bias"),
+            ),
+        ),
+    }
+)
+
+
+_PROPOSITION_SPECS.update(
+    {
+        "tex_prose_sentence_0196": (
+            _mapped(
+                "such as Google's Tensor Processing Units (TPUs)",
+                "Google TPUs are an example of specialized hardware.",
+                _ref("hardware", "specialized_hardware_tpu_example"),
+            ),
+            _mapped(
+                "crucial for achieving the resource efficiency",
+                "Specialized hardware is described as crucial for resource efficiency.",
+                _ref("hardware", "specialized_hardware_resource_efficiency_at_scale"),
+            ),
+            _mapped(
+                "required to run modern AI systems",
+                "The resource-efficiency requirement applies to modern AI systems.",
+                _ref("hardware", "specialized_hardware_resource_efficiency_at_scale"),
+            ),
+            _mapped(
+                "at scale",
+                "The resource-efficiency claim applies at AI-system scale.",
+                _ref("hardware", "specialized_hardware_resource_efficiency_at_scale"),
+            ),
+        ),
+        "tex_prose_sentence_0197": (
+            _mapped(
+                "designing new computer chips is a complex",
+                "New-computer-chip design is described as complex.",
+                _ref("hardware", "chip_design_complexity"),
+            ),
+            _mapped(
+                "time-consuming process",
+                "New-computer-chip design is described as time-consuming.",
+                _ref("hardware", "chip_design_complexity"),
+            ),
+            _mapped(
+                "often spanning years",
+                "The chip-design process is reported to often span years.",
+                _ref("hardware", "chip_design_often_spans_years"),
+            ),
+        ),
+        "tex_prose_sentence_0198": (
+            _mapped(
+                "Register-Transfer Level (RTL) optimization",
+                "The hardware-design step under discussion is RTL optimization.",
+                _ref("hardware", "rtl_optimization_critical_step"),
+            ),
+            _mapped(
+                "critical step in this process",
+                "RTL optimization is characterized as a critical chip-design step.",
+                _ref("hardware", "rtl_optimization_critical_step"),
+            ),
+            _mapped(
+                "manually rewriting hardware descriptions",
+                "RTL optimization involves manual hardware-description rewrites.",
+                _ref("hardware", "rtl_manual_hardware_description_rewriting"),
+            ),
+            _mapped(
+                "improve metrics",
+                "The manual RTL rewrites seek power, performance, and area improvements.",
+                _ref("hardware", "rtl_power_metric"),
+                _ref("hardware", "rtl_performance_metric"),
+                _ref("hardware", "rtl_area_metric"),
+            ),
+            _mapped(
+                "power",
+                "Power is an RTL optimization metric.",
+                _ref("hardware", "rtl_power_metric"),
+            ),
+            _mapped(
+                "performance",
+                "Performance is an RTL optimization metric.",
+                _ref("hardware", "rtl_performance_metric"),
+            ),
+            _mapped(
+                "area",
+                "Area is an RTL optimization metric.",
+                _ref("hardware", "rtl_area_metric"),
+            ),
+            _mapped(
+                "months of iteration",
+                "Manual RTL optimization is reported to demand months of iteration.",
+                _ref("hardware", "rtl_manual_iteration_can_take_months"),
+            ),
+            _mapped(
+                "highly skilled engineers",
+                "Manual RTL optimization is reported to require highly skilled engineers.",
+                _ref("hardware", "rtl_requires_highly_skilled_engineers"),
+            ),
+        ),
+        "tex_prose_sentence_0199": (
+            _mapped(
+                "AlphaEvolve was challenged to optimize",
+                "AlphaEvolve was assigned an RTL optimization challenge.",
+                _ref("hardware", "already_highly_optimized_verilog_target"),
+            ),
+            _mapped(
+                "already highly optimized Verilog implementation",
+                "The target was an already highly optimized Verilog implementation.",
+                _ref("hardware", "already_highly_optimized_verilog_target"),
+            ),
+            _mapped(
+                "key TPU arithmetic circuit",
+                "The Verilog target implements a key TPU arithmetic circuit.",
+                _ref("hardware", "key_tpu_arithmetic_circuit_target"),
+            ),
+            _mapped(
+                "within the matrix multiplication unit",
+                "The target circuit is within the matrix-multiplication unit.",
+                _ref("hardware", "matrix_multiplication_unit_context"),
+            ),
+        ),
+        "tex_prose_sentence_0200": (
+            _mapped(
+                "reduce both area",
+                "Reducing circuit area is an optimization objective.",
+                _ref("hardware", "reduce_area_objective"),
+            ),
+            _mapped(
+                "power consumption",
+                "Reducing circuit power consumption is an optimization objective.",
+                _ref("hardware", "reduce_power_objective"),
+            ),
+            _mapped(
+                "preserving the component's core functionality",
+                "The optimization must preserve the component's core functionality.",
+                _ref("hardware", "preserve_core_functionality_objective"),
+            ),
+        ),
+        "tex_prose_sentence_0201": (
+            _mapped(
+                "final proposal must pass robust verification methods",
+                "The final RTL proposal must pass robust verification.",
+                _ref("hardware", "robust_verification_requirement"),
+            ),
+            _mapped(
+                "confirm that the modified circuit",
+                "Verification is applied to the modified circuit.",
+                _ref("hardware", "verification_confirms_functional_correctness"),
+            ),
+            _mapped(
+                "maintains functional correctness",
+                "Verification must confirm preserved functional correctness.",
+                _ref("hardware", "verification_confirms_functional_correctness"),
+            ),
+        ),
+        "tex_prose_sentence_0202": (
+            _mapped(
+                "AlphaEvolve was able to find",
+                "AlphaEvolve is reported to have found an RTL rewrite.",
+                _ref("hardware", "simple_code_rewrite_discovered"),
+            ),
+            _mapped(
+                "simple code rewrite",
+                "The discovered RTL change is characterized as a simple code rewrite.",
+                _ref("hardware", "simple_code_rewrite_discovered"),
+            ),
+            _mapped(
+                "removed unnecessary bits",
+                "The code rewrite removed unnecessary bits.",
+                _ref("hardware", "unnecessary_bits_removed"),
+            ),
+            _mapped(
+                "validated by TPU designers",
+                "TPU designers validated the reported rewrite.",
+                _ref("hardware", "tpu_designer_correctness_validation"),
+            ),
+            _mapped(
+                "for correctness",
+                "The TPU-designer validation addressed correctness.",
+                _ref("hardware", "tpu_designer_correctness_validation"),
+            ),
+        ),
+        "tex_prose_sentence_0203": (
+            _mapped(
+                "this specific improvement was also independently caught",
+                "The same improvement was independently rediscovered downstream.",
+                _ref("hardware", "downstream_synthesis_independent_rediscovery"),
+            ),
+            _mapped(
+                "downstream synthesis tools",
+                "Downstream synthesis tools independently found the improvement.",
+                _ref("hardware", "downstream_synthesis_independent_rediscovery"),
+            ),
+            _mapped(
+                "AlphaEvolve's contribution at the RTL stage",
+                "AlphaEvolve contributed the optimization at the source-RTL stage.",
+                _ref("hardware", "refine_source_rtl_capability"),
+            ),
+            _mapped(
+                "capability to refine source RTL",
+                "The result is presented as evidence that AlphaEvolve can refine source RTL.",
+                _ref("hardware", "refine_source_rtl_capability"),
+            ),
+            _mapped(
+                "provide optimizations",
+                "Source-RTL refinement can provide design-flow optimizations.",
+                _ref("hardware", "early_design_flow_optimization_value"),
+            ),
+            _mapped(
+                "early in the design flow",
+                "The reported value is optimization early in the design flow.",
+                _ref("hardware", "early_design_flow_optimization_value"),
+            ),
+        ),
+        "tex_prose_sentence_0204": (
+            _mapped(
+                "Integrated into an upcoming TPU",
+                "The reported RTL improvement is integrated into an upcoming TPU.",
+                _ref("hardware", "integrated_into_upcoming_tpu"),
+            ),
+            _mapped(
+                "first direct contribution to TPU arithmetic circuits",
+                "The improvement is reported as Gemini's first direct TPU-circuit contribution.",
+                _ref("hardware", "gemini_first_direct_tpu_arithmetic_contribution"),
+            ),
+            _mapped(
+                "achieved via AlphaEvolve",
+                "The hardware contribution is attributed to AlphaEvolve mediation.",
+                _ref("hardware", "alphaevolve_mediated_hardware_contribution"),
+            ),
+            _mapped(
+                "paving the way for future contributions",
+                "The authors present the result as a path toward future hardware contributions.",
+                _ref("hardware", "path_for_future_hardware_contributions"),
+            ),
+        ),
+        "tex_prose_sentence_0205": (
+            _reviewed_context(
+                "key advantage of AlphaEvolve",
+                "The authors characterize direct Verilog communication as a key AlphaEvolve advantage.",
+                "This is an evaluative author characterization, not a separate implementation requirement.",
+                disposition="author_interpretation",
+            ),
+            _mapped(
+                "communicates the suggested changes directly in Verilog",
+                "AlphaEvolve communicates proposed hardware changes directly in Verilog.",
+                _ref("hardware", "changes_communicated_directly_in_verilog"),
+            ),
+            _mapped(
+                "standard language",
+                "Verilog is described as the standard hardware-engineering language.",
+                _ref("hardware", "verilog_standard_hardware_engineering_language"),
+            ),
+            _mapped(
+                "used by hardware engineers",
+                "Hardware engineers use Verilog.",
+                _ref("hardware", "verilog_standard_hardware_engineering_language"),
+            ),
+            _mapped(
+                "fostering trust",
+                "Direct Verilog output is claimed to foster hardware-engineer trust.",
+                _ref("hardware", "direct_verilog_fosters_trust"),
+            ),
+            _mapped(
+                "simplifying adoption",
+                "Direct Verilog output is claimed to simplify adoption.",
+                _ref("hardware", "direct_verilog_simplifies_adoption"),
+            ),
+        ),
+        "tex_prose_sentence_0206": (
+            _reviewed_context(
+                "early exploration",
+                "The authors characterize the reported hardware work as early exploration.",
+                "This is evidence-maturity context rather than a separate implementation requirement.",
+            ),
+            _reviewed_context(
+                "demonstrates a novel approach",
+                "The authors characterize the approach as novel.",
+                "Novelty is an author interpretation, not a separate implementation requirement.",
+                disposition="author_interpretation",
+            ),
+            _mapped(
+                "LLM-powered code evolution",
+                "The hardware-design approach uses LLM-powered code evolution.",
+                _ref("hardware", "llm_code_evolution_assists_hardware_design"),
+            ),
+            _mapped(
+                "assists in hardware design",
+                "LLM-powered code evolution is reported to assist hardware design.",
+                _ref("hardware", "llm_code_evolution_assists_hardware_design"),
+            ),
+            _mapped(
+                "potentially reducing time to market",
+                "The authors present reduced time to market as a potential outcome.",
+                _ref("hardware", "potential_time_to_market_reduction"),
             ),
         ),
     }
@@ -4098,7 +4393,7 @@ class AlphaEvolveTexPropositionInventoryBoundaryValidation:
 def alphaevolve_tex_proposition_inventory_boundary_record(
     root: str | Path = ".",
 ) -> dict[str, Any]:
-    """Review atomic propositions through retained Section 3.3.2 kernels."""
+    """Review atomic propositions through retained Section 3.3.3 hardware."""
 
     root_path = Path(root)
     prose = alphaevolve_tex_prose_inventory_boundary_record(root_path)
@@ -4306,11 +4601,12 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
                 "all 39 retained Section 3.2 sentences in results.tex",
                 "all 19 retained Section 3.3 opening and Section 3.3.1 scheduling sentences in results.tex",
                 "all 23 retained Section 3.3.2 Gemini kernel-engineering sentences in results.tex",
+                "all 11 retained Section 3.3.3 hardware-circuit-design sentences in results.tex",
                 "manual atomic-proposition statements and exact rendered-source quote offsets",
                 "resolved bounded-claim mappings or explicit context, outlook, and interpretation dispositions",
             ],
             "excluded": [
-                "the remaining 207 retained prose sentences",
+                "the remaining 196 retained prose sentences",
                 "separately audited captions, tables, equations, listings, footnotes, and explicit math constructs",
                 "independent second-reviewer semantic agreement",
                 "mathematical correctness, citation sufficiency, image-pixel semantics, or result reproduction",
@@ -4319,9 +4615,9 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
         },
         "claim_boundary": (
             "This boundary records a single-reviewer atomic-proposition decomposition "
-            "for every retained sentence from the Abstract through Section 3.3.2 "
-            "Gemini kernel engineering. Complete disposition inside this 195-sentence "
-            "scope does not cover the remaining 207 prose "
+            "for every retained sentence from the Abstract through Section 3.3.3 "
+            "hardware circuit design. Complete disposition inside this 206-sentence "
+            "scope does not cover the remaining 196 prose "
             "sentences and does not prove independent semantic exhaustiveness, "
             "mathematical correctness, result reproduction, or AlphaEvolve parity."
         ),

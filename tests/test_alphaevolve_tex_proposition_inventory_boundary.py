@@ -8,7 +8,7 @@ from libreevolve.problems.benchmarks.alphaevolve_tex_proposition_inventory_bound
 )
 
 
-def test_tex_proposition_inventory_accepts_section3_3_2_kernel_scope():
+def test_tex_proposition_inventory_accepts_section3_3_3_hardware_scope():
     boundary = alphaevolve_tex_proposition_inventory_boundary_record()
 
     validation = validate_alphaevolve_tex_proposition_inventory_boundary(boundary)
@@ -23,12 +23,12 @@ def test_tex_proposition_inventory_accepts_section3_3_2_kernel_scope():
     assert boundary["review_scope_complete"] is True
     assert boundary["whole_paper_semantic_exhaustiveness_claim_ready"] is False
     assert boundary["independent_semantic_review_ready"] is False
-    assert validation.reviewed_sentence_count == 195
-    assert validation.proposition_count == 621
-    assert validation.remaining_sentence_count == 207
+    assert validation.reviewed_sentence_count == 206
+    assert validation.proposition_count == 673
+    assert validation.remaining_sentence_count == 196
     assert validation.unmapped_proposition_count == 0
     assert validation.unresolved_reference_count == 0
-    assert boundary["reviewed_sentence_fraction"] == 195 / 402
+    assert boundary["reviewed_sentence_fraction"] == 206 / 402
     assert boundary["reviewed_source_files"] == [
         "introduction.tex",
         "main.tex",
@@ -36,21 +36,21 @@ def test_tex_proposition_inventory_accepts_section3_3_2_kernel_scope():
         "results.tex",
     ]
     assert boundary["disposition_counts"] == {
-        "author_interpretation": 9,
+        "author_interpretation": 11,
         "author_outlook": 2,
-        "existing_bounded_claim_mapping": 570,
-        "source_context_only": 40,
+        "existing_bounded_claim_mapping": 619,
+        "source_context_only": 41,
     }
-    assert boundary["claim_reference_count"] == 592
-    assert boundary["unique_claim_reference_count"] == 253
-    assert boundary["implementation_relevant_proposition_count"] == 560
+    assert boundary["claim_reference_count"] == 643
+    assert boundary["unique_claim_reference_count"] == 286
+    assert boundary["implementation_relevant_proposition_count"] == 609
 
 
 def test_tex_proposition_inventory_resolves_every_reviewed_record():
     boundary = alphaevolve_tex_proposition_inventory_boundary_record()
 
-    assert len(boundary["reviewed_sentence_records"]) == 195
-    assert len(boundary["proposition_records"]) == 621
+    assert len(boundary["reviewed_sentence_records"]) == 206
+    assert len(boundary["proposition_records"]) == 673
     assert all(
         record["review_status"]
         == "manual_static_semantic_decomposition_complete"
@@ -105,6 +105,9 @@ def test_tex_proposition_inventory_records_new_and_repaired_claims():
         "section3_3_2_average_twenty_three_percent_kernel_speedup",
         "section3_3_2_one_percent_gemini_training_reduction",
         "section3_3_2_team_research_engineering_velocity",
+        "direct_verilog_fosters_trust",
+        "direct_verilog_simplifies_adoption",
+        "gemini_first_direct_tpu_arithmetic_contribution",
         "task_problem_specific_abstraction_choice",
     }
     assert set(boundary["new_bounded_claim_ids"]) <= mapped_ids
@@ -212,6 +215,43 @@ def test_tex_proposition_inventory_records_new_and_repaired_claims():
         "section3_3_2_team_research_engineering_velocity",
         "section3_3_2_gemini_optimizes_own_training",
     } <= mapped_ids
+    assert {
+        "specialized_hardware_tpu_example",
+        "specialized_hardware_resource_efficiency_at_scale",
+        "chip_design_complexity",
+        "chip_design_often_spans_years",
+        "rtl_optimization_critical_step",
+        "rtl_manual_hardware_description_rewriting",
+        "rtl_power_metric",
+        "rtl_performance_metric",
+        "rtl_area_metric",
+        "rtl_manual_iteration_can_take_months",
+        "rtl_requires_highly_skilled_engineers",
+        "already_highly_optimized_verilog_target",
+        "key_tpu_arithmetic_circuit_target",
+        "matrix_multiplication_unit_context",
+        "reduce_area_objective",
+        "reduce_power_objective",
+        "preserve_core_functionality_objective",
+        "robust_verification_requirement",
+        "verification_confirms_functional_correctness",
+        "simple_code_rewrite_discovered",
+        "unnecessary_bits_removed",
+        "tpu_designer_correctness_validation",
+        "downstream_synthesis_independent_rediscovery",
+        "refine_source_rtl_capability",
+        "early_design_flow_optimization_value",
+        "integrated_into_upcoming_tpu",
+        "gemini_first_direct_tpu_arithmetic_contribution",
+        "alphaevolve_mediated_hardware_contribution",
+        "path_for_future_hardware_contributions",
+        "changes_communicated_directly_in_verilog",
+        "verilog_standard_hardware_engineering_language",
+        "direct_verilog_fosters_trust",
+        "direct_verilog_simplifies_adoption",
+        "llm_code_evolution_assists_hardware_design",
+        "potential_time_to_market_reduction",
+    } <= mapped_ids
 
 
 def test_tex_proposition_inventory_rejects_record_and_overclaim_drift():
@@ -260,7 +300,7 @@ def test_render_tex_proposition_inventory_summary_reports_shape():
 
     assert "AlphaEvolve TeX proposition inventory boundary" in summary
     assert "| schema_status | ok |" in summary
-    assert "| reviewed_sentence_count | 195 |" in summary
-    assert "| proposition_count | 621 |" in summary
-    assert "| remaining_sentence_count | 207 |" in summary
+    assert "| reviewed_sentence_count | 206 |" in summary
+    assert "| proposition_count | 673 |" in summary
+    assert "| remaining_sentence_count | 196 |" in summary
     assert "| validation_status | ok |" in summary

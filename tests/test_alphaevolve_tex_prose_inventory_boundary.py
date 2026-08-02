@@ -113,6 +113,9 @@ def test_tex_prose_inventory_maps_new_claims_and_disambiguates_repeated_anchors(
         "section3_3_2_average_twenty_three_percent_kernel_speedup",
         "section3_3_2_one_percent_gemini_training_reduction",
         "section3_3_2_team_research_engineering_velocity",
+        "direct_verilog_fosters_trust",
+        "direct_verilog_simplifies_adoption",
+        "gemini_first_direct_tpu_arithmetic_contribution",
     } <= mapped_ids
     assert {
         ref["claim_id"] for ref in records[("main.tex", 34, 0)]["claim_refs"]
@@ -242,6 +245,22 @@ def test_tex_prose_inventory_maps_new_claims_and_disambiguates_repeated_anchors(
         "section3_3_2_deployment_enhanced_training_efficiency",
         "section3_3_2_team_research_engineering_velocity",
         "section3_3_2_tiling_heuristic_deployed_production",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("results.tex", 170, 0)]["claim_refs"]
+    } == {
+        "alphaevolve_mediated_hardware_contribution",
+        "gemini_first_direct_tpu_arithmetic_contribution",
+        "integrated_into_upcoming_tpu",
+        "path_for_future_hardware_contributions",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("results.tex", 170, 1)]["claim_refs"]
+    } == {
+        "changes_communicated_directly_in_verilog",
+        "direct_verilog_fosters_trust",
+        "direct_verilog_simplifies_adoption",
+        "verilog_standard_hardware_engineering_language",
     }
     assert [
         ref["claim_id"] for ref in records[("ablations.tex", 8, 3)]["claim_refs"]

@@ -16426,3 +16426,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     independent review, mathematical/image/citation semantics, result
     reproduction, joined application evidence, CI gates, and owner signoff
     remain open.
+
+- [x] Extend ROADMAP proposition evidence through Section 3.3.3 hardware.
+  - Status: ROADMAP disposition, coverage, exhaustiveness, and implementation-
+    evidence boundaries now link 673 atomic propositions across all 206 retained
+    sentences from the Abstract through hardware circuit design.
+  - Accounting: the hardware slice adds no bounded claim, TODO, or parity credit
+    and repairs three sentence mappings. Aggregate coverage remains 846 bounded
+    and 787 implementation-relevant claims, with 3.8% strict and 21.5% half-
+    credit parity.
+  - Remaining boundary: proposition review for 196 prose sentences,
+    independent review, mathematical/image/citation semantics, result
+    reproduction, joined application evidence, CI gates, and owner signoff
+    remain open.

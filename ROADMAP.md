@@ -1031,16 +1031,16 @@ AlphaEvolve reproduction.
   bounded claims but does not prove sentence-internal clause/proposition
   exhaustiveness, independent semantic review, or result reproduction. The
   supplemental `papers/alphaevolve_tex_proposition_inventory_boundary.json`
-  decomposes all 195 retained sentences from the Abstract through Section 3.3.2
-  Gemini kernel engineering into 621 atomic propositions: 570 map through 592
-  references to 253 bounded claims, 40 are source context, 2 are author outlook,
-  and 9 are qualified author interpretations. It
+  decomposes all 206 retained sentences from the Abstract through Section 3.3.3
+  hardware circuit design into 673 atomic propositions: 619 map through 643
+  references to 286 bounded claims, 41 are source context, 2 are author outlook,
+  and 11 are qualified author interpretations. It
   cumulatively bounds
   the previously missed direct-versus-instrumental-search comparison and the
-  expensive-evaluation sample-efficiency claim. The kernel slice adds no new
-  claim or parity credit, but repairs sentence mappings for the reported 23-
-  percent average kernel speedup, 1-percent Gemini training-time reduction, and
-  Gemini team research and engineering velocity. The other 207 prose
+  expensive-evaluation sample-efficiency claim. The hardware slice adds no new
+  claim or parity credit, but repairs sentence mappings for Gemini's first
+  direct TPU-circuit contribution, direct Verilog fostering trust, and direct
+  Verilog simplifying adoption. The other 196 prose
   sentences and independent semantic review remain open. The twelve bounded
   claim inventories now disposition 846 claims in total: 30 locally
   implemented, 278 partial, 110 not
@@ -1068,10 +1068,10 @@ AlphaEvolve reproduction.
   for all 83 rows and 240 cells in Tables 1-3, plus line-level disposition for all 8 retained
   code listings and 305 physical source lines, plus delimiter-level disposition
   for all 309 explicit TeX math constructs, plus paragraph/sentence disposition
-  for all 128 retained prose paragraphs and 402 grammatical sentences, plus 621
-  atomic-proposition dispositions across all 195 sentences from the Abstract
-  through Section 3.3.2 Gemini kernel engineering. It is not proposition review
-  for the remaining 207 sentences,
+  for all 128 retained prose paragraphs and 402 grammatical sentences, plus 673
+  atomic-proposition dispositions across all 206 sentences from the Abstract
+  through Section 3.3.3 hardware circuit design. It is not proposition review
+  for the remaining 196 sentences,
   mathematical-correctness proof, image-pixel or citation-semantic review,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,
   implemented-benchmark bullet semantic verifier,

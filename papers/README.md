@@ -1687,10 +1687,10 @@ have row/cell
 dispositions; and all 8 retained code listings and 305 physical source lines
 have line-level dispositions; all 309 explicit TeX math constructs have
 delimiter-level dispositions; prose sentences also have dispositions. This is
-supplemented by 621 atomic-proposition dispositions across all 195 sentences
-from the Abstract through Section 3.3.2 Gemini kernel engineering, with 570
-mapped to bounded claims and 51 classified as context, outlook, or
-interpretation. This is not proposition review for the remaining 207 prose
+supplemented by 673 atomic-proposition dispositions across all 206 sentences
+from the Abstract through Section 3.3.3 hardware circuit design, with 619 mapped
+to bounded claims and 54 classified as context, outlook, or interpretation.
+This is not proposition review for the remaining 196 prose
 sentences or independent semantic review,
 mathematical correctness,
 image-pixel or citation-semantic review, or per-phrase sufficiency proof,
@@ -4214,17 +4214,17 @@ independent semantic review, mathematical correctness, result reproduction, or
 AlphaEvolve parity.
 
 The scoped semantic review in
-`papers/alphaevolve_tex_proposition_inventory_boundary.json` decomposes all 195
-retained sentences from the Abstract through Section 3.3.2 Gemini kernel
-engineering into 621 atomic propositions. Five hundred seventy map through 592
-resolved references to 253 existing bounded claims; 40 are source context, 2 are
-author outlook, and 9 are qualified author
+`papers/alphaevolve_tex_proposition_inventory_boundary.json` decomposes all 206
+retained sentences from the Abstract through Section 3.3.3 hardware circuit
+design into 673 atomic propositions. Six hundred nineteen map through 643
+resolved references to 286 existing bounded claims; 41 are source context, 2 are
+author outlook, and 11 are qualified author
 interpretations. The cumulative
 review adds the previously unbounded direct-versus-instrumental-search and
-expensive-evaluation sample-efficiency claims. The kernel slice adds no new
-bounded claim or parity credit, but repairs sentence mappings for the reported
-23-percent average kernel speedup, 1-percent Gemini training-time reduction, and
-Gemini team research and engineering velocity. It is a single-reviewer scoped
-inventory, not proposition coverage for the remaining 207 prose
+expensive-evaluation sample-efficiency claims. The hardware slice adds no new
+bounded claim or parity credit, but repairs sentence mappings for Gemini's first
+direct TPU-circuit contribution, direct Verilog fostering trust, and direct
+Verilog simplifying adoption. It is a single-reviewer scoped inventory, not
+proposition coverage for the remaining 196 prose
 sentences, independent
 semantic agreement, mathematical correctness, result reproduction, or parity.

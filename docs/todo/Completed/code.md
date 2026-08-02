@@ -19875,3 +19875,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused prose, proposition, aggregate, TODO, and manifest
     checks validate source quotes, references, counts, ownership, drift
     rejection, and non-parity boundaries.
+
+- [x] Extend retained-TeX proposition evidence through Section 3.3.3 hardware.
+  - Status: the boundary reviews 11 hardware-circuit-design sentences as 52
+    propositions, bringing cumulative scope to 206 sentences and 673
+    propositions. Of those, 619 map through 643 references to 286 bounded
+    claims and 54 are context, outlook, or interpretation.
+  - Mapping correction: sentence-level evidence now includes Gemini's first
+    direct TPU-circuit contribution, direct Verilog fostering trust, and direct
+    Verilog simplifying adoption. Existing hardware claims and active TODOs own
+    all three gaps.
+  - Remaining code gap: proposition review for 196 prose sentences, independent
+    semantic review, mathematical/image/citation correctness, result
+    reproduction, and AlphaEvolve-scale execution remain open.
+  - Verification: focused prose, proposition, hardware-claim, aggregate, TODO,
+    phase, and manifest checks validate source quotes, references, counts,
+    ownership, drift rejection, and non-parity boundaries.

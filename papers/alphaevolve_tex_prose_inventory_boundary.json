@@ -9299,21 +9299,27 @@
       "claim_refs": [
         {
           "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
-          "claim_id": "alphaevolve_mediated_hardware_contribution",
+          "claim_id": "integrated_into_upcoming_tpu",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         },
         {
           "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
-          "claim_id": "integrated_into_upcoming_tpu",
+          "claim_id": "gemini_first_direct_tpu_arithmetic_contribution",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "alphaevolve_mediated_hardware_contribution",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
         },
         {
           "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
           "claim_id": "path_for_future_hardware_contributions",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null
@@ -9341,13 +9347,25 @@
           "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
           "claim_id": "changes_communicated_directly_in_verilog",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         },
         {
           "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
           "claim_id": "verilog_standard_hardware_engineering_language",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "direct_verilog_fosters_trust",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "direct_verilog_simplifies_adoption",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null

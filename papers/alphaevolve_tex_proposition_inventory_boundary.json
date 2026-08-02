@@ -1,7 +1,7 @@
 {
-  "schema": "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v7",
+  "schema": "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v8",
   "source_paper_id": "2506.13131",
-  "boundary_status": "abstract_through_section3_3_2_kernel_proposition_review_complete_without_remaining_paper_or_independent_semantic_exhaustiveness",
+  "boundary_status": "abstract_through_section3_3_3_hardware_proposition_review_complete_without_remaining_paper_or_independent_semantic_exhaustiveness",
   "source_prose_schema": "libreevolve.alphaevolve_tex_prose_inventory_boundary.v1",
   "source_prose_boundary_status": "retained_tex_paragraph_and_sentence_inventory_complete_without_semantic_clause_exhaustiveness",
   "source_prose_ready": true,
@@ -15,9 +15,9 @@
   "source_errors": [],
   "parse_errors": [],
   "source_sentence_count": 402,
-  "reviewed_sentence_count": 195,
-  "remaining_sentence_count": 207,
-  "reviewed_sentence_fraction": 0.48507462686567165,
+  "reviewed_sentence_count": 206,
+  "remaining_sentence_count": 196,
+  "reviewed_sentence_fraction": 0.5124378109452736,
   "reviewed_source_files": [
     "introduction.tex",
     "main.tex",
@@ -31,16 +31,16 @@
     "discussion.tex",
     "related_work.tex"
   ],
-  "proposition_count": 621,
+  "proposition_count": 673,
   "disposition_counts": {
-    "author_interpretation": 9,
+    "author_interpretation": 11,
     "author_outlook": 2,
-    "existing_bounded_claim_mapping": 570,
-    "source_context_only": 40
+    "existing_bounded_claim_mapping": 619,
+    "source_context_only": 41
   },
-  "claim_reference_count": 592,
-  "unique_claim_reference_count": 253,
-  "implementation_relevant_proposition_count": 560,
+  "claim_reference_count": 643,
+  "unique_claim_reference_count": 286,
+  "implementation_relevant_proposition_count": 609,
   "unmapped_proposition_count": 0,
   "unresolved_reference_count": 0,
   "new_bounded_claim_ids": [
@@ -72,6 +72,9 @@
     "section3_3_2_average_twenty_three_percent_kernel_speedup",
     "section3_3_2_one_percent_gemini_training_reduction",
     "section3_3_2_team_research_engineering_velocity",
+    "direct_verilog_fosters_trust",
+    "direct_verilog_simplifies_adoption",
+    "gemini_first_direct_tpu_arithmetic_contribution",
     "task_problem_specific_abstraction_choice"
   ],
   "reviewed_sentence_records": [
@@ -2838,6 +2841,179 @@
         "tex_proposition_0619",
         "tex_proposition_0620",
         "tex_proposition_0621"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0196",
+      "source_file": "results.tex",
+      "source_line": 166,
+      "source_text_sha256": "03168e07098ceba52110cb28e9392d191df47d4e43584816596dd0d071f0b1ef",
+      "rendered_text_sha256": "03168e07098ceba52110cb28e9392d191df47d4e43584816596dd0d071f0b1ef",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0622",
+        "tex_proposition_0623",
+        "tex_proposition_0624",
+        "tex_proposition_0625"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0197",
+      "source_file": "results.tex",
+      "source_line": 166,
+      "source_text_sha256": "b1dc02143c3b4b6c8761db913f39ebee3d57189e87b5703b57c6a64b018c50c8",
+      "rendered_text_sha256": "b1dc02143c3b4b6c8761db913f39ebee3d57189e87b5703b57c6a64b018c50c8",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0626",
+        "tex_proposition_0627",
+        "tex_proposition_0628"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0198",
+      "source_file": "results.tex",
+      "source_line": 166,
+      "source_text_sha256": "e173b107a3cab2fb46c50444e48c9d892b0201c288abb23c0a7f61ff57248725",
+      "rendered_text_sha256": "e173b107a3cab2fb46c50444e48c9d892b0201c288abb23c0a7f61ff57248725",
+      "proposition_count": 9,
+      "proposition_ids": [
+        "tex_proposition_0629",
+        "tex_proposition_0630",
+        "tex_proposition_0631",
+        "tex_proposition_0632",
+        "tex_proposition_0633",
+        "tex_proposition_0634",
+        "tex_proposition_0635",
+        "tex_proposition_0636",
+        "tex_proposition_0637"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0199",
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_text_sha256": "77babbe6d3b56e0fb62b2a3910afda48862d34694cdfc238d47339de17787ac8",
+      "rendered_text_sha256": "a1c0aafd25aedc129f492646d8da6fa5998fb0b1667b664f2e6a34332d62ff6b",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0638",
+        "tex_proposition_0639",
+        "tex_proposition_0640",
+        "tex_proposition_0641"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0200",
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_text_sha256": "ec105168cb022497a50e96d77f500f552581af2a72118459d74a3b407253108d",
+      "rendered_text_sha256": "ec105168cb022497a50e96d77f500f552581af2a72118459d74a3b407253108d",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0642",
+        "tex_proposition_0643",
+        "tex_proposition_0644"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0201",
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_text_sha256": "2b24825900c5c3982e3d39b2b124d51d17e2f039f556c697175df8aada62545f",
+      "rendered_text_sha256": "2b24825900c5c3982e3d39b2b124d51d17e2f039f556c697175df8aada62545f",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0645",
+        "tex_proposition_0646",
+        "tex_proposition_0647"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0202",
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_text_sha256": "02267883287de9b76938b6473cb0757fbdc2541b154b30dfa03b98588d96a4f7",
+      "rendered_text_sha256": "55a536d934ba1ae2135185e5ad74d57ffb30afbd48de25e4ccd59a541a9ddd88",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0648",
+        "tex_proposition_0649",
+        "tex_proposition_0650",
+        "tex_proposition_0651",
+        "tex_proposition_0652"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0203",
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_text_sha256": "ed8a96977c761e446d8e329d3ae53368a178bd10d9a4e8817c29889ffd73f507",
+      "rendered_text_sha256": "c19c336e2d9e0ee683420391005f9cfa3774f036af08c7b2c893997aba34c17d",
+      "proposition_count": 6,
+      "proposition_ids": [
+        "tex_proposition_0653",
+        "tex_proposition_0654",
+        "tex_proposition_0655",
+        "tex_proposition_0656",
+        "tex_proposition_0657",
+        "tex_proposition_0658"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0204",
+      "source_file": "results.tex",
+      "source_line": 170,
+      "source_text_sha256": "15301c774e8233787161b3827f5401d1aee4ba3b3d9ed825a1ba48b605e99bb4",
+      "rendered_text_sha256": "fbedb8a658fa0a907cf3fc6176dea5bae612e50120c9798430f7be309d9c95c7",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0659",
+        "tex_proposition_0660",
+        "tex_proposition_0661",
+        "tex_proposition_0662"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0205",
+      "source_file": "results.tex",
+      "source_line": 170,
+      "source_text_sha256": "3141a76c261ebc56b80f388ea21e719e17db349d2ce08474d0f6a3188c136bcb",
+      "rendered_text_sha256": "7ee4b3f23a6382a98a87f904ed217f6b334afa8e323fadc7c84f8aaa0293aaf7",
+      "proposition_count": 6,
+      "proposition_ids": [
+        "tex_proposition_0663",
+        "tex_proposition_0664",
+        "tex_proposition_0665",
+        "tex_proposition_0666",
+        "tex_proposition_0667",
+        "tex_proposition_0668"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0206",
+      "source_file": "results.tex",
+      "source_line": 170,
+      "source_text_sha256": "bf39aa0fb81c6f83d8b27a66b8d0adaa9e0d33a4e97b2a375ba6cb2a40b50623",
+      "rendered_text_sha256": "bf39aa0fb81c6f83d8b27a66b8d0adaa9e0d33a4e97b2a375ba6cb2a40b50623",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0669",
+        "tex_proposition_0670",
+        "tex_proposition_0671",
+        "tex_proposition_0672",
+        "tex_proposition_0673"
       ],
       "review_status": "manual_static_semantic_decomposition_complete"
     }
@@ -17521,6 +17697,1245 @@
       ],
       "implementation_relevant": true,
       "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0622",
+      "sentence_id": "tex_prose_sentence_0196",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 166,
+      "source_end_line": 166,
+      "source_quote": "such as Google's Tensor Processing Units (TPUs)",
+      "source_quote_start": 22,
+      "source_quote_end": 69,
+      "source_quote_sha256": "790077f3dc4c54f33451d7ef3077f7fb88ddcd2c42d4a694e0195eff3e65964f",
+      "statement": "Google TPUs are an example of specialized hardware.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "specialized_hardware_tpu_example",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0623",
+      "sentence_id": "tex_prose_sentence_0196",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 166,
+      "source_end_line": 166,
+      "source_quote": "crucial for achieving the resource efficiency",
+      "source_quote_start": 74,
+      "source_quote_end": 119,
+      "source_quote_sha256": "96a4db6c9ad9af95f2ab5a9010e6bbffed8d85d0119929302dc52a7f2271db5c",
+      "statement": "Specialized hardware is described as crucial for resource efficiency.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "specialized_hardware_resource_efficiency_at_scale",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0624",
+      "sentence_id": "tex_prose_sentence_0196",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 166,
+      "source_end_line": 166,
+      "source_quote": "required to run modern AI systems",
+      "source_quote_start": 120,
+      "source_quote_end": 153,
+      "source_quote_sha256": "60a950ffa1e32348b9a8e02d5555bac505836b065292d11e71563a0abe8ba6d4",
+      "statement": "The resource-efficiency requirement applies to modern AI systems.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "specialized_hardware_resource_efficiency_at_scale",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0625",
+      "sentence_id": "tex_prose_sentence_0196",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 166,
+      "source_end_line": 166,
+      "source_quote": "at scale",
+      "source_quote_start": 154,
+      "source_quote_end": 162,
+      "source_quote_sha256": "e9422766390646da74c2159f69465d8c3eabef6a834d399a7101bbc2af325fd3",
+      "statement": "The resource-efficiency claim applies at AI-system scale.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "specialized_hardware_resource_efficiency_at_scale",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0626",
+      "sentence_id": "tex_prose_sentence_0197",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 166,
+      "source_end_line": 166,
+      "source_quote": "designing new computer chips is a complex",
+      "source_quote_start": 9,
+      "source_quote_end": 50,
+      "source_quote_sha256": "2733c91b65258539e5dbe01dcfc55d19331d2b068a2ad5b1c72ad6dc5d053ccc",
+      "statement": "New-computer-chip design is described as complex.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "chip_design_complexity",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0627",
+      "sentence_id": "tex_prose_sentence_0197",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 166,
+      "source_end_line": 166,
+      "source_quote": "time-consuming process",
+      "source_quote_start": 55,
+      "source_quote_end": 77,
+      "source_quote_sha256": "ac332ea5955545a508afcbf4997f2c64257c325219433f768227cbb55801bdd3",
+      "statement": "New-computer-chip design is described as time-consuming.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "chip_design_complexity",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0628",
+      "sentence_id": "tex_prose_sentence_0197",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 166,
+      "source_end_line": 166,
+      "source_quote": "often spanning years",
+      "source_quote_start": 79,
+      "source_quote_end": 99,
+      "source_quote_sha256": "dfb936039d0e9acb8fcc99d0640fa0f54e9f150c075700d4827058de965df751",
+      "statement": "The chip-design process is reported to often span years.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "chip_design_often_spans_years",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0629",
+      "sentence_id": "tex_prose_sentence_0198",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 166,
+      "source_end_line": 166,
+      "source_quote": "Register-Transfer Level (RTL) optimization",
+      "source_quote_start": 0,
+      "source_quote_end": 42,
+      "source_quote_sha256": "b7b5d0e976b859b8448194182337dc5970a1d8971e1c2ed5d401a35a203eca76",
+      "statement": "The hardware-design step under discussion is RTL optimization.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "rtl_optimization_critical_step",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0630",
+      "sentence_id": "tex_prose_sentence_0198",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 166,
+      "source_end_line": 166,
+      "source_quote": "critical step in this process",
+      "source_quote_start": 46,
+      "source_quote_end": 75,
+      "source_quote_sha256": "eb955a3f0c4aa5b275181bd2649449910700892dc136235f9d5beb598892d3e0",
+      "statement": "RTL optimization is characterized as a critical chip-design step.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "rtl_optimization_critical_step",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0631",
+      "sentence_id": "tex_prose_sentence_0198",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 166,
+      "source_end_line": 166,
+      "source_quote": "manually rewriting hardware descriptions",
+      "source_quote_start": 86,
+      "source_quote_end": 126,
+      "source_quote_sha256": "5939b8b0ed79d618dc74a7e353d85a4ce91d78f748910b8420b019b72b161ed8",
+      "statement": "RTL optimization involves manual hardware-description rewrites.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "rtl_manual_hardware_description_rewriting",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0632",
+      "sentence_id": "tex_prose_sentence_0198",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 166,
+      "source_end_line": 166,
+      "source_quote": "improve metrics",
+      "source_quote_start": 130,
+      "source_quote_end": 145,
+      "source_quote_sha256": "2cd509a4276ac169363a246a9149d6696658ca9f3ec677b8dc43b429781bcc64",
+      "statement": "The manual RTL rewrites seek power, performance, and area improvements.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "rtl_power_metric",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "rtl_performance_metric",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "rtl_area_metric",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0633",
+      "sentence_id": "tex_prose_sentence_0198",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 166,
+      "source_end_line": 166,
+      "source_quote": "power",
+      "source_quote_start": 151,
+      "source_quote_end": 156,
+      "source_quote_sha256": "07d715edb696fb5f628f7298e5d7217ed4d2bdfc5347a1c55fee30832267f21d",
+      "statement": "Power is an RTL optimization metric.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "rtl_power_metric",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0634",
+      "sentence_id": "tex_prose_sentence_0198",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 166,
+      "source_end_line": 166,
+      "source_quote": "performance",
+      "source_quote_start": 158,
+      "source_quote_end": 169,
+      "source_quote_sha256": "4a1898716ef67796fcc80c7426c4f876d398de27da5c73a3accf425e42a7f412",
+      "statement": "Performance is an RTL optimization metric.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "rtl_performance_metric",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0635",
+      "sentence_id": "tex_prose_sentence_0198",
+      "sentence_proposition_ordinal": 7,
+      "source_file": "results.tex",
+      "source_line": 166,
+      "source_end_line": 166,
+      "source_quote": "area",
+      "source_quote_start": 175,
+      "source_quote_end": 179,
+      "source_quote_sha256": "4a91ee5f0106c2b35c11c168352f0abfbf4fc86165c62d6fb51b5232dfc692e6",
+      "statement": "Area is an RTL optimization metric.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "rtl_area_metric",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0636",
+      "sentence_id": "tex_prose_sentence_0198",
+      "sentence_proposition_ordinal": 8,
+      "source_file": "results.tex",
+      "source_line": 166,
+      "source_end_line": 166,
+      "source_quote": "months of iteration",
+      "source_quote_start": 191,
+      "source_quote_end": 210,
+      "source_quote_sha256": "3e2144d16fb0e4e13ca995fb8b4a55e84778f52a20765031df2d5c1aa65373f7",
+      "statement": "Manual RTL optimization is reported to demand months of iteration.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "rtl_manual_iteration_can_take_months",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0637",
+      "sentence_id": "tex_prose_sentence_0198",
+      "sentence_proposition_ordinal": 9,
+      "source_file": "results.tex",
+      "source_line": 166,
+      "source_end_line": 166,
+      "source_quote": "highly skilled engineers",
+      "source_quote_start": 214,
+      "source_quote_end": 238,
+      "source_quote_sha256": "d04bb486f0df1f6371b8d79ab70788f70b4b664aaa1103cf9ec1592d8af66e25",
+      "statement": "Manual RTL optimization is reported to require highly skilled engineers.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "rtl_requires_highly_skilled_engineers",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0638",
+      "sentence_id": "tex_prose_sentence_0199",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_end_line": 168,
+      "source_quote": "AlphaEvolve was challenged to optimize",
+      "source_quote_start": 14,
+      "source_quote_end": 52,
+      "source_quote_sha256": "837eeea0c1eff08a3ff8ce30bd8c5a7636626c6e5e9d6001fc7e7ab70f37931e",
+      "statement": "AlphaEvolve was assigned an RTL optimization challenge.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "already_highly_optimized_verilog_target",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0639",
+      "sentence_id": "tex_prose_sentence_0199",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_end_line": 168,
+      "source_quote": "already highly optimized Verilog implementation",
+      "source_quote_start": 56,
+      "source_quote_end": 103,
+      "source_quote_sha256": "5fc971138c9701a35f8c46700cdc98e1320522dabf3c7c94250ed809663c80ed",
+      "statement": "The target was an already highly optimized Verilog implementation.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "already_highly_optimized_verilog_target",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0640",
+      "sentence_id": "tex_prose_sentence_0199",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_end_line": 168,
+      "source_quote": "key TPU arithmetic circuit",
+      "source_quote_start": 109,
+      "source_quote_end": 135,
+      "source_quote_sha256": "d95d4416984cf772486272f4e47bb27c219f67696e3a349a3a0e83a3a12201b6",
+      "statement": "The Verilog target implements a key TPU arithmetic circuit.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "key_tpu_arithmetic_circuit_target",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0641",
+      "sentence_id": "tex_prose_sentence_0199",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_end_line": 168,
+      "source_quote": "within the matrix multiplication unit",
+      "source_quote_start": 136,
+      "source_quote_end": 173,
+      "source_quote_sha256": "a8dade27a168d8f3cf54432420230a47c91f62d350729f93696086c97d375333",
+      "statement": "The target circuit is within the matrix-multiplication unit.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "matrix_multiplication_unit_context",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0642",
+      "sentence_id": "tex_prose_sentence_0200",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_end_line": 168,
+      "source_quote": "reduce both area",
+      "source_quote_start": 36,
+      "source_quote_end": 52,
+      "source_quote_sha256": "96da949d7c5a00401bb69e19276cf41246903425c01c33485e2159102e10775b",
+      "statement": "Reducing circuit area is an optimization objective.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "reduce_area_objective",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0643",
+      "sentence_id": "tex_prose_sentence_0200",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_end_line": 168,
+      "source_quote": "power consumption",
+      "source_quote_start": 57,
+      "source_quote_end": 74,
+      "source_quote_sha256": "201957ca722a892ab973e04508ce43224f3ce1a38ecd24e736681439ad76f023",
+      "statement": "Reducing circuit power consumption is an optimization objective.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "reduce_power_objective",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0644",
+      "sentence_id": "tex_prose_sentence_0200",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_end_line": 168,
+      "source_quote": "preserving the component's core functionality",
+      "source_quote_start": 81,
+      "source_quote_end": 126,
+      "source_quote_sha256": "af883cfb773dea8970b7aa42c4e44006518865dc05b31a0fde4f4e3c0ee47b90",
+      "statement": "The optimization must preserve the component's core functionality.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "preserve_core_functionality_objective",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0645",
+      "sentence_id": "tex_prose_sentence_0201",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_end_line": 168,
+      "source_quote": "final proposal must pass robust verification methods",
+      "source_quote_start": 15,
+      "source_quote_end": 67,
+      "source_quote_sha256": "6fbb45fc3cc739c2e85a712951fd5b332e43bdb3dd4e7fba18df5fd8bdd5fe4b",
+      "statement": "The final RTL proposal must pass robust verification.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "robust_verification_requirement",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0646",
+      "sentence_id": "tex_prose_sentence_0201",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_end_line": 168,
+      "source_quote": "confirm that the modified circuit",
+      "source_quote_start": 71,
+      "source_quote_end": 104,
+      "source_quote_sha256": "7dba44180600d329ab27de2f2988b8f35f5fe3f73b86906f2fd2a5f9a2fcb876",
+      "statement": "Verification is applied to the modified circuit.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "verification_confirms_functional_correctness",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0647",
+      "sentence_id": "tex_prose_sentence_0201",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_end_line": 168,
+      "source_quote": "maintains functional correctness",
+      "source_quote_start": 105,
+      "source_quote_end": 137,
+      "source_quote_sha256": "8edc31d154b1bdcb3bca78ba4bb4dff8d6e70f92d4bd0128d0e65ed4880505c2",
+      "statement": "Verification must confirm preserved functional correctness.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "verification_confirms_functional_correctness",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0648",
+      "sentence_id": "tex_prose_sentence_0202",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_end_line": 168,
+      "source_quote": "AlphaEvolve was able to find",
+      "source_quote_start": 0,
+      "source_quote_end": 28,
+      "source_quote_sha256": "76c25dc0d17b6ba7513db8673cdc4d295a2479eb3009cb929c2977516f976c95",
+      "statement": "AlphaEvolve is reported to have found an RTL rewrite.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "simple_code_rewrite_discovered",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0649",
+      "sentence_id": "tex_prose_sentence_0202",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_end_line": 168,
+      "source_quote": "simple code rewrite",
+      "source_quote_start": 31,
+      "source_quote_end": 50,
+      "source_quote_sha256": "8b8d17c8a6d53b1ddd1e5c98f4da461c25660e7f64bef9cc26444a2198b56c83",
+      "statement": "The discovered RTL change is characterized as a simple code rewrite.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "simple_code_rewrite_discovered",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0650",
+      "sentence_id": "tex_prose_sentence_0202",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_end_line": 168,
+      "source_quote": "removed unnecessary bits",
+      "source_quote_start": 56,
+      "source_quote_end": 80,
+      "source_quote_sha256": "1f0b90a55d555a1e099c4a7b36694da5b5e01e9c31c0e65128df869c25556348",
+      "statement": "The code rewrite removed unnecessary bits.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "unnecessary_bits_removed",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0651",
+      "sentence_id": "tex_prose_sentence_0202",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_end_line": 168,
+      "source_quote": "validated by TPU designers",
+      "source_quote_start": 91,
+      "source_quote_end": 117,
+      "source_quote_sha256": "b7237682afc7f299e959cd2030536645fbdd308c2162c69999f49c0af650b884",
+      "statement": "TPU designers validated the reported rewrite.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "tpu_designer_correctness_validation",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0652",
+      "sentence_id": "tex_prose_sentence_0202",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_end_line": 168,
+      "source_quote": "for correctness",
+      "source_quote_start": 118,
+      "source_quote_end": 133,
+      "source_quote_sha256": "3d26649f20c4127a71f397dbc60bd720ff1099b39eec3ce455f22818f05ada75",
+      "statement": "The TPU-designer validation addressed correctness.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "tpu_designer_correctness_validation",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0653",
+      "sentence_id": "tex_prose_sentence_0203",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_end_line": 168,
+      "source_quote": "this specific improvement was also independently caught",
+      "source_quote_start": 6,
+      "source_quote_end": 61,
+      "source_quote_sha256": "5a54593e0c979f54216d89af1a6e9af98a016472d648e09cd0ad9962bbf8df9e",
+      "statement": "The same improvement was independently rediscovered downstream.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "downstream_synthesis_independent_rediscovery",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0654",
+      "sentence_id": "tex_prose_sentence_0203",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_end_line": 168,
+      "source_quote": "downstream synthesis tools",
+      "source_quote_start": 65,
+      "source_quote_end": 91,
+      "source_quote_sha256": "1b352741cde2e0ae3b4800eb47ec0ae78430f2be0db6d0535c91ef68a894bd55",
+      "statement": "Downstream synthesis tools independently found the improvement.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "downstream_synthesis_independent_rediscovery",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0655",
+      "sentence_id": "tex_prose_sentence_0203",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_end_line": 168,
+      "source_quote": "AlphaEvolve's contribution at the RTL stage",
+      "source_quote_start": 93,
+      "source_quote_end": 136,
+      "source_quote_sha256": "3c2d45e2ea3106c0ad7246c94fc05986af697848080709c78ca23bafb2b0d95e",
+      "statement": "AlphaEvolve contributed the optimization at the source-RTL stage.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "refine_source_rtl_capability",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0656",
+      "sentence_id": "tex_prose_sentence_0203",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_end_line": 168,
+      "source_quote": "capability to refine source RTL",
+      "source_quote_start": 154,
+      "source_quote_end": 185,
+      "source_quote_sha256": "93d68b8b30b728f4e90d550e46635c48bb2d23f0a57fc20c338098cbe879fa49",
+      "statement": "The result is presented as evidence that AlphaEvolve can refine source RTL.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "refine_source_rtl_capability",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0657",
+      "sentence_id": "tex_prose_sentence_0203",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_end_line": 168,
+      "source_quote": "provide optimizations",
+      "source_quote_start": 190,
+      "source_quote_end": 211,
+      "source_quote_sha256": "65e521b0c7f7aab13fc7bfd011c0daf67bf4352cdd5067b9cde4da8efb6e163c",
+      "statement": "Source-RTL refinement can provide design-flow optimizations.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "early_design_flow_optimization_value",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0658",
+      "sentence_id": "tex_prose_sentence_0203",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 168,
+      "source_end_line": 168,
+      "source_quote": "early in the design flow",
+      "source_quote_start": 212,
+      "source_quote_end": 236,
+      "source_quote_sha256": "9c2e2f91072dceee01e5fe15f1d02439118dd394786de6cc1bc448a01103c28f",
+      "statement": "The reported value is optimization early in the design flow.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "early_design_flow_optimization_value",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0659",
+      "sentence_id": "tex_prose_sentence_0204",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 170,
+      "source_end_line": 170,
+      "source_quote": "Integrated into an upcoming TPU",
+      "source_quote_start": 0,
+      "source_quote_end": 31,
+      "source_quote_sha256": "eb0efc45e17120bddbcfcbc1a98cbe0717084465ce9870a7dba541ae14e4fd64",
+      "statement": "The reported RTL improvement is integrated into an upcoming TPU.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "integrated_into_upcoming_tpu",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0660",
+      "sentence_id": "tex_prose_sentence_0204",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 170,
+      "source_end_line": 170,
+      "source_quote": "first direct contribution to TPU arithmetic circuits",
+      "source_quote_start": 70,
+      "source_quote_end": 122,
+      "source_quote_sha256": "2f16370ae6e7adb91aaee48c37d3995f7b133148a6078b6c350e0c892bfde7c1",
+      "statement": "The improvement is reported as Gemini's first direct TPU-circuit contribution.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "gemini_first_direct_tpu_arithmetic_contribution",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0661",
+      "sentence_id": "tex_prose_sentence_0204",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 170,
+      "source_end_line": 170,
+      "source_quote": "achieved via AlphaEvolve",
+      "source_quote_start": 124,
+      "source_quote_end": 148,
+      "source_quote_sha256": "71466322c770881ab94827359264411e2c1856f868c1186db7e00dcf32aa0d2b",
+      "statement": "The hardware contribution is attributed to AlphaEvolve mediation.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "alphaevolve_mediated_hardware_contribution",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0662",
+      "sentence_id": "tex_prose_sentence_0204",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 170,
+      "source_end_line": 170,
+      "source_quote": "paving the way for future contributions",
+      "source_quote_start": 150,
+      "source_quote_end": 189,
+      "source_quote_sha256": "8400e9802cb6e59db3e889213d89b09bc1c83654f1c343bf3b850b4a9fb60cef",
+      "statement": "The authors present the result as a path toward future hardware contributions.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "path_for_future_hardware_contributions",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0663",
+      "sentence_id": "tex_prose_sentence_0205",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 170,
+      "source_end_line": 170,
+      "source_quote": "key advantage of AlphaEvolve",
+      "source_quote_start": 2,
+      "source_quote_end": 30,
+      "source_quote_sha256": "8cac69bb98a153023b011356590040283bf92fa127c79ebae00a1af790640742",
+      "statement": "The authors characterize direct Verilog communication as a key AlphaEvolve advantage.",
+      "disposition": "author_interpretation",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This is an evaluative author characterization, not a separate implementation requirement."
+    },
+    {
+      "proposition_id": "tex_proposition_0664",
+      "sentence_id": "tex_prose_sentence_0205",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 170,
+      "source_end_line": 170,
+      "source_quote": "communicates the suggested changes directly in Verilog",
+      "source_quote_start": 42,
+      "source_quote_end": 96,
+      "source_quote_sha256": "69abfe7b1956ba18d4b6887f3fc1713adf57e41d84b995dfccebee37591b48e0",
+      "statement": "AlphaEvolve communicates proposed hardware changes directly in Verilog.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "changes_communicated_directly_in_verilog",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0665",
+      "sentence_id": "tex_prose_sentence_0205",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 170,
+      "source_end_line": 170,
+      "source_quote": "standard language",
+      "source_quote_start": 102,
+      "source_quote_end": 119,
+      "source_quote_sha256": "e659411a2ac2d83f6c8d7cb46eb3fc040923e69dda464a9752ac6403a679edc4",
+      "statement": "Verilog is described as the standard hardware-engineering language.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "verilog_standard_hardware_engineering_language",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0666",
+      "sentence_id": "tex_prose_sentence_0205",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 170,
+      "source_end_line": 170,
+      "source_quote": "used by hardware engineers",
+      "source_quote_start": 120,
+      "source_quote_end": 146,
+      "source_quote_sha256": "156b3bdaf9a732b27695dec9619699c904072abcfe51656c51d4d60f40f43fd3",
+      "statement": "Hardware engineers use Verilog.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "verilog_standard_hardware_engineering_language",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0667",
+      "sentence_id": "tex_prose_sentence_0205",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 170,
+      "source_end_line": 170,
+      "source_quote": "fostering trust",
+      "source_quote_start": 148,
+      "source_quote_end": 163,
+      "source_quote_sha256": "da75c66b1852b2024065b2e11658b071606c78dcb63b7f5636ebd2cd1173cce8",
+      "statement": "Direct Verilog output is claimed to foster hardware-engineer trust.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "direct_verilog_fosters_trust",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0668",
+      "sentence_id": "tex_prose_sentence_0205",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 170,
+      "source_end_line": 170,
+      "source_quote": "simplifying adoption",
+      "source_quote_start": 168,
+      "source_quote_end": 188,
+      "source_quote_sha256": "acbc663ddc16b539c0b933e39de3a37d4b74b011e787752a2ffbe7adfdbbb5dc",
+      "statement": "Direct Verilog output is claimed to simplify adoption.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "direct_verilog_simplifies_adoption",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0669",
+      "sentence_id": "tex_prose_sentence_0206",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 170,
+      "source_end_line": 170,
+      "source_quote": "early exploration",
+      "source_quote_start": 5,
+      "source_quote_end": 22,
+      "source_quote_sha256": "23b1396ce2259d59ea4e99161428ef87daa997300742fd9f765e34b8878d5732",
+      "statement": "The authors characterize the reported hardware work as early exploration.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This is evidence-maturity context rather than a separate implementation requirement."
+    },
+    {
+      "proposition_id": "tex_proposition_0670",
+      "sentence_id": "tex_prose_sentence_0206",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 170,
+      "source_end_line": 170,
+      "source_quote": "demonstrates a novel approach",
+      "source_quote_start": 23,
+      "source_quote_end": 52,
+      "source_quote_sha256": "8ed4e8815b0992fbe17f9069145f229b75a7bb4be749fc48604a9efe00987464",
+      "statement": "The authors characterize the approach as novel.",
+      "disposition": "author_interpretation",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "Novelty is an author interpretation, not a separate implementation requirement."
+    },
+    {
+      "proposition_id": "tex_proposition_0671",
+      "sentence_id": "tex_prose_sentence_0206",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 170,
+      "source_end_line": 170,
+      "source_quote": "LLM-powered code evolution",
+      "source_quote_start": 59,
+      "source_quote_end": 85,
+      "source_quote_sha256": "c4332d1de82466025c47c8cdbee744cbf4d7ef465a59ae15c63318bd010d23d4",
+      "statement": "The hardware-design approach uses LLM-powered code evolution.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "llm_code_evolution_assists_hardware_design",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0672",
+      "sentence_id": "tex_prose_sentence_0206",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 170,
+      "source_end_line": 170,
+      "source_quote": "assists in hardware design",
+      "source_quote_start": 86,
+      "source_quote_end": 112,
+      "source_quote_sha256": "428be9509b80e145fbb7f87f3f5c8e26a50477ba2e2770b5aeb87d9f3de075bf",
+      "statement": "LLM-powered code evolution is reported to assist hardware design.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "llm_code_evolution_assists_hardware_design",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0673",
+      "sentence_id": "tex_prose_sentence_0206",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 170,
+      "source_end_line": 170,
+      "source_quote": "potentially reducing time to market",
+      "source_quote_start": 114,
+      "source_quote_end": 149,
+      "source_quote_sha256": "7fc60fe097a5da6a09e4831361159aa83445b9b17da5994cceede8f3a37350ba",
+      "statement": "The authors present reduced time to market as a potential outcome.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "claim_id": "potential_time_to_market_reduction",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
     }
   ],
   "inventory_scope": {
@@ -17532,16 +18947,17 @@
       "all 39 retained Section 3.2 sentences in results.tex",
       "all 19 retained Section 3.3 opening and Section 3.3.1 scheduling sentences in results.tex",
       "all 23 retained Section 3.3.2 Gemini kernel-engineering sentences in results.tex",
+      "all 11 retained Section 3.3.3 hardware-circuit-design sentences in results.tex",
       "manual atomic-proposition statements and exact rendered-source quote offsets",
       "resolved bounded-claim mappings or explicit context, outlook, and interpretation dispositions"
     ],
     "excluded": [
-      "the remaining 207 retained prose sentences",
+      "the remaining 196 retained prose sentences",
       "separately audited captions, tables, equations, listings, footnotes, and explicit math constructs",
       "independent second-reviewer semantic agreement",
       "mathematical correctness, citation sufficiency, image-pixel semantics, or result reproduction",
       "AlphaEvolve system parity"
     ]
   },
-  "claim_boundary": "This boundary records a single-reviewer atomic-proposition decomposition for every retained sentence from the Abstract through Section 3.3.2 Gemini kernel engineering. Complete disposition inside this 195-sentence scope does not cover the remaining 207 prose sentences and does not prove independent semantic exhaustiveness, mathematical correctness, result reproduction, or AlphaEvolve parity."
+  "claim_boundary": "This boundary records a single-reviewer atomic-proposition decomposition for every retained sentence from the Abstract through Section 3.3.3 hardware circuit design. Complete disposition inside this 206-sentence scope does not cover the remaining 196 prose sentences and does not prove independent semantic exhaustiveness, mathematical correctness, result reproduction, or AlphaEvolve parity."
 }

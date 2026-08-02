@@ -249,13 +249,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     inherits 34 source-detail and 75 table-cell dispositions and maps the
     remaining 200 constructs directly to existing bounded claim ids, with no
     unmapped or unresolved references and no new claims or parity credit. The
-    proposition inventory now reviews all 195 sentences from the Abstract
-    through Section 3.3.2 Gemini kernel engineering as 621 atomic propositions,
-    maps 570 through 592 references to 253 bounded claims, and classifies 51 as
-    context, outlook, or interpretation. The kernel slice adds no new bounded
-    claim or parity credit, but repairs sentence mappings for the reported 23-
-    percent average kernel speedup, 1-percent Gemini training-time reduction,
-    and Gemini team research and engineering velocity.
+    proposition inventory now reviews all 206 sentences from the Abstract
+    through Section 3.3.3 hardware circuit design as 673 atomic propositions,
+    maps 619 through 643 references to 286 bounded claims, and classifies 54 as
+    context, outlook, or interpretation. The hardware slice adds no new bounded
+    claim or parity credit, but repairs sentence mappings for Gemini's first
+    direct TPU-circuit contribution, direct Verilog fostering trust, and direct
+    Verilog simplifying adoption.
     `papers/roadmap_source_span_disposition_boundary.json` now maps all 55
     named spans to ROADMAP section ids, phase buckets, local status, sidecars,
     and audit TODO links, and records that only the AlphaEvolve
@@ -285,9 +285,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     footnote constructs have dispositions, all 83 table rows and 240 cells have
     row/cell dispositions, all 8 code listings and 305 source lines have
     line-level dispositions; all 309 math constructs and 402 prose sentences
-    have dispositions; 621 propositions across all 195 sentences through Section
-    3.3.2 kernel engineering are reviewed. The matrix remains incomplete across
-    the rest of the paper: 207 sentences
+    have dispositions; 673 propositions across all 206 sentences through Section
+    3.3.3 hardware circuit design are reviewed. The matrix remains incomplete
+    across the rest of the paper: 196 sentences
     still lack proposition review; it cannot prove
     local math/image/citation correctness and result reproduction;
     show TODO ownership for every gap and add an application matrix;

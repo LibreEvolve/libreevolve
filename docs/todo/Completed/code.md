@@ -19843,3 +19843,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused proposition, aggregate, TODO, and manifest checks
     validate exact quotes, references, counts, ownership, drift rejection, and
     non-parity boundaries.
+
+- [x] Extend retained-TeX proposition evidence through Section 3.3.1 scheduling.
+  - Status: the boundary reviews the 19 Section 3.3 opening and data-center-
+    scheduling sentences as 91 propositions, bringing cumulative scope to 172
+    sentences and 523 propositions. Of those, 474 map through 496 references to
+    204 bounded claims and 49 are context, outlook, or interpretation.
+  - Mapping correction: sentence-level evidence now includes post-deployment
+    simulator confirmation, continuous average 0.7-percent recovery,
+    debuggability, predictability, deployment ease, and mission-critical
+    operational qualities. Existing claims and active TODOs own all six gaps.
+  - Remaining code gap: proposition review for 230 prose sentences, independent
+    semantic review, mathematical/image/citation correctness, result
+    reproduction, and AlphaEvolve-scale execution remain open.
+  - Verification: focused prose, proposition, aggregate, TODO, and manifest
+    checks validate source quotes, references, counts, ownership, drift
+    rejection, and non-parity boundaries.

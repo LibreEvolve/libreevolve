@@ -1687,11 +1687,10 @@ have row/cell
 dispositions; and all 8 retained code listings and 305 physical source lines
 have line-level dispositions; all 309 explicit TeX math constructs have
 delimiter-level dispositions; prose sentences also have dispositions. This is
-supplemented by 432 atomic-proposition dispositions across all 153 sentences
-from the Abstract through the complete Section 3.2 constructive-mathematics
-section, with 386 mapped to bounded claims and 46 classified as context,
-outlook, or interpretation. This is not proposition review for the remaining
-249 prose sentences or
+supplemented by 523 atomic-proposition dispositions across all 172 sentences
+from the Abstract through Section 3.3.1 data-center scheduling, with 474 mapped
+to bounded claims and 49 classified as context, outlook, or interpretation.
+This is not proposition review for the remaining 230 prose sentences or
 independent semantic review,
 mathematical correctness,
 image-pixel or citation-semantic review, or per-phrase sufficiency proof,
@@ -4215,18 +4214,18 @@ independent semantic review, mathematical correctness, result reproduction, or
 AlphaEvolve parity.
 
 The scoped semantic review in
-`papers/alphaevolve_tex_proposition_inventory_boundary.json` decomposes all 153
-retained sentences from the Abstract through the complete Section 3.2
-constructive-mathematics section into 432 atomic propositions. Three hundred
-eighty-six map through 408 resolved references to 172 existing bounded claims;
-37 are source context, 2 are author outlook, and 7 are qualified author
+`papers/alphaevolve_tex_proposition_inventory_boundary.json` decomposes all 172
+retained sentences from the Abstract through Section 3.3.1 data-center
+scheduling into 523 atomic propositions. Four hundred seventy-four map through
+496 resolved references to 204 existing bounded claims; 39 are source context,
+2 are author outlook, and 8 are qualified author
 interpretations. The cumulative
 review adds the previously unbounded direct-versus-instrumental-search and
-expensive-evaluation sample-efficiency claims. Completing Section 3.2 adds no
-new bounded claim, sentence-mapping repair, or parity credit; its named result,
-artifact, and collaboration propositions resolve to existing constructive-math
-claims. The preceding methodology slice repaired two broad sentence mappings.
-It is a single-reviewer scoped inventory, not proposition coverage for the
-remaining 249 prose
+expensive-evaluation sample-efficiency claims. The scheduling slice adds no new
+bounded claim or parity credit, but repairs six sentence mappings for post-
+deployment simulator confirmation, continuous average 0.7-percent recovery,
+debuggability, predictability, deployment ease, and mission-critical
+operational qualities. It is a single-reviewer scoped inventory, not
+proposition coverage for the remaining 230 prose
 sentences, independent
 semantic agreement, mathematical correctness, result reproduction, or parity.

@@ -198,16 +198,17 @@ Important limits:
   the prose walk, but complete sentence disposition is not sentence-internal
   clause/proposition exhaustiveness or independent semantic review.
 - `papers/alphaevolve_tex_proposition_inventory_boundary.json` decomposes all
-  153 retained sentences from the Abstract through the complete Section 3.2
-  constructive-mathematics section into 432 atomic propositions. Three hundred
-  eighty-six map through 408 references to 172 bounded claims; 37 are source
-  context, 2 are author outlook, and 7 are qualified author interpretations.
+  172 retained sentences from the Abstract through Section 3.3.1 data-center
+  scheduling into 523 atomic propositions. Four hundred seventy-four map
+  through 496 references to 204 bounded claims; 39 are source context, 2 are
+  author outlook, and 8 are qualified author interpretations.
   The cumulative review
   adds the previously unbounded direct-versus-instrumental-search and expensive-
-  evaluation sample-efficiency claims. Completing Section 3.2 adds no new claim,
-  sentence-mapping repair, or parity credit; its named result, artifact, and
-  collaboration propositions resolve to existing constructive-math claims. The
-  preceding methodology slice repaired two broad sentence mappings. The remaining 249
+  evaluation sample-efficiency claims. The scheduling slice adds no new claim
+  or parity credit, but repairs six sentence mappings for post-deployment
+  simulator confirmation, continuous average 0.7-percent recovery,
+  debuggability, predictability, deployment ease, and mission-critical
+  operational qualities. The remaining 230
   prose sentences and independent semantic review remain open.
 - Together the twelve bounded inventories cover 846 claims: 30 locally
   implemented, 278 partial, 110 not implemented, 369 not demonstrated, and 59
@@ -222,10 +223,10 @@ Important limits:
   all 8 retained code listings and 305 physical source lines have line-level
   dispositions; all 309 explicit TeX math constructs have delimiter-level
   dispositions; and all 128 retained prose paragraphs and 402 grammatical
-  sentences have dispositions; all 153 sentences from the Abstract through the
-  complete Section 3.2 constructive-mathematics section also have 432 atomic-
-  proposition dispositions. Coverage still excludes proposition review for the
-  remaining 249 sentences,
+  sentences have dispositions; all 172 sentences from the Abstract through
+  Section 3.3.1 data-center scheduling also have 523 atomic-proposition
+  dispositions. Coverage still excludes proposition review for the remaining
+  230 sentences,
   mathematical correctness,
   image-pixel and citation-semantic review, independent result reproduction,
   independent proof of semantic completeness, and AlphaEvolve-scale execution.

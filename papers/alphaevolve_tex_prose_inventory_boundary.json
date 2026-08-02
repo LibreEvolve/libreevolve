@@ -8057,9 +8057,21 @@
       "claim_refs": [
         {
           "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_post_deployment_confirms_simulator",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_continuous_average_point_7_percent_recovery",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
           "claim_id": "section3_3_1_recovered_resources_otherwise_stranded",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null
@@ -8087,19 +8099,43 @@
           "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
           "claim_id": "section3_3_1_chosen_over_deep_reinforcement_learning",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         },
         {
           "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
           "claim_id": "section3_3_1_code_solution_better_performance",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         },
         {
           "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
           "claim_id": "section3_3_1_interpretability_advantage",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_debuggability_advantage",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_predictability_advantage",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_ease_of_deployment_advantage",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_mission_critical_operational_qualities",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null

@@ -367,6 +367,22 @@ _DIRECT_CLAIM_MAP: dict[
     ("results.tex", 119, 1): _claim_refs(
         "scheduling", "section3_3_1_historical_fleet_snapshot_simulator_feedback"
     ),
+    ("results.tex", 119, 4): _claim_refs(
+        "scheduling",
+        "section3_3_1_post_deployment_confirms_simulator",
+        "section3_3_1_continuous_average_point_7_percent_recovery",
+        "section3_3_1_recovered_resources_otherwise_stranded",
+    ),
+    ("results.tex", 119, 5): _claim_refs(
+        "scheduling",
+        "section3_3_1_chosen_over_deep_reinforcement_learning",
+        "section3_3_1_code_solution_better_performance",
+        "section3_3_1_interpretability_advantage",
+        "section3_3_1_debuggability_advantage",
+        "section3_3_1_predictability_advantage",
+        "section3_3_1_ease_of_deployment_advantage",
+        "section3_3_1_mission_critical_operational_qualities",
+    ),
     ("results.tex", 150, 2): _claim_refs(
         "kernel", "section3_3_2_pallas_kernel_training_importance"
     ),

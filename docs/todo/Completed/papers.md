@@ -14796,3 +14796,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Remaining paper gap: 249 sentence propositions, independent semantic
     agreement, mathematical/image/citation correctness, result reproduction,
     and AlphaEvolve parity remain unproven.
+
+- [x] Review AlphaEvolve Section 3.3.1 scheduling propositions.
+  - Paper evidence: 19 retained sentences cover the Section 3.3 systems
+    transition, Borg problem framing, two-variable vector-bin-packing model,
+    rank-only safety boundary, simulator/test evidence, fleet deployment,
+    0.7-percent result, and deep-RL comparison.
+  - Status: the slice adds 91 propositions, bringing cumulative coverage to 172
+    sentences and 523 propositions; 474 map through 496 references to 204
+    bounded claims and 49 are context, outlook, or interpretation.
+  - Mapping correction: six existing scheduling claims omitted by broad prose
+    matching are now linked. No new claim, active TODO, or parity credit is
+    added.
+  - Remaining paper gap: 230 sentence propositions, independent semantic
+    agreement, mathematical/image/citation correctness, result reproduction,
+    and AlphaEvolve parity remain unproven.

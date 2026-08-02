@@ -20,16 +20,16 @@ from libreevolve.problems.benchmarks.paper_bibliography import (
 
 
 ALPHAEVOLVE_TEX_PROPOSITION_INVENTORY_BOUNDARY_SCHEMA = (
-    "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v5"
+    "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v6"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "abstract_through_complete_section3_2_proposition_review_complete_without_"
+    "abstract_through_section3_3_1_scheduling_proposition_review_complete_without_"
     "remaining_paper_or_independent_semantic_exhaustiveness"
 )
-EXPECTED_REVIEWED_SENTENCE_COUNT = 153
-EXPECTED_PROPOSITION_COUNT = 432
+EXPECTED_REVIEWED_SENTENCE_COUNT = 172
+EXPECTED_PROPOSITION_COUNT = 523
 EXPECTED_REVIEWED_SENTENCE_IDS = tuple(
-    f"tex_prose_sentence_{ordinal:04d}" for ordinal in range(1, 154)
+    f"tex_prose_sentence_{ordinal:04d}" for ordinal in range(1, 173)
 )
 EXPECTED_NEW_BOUNDED_CLAIM_IDS = (
     "introduction_algorithm_search_outperforms_direct_solution_search",
@@ -51,6 +51,12 @@ EXPECTED_REPAIRED_SENTENCE_CLAIM_IDS = (
     "section3_1_standard_gradient_baseline_components",
     "section3_2_evolve_heuristics_not_direct_constructions",
     "section3_2_fast_objective_evaluations_common_in_math",
+    "section3_3_1_continuous_average_point_7_percent_recovery",
+    "section3_3_1_debuggability_advantage",
+    "section3_3_1_ease_of_deployment_advantage",
+    "section3_3_1_mission_critical_operational_qualities",
+    "section3_3_1_post_deployment_confirms_simulator",
+    "section3_3_1_predictability_advantage",
     "task_problem_specific_abstraction_choice",
 )
 
@@ -2776,6 +2782,754 @@ _PROPOSITION_SPECS.update(
     }
 )
 
+_PROPOSITION_SPECS.update(
+    {
+        "tex_prose_sentence_0154": (
+            _reviewed_context(
+                "scientific applications presented in preceding sections",
+                "The prose contrasts the following systems results with earlier scientific applications.",
+                "This is a cross-section transition rather than a standalone implementation requirement.",
+            ),
+            _mapped(
+                "AlphaEvolve has been used",
+                "AlphaEvolve is reported to have been used on infrastructure applications.",
+                _ref(
+                    "scheduling",
+                    "section3_3_mission_critical_infrastructure_real_world_impact",
+                ),
+            ),
+            _mapped(
+                "improve performance of mission-critical infrastructure",
+                "The reported infrastructure use improves mission-critical performance.",
+                _ref(
+                    "scheduling",
+                    "section3_3_mission_critical_infrastructure_real_world_impact",
+                ),
+            ),
+            _mapped(
+                "deliver real-world impact",
+                "The reported infrastructure use delivers real-world impact.",
+                _ref(
+                    "scheduling",
+                    "section3_3_mission_critical_infrastructure_real_world_impact",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0155": (
+            _mapped(
+                "Efficiently scheduling compute jobs",
+                "The scheduling problem seeks efficient placement of compute jobs.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_google_scale_borg_scheduling_problem",
+                ),
+            ),
+            _mapped(
+                "onto a cluster of machines",
+                "The compute jobs are scheduled onto a machine cluster.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_google_scale_borg_scheduling_problem",
+                ),
+            ),
+            _mapped(
+                "critical optimization problem",
+                "Efficient cluster scheduling is characterized as a critical optimization problem.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_google_scale_borg_scheduling_problem",
+                ),
+            ),
+            _mapped(
+                "at the scale of Google's data centers",
+                "The reported scheduling problem operates at Google data-center scale.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_google_scale_borg_scheduling_problem",
+                ),
+            ),
+            _mapped(
+                "orchestrated by Borg",
+                "Borg orchestrates the referenced Google data centers.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_google_scale_borg_scheduling_problem",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0156": (
+            _mapped(
+                "assigning jobs to available machines",
+                "The scheduling task assigns jobs to available machines.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_assign_jobs_from_requirements_and_capacity",
+                ),
+            ),
+            _mapped(
+                "job resource requirements",
+                "Job resource requirements constrain assignment.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_assign_jobs_from_requirements_and_capacity",
+                ),
+            ),
+            _mapped(
+                "machine capacity",
+                "Machine capacity constrains assignment.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_assign_jobs_from_requirements_and_capacity",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0157": (
+            _mapped(
+                "Inefficient assignments can result in stranded resources",
+                "Inefficient scheduling assignments can strand resources.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_inefficient_assignments_strand_resources",
+                ),
+            ),
+            _mapped(
+                "a machine can no longer accept jobs",
+                "A resource imbalance can leave a machine unable to accept jobs.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_one_resource_exhausted_other_resource_free",
+                ),
+            ),
+            _mapped(
+                "run out of one kind of resource",
+                "The machine can become unavailable after exhausting one resource type.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_one_resource_exhausted_other_resource_free",
+                ),
+            ),
+            _mapped(
+                "(e.g., memory)",
+                "Memory is one example of an exhausted resource.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_one_resource_exhausted_other_resource_free",
+                ),
+            ),
+            _mapped(
+                "still has other resources free",
+                "Other machine resources can remain free after one resource is exhausted.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_one_resource_exhausted_other_resource_free",
+                ),
+            ),
+            _mapped(
+                "(e.g., CPU)",
+                "CPU is one example of a resource that can remain free.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_one_resource_exhausted_other_resource_free",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0158": (
+            _mapped(
+                "Improvements in scheduling efficiency",
+                "Scheduling-efficiency improvements are the proposed recovery mechanism.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_more_jobs_same_compute_footprint",
+                ),
+            ),
+            _mapped(
+                "recover these stranded resources",
+                "Scheduling-efficiency improvements can recover stranded resources.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_more_jobs_same_compute_footprint",
+                ),
+            ),
+            _mapped(
+                "more jobs to be completed",
+                "Recovered resources can allow completion of more jobs.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_more_jobs_same_compute_footprint",
+                ),
+            ),
+            _mapped(
+                "same amount of computational footprint",
+                "The additional jobs use the same computational footprint.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_more_jobs_same_compute_footprint",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0159": (
+            _reviewed_context(
+                "This recovery is essential",
+                "The authors characterize stranded-resource recovery as essential.",
+                "The essentiality judgment is author interpretation; the capacity-growth requirement is mapped separately.",
+                disposition="author_interpretation",
+            ),
+            _mapped(
+                "accommodate growing compute needs",
+                "Resource recovery is intended to accommodate growing compute demand.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_growth_without_proportional_resource_increase",
+                ),
+            ),
+            _mapped(
+                "without a proportional increase in resource consumption",
+                "Compute growth is intended to avoid proportional resource-consumption growth.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_growth_without_proportional_resource_increase",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0160": (
+            _mapped(
+                "this problem is challenging",
+                "The scheduling problem is characterized as challenging.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_debuggability_scale_and_bin_packing_challenge",
+                ),
+            ),
+            _mapped(
+                "typical engineering difficulties",
+                "The scheduling problem includes ordinary engineering difficulties.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_debuggability_scale_and_bin_packing_challenge",
+                ),
+            ),
+            _mapped(
+                "debuggability",
+                "Debuggability is one scheduling engineering difficulty.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_debuggability_scale_and_bin_packing_challenge",
+                ),
+            ),
+            _mapped(
+                "scale",
+                "Scale is one scheduling engineering difficulty.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_debuggability_scale_and_bin_packing_challenge",
+                ),
+            ),
+            _mapped(
+                "classically difficult bin-packing problem",
+                "The engineering difficulties compound a classically difficult bin-packing problem.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_debuggability_scale_and_bin_packing_challenge",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0161": (
+            _mapped(
+                "framing the online job scheduling problem",
+                "The formulation treats online job scheduling as the source problem.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_online_two_variable_vector_bin_packing",
+                ),
+            ),
+            _mapped(
+                "as a vector bin-packing problem",
+                "The online scheduler is formulated as vector bin packing.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_online_two_variable_vector_bin_packing",
+                ),
+            ),
+            _mapped(
+                "with two variables",
+                "The vector-bin-packing formulation has two variables.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_online_two_variable_vector_bin_packing",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0162": (
+            _mapped(
+                "machines represent bins",
+                "Machines are represented as vector-bin-packing bins.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_machines_bins_cpu_memory_capacity",
+                ),
+            ),
+            _mapped(
+                "defined capacities",
+                "The machine bins have defined capacities.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_machines_bins_cpu_memory_capacity",
+                ),
+            ),
+            _mapped(
+                "CPU",
+                "CPU is one machine-capacity dimension.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_machines_bins_cpu_memory_capacity",
+                ),
+            ),
+            _mapped(
+                "memory",
+                "Memory is one machine-capacity dimension.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_machines_bins_cpu_memory_capacity",
+                ),
+            ),
+            _mapped(
+                "incoming jobs are items",
+                "Incoming jobs are represented as vector-bin-packing items.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_jobs_items_resource_demands",
+                ),
+            ),
+            _mapped(
+                "specific resource demands",
+                "The incoming-job items carry specific resource demands.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_jobs_items_resource_demands",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0163": (
+            _mapped(
+                "A heuristic function takes as input",
+                "A heuristic function consumes scheduling inputs.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_heuristic_required_and_free_inputs",
+                ),
+            ),
+            _mapped(
+                "a pending job",
+                "The pending job is one heuristic input entity.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_heuristic_required_and_free_inputs",
+                ),
+            ),
+            _mapped(
+                "CPU and memory requirements",
+                "The heuristic receives the pending job's CPU and memory requirements.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_heuristic_required_and_free_inputs",
+                ),
+            ),
+            _mapped(
+                "a potential machine",
+                "A potential machine is the other heuristic input entity.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_heuristic_required_and_free_inputs",
+                ),
+            ),
+            _mapped(
+                "CPU and memory availability",
+                "The heuristic receives the potential machine's CPU and memory availability.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_heuristic_required_and_free_inputs",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0164": (
+            _mapped(
+                "outputs a priority score",
+                "The heuristic outputs a priority score.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_heuristic_outputs_machine_priority",
+                ),
+            ),
+            _mapped(
+                "for the machine",
+                "The priority score applies to the candidate machine.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_heuristic_outputs_machine_priority",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0165": (
+            _mapped(
+                "The Borg scheduler",
+                "Borg is the scheduler consuming the heuristic score.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_borg_uses_highest_priority_among_other_objectives",
+                ),
+            ),
+            _mapped(
+                "assigns the pending job",
+                "Borg assigns the pending job after scoring.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_borg_uses_highest_priority_among_other_objectives",
+                ),
+            ),
+            _mapped(
+                "machine with the highest priority score",
+                "The heuristic favors the candidate machine with the highest score.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_borg_uses_highest_priority_among_other_objectives",
+                ),
+            ),
+            _mapped(
+                "determined by the heuristic function",
+                "The heuristic function determines the machine-priority score.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_borg_uses_highest_priority_among_other_objectives",
+                ),
+            ),
+            _mapped(
+                "among other objectives",
+                "Borg uses scheduler objectives beyond the heuristic ranking.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_borg_uses_highest_priority_among_other_objectives",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0166": (
+            _mapped(
+                "only influences the ranking of machines",
+                "The heuristic is restricted to ranking candidate machines.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_rank_only_borg_feasible_machines",
+                ),
+            ),
+            _mapped(
+                "already determined by Borg",
+                "Borg determines the candidate-machine set before heuristic ranking.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_rank_only_borg_feasible_machines",
+                ),
+            ),
+            _mapped(
+                "to be available",
+                "Borg limits ranking to machines it considers available.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_rank_only_borg_feasible_machines",
+                ),
+            ),
+            _mapped(
+                "capable of running each pending job",
+                "Borg limits ranking to machines capable of running the pending job.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_rank_only_borg_feasible_machines",
+                ),
+            ),
+            _mapped(
+                "scheduling decisions are effectively correct by construction",
+                "The rank-only feasibility boundary is claimed to make scheduling decisions effectively correct by construction.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_effectively_correct_by_construction",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0167": (
+            _mapped(
+                "An early version of AlphaEvolve was used",
+                "An early AlphaEvolve version was used for scheduling discovery.",
+                _ref("scheduling", "section3_3_1_early_alphaevolve_version"),
+            ),
+            _mapped(
+                "discover a remarkably simple yet effective heuristic function",
+                "AlphaEvolve is reported to discover a scheduling heuristic.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_simple_effective_heuristic_discovery",
+                ),
+            ),
+            _mapped(
+                "remarkably simple",
+                "The discovered scheduling heuristic is characterized as remarkably simple.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_simple_effective_heuristic_discovery",
+                ),
+            ),
+            _mapped(
+                "effective heuristic function",
+                "The discovered scheduling heuristic is reported to be effective.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_simple_effective_heuristic_discovery",
+                ),
+            ),
+            _reviewed_context(
+                "shown in [citation]",
+                "The prose points to Figure 6 for the heuristic function.",
+                "This is a figure locator; Figure 6 code and visual semantics are dispositioned separately.",
+            ),
+            _mapped(
+                "evolving from the existing one in production",
+                "The discovered heuristic evolved from the production incumbent.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_evolved_from_production_incumbent",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0168": (
+            _mapped(
+                "a simulator of our data centers",
+                "The scheduling evaluation uses a data-center simulator.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_historical_fleet_snapshot_simulator_feedback",
+                ),
+            ),
+            _mapped(
+                "provide feedback to AlphaEvolve",
+                "The data-center simulator provides AlphaEvolve feedback.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_historical_fleet_snapshot_simulator_feedback",
+                ),
+            ),
+            _mapped(
+                "historical snapshots",
+                "Simulator feedback is based on historical snapshots.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_historical_fleet_snapshot_simulator_feedback",
+                ),
+            ),
+            _mapped(
+                "workloads",
+                "The historical simulator snapshots include workloads.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_historical_fleet_snapshot_simulator_feedback",
+                ),
+            ),
+            _mapped(
+                "capacity",
+                "The historical simulator snapshots include capacity.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_historical_fleet_snapshot_simulator_feedback",
+                ),
+            ),
+            _mapped(
+                "across Google",
+                "The historical snapshots span Google's fleet.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_historical_fleet_snapshot_simulator_feedback",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0169": (
+            _mapped(
+                "measure the performance of AlphaEvolve's heuristic function",
+                "The evolved scheduling heuristic is measured on a test dataset.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_unseen_recent_workload_capacity_generalization",
+                ),
+            ),
+            _mapped(
+                "unseen test dataset",
+                "The scheduling test dataset is unseen during evolution.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_unseen_recent_workload_capacity_generalization",
+                ),
+            ),
+            _mapped(
+                "recent workloads",
+                "The unseen scheduling test dataset contains recent workloads.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_unseen_recent_workload_capacity_generalization",
+                ),
+            ),
+            _mapped(
+                "capacity",
+                "The unseen scheduling test dataset contains capacity data.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_unseen_recent_workload_capacity_generalization",
+                ),
+            ),
+            _mapped(
+                "ensure generalization",
+                "The unseen recent test set is intended to test generalization.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_unseen_recent_workload_capacity_generalization",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0170": (
+            _mapped(
+                "AlphaEvolve's heuristic function outperforms the one in production",
+                "The evolved heuristic is reported to outperform the production incumbent.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_outperforms_production_heuristic",
+                ),
+            ),
+            _mapped(
+                "rolled out AlphaEvolve's heuristic function",
+                "The evolved heuristic was rolled out after outperforming the incumbent.",
+                _ref("scheduling", "section3_3_1_entire_fleet_rollout"),
+            ),
+            _mapped(
+                "to the entire fleet",
+                "The reported scheduling rollout covered the entire fleet.",
+                _ref("scheduling", "section3_3_1_entire_fleet_rollout"),
+            ),
+        ),
+        "tex_prose_sentence_0171": (
+            _mapped(
+                "Post-deployment measurements",
+                "The reported scheduling result uses post-deployment measurements.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_post_deployment_confirms_simulator",
+                ),
+            ),
+            _mapped(
+                "across Google",
+                "The post-deployment measurements span Google's fleet.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_post_deployment_confirms_simulator",
+                ),
+            ),
+            _mapped(
+                "confirmed the simulator results",
+                "The post-deployment fleet measurements are reported to confirm simulator results.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_post_deployment_confirms_simulator",
+                ),
+            ),
+            _mapped(
+                "continuously recovers",
+                "The deployed heuristic is reported to recover resources continuously.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_continuous_average_point_7_percent_recovery",
+                ),
+            ),
+            _mapped(
+                "on average 0.7 percent",
+                "The reported average recovered-resource fraction is 0.7 percent.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_continuous_average_point_7_percent_recovery",
+                ),
+            ),
+            _mapped(
+                "fleet-wide compute resources",
+                "The 0.7-percent recovery metric applies to fleet-wide compute resources.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_continuous_average_point_7_percent_recovery",
+                ),
+            ),
+            _mapped(
+                "which would otherwise be stranded",
+                "The recovered compute resources would otherwise be stranded.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_recovered_resources_otherwise_stranded",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0172": (
+            _mapped(
+                "AlphaEvolve was chosen over a deep reinforcement learning approach",
+                "AlphaEvolve's code heuristic was selected over deep reinforcement learning.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_chosen_over_deep_reinforcement_learning",
+                ),
+            ),
+            _mapped(
+                "code solution",
+                "The selected AlphaEvolve scheduling output is a code solution.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_code_solution_better_performance",
+                ),
+            ),
+            _mapped(
+                "leads to better performance",
+                "The code solution is reported to outperform the deep-RL approach.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_code_solution_better_performance",
+                ),
+            ),
+            _mapped(
+                "interpretability",
+                "Interpretability is a reported advantage of the code solution.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_interpretability_advantage",
+                ),
+            ),
+            _mapped(
+                "debuggability",
+                "Debuggability is a reported advantage of the code solution.",
+                _ref("scheduling", "section3_3_1_debuggability_advantage"),
+            ),
+            _mapped(
+                "predictability",
+                "Predictability is a reported advantage of the code solution.",
+                _ref("scheduling", "section3_3_1_predictability_advantage"),
+            ),
+            _mapped(
+                "ease of deployment",
+                "Ease of deployment is a reported advantage of the code solution.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_ease_of_deployment_advantage",
+                ),
+            ),
+            _mapped(
+                "essential qualities for a mission-critical system",
+                "The reported operational advantages are characterized as essential for a mission-critical system.",
+                _ref(
+                    "scheduling",
+                    "section3_3_1_mission_critical_operational_qualities",
+                ),
+            ),
+        ),
+    }
+)
+
 
 @dataclass(frozen=True)
 class AlphaEvolveTexPropositionInventoryBoundaryIssue:
@@ -2798,7 +3552,7 @@ class AlphaEvolveTexPropositionInventoryBoundaryValidation:
 def alphaevolve_tex_proposition_inventory_boundary_record(
     root: str | Path = ".",
 ) -> dict[str, Any]:
-    """Review atomic propositions through the complete retained Section 3.2."""
+    """Review atomic propositions through retained Section 3.3.1 scheduling."""
 
     root_path = Path(root)
     prose = alphaevolve_tex_prose_inventory_boundary_record(root_path)
@@ -3004,11 +3758,12 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
                 "all 61 retained Methods sentences in methods.tex",
                 "all 16 retained Section 3.1 matrix-result sentences in results.tex",
                 "all 39 retained Section 3.2 sentences in results.tex",
+                "all 19 retained Section 3.3 opening and Section 3.3.1 scheduling sentences in results.tex",
                 "manual atomic-proposition statements and exact rendered-source quote offsets",
                 "resolved bounded-claim mappings or explicit context, outlook, and interpretation dispositions",
             ],
             "excluded": [
-                "the remaining 249 retained prose sentences",
+                "the remaining 230 retained prose sentences",
                 "separately audited captions, tables, equations, listings, footnotes, and explicit math constructs",
                 "independent second-reviewer semantic agreement",
                 "mathematical correctness, citation sufficiency, image-pixel semantics, or result reproduction",
@@ -3017,9 +3772,9 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
         },
         "claim_boundary": (
             "This boundary records a single-reviewer atomic-proposition decomposition "
-            "for every retained sentence from the Abstract through the complete "
-            "Section 3.2 constructive-mathematics section. Complete disposition "
-            "inside this 153-sentence scope does not cover the remaining 249 prose "
+            "for every retained sentence from the Abstract through Section 3.3.1 "
+            "data-center scheduling. Complete disposition inside this 172-sentence "
+            "scope does not cover the remaining 230 prose "
             "sentences and does not prove independent semantic exhaustiveness, "
             "mathematical correctness, result reproduction, or AlphaEvolve parity."
         ),

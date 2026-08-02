@@ -1,7 +1,7 @@
 {
-  "schema": "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v5",
+  "schema": "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v6",
   "source_paper_id": "2506.13131",
-  "boundary_status": "abstract_through_complete_section3_2_proposition_review_complete_without_remaining_paper_or_independent_semantic_exhaustiveness",
+  "boundary_status": "abstract_through_section3_3_1_scheduling_proposition_review_complete_without_remaining_paper_or_independent_semantic_exhaustiveness",
   "source_prose_schema": "libreevolve.alphaevolve_tex_prose_inventory_boundary.v1",
   "source_prose_boundary_status": "retained_tex_paragraph_and_sentence_inventory_complete_without_semantic_clause_exhaustiveness",
   "source_prose_ready": true,
@@ -15,9 +15,9 @@
   "source_errors": [],
   "parse_errors": [],
   "source_sentence_count": 402,
-  "reviewed_sentence_count": 153,
-  "remaining_sentence_count": 249,
-  "reviewed_sentence_fraction": 0.3805970149253731,
+  "reviewed_sentence_count": 172,
+  "remaining_sentence_count": 230,
+  "reviewed_sentence_fraction": 0.42786069651741293,
   "reviewed_source_files": [
     "introduction.tex",
     "main.tex",
@@ -31,16 +31,16 @@
     "discussion.tex",
     "related_work.tex"
   ],
-  "proposition_count": 432,
+  "proposition_count": 523,
   "disposition_counts": {
-    "author_interpretation": 7,
+    "author_interpretation": 8,
     "author_outlook": 2,
-    "existing_bounded_claim_mapping": 386,
-    "source_context_only": 37
+    "existing_bounded_claim_mapping": 474,
+    "source_context_only": 39
   },
-  "claim_reference_count": 408,
-  "unique_claim_reference_count": 172,
-  "implementation_relevant_proposition_count": 376,
+  "claim_reference_count": 496,
+  "unique_claim_reference_count": 204,
+  "implementation_relevant_proposition_count": 464,
   "unmapped_proposition_count": 0,
   "unresolved_reference_count": 0,
   "new_bounded_claim_ids": [
@@ -63,6 +63,12 @@
     "section3_1_standard_gradient_baseline_components",
     "section3_2_evolve_heuristics_not_direct_constructions",
     "section3_2_fast_objective_evaluations_common_in_math",
+    "section3_3_1_continuous_average_point_7_percent_recovery",
+    "section3_3_1_debuggability_advantage",
+    "section3_3_1_ease_of_deployment_advantage",
+    "section3_3_1_mission_critical_operational_qualities",
+    "section3_3_1_post_deployment_confirms_simulator",
+    "section3_3_1_predictability_advantage",
     "task_problem_specific_abstraction_choice"
   ],
   "reviewed_sentence_records": [
@@ -2178,6 +2184,306 @@
         "tex_proposition_0430",
         "tex_proposition_0431",
         "tex_proposition_0432"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0154",
+      "source_file": "results.tex",
+      "source_line": 111,
+      "source_text_sha256": "87d46a5de45be3c839a28edab2b43ebff1084f787f35c3152c5974aad446c8c1",
+      "rendered_text_sha256": "8024dd1bf385ba86a418a2d03f3b380a05880c2f6d5560b29fe546f958f27563",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0433",
+        "tex_proposition_0434",
+        "tex_proposition_0435",
+        "tex_proposition_0436"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0155",
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_text_sha256": "cff374987623d315c7d84ac5eb671501f7344316f5dd0d5f7e950651711932dd",
+      "rendered_text_sha256": "b3ed5ae66b4cde9d3e9de73d2212f3a3d04e2f33ad07bd8a2cf3bc0d3800837a",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0437",
+        "tex_proposition_0438",
+        "tex_proposition_0439",
+        "tex_proposition_0440",
+        "tex_proposition_0441"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0156",
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_text_sha256": "9874de1fe866dc21d08f6a5563737f1f331dac3e24f7c9a735fe89ca9fcdd83a",
+      "rendered_text_sha256": "9874de1fe866dc21d08f6a5563737f1f331dac3e24f7c9a735fe89ca9fcdd83a",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0442",
+        "tex_proposition_0443",
+        "tex_proposition_0444"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0157",
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_text_sha256": "71f2913c6eb19efad181d105cfe75954ad763b355f197cd06a8546af139eadeb",
+      "rendered_text_sha256": "71f2913c6eb19efad181d105cfe75954ad763b355f197cd06a8546af139eadeb",
+      "proposition_count": 6,
+      "proposition_ids": [
+        "tex_proposition_0445",
+        "tex_proposition_0446",
+        "tex_proposition_0447",
+        "tex_proposition_0448",
+        "tex_proposition_0449",
+        "tex_proposition_0450"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0158",
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_text_sha256": "3a92ff1b92f6303e48b65057557fe8b910626e3c5847a8c842b78c180560159f",
+      "rendered_text_sha256": "3a92ff1b92f6303e48b65057557fe8b910626e3c5847a8c842b78c180560159f",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0451",
+        "tex_proposition_0452",
+        "tex_proposition_0453",
+        "tex_proposition_0454"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0159",
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_text_sha256": "3095288077089c1bcc0dad17d3989bd5751a2fc09e0e6274b898034590984082",
+      "rendered_text_sha256": "3095288077089c1bcc0dad17d3989bd5751a2fc09e0e6274b898034590984082",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0455",
+        "tex_proposition_0456",
+        "tex_proposition_0457"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0160",
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_text_sha256": "9cb633a38f5ed1c58b9881b510a8fa04e509da8696729df4dba447c82b370484",
+      "rendered_text_sha256": "9cb633a38f5ed1c58b9881b510a8fa04e509da8696729df4dba447c82b370484",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0458",
+        "tex_proposition_0459",
+        "tex_proposition_0460",
+        "tex_proposition_0461",
+        "tex_proposition_0462"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0161",
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_text_sha256": "2fbbbd2148347233913ad7693a07e75869b9323ac7b666ad28082a38c10166b5",
+      "rendered_text_sha256": "2fbbbd2148347233913ad7693a07e75869b9323ac7b666ad28082a38c10166b5",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0463",
+        "tex_proposition_0464",
+        "tex_proposition_0465"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0162",
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_text_sha256": "b4e51b89f232ca7248aa28e0d88ac6d1c3ea179ce199ebd48f3f416fafa48e6e",
+      "rendered_text_sha256": "b4e51b89f232ca7248aa28e0d88ac6d1c3ea179ce199ebd48f3f416fafa48e6e",
+      "proposition_count": 6,
+      "proposition_ids": [
+        "tex_proposition_0466",
+        "tex_proposition_0467",
+        "tex_proposition_0468",
+        "tex_proposition_0469",
+        "tex_proposition_0470",
+        "tex_proposition_0471"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0163",
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_text_sha256": "967e51b0f0b26f60f9425f00922d97fe920425ff7884dca431379861905bac5a",
+      "rendered_text_sha256": "967e51b0f0b26f60f9425f00922d97fe920425ff7884dca431379861905bac5a",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0472",
+        "tex_proposition_0473",
+        "tex_proposition_0474",
+        "tex_proposition_0475",
+        "tex_proposition_0476"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0164",
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_text_sha256": "cf025001aa8ceffdf3eef5c5ac1da7b75f02da6795a14d9f844586f83b4688ab",
+      "rendered_text_sha256": "cf025001aa8ceffdf3eef5c5ac1da7b75f02da6795a14d9f844586f83b4688ab",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0477",
+        "tex_proposition_0478"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0165",
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_text_sha256": "ecc60831d04560d40d95b64869e7b0c61ecff0a70a03b91b12e64c95512b7749",
+      "rendered_text_sha256": "ecc60831d04560d40d95b64869e7b0c61ecff0a70a03b91b12e64c95512b7749",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0479",
+        "tex_proposition_0480",
+        "tex_proposition_0481",
+        "tex_proposition_0482",
+        "tex_proposition_0483"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0166",
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_text_sha256": "d7504ce42d74cdbec9e51ea27b1c204726a657a1c924000081ce96dc3e942d1d",
+      "rendered_text_sha256": "d7504ce42d74cdbec9e51ea27b1c204726a657a1c924000081ce96dc3e942d1d",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0484",
+        "tex_proposition_0485",
+        "tex_proposition_0486",
+        "tex_proposition_0487",
+        "tex_proposition_0488"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0167",
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_text_sha256": "1cbfc20421532af55050103886344b0c5f3929c9db9d4728d9c479e95306673b",
+      "rendered_text_sha256": "d02c7848ec63a05e83f89675b018305a72efe65712bfbba00a4da419d374ab4e",
+      "proposition_count": 6,
+      "proposition_ids": [
+        "tex_proposition_0489",
+        "tex_proposition_0490",
+        "tex_proposition_0491",
+        "tex_proposition_0492",
+        "tex_proposition_0493",
+        "tex_proposition_0494"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0168",
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_text_sha256": "32b362a6686983bee3a1059ea7f2b1355026101695b877a2bfa727e74eb982fd",
+      "rendered_text_sha256": "26d005ddefaecf8785d5fe5c2419396b9aad306f3dd425278fbc5f458fcaa3f5",
+      "proposition_count": 6,
+      "proposition_ids": [
+        "tex_proposition_0495",
+        "tex_proposition_0496",
+        "tex_proposition_0497",
+        "tex_proposition_0498",
+        "tex_proposition_0499",
+        "tex_proposition_0500"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0169",
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_text_sha256": "d3a65910fe41a34414abc8c561e20b637c2e45594f7d6d824bf04e67d87086ae",
+      "rendered_text_sha256": "197628e1cf9c34c9bfd0cc60d57d5d9a6449bb94ce969030f7017a8bd5e9de96",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0501",
+        "tex_proposition_0502",
+        "tex_proposition_0503",
+        "tex_proposition_0504",
+        "tex_proposition_0505"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0170",
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_text_sha256": "737e38f38161c9a31d6b12b52f999d869f29094cd65bf79e8d33d44de3ff6e15",
+      "rendered_text_sha256": "2e1f1d9e64b1d64abeee6f455ffaf4158fbf1c953e4d243cdcf07348fbca9af9",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0506",
+        "tex_proposition_0507",
+        "tex_proposition_0508"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0171",
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_text_sha256": "6b9447fd47e703fb147e809afea70a07825cae668e6ecf41bd1a930d8678fdba",
+      "rendered_text_sha256": "4bd3a4fb3b943b0d6a4c2bee66537c56d15925b61205f4cb1fde6d65de383bc2",
+      "proposition_count": 7,
+      "proposition_ids": [
+        "tex_proposition_0509",
+        "tex_proposition_0510",
+        "tex_proposition_0511",
+        "tex_proposition_0512",
+        "tex_proposition_0513",
+        "tex_proposition_0514",
+        "tex_proposition_0515"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0172",
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_text_sha256": "d18d909e06ed102dfb351bc0843567696375e56b749741597594072081710239",
+      "rendered_text_sha256": "ace4c1005ee4b2aa8660878c5fd4d73fdf6890185879858a098b4f294dd8ff1b",
+      "proposition_count": 8,
+      "proposition_ids": [
+        "tex_proposition_0516",
+        "tex_proposition_0517",
+        "tex_proposition_0518",
+        "tex_proposition_0519",
+        "tex_proposition_0520",
+        "tex_proposition_0521",
+        "tex_proposition_0522",
+        "tex_proposition_0523"
       ],
       "review_status": "manual_static_semantic_decomposition_complete"
     }
@@ -12360,6 +12666,2169 @@
       ],
       "implementation_relevant": true,
       "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0433",
+      "sentence_id": "tex_prose_sentence_0154",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 111,
+      "source_end_line": 111,
+      "source_quote": "scientific applications presented in preceding sections",
+      "source_quote_start": 19,
+      "source_quote_end": 74,
+      "source_quote_sha256": "c4ed4d3e086c37af0aee14538be50be4fbd1ba488dc18816bd205215b4192338",
+      "statement": "The prose contrasts the following systems results with earlier scientific applications.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This is a cross-section transition rather than a standalone implementation requirement."
+    },
+    {
+      "proposition_id": "tex_proposition_0434",
+      "sentence_id": "tex_prose_sentence_0154",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 111,
+      "source_end_line": 111,
+      "source_quote": "AlphaEvolve has been used",
+      "source_quote_start": 100,
+      "source_quote_end": 125,
+      "source_quote_sha256": "4768c56bdb3e6b63080f9dff1a7e04e9a73f87c90dde5ce8c985730fc581c72c",
+      "statement": "AlphaEvolve is reported to have been used on infrastructure applications.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_mission_critical_infrastructure_real_world_impact",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0435",
+      "sentence_id": "tex_prose_sentence_0154",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 111,
+      "source_end_line": 111,
+      "source_quote": "improve performance of mission-critical infrastructure",
+      "source_quote_start": 129,
+      "source_quote_end": 183,
+      "source_quote_sha256": "af172cbecaefeeaed1fd1da48a8252109b8271bb81778e377205b14c0418074c",
+      "statement": "The reported infrastructure use improves mission-critical performance.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_mission_critical_infrastructure_real_world_impact",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0436",
+      "sentence_id": "tex_prose_sentence_0154",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 111,
+      "source_end_line": 111,
+      "source_quote": "deliver real-world impact",
+      "source_quote_start": 188,
+      "source_quote_end": 213,
+      "source_quote_sha256": "114d12057a5f46fe356309609a589e75af0218422cd3177b932a8736210b5ce3",
+      "statement": "The reported infrastructure use delivers real-world impact.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_mission_critical_infrastructure_real_world_impact",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0437",
+      "sentence_id": "tex_prose_sentence_0155",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "Efficiently scheduling compute jobs",
+      "source_quote_start": 0,
+      "source_quote_end": 35,
+      "source_quote_sha256": "7e8ed2730640fbf38767fdba038902c6f6879a3e7242864df34e3ba17d7dc40e",
+      "statement": "The scheduling problem seeks efficient placement of compute jobs.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_google_scale_borg_scheduling_problem",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0438",
+      "sentence_id": "tex_prose_sentence_0155",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "onto a cluster of machines",
+      "source_quote_start": 36,
+      "source_quote_end": 62,
+      "source_quote_sha256": "2ea5d01618febe86194a0dc2950c37fb7282b39fde3be3324af4a1d90e64f403",
+      "statement": "The compute jobs are scheduled onto a machine cluster.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_google_scale_borg_scheduling_problem",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0439",
+      "sentence_id": "tex_prose_sentence_0155",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "critical optimization problem",
+      "source_quote_start": 68,
+      "source_quote_end": 97,
+      "source_quote_sha256": "99d5530f8a6a833585cede900fc6bbd9d9a302ab2673bd215a972972c5f03ba1",
+      "statement": "Efficient cluster scheduling is characterized as a critical optimization problem.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_google_scale_borg_scheduling_problem",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0440",
+      "sentence_id": "tex_prose_sentence_0155",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "at the scale of Google's data centers",
+      "source_quote_start": 112,
+      "source_quote_end": 149,
+      "source_quote_sha256": "f2a1fe1d80d5f1fcea76c086095bc7f7b6428b93257ccddf60057c5106a3bb02",
+      "statement": "The reported scheduling problem operates at Google data-center scale.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_google_scale_borg_scheduling_problem",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0441",
+      "sentence_id": "tex_prose_sentence_0155",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "orchestrated by Borg",
+      "source_quote_start": 151,
+      "source_quote_end": 171,
+      "source_quote_sha256": "830f6d522ff6a952a1baa9c84e6e1b18b0739fc3836847807d84bf9f99138042",
+      "statement": "Borg orchestrates the referenced Google data centers.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_google_scale_borg_scheduling_problem",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0442",
+      "sentence_id": "tex_prose_sentence_0156",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "assigning jobs to available machines",
+      "source_quote_start": 19,
+      "source_quote_end": 55,
+      "source_quote_sha256": "e606241a723ef390c9506d147b7cbfdb24b17f928518dc4579f4a231c6307a5c",
+      "statement": "The scheduling task assigns jobs to available machines.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_assign_jobs_from_requirements_and_capacity",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0443",
+      "sentence_id": "tex_prose_sentence_0156",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "job resource requirements",
+      "source_quote_start": 65,
+      "source_quote_end": 90,
+      "source_quote_sha256": "83d76078c30d13e952b1215fe19f779e682f5055175ecbab4e84b206687d1fea",
+      "statement": "Job resource requirements constrain assignment.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_assign_jobs_from_requirements_and_capacity",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0444",
+      "sentence_id": "tex_prose_sentence_0156",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "machine capacity",
+      "source_quote_start": 95,
+      "source_quote_end": 111,
+      "source_quote_sha256": "accd48fd489e6d3181faafa7c3c7d6864d5baf4c656f5b4edad703cdf683bd28",
+      "statement": "Machine capacity constrains assignment.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_assign_jobs_from_requirements_and_capacity",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0445",
+      "sentence_id": "tex_prose_sentence_0157",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "Inefficient assignments can result in stranded resources",
+      "source_quote_start": 0,
+      "source_quote_end": 56,
+      "source_quote_sha256": "b166a69c66b6e6d6fcf9dc0f01ae3270854ef3aca5e0dac3f864d9badadc794b",
+      "statement": "Inefficient scheduling assignments can strand resources.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_inefficient_assignments_strand_resources",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0446",
+      "sentence_id": "tex_prose_sentence_0157",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "a machine can no longer accept jobs",
+      "source_quote_start": 63,
+      "source_quote_end": 98,
+      "source_quote_sha256": "65800df10c09f606d4417d0582396ba28cc3c69fad3c12524ff36290d3a015c6",
+      "statement": "A resource imbalance can leave a machine unable to accept jobs.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_one_resource_exhausted_other_resource_free",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0447",
+      "sentence_id": "tex_prose_sentence_0157",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "run out of one kind of resource",
+      "source_quote_start": 114,
+      "source_quote_end": 145,
+      "source_quote_sha256": "b95d563c333f2e87255a70bfbea84a140c1fde2bf61d6562f698c2f8d22bf5ac",
+      "statement": "The machine can become unavailable after exhausting one resource type.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_one_resource_exhausted_other_resource_free",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0448",
+      "sentence_id": "tex_prose_sentence_0157",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "(e.g., memory)",
+      "source_quote_start": 146,
+      "source_quote_end": 160,
+      "source_quote_sha256": "a7d67904b674111aed0755ee881ed999c47b8182375dc45c00dcd089ec05ee7a",
+      "statement": "Memory is one example of an exhausted resource.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_one_resource_exhausted_other_resource_free",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0449",
+      "sentence_id": "tex_prose_sentence_0157",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "still has other resources free",
+      "source_quote_start": 165,
+      "source_quote_end": 195,
+      "source_quote_sha256": "6e5601ff2c9775c0c8a548350f60e18995bff00cff9cf208851628ce135dd70c",
+      "statement": "Other machine resources can remain free after one resource is exhausted.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_one_resource_exhausted_other_resource_free",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0450",
+      "sentence_id": "tex_prose_sentence_0157",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "(e.g., CPU)",
+      "source_quote_start": 196,
+      "source_quote_end": 207,
+      "source_quote_sha256": "1cd23fdc4498ad66bdd9ce163ed36b6072a00064bf1b15417809b4cfe61d74a2",
+      "statement": "CPU is one example of a resource that can remain free.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_one_resource_exhausted_other_resource_free",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0451",
+      "sentence_id": "tex_prose_sentence_0158",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "Improvements in scheduling efficiency",
+      "source_quote_start": 0,
+      "source_quote_end": 37,
+      "source_quote_sha256": "17bbc910e3deceeea59aa468f5e9be2721f3a789e082c0c5bc0fdbbb44a70252",
+      "statement": "Scheduling-efficiency improvements are the proposed recovery mechanism.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_more_jobs_same_compute_footprint",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0452",
+      "sentence_id": "tex_prose_sentence_0158",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "recover these stranded resources",
+      "source_quote_start": 42,
+      "source_quote_end": 74,
+      "source_quote_sha256": "8b8b3f89e25238daf019709df1ff01b1876cb69e65cc97cd7144af5d90562a1d",
+      "statement": "Scheduling-efficiency improvements can recover stranded resources.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_more_jobs_same_compute_footprint",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0453",
+      "sentence_id": "tex_prose_sentence_0158",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "more jobs to be completed",
+      "source_quote_start": 85,
+      "source_quote_end": 110,
+      "source_quote_sha256": "5a4eb0b5fbe0a0285dec0113995c039ef08e70f42baac1788dcc4082f36a8850",
+      "statement": "Recovered resources can allow completion of more jobs.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_more_jobs_same_compute_footprint",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0454",
+      "sentence_id": "tex_prose_sentence_0158",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "same amount of computational footprint",
+      "source_quote_start": 118,
+      "source_quote_end": 156,
+      "source_quote_sha256": "526f99bd769b154c2fff3a59aaed3e23ec64d760e6b68ae5c4b482f3c1ae6f98",
+      "statement": "The additional jobs use the same computational footprint.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_more_jobs_same_compute_footprint",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0455",
+      "sentence_id": "tex_prose_sentence_0159",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "This recovery is essential",
+      "source_quote_start": 0,
+      "source_quote_end": 26,
+      "source_quote_sha256": "044a97111c6291f6795cbe51f595e85b3f2dc6f1b4a023fa2b3831e646db12de",
+      "statement": "The authors characterize stranded-resource recovery as essential.",
+      "disposition": "author_interpretation",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "The essentiality judgment is author interpretation; the capacity-growth requirement is mapped separately."
+    },
+    {
+      "proposition_id": "tex_proposition_0456",
+      "sentence_id": "tex_prose_sentence_0159",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "accommodate growing compute needs",
+      "source_quote_start": 30,
+      "source_quote_end": 63,
+      "source_quote_sha256": "7986e1340ae2f0e599ed593f734c98ef252abde426fd61c5d2668ddb73e69519",
+      "statement": "Resource recovery is intended to accommodate growing compute demand.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_growth_without_proportional_resource_increase",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0457",
+      "sentence_id": "tex_prose_sentence_0159",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "without a proportional increase in resource consumption",
+      "source_quote_start": 64,
+      "source_quote_end": 119,
+      "source_quote_sha256": "951caa4501f1cc14331fc004da2cd63ff7645626783a32c9eb8df461f4759cd6",
+      "statement": "Compute growth is intended to avoid proportional resource-consumption growth.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_growth_without_proportional_resource_increase",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0458",
+      "sentence_id": "tex_prose_sentence_0160",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "this problem is challenging",
+      "source_quote_start": 13,
+      "source_quote_end": 40,
+      "source_quote_sha256": "61e1bd5ccb5a9bd92aa16ad06491f1a9035c164d18097b6108e65dc595c706c3",
+      "statement": "The scheduling problem is characterized as challenging.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_debuggability_scale_and_bin_packing_challenge",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0459",
+      "sentence_id": "tex_prose_sentence_0160",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "typical engineering difficulties",
+      "source_quote_start": 59,
+      "source_quote_end": 91,
+      "source_quote_sha256": "e49161aa3297efe30e5082f43793446a30e1fc764079da2d8788f863df70ed37",
+      "statement": "The scheduling problem includes ordinary engineering difficulties.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_debuggability_scale_and_bin_packing_challenge",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0460",
+      "sentence_id": "tex_prose_sentence_0160",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "debuggability",
+      "source_quote_start": 101,
+      "source_quote_end": 114,
+      "source_quote_sha256": "1f75dc35a56447df8ffa432e7e6f81bc60da48b77aca950aa77837e1429bbf3a",
+      "statement": "Debuggability is one scheduling engineering difficulty.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_debuggability_scale_and_bin_packing_challenge",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0461",
+      "sentence_id": "tex_prose_sentence_0160",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "scale",
+      "source_quote_start": 119,
+      "source_quote_end": 124,
+      "source_quote_sha256": "f469802a31447f90d6a033d43f18db7ebfbee7cc3c378024bcc0f1573d3feef8",
+      "statement": "Scale is one scheduling engineering difficulty.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_debuggability_scale_and_bin_packing_challenge",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0462",
+      "sentence_id": "tex_prose_sentence_0160",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "classically difficult bin-packing problem",
+      "source_quote_start": 140,
+      "source_quote_end": 181,
+      "source_quote_sha256": "e1fe75c95d8e37e21ad7591de0f4a4c678e65d5f380b89a1f5bf5638ff36efe0",
+      "statement": "The engineering difficulties compound a classically difficult bin-packing problem.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_debuggability_scale_and_bin_packing_challenge",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0463",
+      "sentence_id": "tex_prose_sentence_0161",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "framing the online job scheduling problem",
+      "source_quote_start": 29,
+      "source_quote_end": 70,
+      "source_quote_sha256": "4ee3467194ad7c64acf47f92878d7635b5c779dbc6bf54e6932e3ff059cd3ea3",
+      "statement": "The formulation treats online job scheduling as the source problem.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_online_two_variable_vector_bin_packing",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0464",
+      "sentence_id": "tex_prose_sentence_0161",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "as a vector bin-packing problem",
+      "source_quote_start": 71,
+      "source_quote_end": 102,
+      "source_quote_sha256": "fac92acaa6b1993acc4583ee90d1a268bc1487db6d296fc6658b6d55b78cc71f",
+      "statement": "The online scheduler is formulated as vector bin packing.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_online_two_variable_vector_bin_packing",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0465",
+      "sentence_id": "tex_prose_sentence_0161",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "with two variables",
+      "source_quote_start": 103,
+      "source_quote_end": 121,
+      "source_quote_sha256": "0e72cd07f97f49bd84c79bb97b4d3b8e3cc408159634390baf356abda595ebe9",
+      "statement": "The vector-bin-packing formulation has two variables.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_online_two_variable_vector_bin_packing",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0466",
+      "sentence_id": "tex_prose_sentence_0162",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "machines represent bins",
+      "source_quote_start": 17,
+      "source_quote_end": 40,
+      "source_quote_sha256": "e433f2416ef3d36b1cb84af4128f8ee98eff23608e54d7f5e2ab1d861fc2c5f4",
+      "statement": "Machines are represented as vector-bin-packing bins.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_machines_bins_cpu_memory_capacity",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0467",
+      "sentence_id": "tex_prose_sentence_0162",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "defined capacities",
+      "source_quote_start": 46,
+      "source_quote_end": 64,
+      "source_quote_sha256": "cc103de69b36aaa66926a6046c1d93236ae096dacc68132c7b73045f89da215f",
+      "statement": "The machine bins have defined capacities.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_machines_bins_cpu_memory_capacity",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0468",
+      "sentence_id": "tex_prose_sentence_0162",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "CPU",
+      "source_quote_start": 69,
+      "source_quote_end": 72,
+      "source_quote_sha256": "db9a4c7d4c195ebf80068dd04120accce1cbfbef342bb43a53cbd651eb96e37b",
+      "statement": "CPU is one machine-capacity dimension.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_machines_bins_cpu_memory_capacity",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0469",
+      "sentence_id": "tex_prose_sentence_0162",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "memory",
+      "source_quote_start": 77,
+      "source_quote_end": 83,
+      "source_quote_sha256": "c064fbca9d9de8dd9bb0624984403b28d0da807a69365d4f7fb09123ecb0c405",
+      "statement": "Memory is one machine-capacity dimension.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_machines_bins_cpu_memory_capacity",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0470",
+      "sentence_id": "tex_prose_sentence_0162",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "incoming jobs are items",
+      "source_quote_start": 89,
+      "source_quote_end": 112,
+      "source_quote_sha256": "951d817ffe9c78df673cfa7e6b751ed6ac093ff1c2ac314a8886f47dfcfe51a6",
+      "statement": "Incoming jobs are represented as vector-bin-packing items.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_jobs_items_resource_demands",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0471",
+      "sentence_id": "tex_prose_sentence_0162",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "specific resource demands",
+      "source_quote_start": 118,
+      "source_quote_end": 143,
+      "source_quote_sha256": "ab1f2004dc28103d2e791d51d7cb1fccd95405fc3655aad5fe855086448d7ff0",
+      "statement": "The incoming-job items carry specific resource demands.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_jobs_items_resource_demands",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0472",
+      "sentence_id": "tex_prose_sentence_0163",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "A heuristic function takes as input",
+      "source_quote_start": 0,
+      "source_quote_end": 35,
+      "source_quote_sha256": "c80bb4d0f517dbf639fc94cf20b51fb5f4fba1b7b70a5f9e52ade5f3684c42b1",
+      "statement": "A heuristic function consumes scheduling inputs.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_heuristic_required_and_free_inputs",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0473",
+      "sentence_id": "tex_prose_sentence_0163",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "a pending job",
+      "source_quote_start": 36,
+      "source_quote_end": 49,
+      "source_quote_sha256": "5442b706eb28ba3a9e74e4dfe80d38621884c3ee6958c1cd835c60cfd9b9548b",
+      "statement": "The pending job is one heuristic input entity.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_heuristic_required_and_free_inputs",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0474",
+      "sentence_id": "tex_prose_sentence_0163",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "CPU and memory requirements",
+      "source_quote_start": 52,
+      "source_quote_end": 79,
+      "source_quote_sha256": "ac1950ee0c953879d574efdb25fc2263944d24d8c3298c21889875ffcac44dd2",
+      "statement": "The heuristic receives the pending job's CPU and memory requirements.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_heuristic_required_and_free_inputs",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0475",
+      "sentence_id": "tex_prose_sentence_0163",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "a potential machine",
+      "source_quote_start": 84,
+      "source_quote_end": 103,
+      "source_quote_sha256": "925ffbcbbfa9d147041340cefdb33a99c9490b62b8b344398dfc8491ee2594f0",
+      "statement": "A potential machine is the other heuristic input entity.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_heuristic_required_and_free_inputs",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0476",
+      "sentence_id": "tex_prose_sentence_0163",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "CPU and memory availability",
+      "source_quote_start": 106,
+      "source_quote_end": 133,
+      "source_quote_sha256": "7e4f598f477469b36e6845d69a49fa7a545f129da498b6bda20356ab72536a73",
+      "statement": "The heuristic receives the potential machine's CPU and memory availability.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_heuristic_required_and_free_inputs",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0477",
+      "sentence_id": "tex_prose_sentence_0164",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "outputs a priority score",
+      "source_quote_start": 19,
+      "source_quote_end": 43,
+      "source_quote_sha256": "12fbf50d773eba22f791a095a94c5be5d450befeddc69711c63a46fa3909459d",
+      "statement": "The heuristic outputs a priority score.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_heuristic_outputs_machine_priority",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0478",
+      "sentence_id": "tex_prose_sentence_0164",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "for the machine",
+      "source_quote_start": 44,
+      "source_quote_end": 59,
+      "source_quote_sha256": "cc71b1579cd6bc803e90a4899b59dc1df48876c32265d81a202131eab67d6bc3",
+      "statement": "The priority score applies to the candidate machine.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_heuristic_outputs_machine_priority",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0479",
+      "sentence_id": "tex_prose_sentence_0165",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "The Borg scheduler",
+      "source_quote_start": 0,
+      "source_quote_end": 18,
+      "source_quote_sha256": "2f649c13a9935f007f21299a4942f202f0697c76499e19b3721faf0f54fd0a9c",
+      "statement": "Borg is the scheduler consuming the heuristic score.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_borg_uses_highest_priority_among_other_objectives",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0480",
+      "sentence_id": "tex_prose_sentence_0165",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "assigns the pending job",
+      "source_quote_start": 32,
+      "source_quote_end": 55,
+      "source_quote_sha256": "32b1eaf129058de620e8bf97276e59d358e73501ebcac9e783a80b27696dca89",
+      "statement": "Borg assigns the pending job after scoring.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_borg_uses_highest_priority_among_other_objectives",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0481",
+      "sentence_id": "tex_prose_sentence_0165",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "machine with the highest priority score",
+      "source_quote_start": 63,
+      "source_quote_end": 102,
+      "source_quote_sha256": "cc72316a10f1d0a1263f76aad281a7bcf9eb9abd792b057d0baef6f4604738f3",
+      "statement": "The heuristic favors the candidate machine with the highest score.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_borg_uses_highest_priority_among_other_objectives",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0482",
+      "sentence_id": "tex_prose_sentence_0165",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "determined by the heuristic function",
+      "source_quote_start": 106,
+      "source_quote_end": 142,
+      "source_quote_sha256": "a8262cb8209e2b76c59236e211249bf6714c2ffc2a308ea4aa20c2524fd0a4ac",
+      "statement": "The heuristic function determines the machine-priority score.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_borg_uses_highest_priority_among_other_objectives",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0483",
+      "sentence_id": "tex_prose_sentence_0165",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "among other objectives",
+      "source_quote_start": 144,
+      "source_quote_end": 166,
+      "source_quote_sha256": "e33204d0cbb5f80a5c027c1f44d6d553912e44bd37c5614cbeeb52fbf79911e4",
+      "statement": "Borg uses scheduler objectives beyond the heuristic ranking.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_borg_uses_highest_priority_among_other_objectives",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0484",
+      "sentence_id": "tex_prose_sentence_0166",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "only influences the ranking of machines",
+      "source_quote_start": 23,
+      "source_quote_end": 62,
+      "source_quote_sha256": "80fc35795038fe50a98cef2a4892dc73b30f6d2ac2cca0769938813a975a9224",
+      "statement": "The heuristic is restricted to ranking candidate machines.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_rank_only_borg_feasible_machines",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0485",
+      "sentence_id": "tex_prose_sentence_0166",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "already determined by Borg",
+      "source_quote_start": 63,
+      "source_quote_end": 89,
+      "source_quote_sha256": "d28c3558d48db82fa1654fc023b639165ccd81bef189f2159b81a3708d4dddbf",
+      "statement": "Borg determines the candidate-machine set before heuristic ranking.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_rank_only_borg_feasible_machines",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0486",
+      "sentence_id": "tex_prose_sentence_0166",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "to be available",
+      "source_quote_start": 90,
+      "source_quote_end": 105,
+      "source_quote_sha256": "737dfc852d69b812c1ae0e471c64a28260d793d1e7a2c7e3fa4d0331b5a95cf9",
+      "statement": "Borg limits ranking to machines it considers available.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_rank_only_borg_feasible_machines",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0487",
+      "sentence_id": "tex_prose_sentence_0166",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "capable of running each pending job",
+      "source_quote_start": 110,
+      "source_quote_end": 145,
+      "source_quote_sha256": "2e1e3951a472ad7de3832cc13bad68d7cc9df36354e1957b57eab692cab8b2c8",
+      "statement": "Borg limits ranking to machines capable of running the pending job.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_rank_only_borg_feasible_machines",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0488",
+      "sentence_id": "tex_prose_sentence_0166",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 117,
+      "source_end_line": 117,
+      "source_quote": "scheduling decisions are effectively correct by construction",
+      "source_quote_start": 161,
+      "source_quote_end": 221,
+      "source_quote_sha256": "5f9e643367647bbd19982849604bec90fbcc3583dc406cea171127b01c3358e8",
+      "statement": "The rank-only feasibility boundary is claimed to make scheduling decisions effectively correct by construction.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_effectively_correct_by_construction",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0489",
+      "sentence_id": "tex_prose_sentence_0167",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "An early version of AlphaEvolve was used",
+      "source_quote_start": 0,
+      "source_quote_end": 40,
+      "source_quote_sha256": "37f3fa716ef167945436f4a0bed2b9683a860bf96a914bd13f8484db09563dca",
+      "statement": "An early AlphaEvolve version was used for scheduling discovery.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_early_alphaevolve_version",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0490",
+      "sentence_id": "tex_prose_sentence_0167",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "discover a remarkably simple yet effective heuristic function",
+      "source_quote_start": 44,
+      "source_quote_end": 105,
+      "source_quote_sha256": "e4ad566f3dacc734eb17089626beb801b233aaf481b590fd4e01b80278a00ee5",
+      "statement": "AlphaEvolve is reported to discover a scheduling heuristic.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_simple_effective_heuristic_discovery",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0491",
+      "sentence_id": "tex_prose_sentence_0167",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "remarkably simple",
+      "source_quote_start": 55,
+      "source_quote_end": 72,
+      "source_quote_sha256": "d0e21406c19c4d0916779ab245858c5f55b9b8b7fe44cc9b1fd75b9bc4acf55b",
+      "statement": "The discovered scheduling heuristic is characterized as remarkably simple.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_simple_effective_heuristic_discovery",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0492",
+      "sentence_id": "tex_prose_sentence_0167",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "effective heuristic function",
+      "source_quote_start": 77,
+      "source_quote_end": 105,
+      "source_quote_sha256": "feb23924f1132b5e5257c2794c27ced1ad7e80b51465d4634ad13c8a1253e1e4",
+      "statement": "The discovered scheduling heuristic is reported to be effective.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_simple_effective_heuristic_discovery",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0493",
+      "sentence_id": "tex_prose_sentence_0167",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "shown in [citation]",
+      "source_quote_start": 107,
+      "source_quote_end": 126,
+      "source_quote_sha256": "2fb06e3d060a73823cc4fb72bd12eace638a87e7f72355d53c93f02436e64c1e",
+      "statement": "The prose points to Figure 6 for the heuristic function.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This is a figure locator; Figure 6 code and visual semantics are dispositioned separately."
+    },
+    {
+      "proposition_id": "tex_proposition_0494",
+      "sentence_id": "tex_prose_sentence_0167",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "evolving from the existing one in production",
+      "source_quote_start": 130,
+      "source_quote_end": 174,
+      "source_quote_sha256": "92167ae247ef0a5dcfa05dea01f6b936cf32a4721c2eb5404956632f250c4918",
+      "statement": "The discovered heuristic evolved from the production incumbent.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_evolved_from_production_incumbent",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0495",
+      "sentence_id": "tex_prose_sentence_0168",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "a simulator of our data centers",
+      "source_quote_start": 7,
+      "source_quote_end": 38,
+      "source_quote_sha256": "00c835fcd582e5327b3592923e243062b7aceb3e8735324539a538ba912bf25b",
+      "statement": "The scheduling evaluation uses a data-center simulator.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_historical_fleet_snapshot_simulator_feedback",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0496",
+      "sentence_id": "tex_prose_sentence_0168",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "provide feedback to AlphaEvolve",
+      "source_quote_start": 42,
+      "source_quote_end": 73,
+      "source_quote_sha256": "813e9bcf4310284f58ab82e5a3ad5f8ee4591cf6396279ded7cac9475a51c73f",
+      "statement": "The data-center simulator provides AlphaEvolve feedback.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_historical_fleet_snapshot_simulator_feedback",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0497",
+      "sentence_id": "tex_prose_sentence_0168",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "historical snapshots",
+      "source_quote_start": 83,
+      "source_quote_end": 103,
+      "source_quote_sha256": "a65b50588111b45d7b7febdc0138025c1c3c7bada56d5b4d2a3e911353fa31ca",
+      "statement": "Simulator feedback is based on historical snapshots.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_historical_fleet_snapshot_simulator_feedback",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0498",
+      "sentence_id": "tex_prose_sentence_0168",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "workloads",
+      "source_quote_start": 107,
+      "source_quote_end": 116,
+      "source_quote_sha256": "02200ad6ba37c44d643de92ce4419a54f8dda38b04c0d678b62c0f17724d8e9a",
+      "statement": "The historical simulator snapshots include workloads.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_historical_fleet_snapshot_simulator_feedback",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0499",
+      "sentence_id": "tex_prose_sentence_0168",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "capacity",
+      "source_quote_start": 121,
+      "source_quote_end": 129,
+      "source_quote_sha256": "ec21b3b973a3a0e7050392031862848f7a19272ca8a820aed64c56d1d26e8db1",
+      "statement": "The historical simulator snapshots include capacity.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_historical_fleet_snapshot_simulator_feedback",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0500",
+      "sentence_id": "tex_prose_sentence_0168",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "across Google",
+      "source_quote_start": 130,
+      "source_quote_end": 143,
+      "source_quote_sha256": "1e94ff88d1faff92deaf805537d29c4f9092cdbfb3d77195d67a64e52f86e4d6",
+      "statement": "The historical snapshots span Google's fleet.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_historical_fleet_snapshot_simulator_feedback",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0501",
+      "sentence_id": "tex_prose_sentence_0169",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "measure the performance of AlphaEvolve's heuristic function",
+      "source_quote_start": 3,
+      "source_quote_end": 62,
+      "source_quote_sha256": "4586a1d04ded9f08017633e17d09d008c6a92c0ccc36024e109c2741fe2623c1",
+      "statement": "The evolved scheduling heuristic is measured on a test dataset.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_unseen_recent_workload_capacity_generalization",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0502",
+      "sentence_id": "tex_prose_sentence_0169",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "unseen test dataset",
+      "source_quote_start": 69,
+      "source_quote_end": 88,
+      "source_quote_sha256": "699f183faa70cddabfc702055b436a8d5c38a086e04fcda857e3adca1920e71b",
+      "statement": "The scheduling test dataset is unseen during evolution.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_unseen_recent_workload_capacity_generalization",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0503",
+      "sentence_id": "tex_prose_sentence_0169",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "recent workloads",
+      "source_quote_start": 92,
+      "source_quote_end": 108,
+      "source_quote_sha256": "b5ee81333548b7c9eaf7b84036f76ffe839b062f10fa453762c59e016ff40cee",
+      "statement": "The unseen scheduling test dataset contains recent workloads.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_unseen_recent_workload_capacity_generalization",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0504",
+      "sentence_id": "tex_prose_sentence_0169",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "capacity",
+      "source_quote_start": 113,
+      "source_quote_end": 121,
+      "source_quote_sha256": "ec21b3b973a3a0e7050392031862848f7a19272ca8a820aed64c56d1d26e8db1",
+      "statement": "The unseen scheduling test dataset contains capacity data.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_unseen_recent_workload_capacity_generalization",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0505",
+      "sentence_id": "tex_prose_sentence_0169",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "ensure generalization",
+      "source_quote_start": 125,
+      "source_quote_end": 146,
+      "source_quote_sha256": "adb8f51200d9cdda46c596e61b6b805f69a966f6e2cd237b7e568e6f373fc475",
+      "statement": "The unseen recent test set is intended to test generalization.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_unseen_recent_workload_capacity_generalization",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0506",
+      "sentence_id": "tex_prose_sentence_0170",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "AlphaEvolve's heuristic function outperforms the one in production",
+      "source_quote_start": 15,
+      "source_quote_end": 81,
+      "source_quote_sha256": "2df9ded0f3c8a5c2568ed34019e487b6cf6c04fdaa2cdcf7c50693de7bd9a4c2",
+      "statement": "The evolved heuristic is reported to outperform the production incumbent.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_outperforms_production_heuristic",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0507",
+      "sentence_id": "tex_prose_sentence_0170",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "rolled out AlphaEvolve's heuristic function",
+      "source_quote_start": 86,
+      "source_quote_end": 129,
+      "source_quote_sha256": "c545636777c7c8a7d5c5da3f4f989aa47151b076e110f3a38bc5e02c68e99922",
+      "statement": "The evolved heuristic was rolled out after outperforming the incumbent.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_entire_fleet_rollout",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0508",
+      "sentence_id": "tex_prose_sentence_0170",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "to the entire fleet",
+      "source_quote_start": 130,
+      "source_quote_end": 149,
+      "source_quote_sha256": "ba17dd1efb03ce5fd8667c85d584b942bab6179ba57b9a520d3c2cc35165ad10",
+      "statement": "The reported scheduling rollout covered the entire fleet.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_entire_fleet_rollout",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0509",
+      "sentence_id": "tex_prose_sentence_0171",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "Post-deployment measurements",
+      "source_quote_start": 0,
+      "source_quote_end": 28,
+      "source_quote_sha256": "f735a38335c8695e943be8702bae49d4870d387b458071121f7e33827eab5cc3",
+      "statement": "The reported scheduling result uses post-deployment measurements.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_post_deployment_confirms_simulator",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0510",
+      "sentence_id": "tex_prose_sentence_0171",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "across Google",
+      "source_quote_start": 29,
+      "source_quote_end": 42,
+      "source_quote_sha256": "1e94ff88d1faff92deaf805537d29c4f9092cdbfb3d77195d67a64e52f86e4d6",
+      "statement": "The post-deployment measurements span Google's fleet.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_post_deployment_confirms_simulator",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0511",
+      "sentence_id": "tex_prose_sentence_0171",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "confirmed the simulator results",
+      "source_quote_start": 51,
+      "source_quote_end": 82,
+      "source_quote_sha256": "edc95498b37e4cbf9e9ba195cd9da48929a7b3998c05a918f2e2dc3179a9574c",
+      "statement": "The post-deployment fleet measurements are reported to confirm simulator results.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_post_deployment_confirms_simulator",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0512",
+      "sentence_id": "tex_prose_sentence_0171",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "continuously recovers",
+      "source_quote_start": 123,
+      "source_quote_end": 144,
+      "source_quote_sha256": "9f3d3e9040b9ff5414766f2591641f6ea0a43d3e498b61271b18603768d4a175",
+      "statement": "The deployed heuristic is reported to recover resources continuously.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_continuous_average_point_7_percent_recovery",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0513",
+      "sentence_id": "tex_prose_sentence_0171",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "on average 0.7 percent",
+      "source_quote_start": 145,
+      "source_quote_end": 167,
+      "source_quote_sha256": "14b3afca0461f7358b18c905a8f88232fe903ad3a9fab141ccc228361a4c00b5",
+      "statement": "The reported average recovered-resource fraction is 0.7 percent.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_continuous_average_point_7_percent_recovery",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0514",
+      "sentence_id": "tex_prose_sentence_0171",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "fleet-wide compute resources",
+      "source_quote_start": 180,
+      "source_quote_end": 208,
+      "source_quote_sha256": "948fca59e7d29e0b0bb1488f06c958d266df46126a02b01d1a468721e5d9f883",
+      "statement": "The 0.7-percent recovery metric applies to fleet-wide compute resources.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_continuous_average_point_7_percent_recovery",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0515",
+      "sentence_id": "tex_prose_sentence_0171",
+      "sentence_proposition_ordinal": 7,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "which would otherwise be stranded",
+      "source_quote_start": 210,
+      "source_quote_end": 243,
+      "source_quote_sha256": "58d6a57c73d74dcb9a871d16e57e6e7483c7aabc5bf2e7cf2c0f649b2741d4c5",
+      "statement": "The recovered compute resources would otherwise be stranded.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_recovered_resources_otherwise_stranded",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0516",
+      "sentence_id": "tex_prose_sentence_0172",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "AlphaEvolve was chosen over a deep reinforcement learning approach",
+      "source_quote_start": 0,
+      "source_quote_end": 66,
+      "source_quote_sha256": "d3eecf7400f008c94effd6fac660eaf0db976969267d164628d95e185520862c",
+      "statement": "AlphaEvolve's code heuristic was selected over deep reinforcement learning.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_chosen_over_deep_reinforcement_learning",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0517",
+      "sentence_id": "tex_prose_sentence_0172",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "code solution",
+      "source_quote_start": 79,
+      "source_quote_end": 92,
+      "source_quote_sha256": "3fa3925d6d5035cfb2ffa719a80c3298e767d954da74b9c156d474002471c3b4",
+      "statement": "The selected AlphaEvolve scheduling output is a code solution.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_code_solution_better_performance",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0518",
+      "sentence_id": "tex_prose_sentence_0172",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "leads to better performance",
+      "source_quote_start": 102,
+      "source_quote_end": 129,
+      "source_quote_sha256": "aa249e7bd9db126b3b2088b15731034073f18d7f658a4fb2e1c4486e9cdb449c",
+      "statement": "The code solution is reported to outperform the deep-RL approach.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_code_solution_better_performance",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0519",
+      "sentence_id": "tex_prose_sentence_0172",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "interpretability",
+      "source_quote_start": 167,
+      "source_quote_end": 183,
+      "source_quote_sha256": "28aafeeb04ffd57db83a914b6e7e7a5202876e5b8a3fc6191a931d6a3bf7065a",
+      "statement": "Interpretability is a reported advantage of the code solution.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_interpretability_advantage",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0520",
+      "sentence_id": "tex_prose_sentence_0172",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "debuggability",
+      "source_quote_start": 185,
+      "source_quote_end": 198,
+      "source_quote_sha256": "1f75dc35a56447df8ffa432e7e6f81bc60da48b77aca950aa77837e1429bbf3a",
+      "statement": "Debuggability is a reported advantage of the code solution.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_debuggability_advantage",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0521",
+      "sentence_id": "tex_prose_sentence_0172",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "predictability",
+      "source_quote_start": 200,
+      "source_quote_end": 214,
+      "source_quote_sha256": "42237d6463e640a0f0d966919de9bf54c50651b63ac347416030fd4156273afa",
+      "statement": "Predictability is a reported advantage of the code solution.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_predictability_advantage",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0522",
+      "sentence_id": "tex_prose_sentence_0172",
+      "sentence_proposition_ordinal": 7,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "ease of deployment",
+      "source_quote_start": 220,
+      "source_quote_end": 238,
+      "source_quote_sha256": "dfce795319e81fea1f3a7d2b78228cb8e7b819fad8c3cd2057f807db3ce5c227",
+      "statement": "Ease of deployment is a reported advantage of the code solution.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_ease_of_deployment_advantage",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0523",
+      "sentence_id": "tex_prose_sentence_0172",
+      "sentence_proposition_ordinal": 8,
+      "source_file": "results.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "essential qualities for a mission-critical system",
+      "source_quote_start": 239,
+      "source_quote_end": 288,
+      "source_quote_sha256": "569a9347cbc24fd4f6cc9430b65a06455b3dadc2ccc3634f9e75ee64277ab20f",
+      "statement": "The reported operational advantages are characterized as essential for a mission-critical system.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "section3_3_1_mission_critical_operational_qualities",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
     }
   ],
   "inventory_scope": {
@@ -12369,16 +14838,17 @@
       "all 61 retained Methods sentences in methods.tex",
       "all 16 retained Section 3.1 matrix-result sentences in results.tex",
       "all 39 retained Section 3.2 sentences in results.tex",
+      "all 19 retained Section 3.3 opening and Section 3.3.1 scheduling sentences in results.tex",
       "manual atomic-proposition statements and exact rendered-source quote offsets",
       "resolved bounded-claim mappings or explicit context, outlook, and interpretation dispositions"
     ],
     "excluded": [
-      "the remaining 249 retained prose sentences",
+      "the remaining 230 retained prose sentences",
       "separately audited captions, tables, equations, listings, footnotes, and explicit math constructs",
       "independent second-reviewer semantic agreement",
       "mathematical correctness, citation sufficiency, image-pixel semantics, or result reproduction",
       "AlphaEvolve system parity"
     ]
   },
-  "claim_boundary": "This boundary records a single-reviewer atomic-proposition decomposition for every retained sentence from the Abstract through the complete Section 3.2 constructive-mathematics section. Complete disposition inside this 153-sentence scope does not cover the remaining 249 prose sentences and does not prove independent semantic exhaustiveness, mathematical correctness, result reproduction, or AlphaEvolve parity."
+  "claim_boundary": "This boundary records a single-reviewer atomic-proposition decomposition for every retained sentence from the Abstract through Section 3.3.1 data-center scheduling. Complete disposition inside this 172-sentence scope does not cover the remaining 230 prose sentences and does not prove independent semantic exhaustiveness, mathematical correctness, result reproduction, or AlphaEvolve parity."
 }

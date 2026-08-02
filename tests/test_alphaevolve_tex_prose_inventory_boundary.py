@@ -104,6 +104,12 @@ def test_tex_prose_inventory_maps_new_claims_and_disambiguates_repeated_anchors(
         "section3_1_most_table2_simple_initial_program",
         "section3_2_evolve_heuristics_not_direct_constructions",
         "section3_2_fast_objective_evaluations_common_in_math",
+        "section3_3_1_continuous_average_point_7_percent_recovery",
+        "section3_3_1_debuggability_advantage",
+        "section3_3_1_ease_of_deployment_advantage",
+        "section3_3_1_mission_critical_operational_qualities",
+        "section3_3_1_post_deployment_confirms_simulator",
+        "section3_3_1_predictability_advantage",
     } <= mapped_ids
     assert {
         ref["claim_id"] for ref in records[("main.tex", 34, 0)]["claim_refs"]
@@ -201,6 +207,24 @@ def test_tex_prose_inventory_maps_new_claims_and_disambiguates_repeated_anchors(
     } == {
         "section3_2_fast_objective_evaluations_common_in_math",
         "section3_2_iterative_refinement_strategy",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("results.tex", 119, 4)]["claim_refs"]
+    } == {
+        "section3_3_1_continuous_average_point_7_percent_recovery",
+        "section3_3_1_post_deployment_confirms_simulator",
+        "section3_3_1_recovered_resources_otherwise_stranded",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("results.tex", 119, 5)]["claim_refs"]
+    } == {
+        "section3_3_1_chosen_over_deep_reinforcement_learning",
+        "section3_3_1_code_solution_better_performance",
+        "section3_3_1_debuggability_advantage",
+        "section3_3_1_ease_of_deployment_advantage",
+        "section3_3_1_interpretability_advantage",
+        "section3_3_1_mission_critical_operational_qualities",
+        "section3_3_1_predictability_advantage",
     }
     assert [
         ref["claim_id"] for ref in records[("ablations.tex", 8, 3)]["claim_refs"]

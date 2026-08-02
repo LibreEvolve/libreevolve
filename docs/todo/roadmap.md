@@ -249,13 +249,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     inherits 34 source-detail and 75 table-cell dispositions and maps the
     remaining 200 constructs directly to existing bounded claim ids, with no
     unmapped or unresolved references and no new claims or parity credit. The
-    proposition inventory now reviews all 114 Abstract, Introduction, Methods,
-    and Section 3.1 matrix-result sentences as 297 atomic propositions, maps 267
-    through 287 references to 122 bounded claims, and classifies 30 as
-    context, outlook, or interpretation. Section 3.1 adds no new bounded claim
-    or parity credit, but repairs five sentence mappings for the gradient
-    baseline, prompt context, evaluation and hill-climb signals, near-integrality
-    prompting, and simple initial programs.
+    proposition inventory now reviews all 136 Abstract, Introduction, Methods,
+    Section 3.1 matrix-result, and Section 3.2 constructive-math overview/search-
+    methodology sentences as 382 atomic propositions, maps 345 through 365
+    references to 159 bounded claims, and classifies 37 as context, outlook, or
+    interpretation. The Section 3.2 methodology extension adds no new bounded
+    claim or parity credit, but repairs two sentence mappings for heuristic-
+    program evolution rather than direct constructions and fast objective
+    evaluations common in constructive mathematics.
     `papers/roadmap_source_span_disposition_boundary.json` now maps all 55
     named spans to ROADMAP section ids, phase buckets, local status, sidecars,
     and audit TODO links, and records that only the AlphaEvolve
@@ -285,9 +286,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     footnote constructs have dispositions, all 83 table rows and 240 cells have
     row/cell dispositions, all 8 code listings and 305 source lines have
     line-level dispositions; all 309 math constructs and 402 prose sentences
-    have dispositions; 297 propositions in 114 sentences through Section 3.1
-    are reviewed. The matrix remains incomplete
-    across the rest of the paper: 288 sentences
+    have dispositions; 382 propositions in 136 sentences through Section 3.2
+    constructive-math overview/search methodology are reviewed. The matrix
+    remains incomplete across the rest of the paper: 266 sentences
     still lack proposition review; it cannot prove
     local math/image/citation correctness and result reproduction;
     show TODO ownership for every gap and add an application matrix;

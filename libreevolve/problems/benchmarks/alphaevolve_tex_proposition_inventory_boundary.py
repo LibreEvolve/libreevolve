@@ -20,16 +20,16 @@ from libreevolve.problems.benchmarks.paper_bibliography import (
 
 
 ALPHAEVOLVE_TEX_PROPOSITION_INVENTORY_BOUNDARY_SCHEMA = (
-    "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v3"
+    "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v4"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "abstract_introduction_methods_and_matrix_results_proposition_review_complete_without_"
+    "abstract_through_section3_2_math_methodology_proposition_review_complete_without_"
     "remaining_paper_or_independent_semantic_exhaustiveness"
 )
-EXPECTED_REVIEWED_SENTENCE_COUNT = 114
-EXPECTED_PROPOSITION_COUNT = 297
+EXPECTED_REVIEWED_SENTENCE_COUNT = 136
+EXPECTED_PROPOSITION_COUNT = 382
 EXPECTED_REVIEWED_SENTENCE_IDS = tuple(
-    f"tex_prose_sentence_{ordinal:04d}" for ordinal in range(1, 115)
+    f"tex_prose_sentence_{ordinal:04d}" for ordinal in range(1, 137)
 )
 EXPECTED_NEW_BOUNDED_CLAIM_IDS = (
     "introduction_algorithm_search_outperforms_direct_solution_search",
@@ -49,6 +49,8 @@ EXPECTED_REPAIRED_SENTENCE_CLAIM_IDS = (
     "section3_1_most_table2_simple_initial_program",
     "section3_1_natural_language_near_integrality_prompt",
     "section3_1_standard_gradient_baseline_components",
+    "section3_2_evolve_heuristics_not_direct_constructions",
+    "section3_2_fast_objective_evaluations_common_in_math",
     "task_problem_specific_abstraction_choice",
 )
 
@@ -1930,6 +1932,558 @@ _PROPOSITION_SPECS.update(
     }
 )
 
+_PROPOSITION_SPECS.update(
+    {
+        "tex_prose_sentence_0115": (
+            _reviewed_context(
+                "A significant frontier in mathematical research",
+                "The discovery of optimized mathematical constructions is presented as an important research frontier.",
+                "The significance label is author framing rather than a separate implementation requirement.",
+                disposition="author_interpretation",
+            ),
+            _mapped(
+                "discovering objects or constructions",
+                "The constructive-math task class searches for mathematical objects or constructions.",
+                _ref(
+                    "math",
+                    "section3_2_optimal_near_optimal_construction_frontier",
+                ),
+            ),
+            _mapped(
+                "optimal, or near-optimal, properties according to some measure",
+                "Constructive-math candidates target optimal or near-optimal values under a declared measure.",
+                _ref(
+                    "math",
+                    "section3_2_optimal_near_optimal_construction_frontier",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0116": (
+            _mapped(
+                "finding dense packings of geometric shapes",
+                "Dense geometric packing is one constructive-math problem class.",
+                _ref("math", "section3_2_dense_geometric_packing_example"),
+            ),
+            _mapped(
+                "identifying functions or sets satisfying specific combinatorial",
+                "Functions or sets under combinatorial constraints form another problem class.",
+                _ref(
+                    "math",
+                    "section3_2_combinatorial_analytic_constraint_examples",
+                ),
+            ),
+            _mapped(
+                "analytic constraints",
+                "Functions or sets under analytic constraints form another problem class.",
+                _ref(
+                    "math",
+                    "section3_2_combinatorial_analytic_constraint_examples",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0117": (
+            _mapped(
+                "Progress often relies on finding a single construction",
+                "Progress on a constructive-math problem may depend on one construction.",
+                _ref(
+                    "math",
+                    "section3_2_single_construction_surpasses_known_examples",
+                ),
+            ),
+            _mapped(
+                "surpasses all previously known examples",
+                "The decisive construction surpasses every previously known example.",
+                _ref(
+                    "math",
+                    "section3_2_single_construction_surpasses_known_examples",
+                ),
+            ),
+            _mapped(
+                "establishing new lower",
+                "A superior construction can establish a new lower bound on the optimum.",
+                _ref("math", "section3_2_new_lower_or_upper_bound"),
+            ),
+            _mapped(
+                "upper bounds for the optimal value",
+                "A superior construction can establish a new upper bound on the optimum.",
+                _ref("math", "section3_2_new_lower_or_upper_bound"),
+            ),
+        ),
+        "tex_prose_sentence_0118": (
+            _reviewed_context(
+                "AlphaEvolve serves as a powerful tool",
+                "AlphaEvolve is characterized as a powerful constructive-math tool.",
+                "The qualitative power label is author interpretation; the search and result claims are mapped separately.",
+                disposition="author_interpretation",
+            ),
+            _mapped(
+                "for exploring",
+                "AlphaEvolve is used to explore constructive-math search spaces.",
+                _ref("math", "section3_2_vast_search_space_exploration"),
+            ),
+            _mapped(
+                "vast search space inherent in these problems",
+                "The targeted constructive-math problems have vast search spaces.",
+                _ref("math", "section3_2_vast_search_space_exploration"),
+            ),
+            _mapped(
+                "successfully tackling a diverse array of open mathematical challenges",
+                "AlphaEvolve is reported to tackle diverse open mathematical challenges successfully.",
+                _ref("math", "section3_2_diverse_open_challenges"),
+            ),
+        ),
+        "tex_prose_sentence_0119": (
+            _reviewed_context(
+                "To assess its capabilities",
+                "The constructive-math portfolio is presented as a capability assessment.",
+                "This states the experiment's purpose rather than an additional system requirement.",
+            ),
+            _mapped(
+                "a curated set",
+                "The mathematical evaluation portfolio is curated.",
+                _ref("math", "section3_2_over_fifty_problem_instances"),
+            ),
+            _mapped(
+                "over 50 mathematical problems",
+                "The reported portfolio contains more than 50 mathematical problems.",
+                _ref("math", "section3_2_over_fifty_problem_instances"),
+            ),
+            _mapped(
+                "more than five different branches of mathematics",
+                "The reported portfolio spans more than five mathematical branches.",
+                _ref("math", "section3_2_more_than_five_branches"),
+            ),
+            _mapped(
+                "including analysis",
+                "Analysis is one named portfolio branch.",
+                _ref("math", "section3_2_named_branch_examples"),
+            ),
+            _mapped(
+                "combinatorics",
+                "Combinatorics is one named portfolio branch.",
+                _ref("math", "section3_2_named_branch_examples"),
+            ),
+            _mapped(
+                "number theory",
+                "Number theory is one named portfolio branch.",
+                _ref("math", "section3_2_named_branch_examples"),
+            ),
+            _mapped(
+                "geometry",
+                "Geometry is one named portfolio branch.",
+                _ref("math", "section3_2_named_branch_examples"),
+            ),
+            _mapped(
+                "numerous specific parameter settings",
+                "The reported portfolio evaluates numerous parameter settings.",
+                _ref("math", "section3_2_numerous_parameter_settings"),
+            ),
+            _mapped(
+                "different dimensions",
+                "Different dimensions are one evaluated parameter family.",
+                _ref("math", "section3_2_numerous_parameter_settings"),
+            ),
+            _mapped(
+                "sizes",
+                "Different sizes are one evaluated parameter family.",
+                _ref("math", "section3_2_numerous_parameter_settings"),
+            ),
+        ),
+        "tex_prose_sentence_0120": (
+            _mapped(
+                "In 75 percent of the cases AlphaEvolve rediscovered the best known constructions",
+                "AlphaEvolve is reported to rediscover best-known constructions in 75 percent of cases.",
+                _ref("math", "section3_2_seventy_five_percent_rediscovery"),
+            ),
+            _mapped(
+                "in 20 percent of the cases it discovered a new object",
+                "AlphaEvolve is reported to discover a new object in 20 percent of cases.",
+                _ref("math", "section3_2_twenty_percent_sota_improvement"),
+            ),
+            _mapped(
+                "better than a previously known best construction",
+                "The reported new objects improve on previous best-known constructions.",
+                _ref("math", "section3_2_twenty_percent_sota_improvement"),
+            ),
+            _mapped(
+                "thereby improving the SOTA",
+                "The reported 20-percent cases improve the state of the art.",
+                _ref("math", "section3_2_twenty_percent_sota_improvement"),
+            ),
+        ),
+        "tex_prose_sentence_0121": (
+            _mapped(
+                "In all these cases, the initial starting point was a simple or a random construction",
+                "Every aggregate constructive-math case is reported to start from a simple or random construction.",
+                _ref("math", "section3_2_all_simple_or_random_starts"),
+            ),
+        ),
+        "tex_prose_sentence_0122": (
+            _mapped(
+                "These results underscore AlphaEvolve's broad potential",
+                "The reported results are presented as evidence of broad mathematical potential.",
+                _ref("math", "section3_2_broad_versatile_math_potential"),
+            ),
+            _mapped(
+                "a versatile tool for mathematical research",
+                "AlphaEvolve is presented as a versatile mathematical-research tool.",
+                _ref("math", "section3_2_broad_versatile_math_potential"),
+            ),
+        ),
+        "tex_prose_sentence_0123": (
+            _mapped(
+                "A significant advantage of the AlphaEvolve configuration used here is its versatility",
+                "The reported AlphaEvolve configuration claims versatility as a significant advantage.",
+                _ref("math", "section3_2_versatility_and_speed_advantage"),
+            ),
+            _mapped(
+                "speed of application",
+                "The reported AlphaEvolve configuration is claimed to be fast to apply.",
+                _ref("math", "section3_2_versatility_and_speed_advantage"),
+            ),
+        ),
+        "tex_prose_sentence_0124": (
+            _mapped(
+                "focused on evolving heuristic search programs",
+                "The core constructive-math methodology evolves heuristic search programs.",
+                _ref(
+                    "math",
+                    "section3_2_evolve_heuristics_not_direct_constructions",
+                ),
+            ),
+            _reviewed_context(
+                "detailed below",
+                "The prose points forward to the detailed search methodology.",
+                "This is document navigation rather than a separate implementation requirement.",
+            ),
+            _mapped(
+                "rapidly deployed",
+                "The constructive-math methodology is reported to deploy rapidly.",
+                _ref("math", "section3_2_rapid_deployment"),
+            ),
+            _mapped(
+                "a diverse range of mathematical construction problems",
+                "The methodology is reported to cover diverse construction problems.",
+                _ref(
+                    "math",
+                    "section3_2_diverse_constructions_and_conjectures",
+                ),
+            ),
+            _mapped(
+                "conjectures",
+                "The methodology is reported to cover mathematical conjectures.",
+                _ref(
+                    "math",
+                    "section3_2_diverse_constructions_and_conjectures",
+                ),
+            ),
+            _mapped(
+                "often requiring less initial problem-specific expert tailoring compared to traditional bespoke approaches",
+                "The methodology is reported often to need less initial task-specific expertise than bespoke approaches.",
+                _ref(
+                    "math",
+                    "section3_2_less_expert_tailoring_than_bespoke",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0125": (
+            _mapped(
+                "deep mathematical insight naturally aids in problem formulation",
+                "Deep mathematical expertise helps formulate constructive-math problems.",
+                _ref("math", "section3_2_deep_insight_aids_formulation"),
+            ),
+            _mapped(
+                "search space definition",
+                "Deep mathematical expertise helps define the search space.",
+                _ref("math", "section3_2_deep_insight_aids_formulation"),
+            ),
+            _mapped(
+                "often demonstrates a capacity to autonomously discover effective search patterns",
+                "AlphaEvolve is reported often to demonstrate autonomous discovery of effective search patterns.",
+                _ref(
+                    "math",
+                    "section3_2_autonomous_search_patterns_and_attack_strategies",
+                ),
+            ),
+            _mapped(
+                "attack strategies",
+                "AlphaEvolve is reported to discover effective attack strategies autonomously.",
+                _ref(
+                    "math",
+                    "section3_2_autonomous_search_patterns_and_attack_strategies",
+                ),
+            ),
+            _mapped(
+                "by identifying subtle structures within the problem landscape",
+                "The reported autonomous strategies arise from identifying subtle problem structure.",
+                _ref("math", "section3_2_identifies_subtle_structures"),
+            ),
+        ),
+        "tex_prose_sentence_0126": (
+            _mapped(
+                "This allows for",
+                "Autonomous pattern and structure discovery is claimed to enable the reported exploration regime.",
+                _ref("math", "section3_2_efficient_large_scale_exploration"),
+            ),
+            _mapped(
+                "efficient",
+                "The methodology is reported to explore mathematical problems efficiently.",
+                _ref("math", "section3_2_efficient_large_scale_exploration"),
+            ),
+            _mapped(
+                "large-scale exploration",
+                "The methodology is reported to support large-scale exploration.",
+                _ref("math", "section3_2_efficient_large_scale_exploration"),
+            ),
+            _mapped(
+                "across many different problems",
+                "The reported large-scale exploration spans many different problems.",
+                _ref("math", "section3_2_efficient_large_scale_exploration"),
+            ),
+        ),
+        "tex_prose_sentence_0127": (
+            _reviewed_context(
+                "The key methodological innovation enabling these discoveries",
+                "Heuristic-program evolution is characterized as the key enabler of the reported discoveries.",
+                "The key-enabler label is author interpretation; the actual search representation is mapped separately.",
+                disposition="author_interpretation",
+            ),
+            _mapped(
+                "evolve heuristic search algorithms",
+                "AlphaEvolve evolves heuristic search algorithms for constructive math.",
+                _ref(
+                    "math",
+                    "section3_2_evolve_heuristics_not_direct_constructions",
+                ),
+            ),
+            _mapped(
+                "rather than directly evolving the constructions themselves",
+                "The methodology evolves search heuristics instead of direct construction payloads.",
+                _ref(
+                    "math",
+                    "section3_2_evolve_heuristics_not_direct_constructions",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0128": (
+            _mapped(
+                "For many problems",
+                "The reported constructive-math setup uses iterative refinement across many problems.",
+                _ref("math", "section3_2_iterative_refinement_strategy"),
+            ),
+            _mapped(
+                "we employed an iterative refinement strategy",
+                "The constructive-math search uses an iterative refinement strategy.",
+                _ref("math", "section3_2_iterative_refinement_strategy"),
+            ),
+            _mapped(
+                "particularly those with fast objective function evaluations",
+                "Iterative refinement is particularly applicable when objective evaluation is fast.",
+                _ref(
+                    "math",
+                    "section3_2_fast_objective_evaluations_common_in_math",
+                ),
+            ),
+            _mapped(
+                "which are common in mathematics",
+                "Fast objective-function evaluations are reported to be common in mathematics.",
+                _ref(
+                    "math",
+                    "section3_2_fast_objective_evaluations_common_in_math",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0129": (
+            _mapped(
+                "Each generation of AlphaEvolve was tasked with evolving a program",
+                "Every generation evolves a program in the reported constructive-math setup.",
+                _ref(
+                    "math",
+                    "section3_2_each_generation_evolves_search_heuristic_program",
+                ),
+            ),
+            _mapped(
+                "representing a search heuristic",
+                "The evolved program represents a search heuristic.",
+                _ref(
+                    "math",
+                    "section3_2_each_generation_evolves_search_heuristic_program",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0130": (
+            _mapped(
+                "given a fixed time budget",
+                "Each evolved heuristic receives a fixed execution-time budget.",
+                _ref("math", "section3_2_fixed_time_budget_1000_seconds"),
+            ),
+            _mapped(
+                "1000 seconds",
+                "One reported fixed-budget example is 1000 seconds.",
+                _ref("math", "section3_2_fixed_time_budget_1000_seconds"),
+            ),
+            _mapped(
+                "shown the best construction",
+                "Each evolved heuristic receives an incumbent best construction.",
+                _ref("math", "section3_2_previous_best_construction_handoff"),
+            ),
+            _mapped(
+                "found by the previous best heuristic",
+                "The incumbent construction comes from the previous best heuristic.",
+                _ref("math", "section3_2_previous_best_construction_handoff"),
+            ),
+        ),
+        "tex_prose_sentence_0131": (
+            _mapped(
+                "leverage this starting point",
+                "The evolved heuristic starts from the handed-off incumbent construction.",
+                _ref("math", "section3_2_improve_starting_point_within_budget"),
+            ),
+            _mapped(
+                "the allotted time",
+                "The evolved heuristic must operate within its allotted time.",
+                _ref("math", "section3_2_improve_starting_point_within_budget"),
+            ),
+            _mapped(
+                "find an even better construction",
+                "The evolved heuristic aims to improve the incumbent construction.",
+                _ref("math", "section3_2_improve_starting_point_within_budget"),
+            ),
+        ),
+        "tex_prose_sentence_0132": (
+            _mapped(
+                "selects for heuristics",
+                "Evolution selects among constructive-math heuristics.",
+                _ref(
+                    "math",
+                    "section3_2_select_high_quality_solution_improvers",
+                ),
+            ),
+            _mapped(
+                "effective at improving",
+                "Heuristic selection favors demonstrated incumbent improvement.",
+                _ref(
+                    "math",
+                    "section3_2_select_high_quality_solution_improvers",
+                ),
+            ),
+            _mapped(
+                "already high-quality solutions",
+                "The selection target includes already high-quality incumbent solutions.",
+                _ref(
+                    "math",
+                    "section3_2_select_high_quality_solution_improvers",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0133": (
+            _mapped(
+                "final constructions were often the result of a sequence",
+                "Final constructions often result from an ordered heuristic sequence.",
+                _ref("math", "section3_2_sequence_of_specialized_heuristics"),
+            ),
+            _mapped(
+                "different, specialized heuristics",
+                "The reported sequence contains distinct specialized heuristics.",
+                _ref("math", "section3_2_sequence_of_specialized_heuristics"),
+            ),
+            _mapped(
+                "discovered by AlphaEvolve",
+                "AlphaEvolve discovers the specialized heuristic stages.",
+                _ref("math", "section3_2_sequence_of_specialized_heuristics"),
+            ),
+            _mapped(
+                "early heuristics proficient at making large gains",
+                "Early heuristic stages are reported to make large gains.",
+                _ref("math", "section3_2_early_broad_gain_heuristics"),
+            ),
+            _mapped(
+                "random",
+                "Early heuristic stages can begin from random states.",
+                _ref("math", "section3_2_early_broad_gain_heuristics"),
+            ),
+            _mapped(
+                "simple initial states",
+                "Early heuristic stages can begin from simple initial states.",
+                _ref("math", "section3_2_early_broad_gain_heuristics"),
+            ),
+            _mapped(
+                "later heuristics adept at fine-tuning",
+                "Later heuristic stages are reported to perform fine tuning.",
+                _ref("math", "section3_2_late_fine_tuning_heuristics"),
+            ),
+            _mapped(
+                "near-optimal configurations",
+                "Later heuristic stages target near-optimal configurations.",
+                _ref("math", "section3_2_late_fine_tuning_heuristics"),
+            ),
+        ),
+        "tex_prose_sentence_0134": (
+            _mapped(
+                "automated discovery",
+                "AlphaEvolve automates discovery of the reported search strategies.",
+                _ref(
+                    "math",
+                    "section3_2_multi_stage_strategy_hard_to_replicate_manually",
+                ),
+            ),
+            _mapped(
+                "multi-stage",
+                "The discovered search strategies contain multiple stages.",
+                _ref(
+                    "math",
+                    "section3_2_multi_stage_strategy_hard_to_replicate_manually",
+                ),
+            ),
+            _mapped(
+                "adaptive search strategies",
+                "The discovered multi-stage search strategies are adaptive.",
+                _ref(
+                    "math",
+                    "section3_2_multi_stage_strategy_hard_to_replicate_manually",
+                ),
+            ),
+            _mapped(
+                "challenging to replicate manually",
+                "The reported multi-stage strategies are difficult to reproduce manually.",
+                _ref(
+                    "math",
+                    "section3_2_multi_stage_strategy_hard_to_replicate_manually",
+                ),
+            ),
+            _mapped(
+                "proved crucial for surpassing the SOTA",
+                "The reported multi-stage strategies are claimed to be crucial for state-of-the-art gains.",
+                _ref("math", "section3_2_multi_stage_strategy_crucial_for_sota"),
+            ),
+        ),
+        "tex_prose_sentence_0135": (
+            _reviewed_context(
+                "Below are high-level descriptions",
+                "The prose introduces the following high-level result summaries.",
+                "This is document structure rather than a separate implementation requirement.",
+            ),
+            _reviewed_context(
+                "problems where AlphaEvolve yielded new results",
+                "The following examples are selected from problems with reported new results.",
+                "The specific result claims are dispositioned in the following sentences and result inventory.",
+            ),
+        ),
+        "tex_prose_sentence_0136": (
+            _mapped(
+                "Full list of problems",
+                "Appendix B is reported to contain the full mathematical problem list.",
+                _ref("math", "section3_2_full_list_and_details_in_appendix_b"),
+            ),
+            _mapped(
+                "details are provided in Appendix [citation]",
+                "Appendix B is reported to contain details for the mathematical problems.",
+                _ref("math", "section3_2_full_list_and_details_in_appendix_b"),
+            ),
+        ),
+    }
+)
+
 
 @dataclass(frozen=True)
 class AlphaEvolveTexPropositionInventoryBoundaryIssue:
@@ -1952,7 +2506,7 @@ class AlphaEvolveTexPropositionInventoryBoundaryValidation:
 def alphaevolve_tex_proposition_inventory_boundary_record(
     root: str | Path = ".",
 ) -> dict[str, Any]:
-    """Review atomic propositions through retained Section 3.1 matrix results."""
+    """Review atomic propositions through retained Section 3.2 methodology."""
 
     root_path = Path(root)
     prose = alphaevolve_tex_prose_inventory_boundary_record(root_path)
@@ -2157,11 +2711,12 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
                 "all 29 retained Introduction sentences in introduction.tex",
                 "all 61 retained Methods sentences in methods.tex",
                 "all 16 retained Section 3.1 matrix-result sentences in results.tex",
+                "all 22 retained Section 3.2 overview and methodology sentences in results.tex",
                 "manual atomic-proposition statements and exact rendered-source quote offsets",
                 "resolved bounded-claim mappings or explicit context, outlook, and interpretation dispositions",
             ],
             "excluded": [
-                "the remaining 288 retained prose sentences",
+                "the remaining 266 retained prose sentences",
                 "separately audited captions, tables, equations, listings, footnotes, and explicit math constructs",
                 "independent second-reviewer semantic agreement",
                 "mathematical correctness, citation sufficiency, image-pixel semantics, or result reproduction",
@@ -2170,9 +2725,9 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
         },
         "claim_boundary": (
             "This boundary records a single-reviewer atomic-proposition decomposition "
-            "for every retained Abstract, Introduction, Methods, and Section 3.1 matrix-result "
-            "sentence. Complete disposition inside this 114-sentence scope does not cover "
-            "the remaining 288 prose "
+            "for every retained sentence from the Abstract through the Section 3.2 "
+            "constructive-math overview and search methodology. Complete disposition "
+            "inside this 136-sentence scope does not cover the remaining 266 prose "
             "sentences and does not prove independent semantic exhaustiveness, "
             "mathematical correctness, result reproduction, or AlphaEvolve parity."
         ),
@@ -2217,7 +2772,7 @@ def validate_alphaevolve_tex_proposition_inventory_boundary(
         issues.append(
             _issue(
                 "review_scope_incomplete",
-                "Abstract through Section 3.1 matrix-result review scope is incomplete",
+                "Abstract through Section 3.2 methodology review scope is incomplete",
             )
         )
     for field in (

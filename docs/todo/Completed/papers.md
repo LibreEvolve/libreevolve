@@ -14766,3 +14766,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     verification, Sections 3.3.2-5, and AlphaEvolve parity remain unproven.
   - Verification: the paper manifest requires the sidecar and rejects source,
     count, status, reference, ownership, result-reproduction, and parity drift.
+
+- [x] Review AlphaEvolve Section 3.2 overview and search-methodology propositions.
+  - Paper evidence: 22 retained Section 3.2 sentences decompose into 85 atomic
+    propositions covering the constructive-math framing, heuristic-program
+    search, evaluator shape, examples, and collaboration context.
+  - Status: cumulative proposition coverage is 136 sentences and 382
+    propositions; 345 map through 365 references to 159 bounded claims and 37
+    are context, outlook, or interpretation. Two broad sentence mappings are
+    repaired, with no new bounded claim or parity credit.
+  - Remaining paper gap: 266 sentence propositions, independent semantic
+    agreement, mathematical/image/citation correctness, result reproduction,
+    and AlphaEvolve parity remain unproven.
+  - Verification: the paper manifest and focused tests reject source, count,
+    reference, mapping, TODO-ownership, and parity drift.

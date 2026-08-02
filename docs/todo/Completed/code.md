@@ -19811,3 +19811,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused inventory, implementation-map, ROADMAP coverage, and
     paper-manifest tests validate anchors, counts, references, TODO ownership,
     source wording, drift rejection, and result/parity disclaimers.
+
+- [x] Extend retained-TeX proposition evidence through Section 3.2 methodology.
+  - Status: the boundary reviews 22 constructive-math overview and search-
+    methodology sentences as 85 propositions, bringing the cumulative scope to
+    136 sentences and 382 propositions. Of those, 345 map through 365 references
+    to 159 bounded claims and 37 are context, outlook, or interpretation.
+  - Claim correction: two broad sentence mappings now include heuristic-program
+    evolution rather than direct constructions and fast objective evaluations
+    common in constructive mathematics. No bounded claim or parity credit is
+    added.
+  - Remaining code gap: proposition review for 266 prose sentences, independent
+    semantic review, mathematical/image/citation correctness, result
+    reproduction, and AlphaEvolve-scale execution remain open.
+  - Verification: focused proposition, prose, aggregate, TODO, and manifest
+    checks validate source spans, references, counts, drift rejection, and
+    non-parity boundaries.

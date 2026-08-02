@@ -16373,3 +16373,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     independent review, mathematical/image/citation semantics, result
     reproduction, joined application evidence, CI gates, and owner signoff
     remain open.
+
+- [x] Extend ROADMAP proposition evidence through Section 3.2 methodology.
+  - Status: ROADMAP disposition, coverage, exhaustiveness, and implementation-
+    evidence boundaries now link 382 atomic propositions across 136 retained
+    sentences through the Section 3.2 constructive-math overview and search
+    methodology.
+  - Accounting: the slice adds no bounded claim or parity credit and repairs
+    two sentence mappings. Aggregate coverage remains 846 bounded and 787
+    implementation-relevant claims, with 3.8% strict and 21.5% half-credit
+    parity.
+  - Remaining boundary: proposition review for 266 prose sentences,
+    independent review, mathematical/image/citation semantics, result
+    reproduction, joined application evidence, CI gates, and owner signoff
+    remain open.

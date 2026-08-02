@@ -1,7 +1,7 @@
 {
-  "schema": "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v3",
+  "schema": "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v4",
   "source_paper_id": "2506.13131",
-  "boundary_status": "abstract_introduction_methods_and_matrix_results_proposition_review_complete_without_remaining_paper_or_independent_semantic_exhaustiveness",
+  "boundary_status": "abstract_through_section3_2_math_methodology_proposition_review_complete_without_remaining_paper_or_independent_semantic_exhaustiveness",
   "source_prose_schema": "libreevolve.alphaevolve_tex_prose_inventory_boundary.v1",
   "source_prose_boundary_status": "retained_tex_paragraph_and_sentence_inventory_complete_without_semantic_clause_exhaustiveness",
   "source_prose_ready": true,
@@ -15,9 +15,9 @@
   "source_errors": [],
   "parse_errors": [],
   "source_sentence_count": 402,
-  "reviewed_sentence_count": 114,
-  "remaining_sentence_count": 288,
-  "reviewed_sentence_fraction": 0.2835820895522388,
+  "reviewed_sentence_count": 136,
+  "remaining_sentence_count": 266,
+  "reviewed_sentence_fraction": 0.3383084577114428,
   "reviewed_source_files": [
     "introduction.tex",
     "main.tex",
@@ -31,16 +31,16 @@
     "discussion.tex",
     "related_work.tex"
   ],
-  "proposition_count": 297,
+  "proposition_count": 382,
   "disposition_counts": {
-    "author_interpretation": 3,
+    "author_interpretation": 6,
     "author_outlook": 2,
-    "existing_bounded_claim_mapping": 267,
-    "source_context_only": 25
+    "existing_bounded_claim_mapping": 345,
+    "source_context_only": 29
   },
-  "claim_reference_count": 287,
-  "unique_claim_reference_count": 122,
-  "implementation_relevant_proposition_count": 257,
+  "claim_reference_count": 365,
+  "unique_claim_reference_count": 159,
+  "implementation_relevant_proposition_count": 335,
   "unmapped_proposition_count": 0,
   "unresolved_reference_count": 0,
   "new_bounded_claim_ids": [
@@ -61,6 +61,8 @@
     "section3_1_most_table2_simple_initial_program",
     "section3_1_natural_language_near_integrality_prompt",
     "section3_1_standard_gradient_baseline_components",
+    "section3_2_evolve_heuristics_not_direct_constructions",
+    "section3_2_fast_objective_evaluations_common_in_math",
     "task_problem_specific_abstraction_choice"
   ],
   "reviewed_sentence_records": [
@@ -1612,6 +1614,333 @@
         "tex_proposition_0295",
         "tex_proposition_0296",
         "tex_proposition_0297"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0115",
+      "source_file": "results.tex",
+      "source_line": 66,
+      "source_text_sha256": "4b02ff13ae3144b835b1cfd5e91b205b34092f5349dab22df0f3d11358a144b0",
+      "rendered_text_sha256": "3f8c8a3edb23903de901718219b7f31b8d2427ae695cad717f0d8a0aadc42151",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0298",
+        "tex_proposition_0299",
+        "tex_proposition_0300"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0116",
+      "source_file": "results.tex",
+      "source_line": 66,
+      "source_text_sha256": "5f552a07b81d42bae51a534c2f471172bd99dc3127e414df36b7e68259081a58",
+      "rendered_text_sha256": "07ebdca5329138ad634c54b4ce9ecccd87512607f25f1710d75c7866ff83d70b",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0301",
+        "tex_proposition_0302",
+        "tex_proposition_0303"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0117",
+      "source_file": "results.tex",
+      "source_line": 66,
+      "source_text_sha256": "110d3a60eec1f3f798e2097c6d895afd9a8c121a6d8eba916da45efc0b46f115",
+      "rendered_text_sha256": "110d3a60eec1f3f798e2097c6d895afd9a8c121a6d8eba916da45efc0b46f115",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0304",
+        "tex_proposition_0305",
+        "tex_proposition_0306",
+        "tex_proposition_0307"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0118",
+      "source_file": "results.tex",
+      "source_line": 66,
+      "source_text_sha256": "fa6cfef0547fa50cfc3bf11bf75b2ba7b7315990b57a2bd384c04ba63316e63d",
+      "rendered_text_sha256": "6e9b72f15a4a5c7c6d13052fe21d915ff8009fea47e4530a1d3c3942d2a19e7b",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0308",
+        "tex_proposition_0309",
+        "tex_proposition_0310",
+        "tex_proposition_0311"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0119",
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_text_sha256": "25dcdd02d12fd763532fc875ef7439a3c3a5d116409e5eec57dc752461884521",
+      "rendered_text_sha256": "1008960bdee9c41296e4e62d54404cfeec5093732d584475188a5f7866117e6b",
+      "proposition_count": 11,
+      "proposition_ids": [
+        "tex_proposition_0312",
+        "tex_proposition_0313",
+        "tex_proposition_0314",
+        "tex_proposition_0315",
+        "tex_proposition_0316",
+        "tex_proposition_0317",
+        "tex_proposition_0318",
+        "tex_proposition_0319",
+        "tex_proposition_0320",
+        "tex_proposition_0321",
+        "tex_proposition_0322"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0120",
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_text_sha256": "5b0c4290109d570d983012e48b71e83d69402c453b5f3f6bc79d291c4028a3f3",
+      "rendered_text_sha256": "ce23c4cfb0e9446dc1a3e26c315d2c9166ec954e3c5ded1fe3e937e4055879ba",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0323",
+        "tex_proposition_0324",
+        "tex_proposition_0325",
+        "tex_proposition_0326"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0121",
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_text_sha256": "e80bc4f1f3a5f5a92e52f7926d9db95c5d5cdd215ff8243ce35d7f014b201a0a",
+      "rendered_text_sha256": "e80bc4f1f3a5f5a92e52f7926d9db95c5d5cdd215ff8243ce35d7f014b201a0a",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0327"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0122",
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_text_sha256": "cc0e666b7a994b5a78cbdbcb0c4d0168ef380459b32bad2fb43a4a54f20b94f5",
+      "rendered_text_sha256": "abd5899a4a59ce749df9f75442d2ddb0a99bc2462352e59d7eed1081e25c2a55",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0328",
+        "tex_proposition_0329"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0123",
+      "source_file": "results.tex",
+      "source_line": 78,
+      "source_text_sha256": "ebf9b5ab017b5e1585d5590069c218d38389f62bf7fa81604292cb203e38fb58",
+      "rendered_text_sha256": "7a0e3973679ed7aba13365a78c29847cbbb112b8fb638759213061d50eba6c1e",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0330",
+        "tex_proposition_0331"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0124",
+      "source_file": "results.tex",
+      "source_line": 78,
+      "source_text_sha256": "66e8fd2ed4b477b08f1ea2a97489b5cc84bbb332f5f556cb85e72f883a9723c6",
+      "rendered_text_sha256": "66e8fd2ed4b477b08f1ea2a97489b5cc84bbb332f5f556cb85e72f883a9723c6",
+      "proposition_count": 6,
+      "proposition_ids": [
+        "tex_proposition_0332",
+        "tex_proposition_0333",
+        "tex_proposition_0334",
+        "tex_proposition_0335",
+        "tex_proposition_0336",
+        "tex_proposition_0337"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0125",
+      "source_file": "results.tex",
+      "source_line": 78,
+      "source_text_sha256": "39654ff231cd6136f9d4b3c9ce918b8b811c6aed76953c9c3a5486c9eb2a70e8",
+      "rendered_text_sha256": "52073c872ee02997610d1422a476c2a62b990fd63243944e9933db16232ff0ca",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0338",
+        "tex_proposition_0339",
+        "tex_proposition_0340",
+        "tex_proposition_0341",
+        "tex_proposition_0342"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0126",
+      "source_file": "results.tex",
+      "source_line": 78,
+      "source_text_sha256": "7232ee5608a8f24ecb7dbc6c8df013563b01c236299e2581d28b400fda204dde",
+      "rendered_text_sha256": "7232ee5608a8f24ecb7dbc6c8df013563b01c236299e2581d28b400fda204dde",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0343",
+        "tex_proposition_0344",
+        "tex_proposition_0345",
+        "tex_proposition_0346"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0127",
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_text_sha256": "2ed027736d9cdcdedac198d09065c131b7b4982e88b0d2ad86b8ec75f0912cbf",
+      "rendered_text_sha256": "f3d02ce92d1583f518c8b2e23cc8f67117a5ab8b74af64516d0247f92f2d2c9f",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0347",
+        "tex_proposition_0348",
+        "tex_proposition_0349"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0128",
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_text_sha256": "fbb92c258b7ddccc6a3288f14d6ee8cc84e68ff6eb4b5ece9bfeab363499d520",
+      "rendered_text_sha256": "fbb92c258b7ddccc6a3288f14d6ee8cc84e68ff6eb4b5ece9bfeab363499d520",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0350",
+        "tex_proposition_0351",
+        "tex_proposition_0352",
+        "tex_proposition_0353"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0129",
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_text_sha256": "243620dd65cc30924a06885e539e3bab18646a07ebb487cbe6459d64c4b32ba4",
+      "rendered_text_sha256": "d2c9e83eeaa5af89753a3c61afcda3d5689c0b7829eee448e336d5e883ec57f8",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0354",
+        "tex_proposition_0355"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0130",
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_text_sha256": "651ee490fcbcef182d2406cdf5b32ad63a343cec0f78011c62d635c9c6f3c4d6",
+      "rendered_text_sha256": "651ee490fcbcef182d2406cdf5b32ad63a343cec0f78011c62d635c9c6f3c4d6",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0356",
+        "tex_proposition_0357",
+        "tex_proposition_0358",
+        "tex_proposition_0359"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0131",
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_text_sha256": "b637195b855e5c6a7faafafa04ea26cdacbcdc5d616e9c996be050a08c1a04b3",
+      "rendered_text_sha256": "b637195b855e5c6a7faafafa04ea26cdacbcdc5d616e9c996be050a08c1a04b3",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0360",
+        "tex_proposition_0361",
+        "tex_proposition_0362"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0132",
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_text_sha256": "72c2b2734c8542b88891b90b10b9ec22e5b07e5860613db97121899ade02e856",
+      "rendered_text_sha256": "72c2b2734c8542b88891b90b10b9ec22e5b07e5860613db97121899ade02e856",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0363",
+        "tex_proposition_0364",
+        "tex_proposition_0365"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0133",
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_text_sha256": "66bd6d5e5a1db79e51d492e227642be3c73c5f6f556ba44e60417f645cf5051a",
+      "rendered_text_sha256": "dca71a2c3344de14ba1d8f46b239973608366e00cb4e0930c3f866198a5b4f1d",
+      "proposition_count": 8,
+      "proposition_ids": [
+        "tex_proposition_0366",
+        "tex_proposition_0367",
+        "tex_proposition_0368",
+        "tex_proposition_0369",
+        "tex_proposition_0370",
+        "tex_proposition_0371",
+        "tex_proposition_0372",
+        "tex_proposition_0373"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0134",
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_text_sha256": "72e3645475bf58367b68f3a543ce3d5bfa0b031a56025ea1f799674e9b6e0a28",
+      "rendered_text_sha256": "72e3645475bf58367b68f3a543ce3d5bfa0b031a56025ea1f799674e9b6e0a28",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0374",
+        "tex_proposition_0375",
+        "tex_proposition_0376",
+        "tex_proposition_0377",
+        "tex_proposition_0378"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0135",
+      "source_file": "results.tex",
+      "source_line": 82,
+      "source_text_sha256": "a4e7a6f3d45eefdd5a894ff53686e472d041f52f06ee24ee88ecba78269cc890",
+      "rendered_text_sha256": "08c7bedf4657e3a9cfa2809e387860c3622f19ce1fe44cdbb82d19ae12984dc2",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0379",
+        "tex_proposition_0380"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0136",
+      "source_file": "results.tex",
+      "source_line": 82,
+      "source_text_sha256": "dcd9e5458689ff97b2e18c138bac02738c7417e5ab62f7a60a6a8958c7dea227",
+      "rendered_text_sha256": "babf98dc860b0865f20724fa4fa20f55367074bdbe777816b4eba74a4d9227df",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0381",
+        "tex_proposition_0382"
       ],
       "review_status": "manual_static_semantic_decomposition_complete"
     }
@@ -8654,6 +8983,1997 @@
       ],
       "implementation_relevant": true,
       "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0298",
+      "sentence_id": "tex_prose_sentence_0115",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 66,
+      "source_end_line": 66,
+      "source_quote": "A significant frontier in mathematical research",
+      "source_quote_start": 0,
+      "source_quote_end": 47,
+      "source_quote_sha256": "90d1b4165a7a513d7f751503ed99a82321436b739b5f97c563a7e089eb5ada19",
+      "statement": "The discovery of optimized mathematical constructions is presented as an important research frontier.",
+      "disposition": "author_interpretation",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "The significance label is author framing rather than a separate implementation requirement."
+    },
+    {
+      "proposition_id": "tex_proposition_0299",
+      "sentence_id": "tex_prose_sentence_0115",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 66,
+      "source_end_line": 66,
+      "source_quote": "discovering objects or constructions",
+      "source_quote_start": 57,
+      "source_quote_end": 93,
+      "source_quote_sha256": "4d80878291f19d0a928ea84d0ce5d917e7d3d533a8ff38dfba370feead8a85ed",
+      "statement": "The constructive-math task class searches for mathematical objects or constructions.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_optimal_near_optimal_construction_frontier",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0300",
+      "sentence_id": "tex_prose_sentence_0115",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 66,
+      "source_end_line": 66,
+      "source_quote": "optimal, or near-optimal, properties according to some measure",
+      "source_quote_start": 107,
+      "source_quote_end": 169,
+      "source_quote_sha256": "24e70d02f3bdef4103a59934ae3f00d7de3d72de0442756d1e211ff840467189",
+      "statement": "Constructive-math candidates target optimal or near-optimal values under a declared measure.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_optimal_near_optimal_construction_frontier",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0301",
+      "sentence_id": "tex_prose_sentence_0116",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 66,
+      "source_end_line": 66,
+      "source_quote": "finding dense packings of geometric shapes",
+      "source_quote_start": 20,
+      "source_quote_end": 62,
+      "source_quote_sha256": "35c12818d5984d4c734769854ae00367a2330b5514aa6eb8b161142b2e9c79b3",
+      "statement": "Dense geometric packing is one constructive-math problem class.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_dense_geometric_packing_example",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0302",
+      "sentence_id": "tex_prose_sentence_0116",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 66,
+      "source_end_line": 66,
+      "source_quote": "identifying functions or sets satisfying specific combinatorial",
+      "source_quote_start": 77,
+      "source_quote_end": 140,
+      "source_quote_sha256": "dd9db403c8ebb8df1f5b6097483977bbea4c0a7361b50ffe23d83f91bd28b66d",
+      "statement": "Functions or sets under combinatorial constraints form another problem class.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_combinatorial_analytic_constraint_examples",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0303",
+      "sentence_id": "tex_prose_sentence_0116",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 66,
+      "source_end_line": 66,
+      "source_quote": "analytic constraints",
+      "source_quote_start": 144,
+      "source_quote_end": 164,
+      "source_quote_sha256": "ac9f8ebcbedb6a7e6268273ea3e0abac0c1087b07c1301ceeeb6722350422074",
+      "statement": "Functions or sets under analytic constraints form another problem class.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_combinatorial_analytic_constraint_examples",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0304",
+      "sentence_id": "tex_prose_sentence_0117",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 66,
+      "source_end_line": 66,
+      "source_quote": "Progress often relies on finding a single construction",
+      "source_quote_start": 0,
+      "source_quote_end": 54,
+      "source_quote_sha256": "74cef721a06021654a0566f7163cb201321936c1f97b1c56b6cbf09d8ad1b0bf",
+      "statement": "Progress on a constructive-math problem may depend on one construction.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_single_construction_surpasses_known_examples",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0305",
+      "sentence_id": "tex_prose_sentence_0117",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 66,
+      "source_end_line": 66,
+      "source_quote": "surpasses all previously known examples",
+      "source_quote_start": 60,
+      "source_quote_end": 99,
+      "source_quote_sha256": "4e3bfcd3cf04769ebbbe21ee83dd4e94af52c8f13d5075b768323cb0715e4bfa",
+      "statement": "The decisive construction surpasses every previously known example.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_single_construction_surpasses_known_examples",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0306",
+      "sentence_id": "tex_prose_sentence_0117",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 66,
+      "source_end_line": 66,
+      "source_quote": "establishing new lower",
+      "source_quote_start": 109,
+      "source_quote_end": 131,
+      "source_quote_sha256": "d98add86bbe5cef4db6c166497f14e260151c129f45bd985ff23df38634f9a82",
+      "statement": "A superior construction can establish a new lower bound on the optimum.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_new_lower_or_upper_bound",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0307",
+      "sentence_id": "tex_prose_sentence_0117",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 66,
+      "source_end_line": 66,
+      "source_quote": "upper bounds for the optimal value",
+      "source_quote_start": 135,
+      "source_quote_end": 169,
+      "source_quote_sha256": "097e08e8fc878d8842280a228f6fc7575db0745d0461b91f5175533c0ba9bfba",
+      "statement": "A superior construction can establish a new upper bound on the optimum.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_new_lower_or_upper_bound",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0308",
+      "sentence_id": "tex_prose_sentence_0118",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 66,
+      "source_end_line": 66,
+      "source_quote": "AlphaEvolve serves as a powerful tool",
+      "source_quote_start": 20,
+      "source_quote_end": 57,
+      "source_quote_sha256": "e6036caa7b1a9233420b2068e7d33e2fa067614a7650082036913f8d6a052c6e",
+      "statement": "AlphaEvolve is characterized as a powerful constructive-math tool.",
+      "disposition": "author_interpretation",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "The qualitative power label is author interpretation; the search and result claims are mapped separately."
+    },
+    {
+      "proposition_id": "tex_proposition_0309",
+      "sentence_id": "tex_prose_sentence_0118",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 66,
+      "source_end_line": 66,
+      "source_quote": "for exploring",
+      "source_quote_start": 58,
+      "source_quote_end": 71,
+      "source_quote_sha256": "cfe995d3ae3b4bf45097e8c1f03edb9802b1b1ffd8c3c312f98711719e1f445d",
+      "statement": "AlphaEvolve is used to explore constructive-math search spaces.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_vast_search_space_exploration",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0310",
+      "sentence_id": "tex_prose_sentence_0118",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 66,
+      "source_end_line": 66,
+      "source_quote": "vast search space inherent in these problems",
+      "source_quote_start": 76,
+      "source_quote_end": 120,
+      "source_quote_sha256": "07eb15568b7a368b8057a6882bc136570b856ff9acb0fb39b2cd8f6c262013f2",
+      "statement": "The targeted constructive-math problems have vast search spaces.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_vast_search_space_exploration",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0311",
+      "sentence_id": "tex_prose_sentence_0118",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 66,
+      "source_end_line": 66,
+      "source_quote": "successfully tackling a diverse array of open mathematical challenges",
+      "source_quote_start": 122,
+      "source_quote_end": 191,
+      "source_quote_sha256": "049e006a35cdbc4194b8706826098905a60869577798b89dd3f426a02e8c3048",
+      "statement": "AlphaEvolve is reported to tackle diverse open mathematical challenges successfully.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_diverse_open_challenges",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0312",
+      "sentence_id": "tex_prose_sentence_0119",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_end_line": 68,
+      "source_quote": "To assess its capabilities",
+      "source_quote_start": 0,
+      "source_quote_end": 26,
+      "source_quote_sha256": "2c340f6115469b11d4e9b6475fb79092d5785a09babbb29e8bb2eb458cc8ff3e",
+      "statement": "The constructive-math portfolio is presented as a capability assessment.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This states the experiment's purpose rather than an additional system requirement."
+    },
+    {
+      "proposition_id": "tex_proposition_0313",
+      "sentence_id": "tex_prose_sentence_0119",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_end_line": 68,
+      "source_quote": "a curated set",
+      "source_quote_start": 52,
+      "source_quote_end": 65,
+      "source_quote_sha256": "af8ab469e1878c7cae9c17437596e4250099b28a13e315674f134129602c0545",
+      "statement": "The mathematical evaluation portfolio is curated.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_over_fifty_problem_instances",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0314",
+      "sentence_id": "tex_prose_sentence_0119",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_end_line": 68,
+      "source_quote": "over 50 mathematical problems",
+      "source_quote_start": 69,
+      "source_quote_end": 98,
+      "source_quote_sha256": "0394486e1f635d58f2cf7f72dfa9311e674e485d981b9466469677e6e2c1f363",
+      "statement": "The reported portfolio contains more than 50 mathematical problems.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_over_fifty_problem_instances",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0315",
+      "sentence_id": "tex_prose_sentence_0119",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_end_line": 68,
+      "source_quote": "more than five different branches of mathematics",
+      "source_quote_start": 109,
+      "source_quote_end": 157,
+      "source_quote_sha256": "ed7d322a07e660ec8d712db392ad78e1f1e7b5c101ed957f6f2d5607cd0d67be",
+      "statement": "The reported portfolio spans more than five mathematical branches.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_more_than_five_branches",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0316",
+      "sentence_id": "tex_prose_sentence_0119",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_end_line": 68,
+      "source_quote": "including analysis",
+      "source_quote_start": 159,
+      "source_quote_end": 177,
+      "source_quote_sha256": "f35a230120f85b97c7be138c7dea5fa758b88913b5a656b5f3caccdc760a6d88",
+      "statement": "Analysis is one named portfolio branch.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_named_branch_examples",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0317",
+      "sentence_id": "tex_prose_sentence_0119",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_end_line": 68,
+      "source_quote": "combinatorics",
+      "source_quote_start": 179,
+      "source_quote_end": 192,
+      "source_quote_sha256": "f281ff02ec7ca8fd9658d215c363d035188c056526a15c2f445e28eb64b51fc0",
+      "statement": "Combinatorics is one named portfolio branch.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_named_branch_examples",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0318",
+      "sentence_id": "tex_prose_sentence_0119",
+      "sentence_proposition_ordinal": 7,
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_end_line": 68,
+      "source_quote": "number theory",
+      "source_quote_start": 194,
+      "source_quote_end": 207,
+      "source_quote_sha256": "a82d9086889a25f8eee60f04a6a2c7f6b045b2a4063a9d5fe3f2336bc16ac7b7",
+      "statement": "Number theory is one named portfolio branch.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_named_branch_examples",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0319",
+      "sentence_id": "tex_prose_sentence_0119",
+      "sentence_proposition_ordinal": 8,
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_end_line": 68,
+      "source_quote": "geometry",
+      "source_quote_start": 213,
+      "source_quote_end": 221,
+      "source_quote_sha256": "8148b7fefaf89ebf8e7951994d2601d731220c5460faecc64c69d12bb7ff3213",
+      "statement": "Geometry is one named portfolio branch.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_named_branch_examples",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0320",
+      "sentence_id": "tex_prose_sentence_0119",
+      "sentence_proposition_ordinal": 9,
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_end_line": 68,
+      "source_quote": "numerous specific parameter settings",
+      "source_quote_start": 240,
+      "source_quote_end": 276,
+      "source_quote_sha256": "035d8a06ead98528868c0dda9df0c34ab27ae0c319538eaba0b13418d95eb1ec",
+      "statement": "The reported portfolio evaluates numerous parameter settings.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_numerous_parameter_settings",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0321",
+      "sentence_id": "tex_prose_sentence_0119",
+      "sentence_proposition_ordinal": 10,
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_end_line": 68,
+      "source_quote": "different dimensions",
+      "source_quote_start": 284,
+      "source_quote_end": 304,
+      "source_quote_sha256": "6802aa5abcaa0c6c63e1e1d0b3d7d8b1fd009017dcedf2b042b48dd3a491109a",
+      "statement": "Different dimensions are one evaluated parameter family.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_numerous_parameter_settings",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0322",
+      "sentence_id": "tex_prose_sentence_0119",
+      "sentence_proposition_ordinal": 11,
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_end_line": 68,
+      "source_quote": "sizes",
+      "source_quote_start": 308,
+      "source_quote_end": 313,
+      "source_quote_sha256": "7c69f3fafb1de73240ddf04c6cb1bd0de86f3335aad885268631bfa5f7503e64",
+      "statement": "Different sizes are one evaluated parameter family.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_numerous_parameter_settings",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0323",
+      "sentence_id": "tex_prose_sentence_0120",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_end_line": 68,
+      "source_quote": "In 75 percent of the cases AlphaEvolve rediscovered the best known constructions",
+      "source_quote_start": 0,
+      "source_quote_end": 80,
+      "source_quote_sha256": "9d087657435e1209bed8c646586d72a5e84edc5738972f10f43afcabf6747500",
+      "statement": "AlphaEvolve is reported to rediscover best-known constructions in 75 percent of cases.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_seventy_five_percent_rediscovery",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0324",
+      "sentence_id": "tex_prose_sentence_0120",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_end_line": 68,
+      "source_quote": "in 20 percent of the cases it discovered a new object",
+      "source_quote_start": 86,
+      "source_quote_end": 139,
+      "source_quote_sha256": "3f24078d21d85ab85c86268742cf734becfcc5d72f303e2e638714882c9e9d0c",
+      "statement": "AlphaEvolve is reported to discover a new object in 20 percent of cases.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_twenty_percent_sota_improvement",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0325",
+      "sentence_id": "tex_prose_sentence_0120",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_end_line": 68,
+      "source_quote": "better than a previously known best construction",
+      "source_quote_start": 148,
+      "source_quote_end": 196,
+      "source_quote_sha256": "e244bf410b7af58b245433c998f8e3ebeb95de3cf42789cbbde3bcee2f276d51",
+      "statement": "The reported new objects improve on previous best-known constructions.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_twenty_percent_sota_improvement",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0326",
+      "sentence_id": "tex_prose_sentence_0120",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_end_line": 68,
+      "source_quote": "thereby improving the SOTA",
+      "source_quote_start": 198,
+      "source_quote_end": 224,
+      "source_quote_sha256": "8e1dd05f6fde6cc047097429e74dae712360508478f84120c997234061d543a6",
+      "statement": "The reported 20-percent cases improve the state of the art.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_twenty_percent_sota_improvement",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0327",
+      "sentence_id": "tex_prose_sentence_0121",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_end_line": 68,
+      "source_quote": "In all these cases, the initial starting point was a simple or a random construction",
+      "source_quote_start": 0,
+      "source_quote_end": 84,
+      "source_quote_sha256": "f90f462288c379be7b77cd9ab8ddaef7b0ee6e0d300d114f13e8ec44a0c9f60b",
+      "statement": "Every aggregate constructive-math case is reported to start from a simple or random construction.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_all_simple_or_random_starts",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0328",
+      "sentence_id": "tex_prose_sentence_0122",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_end_line": 68,
+      "source_quote": "These results underscore AlphaEvolve's broad potential",
+      "source_quote_start": 0,
+      "source_quote_end": 54,
+      "source_quote_sha256": "bedc7de027a5bf0785c07ed6d2f83d95b71a66dc52b81db7ab4ec02de0763abf",
+      "statement": "The reported results are presented as evidence of broad mathematical potential.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_broad_versatile_math_potential",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0329",
+      "sentence_id": "tex_prose_sentence_0122",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 68,
+      "source_end_line": 68,
+      "source_quote": "a versatile tool for mathematical research",
+      "source_quote_start": 58,
+      "source_quote_end": 100,
+      "source_quote_sha256": "3f19b2d857ae16f2cb2f905b3a208d2b036865cfc4a2687f07e860d74edb27ab",
+      "statement": "AlphaEvolve is presented as a versatile mathematical-research tool.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_broad_versatile_math_potential",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0330",
+      "sentence_id": "tex_prose_sentence_0123",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 78,
+      "source_end_line": 78,
+      "source_quote": "A significant advantage of the AlphaEvolve configuration used here is its versatility",
+      "source_quote_start": 0,
+      "source_quote_end": 85,
+      "source_quote_sha256": "818d2ff08c1dda0ef82b4905d71d8fa15fd131ab680458dc3bb60f208df1f6e9",
+      "statement": "The reported AlphaEvolve configuration claims versatility as a significant advantage.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_versatility_and_speed_advantage",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0331",
+      "sentence_id": "tex_prose_sentence_0123",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 78,
+      "source_end_line": 78,
+      "source_quote": "speed of application",
+      "source_quote_start": 90,
+      "source_quote_end": 110,
+      "source_quote_sha256": "3f40b7b4276d4d807e34793d16536a99d815e6535d3adcee32177798c4bf8513",
+      "statement": "The reported AlphaEvolve configuration is claimed to be fast to apply.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_versatility_and_speed_advantage",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0332",
+      "sentence_id": "tex_prose_sentence_0124",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 78,
+      "source_end_line": 78,
+      "source_quote": "focused on evolving heuristic search programs",
+      "source_quote_start": 22,
+      "source_quote_end": 67,
+      "source_quote_sha256": "fff5136fa60e1cadb6152507bf37a1dec167b6f084ee31d0bdc2b383b457b9b9",
+      "statement": "The core constructive-math methodology evolves heuristic search programs.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_evolve_heuristics_not_direct_constructions",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0333",
+      "sentence_id": "tex_prose_sentence_0124",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 78,
+      "source_end_line": 78,
+      "source_quote": "detailed below",
+      "source_quote_start": 69,
+      "source_quote_end": 83,
+      "source_quote_sha256": "ef85089e3009f6a5088a4d1028066757fec4f645b47caa7b13e8242c6f2bdbeb",
+      "statement": "The prose points forward to the detailed search methodology.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This is document navigation rather than a separate implementation requirement."
+    },
+    {
+      "proposition_id": "tex_proposition_0334",
+      "sentence_id": "tex_prose_sentence_0124",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 78,
+      "source_end_line": 78,
+      "source_quote": "rapidly deployed",
+      "source_quote_start": 93,
+      "source_quote_end": 109,
+      "source_quote_sha256": "19c6fef4732980832f17d2848855ef206c276ce7bbbe935af91a34f51663128b",
+      "statement": "The constructive-math methodology is reported to deploy rapidly.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_rapid_deployment",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0335",
+      "sentence_id": "tex_prose_sentence_0124",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 78,
+      "source_end_line": 78,
+      "source_quote": "a diverse range of mathematical construction problems",
+      "source_quote_start": 117,
+      "source_quote_end": 170,
+      "source_quote_sha256": "28c814d0c8a089aa111cbea9c59573807500fc8935c18047a69ffc99a90b8990",
+      "statement": "The methodology is reported to cover diverse construction problems.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_diverse_constructions_and_conjectures",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0336",
+      "sentence_id": "tex_prose_sentence_0124",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 78,
+      "source_end_line": 78,
+      "source_quote": "conjectures",
+      "source_quote_start": 175,
+      "source_quote_end": 186,
+      "source_quote_sha256": "9ef87ee0d78f5a11fe2518f8e12be924b2365ef9c4897d22dab70b35205da3e7",
+      "statement": "The methodology is reported to cover mathematical conjectures.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_diverse_constructions_and_conjectures",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0337",
+      "sentence_id": "tex_prose_sentence_0124",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 78,
+      "source_end_line": 78,
+      "source_quote": "often requiring less initial problem-specific expert tailoring compared to traditional bespoke approaches",
+      "source_quote_start": 188,
+      "source_quote_end": 293,
+      "source_quote_sha256": "2a738ee5f6300d96544de8099b6844acfa4499fa6c65331cc0f477aada44f90c",
+      "statement": "The methodology is reported often to need less initial task-specific expertise than bespoke approaches.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_less_expert_tailoring_than_bespoke",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0338",
+      "sentence_id": "tex_prose_sentence_0125",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 78,
+      "source_end_line": 78,
+      "source_quote": "deep mathematical insight naturally aids in problem formulation",
+      "source_quote_start": 6,
+      "source_quote_end": 69,
+      "source_quote_sha256": "dffd7320b6dc36c343d124600e1d7b2f48c58ea20d96bb470e1e659c0c147619",
+      "statement": "Deep mathematical expertise helps formulate constructive-math problems.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_deep_insight_aids_formulation",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0339",
+      "sentence_id": "tex_prose_sentence_0125",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 78,
+      "source_end_line": 78,
+      "source_quote": "search space definition",
+      "source_quote_start": 74,
+      "source_quote_end": 97,
+      "source_quote_sha256": "b89d73a5e38704b840eafb4b4f988814e165304176ab5001e2be1767a0a70add",
+      "statement": "Deep mathematical expertise helps define the search space.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_deep_insight_aids_formulation",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0340",
+      "sentence_id": "tex_prose_sentence_0125",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 78,
+      "source_end_line": 78,
+      "source_quote": "often demonstrates a capacity to autonomously discover effective search patterns",
+      "source_quote_start": 111,
+      "source_quote_end": 191,
+      "source_quote_sha256": "9b881902501c5e3180f898d6a7585193fea131f5eb242f31ab88929becd70ab8",
+      "statement": "AlphaEvolve is reported often to demonstrate autonomous discovery of effective search patterns.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_autonomous_search_patterns_and_attack_strategies",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0341",
+      "sentence_id": "tex_prose_sentence_0125",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 78,
+      "source_end_line": 78,
+      "source_quote": "attack strategies",
+      "source_quote_start": 196,
+      "source_quote_end": 213,
+      "source_quote_sha256": "34371456b69328cd182db3918dc96582af71f64dc333d3717505e8b12a1084fb",
+      "statement": "AlphaEvolve is reported to discover effective attack strategies autonomously.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_autonomous_search_patterns_and_attack_strategies",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0342",
+      "sentence_id": "tex_prose_sentence_0125",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 78,
+      "source_end_line": 78,
+      "source_quote": "by identifying subtle structures within the problem landscape",
+      "source_quote_start": 214,
+      "source_quote_end": 275,
+      "source_quote_sha256": "55ae47c4574068ba0605778577aff1ae06eb9c0411090e7f121fd27418748d8b",
+      "statement": "The reported autonomous strategies arise from identifying subtle problem structure.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_identifies_subtle_structures",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0343",
+      "sentence_id": "tex_prose_sentence_0126",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 78,
+      "source_end_line": 78,
+      "source_quote": "This allows for",
+      "source_quote_start": 0,
+      "source_quote_end": 15,
+      "source_quote_sha256": "67758b08966eb4dd203c9cc94ac07906753fb9add092357596a25e76cee217b3",
+      "statement": "Autonomous pattern and structure discovery is claimed to enable the reported exploration regime.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_efficient_large_scale_exploration",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0344",
+      "sentence_id": "tex_prose_sentence_0126",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 78,
+      "source_end_line": 78,
+      "source_quote": "efficient",
+      "source_quote_start": 16,
+      "source_quote_end": 25,
+      "source_quote_sha256": "480e4f1d08e9079c05c0b2eeb1fb269cf2164678979891f0780ee9dd33f190e8",
+      "statement": "The methodology is reported to explore mathematical problems efficiently.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_efficient_large_scale_exploration",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0345",
+      "sentence_id": "tex_prose_sentence_0126",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 78,
+      "source_end_line": 78,
+      "source_quote": "large-scale exploration",
+      "source_quote_start": 27,
+      "source_quote_end": 50,
+      "source_quote_sha256": "8ed1bfd88b1b85369d67efddc0e6b439d493bf9e97a261d5312f255393f1877e",
+      "statement": "The methodology is reported to support large-scale exploration.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_efficient_large_scale_exploration",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0346",
+      "sentence_id": "tex_prose_sentence_0126",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 78,
+      "source_end_line": 78,
+      "source_quote": "across many different problems",
+      "source_quote_start": 51,
+      "source_quote_end": 81,
+      "source_quote_sha256": "30eb6bab3cbca529e933c5f0cce410aceab5c0ea60b17177261b408d22c9143e",
+      "statement": "The reported large-scale exploration spans many different problems.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_efficient_large_scale_exploration",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0347",
+      "sentence_id": "tex_prose_sentence_0127",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "The key methodological innovation enabling these discoveries",
+      "source_quote_start": 0,
+      "source_quote_end": 60,
+      "source_quote_sha256": "c05080b4627edde44f2f93d62375cb60d574e1e2dd8996ec30a27f766e65533e",
+      "statement": "Heuristic-program evolution is characterized as the key enabler of the reported discoveries.",
+      "disposition": "author_interpretation",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "The key-enabler label is author interpretation; the actual search representation is mapped separately."
+    },
+    {
+      "proposition_id": "tex_proposition_0348",
+      "sentence_id": "tex_prose_sentence_0127",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "evolve heuristic search algorithms",
+      "source_quote_start": 89,
+      "source_quote_end": 123,
+      "source_quote_sha256": "da9e96f3598777b294f8e22ec59a14523b8a0528c33bbf453d45a31e1a07adbb",
+      "statement": "AlphaEvolve evolves heuristic search algorithms for constructive math.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_evolve_heuristics_not_direct_constructions",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0349",
+      "sentence_id": "tex_prose_sentence_0127",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "rather than directly evolving the constructions themselves",
+      "source_quote_start": 124,
+      "source_quote_end": 182,
+      "source_quote_sha256": "69ccee6a32a18a446d3b9e429ca5319cc455c5c570bc486aa20a5baee083a5e7",
+      "statement": "The methodology evolves search heuristics instead of direct construction payloads.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_evolve_heuristics_not_direct_constructions",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0350",
+      "sentence_id": "tex_prose_sentence_0128",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "For many problems",
+      "source_quote_start": 0,
+      "source_quote_end": 17,
+      "source_quote_sha256": "fab53bc609f2c6f29366ed018cfbd1ef44ec7f5389ffa7cd858e679d1668da69",
+      "statement": "The reported constructive-math setup uses iterative refinement across many problems.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_iterative_refinement_strategy",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0351",
+      "sentence_id": "tex_prose_sentence_0128",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "we employed an iterative refinement strategy",
+      "source_quote_start": 115,
+      "source_quote_end": 159,
+      "source_quote_sha256": "5ed1b5074b18c7620fce3a79d59555731942d747fc797097533dabaf5982b645",
+      "statement": "The constructive-math search uses an iterative refinement strategy.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_iterative_refinement_strategy",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0352",
+      "sentence_id": "tex_prose_sentence_0128",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "particularly those with fast objective function evaluations",
+      "source_quote_start": 19,
+      "source_quote_end": 78,
+      "source_quote_sha256": "ef4163544ebb4202db3c6ebe95fe8f040dac3aee4849f5c7d6c73ce6bbe08b5d",
+      "statement": "Iterative refinement is particularly applicable when objective evaluation is fast.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_fast_objective_evaluations_common_in_math",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0353",
+      "sentence_id": "tex_prose_sentence_0128",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "which are common in mathematics",
+      "source_quote_start": 81,
+      "source_quote_end": 112,
+      "source_quote_sha256": "492367f2d4951649552647a3f228d90413cce3c062b8b55bc72c57443f26dbbf",
+      "statement": "Fast objective-function evaluations are reported to be common in mathematics.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_fast_objective_evaluations_common_in_math",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0354",
+      "sentence_id": "tex_prose_sentence_0129",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "Each generation of AlphaEvolve was tasked with evolving a program",
+      "source_quote_start": 0,
+      "source_quote_end": 65,
+      "source_quote_sha256": "2ffe512f840c68e4878834c2e799561e01ed97662a2c07ea280e4081bd57fdbd",
+      "statement": "Every generation evolves a program in the reported constructive-math setup.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_each_generation_evolves_search_heuristic_program",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0355",
+      "sentence_id": "tex_prose_sentence_0129",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "representing a search heuristic",
+      "source_quote_start": 66,
+      "source_quote_end": 97,
+      "source_quote_sha256": "c7f9e372dd3c9c48168cf61f98f1a962e280df3431061197e1e9ba3068093eb6",
+      "statement": "The evolved program represents a search heuristic.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_each_generation_evolves_search_heuristic_program",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0356",
+      "sentence_id": "tex_prose_sentence_0130",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "given a fixed time budget",
+      "source_quote_start": 17,
+      "source_quote_end": 42,
+      "source_quote_sha256": "47c16fd3154fc324226d39a41834f43f7d6239902fbd63495019831b202cceaf",
+      "statement": "Each evolved heuristic receives a fixed execution-time budget.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_fixed_time_budget_1000_seconds",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0357",
+      "sentence_id": "tex_prose_sentence_0130",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "1000 seconds",
+      "source_quote_start": 50,
+      "source_quote_end": 62,
+      "source_quote_sha256": "90b2e3e05c802b272c77ac5ce69e60554c6e6213803be2dc8bea306f2125d196",
+      "statement": "One reported fixed-budget example is 1000 seconds.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_fixed_time_budget_1000_seconds",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0358",
+      "sentence_id": "tex_prose_sentence_0130",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "shown the best construction",
+      "source_quote_start": 72,
+      "source_quote_end": 99,
+      "source_quote_sha256": "7704d13725ba6ca0e868b874e07ad3c7f7c6fba74772a388926dae2a4112e018",
+      "statement": "Each evolved heuristic receives an incumbent best construction.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_previous_best_construction_handoff",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0359",
+      "sentence_id": "tex_prose_sentence_0130",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "found by the previous best heuristic",
+      "source_quote_start": 100,
+      "source_quote_end": 136,
+      "source_quote_sha256": "1fb94cdb3e23a6137dabb5cf3a0a2913ca592824e63d29704af652700c12073d",
+      "statement": "The incumbent construction comes from the previous best heuristic.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_previous_best_construction_handoff",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0360",
+      "sentence_id": "tex_prose_sentence_0131",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "leverage this starting point",
+      "source_quote_start": 16,
+      "source_quote_end": 44,
+      "source_quote_sha256": "2113db365946fdff4380b4a869323fe4e69ecf27ac5a09c35427ffb5f423639c",
+      "statement": "The evolved heuristic starts from the handed-off incumbent construction.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_improve_starting_point_within_budget",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0361",
+      "sentence_id": "tex_prose_sentence_0131",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "the allotted time",
+      "source_quote_start": 49,
+      "source_quote_end": 66,
+      "source_quote_sha256": "240f66550a6ebd5f271bc45f18b2452231ad5a39395bb04333ba7ed5ef5b2ecc",
+      "statement": "The evolved heuristic must operate within its allotted time.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_improve_starting_point_within_budget",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0362",
+      "sentence_id": "tex_prose_sentence_0131",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "find an even better construction",
+      "source_quote_start": 70,
+      "source_quote_end": 102,
+      "source_quote_sha256": "5bdccf1da1a46939fc70881639e53c41b8da1a9a57dd125788d952838c9e1617",
+      "statement": "The evolved heuristic aims to improve the incumbent construction.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_improve_starting_point_within_budget",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0363",
+      "sentence_id": "tex_prose_sentence_0132",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "selects for heuristics",
+      "source_quote_start": 30,
+      "source_quote_end": 52,
+      "source_quote_sha256": "34136b49eab815d3f4a2099dfa298665db0c2c54c2eeda2a3e8124990abcf0bd",
+      "statement": "Evolution selects among constructive-math heuristics.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_select_high_quality_solution_improvers",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0364",
+      "sentence_id": "tex_prose_sentence_0132",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "effective at improving",
+      "source_quote_start": 62,
+      "source_quote_end": 84,
+      "source_quote_sha256": "624fed85cbf173f65c614c977134511018971e7e2ade55099dddde66f640d977",
+      "statement": "Heuristic selection favors demonstrated incumbent improvement.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_select_high_quality_solution_improvers",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0365",
+      "sentence_id": "tex_prose_sentence_0132",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "already high-quality solutions",
+      "source_quote_start": 85,
+      "source_quote_end": 115,
+      "source_quote_sha256": "46c17e7009a6587ab81db80b5457f412922d0e7d7472baac143a40140563637a",
+      "statement": "The selection target includes already high-quality incumbent solutions.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_select_high_quality_solution_improvers",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0366",
+      "sentence_id": "tex_prose_sentence_0133",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "final constructions were often the result of a sequence",
+      "source_quote_start": 4,
+      "source_quote_end": 59,
+      "source_quote_sha256": "5b483e192572a19074f10f3528469ab782e460f6c33e085d3a2f067a96b6e21a",
+      "statement": "Final constructions often result from an ordered heuristic sequence.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_sequence_of_specialized_heuristics",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0367",
+      "sentence_id": "tex_prose_sentence_0133",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "different, specialized heuristics",
+      "source_quote_start": 63,
+      "source_quote_end": 96,
+      "source_quote_sha256": "9f9c292178d4cbc39f835c780ef4524411a0c69a25915dd16dcce1cd97dc7598",
+      "statement": "The reported sequence contains distinct specialized heuristics.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_sequence_of_specialized_heuristics",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0368",
+      "sentence_id": "tex_prose_sentence_0133",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "discovered by AlphaEvolve",
+      "source_quote_start": 97,
+      "source_quote_end": 122,
+      "source_quote_sha256": "e5a3357e8fbbc6c7ef2aefa12830978b52dc38bf391593987e91f4fc50403ec8",
+      "statement": "AlphaEvolve discovers the specialized heuristic stages.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_sequence_of_specialized_heuristics",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0369",
+      "sentence_id": "tex_prose_sentence_0133",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "early heuristics proficient at making large gains",
+      "source_quote_start": 125,
+      "source_quote_end": 174,
+      "source_quote_sha256": "94239938534b7c101770a0d19a0dc57b67d51511b5a502888369a8f2fe2c3feb",
+      "statement": "Early heuristic stages are reported to make large gains.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_early_broad_gain_heuristics",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0370",
+      "sentence_id": "tex_prose_sentence_0133",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "random",
+      "source_quote_start": 180,
+      "source_quote_end": 186,
+      "source_quote_sha256": "a441b15fe9a3cf56661190a0b93b9dec7d04127288cc87250967cf3b52894d11",
+      "statement": "Early heuristic stages can begin from random states.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_early_broad_gain_heuristics",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0371",
+      "sentence_id": "tex_prose_sentence_0133",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "simple initial states",
+      "source_quote_start": 190,
+      "source_quote_end": 211,
+      "source_quote_sha256": "4aa4ce9009285b4e69041b4db5a66541633ea17ff209362c54388f6034663756",
+      "statement": "Early heuristic stages can begin from simple initial states.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_early_broad_gain_heuristics",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0372",
+      "sentence_id": "tex_prose_sentence_0133",
+      "sentence_proposition_ordinal": 7,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "later heuristics adept at fine-tuning",
+      "source_quote_start": 217,
+      "source_quote_end": 254,
+      "source_quote_sha256": "9290ac368ee7ee1b8b7575b00979604ffadfe1f20c7b144ae1a8c818390b2cf2",
+      "statement": "Later heuristic stages are reported to perform fine tuning.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_late_fine_tuning_heuristics",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0373",
+      "sentence_id": "tex_prose_sentence_0133",
+      "sentence_proposition_ordinal": 8,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "near-optimal configurations",
+      "source_quote_start": 255,
+      "source_quote_end": 282,
+      "source_quote_sha256": "5e1aaa665d26db132d35ad76c9f41d8585242b7457beae0df04ce24d68806392",
+      "statement": "Later heuristic stages target near-optimal configurations.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_late_fine_tuning_heuristics",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0374",
+      "sentence_id": "tex_prose_sentence_0134",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "automated discovery",
+      "source_quote_start": 5,
+      "source_quote_end": 24,
+      "source_quote_sha256": "18922b164aae13fe3b0129bdd98e86e59a31e490ba50a0fd6a0634b717953aab",
+      "statement": "AlphaEvolve automates discovery of the reported search strategies.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_multi_stage_strategy_hard_to_replicate_manually",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0375",
+      "sentence_id": "tex_prose_sentence_0134",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "multi-stage",
+      "source_quote_start": 28,
+      "source_quote_end": 39,
+      "source_quote_sha256": "df95b1013bf5544cdce18651dfd573281255339ff65fbca28849697808ae22ca",
+      "statement": "The discovered search strategies contain multiple stages.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_multi_stage_strategy_hard_to_replicate_manually",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0376",
+      "sentence_id": "tex_prose_sentence_0134",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "adaptive search strategies",
+      "source_quote_start": 41,
+      "source_quote_end": 67,
+      "source_quote_sha256": "0fd53e84ee3c348d840801f94a6d28db38ca1e774dcf1e845e5bc8be64a8b8f4",
+      "statement": "The discovered multi-stage search strategies are adaptive.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_multi_stage_strategy_hard_to_replicate_manually",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0377",
+      "sentence_id": "tex_prose_sentence_0134",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "challenging to replicate manually",
+      "source_quote_start": 71,
+      "source_quote_end": 104,
+      "source_quote_sha256": "0ac7966b7fc2e481b3ae70402d5f3ed8f364058551a21163667704d140a04d0a",
+      "statement": "The reported multi-stage strategies are difficult to reproduce manually.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_multi_stage_strategy_hard_to_replicate_manually",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0378",
+      "sentence_id": "tex_prose_sentence_0134",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 80,
+      "source_end_line": 80,
+      "source_quote": "proved crucial for surpassing the SOTA",
+      "source_quote_start": 109,
+      "source_quote_end": 147,
+      "source_quote_sha256": "9ae59a756dc576b2e2b51d9071fa264d62e965509f613fbdd67e306f240673a5",
+      "statement": "The reported multi-stage strategies are claimed to be crucial for state-of-the-art gains.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_multi_stage_strategy_crucial_for_sota",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0379",
+      "sentence_id": "tex_prose_sentence_0135",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 82,
+      "source_end_line": 82,
+      "source_quote": "Below are high-level descriptions",
+      "source_quote_start": 0,
+      "source_quote_end": 33,
+      "source_quote_sha256": "471ccaae741d1e20b9a3c3a05c25ed7fc8ca98635a95bcb33d99c90d73e030f7",
+      "statement": "The prose introduces the following high-level result summaries.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This is document structure rather than a separate implementation requirement."
+    },
+    {
+      "proposition_id": "tex_proposition_0380",
+      "sentence_id": "tex_prose_sentence_0135",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 82,
+      "source_end_line": 82,
+      "source_quote": "problems where AlphaEvolve yielded new results",
+      "source_quote_start": 49,
+      "source_quote_end": 95,
+      "source_quote_sha256": "2aa1fa24546f242983ca1c54782bf12786a9f2124fd589c1b80be9f321720a2e",
+      "statement": "The following examples are selected from problems with reported new results.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "The specific result claims are dispositioned in the following sentences and result inventory."
+    },
+    {
+      "proposition_id": "tex_proposition_0381",
+      "sentence_id": "tex_prose_sentence_0136",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 82,
+      "source_end_line": 82,
+      "source_quote": "Full list of problems",
+      "source_quote_start": 0,
+      "source_quote_end": 21,
+      "source_quote_sha256": "e181ffcd5180f6c820a4235a8f3309a6ee31977fc9c3788d86b21775221c60cc",
+      "statement": "Appendix B is reported to contain the full mathematical problem list.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_full_list_and_details_in_appendix_b",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0382",
+      "sentence_id": "tex_prose_sentence_0136",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 82,
+      "source_end_line": 82,
+      "source_quote": "details are provided in Appendix [citation]",
+      "source_quote_start": 26,
+      "source_quote_end": 69,
+      "source_quote_sha256": "9e636b5f908c1334961c7a1e5e3afce2e52b648b2c6249c7a2e4267397077c25",
+      "statement": "Appendix B is reported to contain details for the mathematical problems.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_full_list_and_details_in_appendix_b",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
     }
   ],
   "inventory_scope": {
@@ -8662,16 +10982,17 @@
       "all 29 retained Introduction sentences in introduction.tex",
       "all 61 retained Methods sentences in methods.tex",
       "all 16 retained Section 3.1 matrix-result sentences in results.tex",
+      "all 22 retained Section 3.2 overview and methodology sentences in results.tex",
       "manual atomic-proposition statements and exact rendered-source quote offsets",
       "resolved bounded-claim mappings or explicit context, outlook, and interpretation dispositions"
     ],
     "excluded": [
-      "the remaining 288 retained prose sentences",
+      "the remaining 266 retained prose sentences",
       "separately audited captions, tables, equations, listings, footnotes, and explicit math constructs",
       "independent second-reviewer semantic agreement",
       "mathematical correctness, citation sufficiency, image-pixel semantics, or result reproduction",
       "AlphaEvolve system parity"
     ]
   },
-  "claim_boundary": "This boundary records a single-reviewer atomic-proposition decomposition for every retained Abstract, Introduction, Methods, and Section 3.1 matrix-result sentence. Complete disposition inside this 114-sentence scope does not cover the remaining 288 prose sentences and does not prove independent semantic exhaustiveness, mathematical correctness, result reproduction, or AlphaEvolve parity."
+  "claim_boundary": "This boundary records a single-reviewer atomic-proposition decomposition for every retained sentence from the Abstract through the Section 3.2 constructive-math overview and search methodology. Complete disposition inside this 136-sentence scope does not cover the remaining 266 prose sentences and does not prove independent semantic exhaustiveness, mathematical correctness, result reproduction, or AlphaEvolve parity."
 }

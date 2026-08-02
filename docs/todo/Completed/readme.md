@@ -16143,3 +16143,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Boundary: README keeps proposition review for 288 sentences, independent
     semantic review, mathematical and citation correctness, result reproduction,
     and AlphaEvolve-scale execution explicitly open.
+
+- [x] Document the AlphaEvolve Section 3.2 methodology proposition review.
+  - Status: README now reports 136 reviewed sentences, 382 propositions, 345
+    bounded-claim mappings through 365 references to 159 claims, and 37 context,
+    outlook, or interpretation dispositions.
+  - Accounting: the Section 3.2 methodology slice adds no bounded claim or
+    parity credit; it repairs two sentence mappings while the aggregate remains
+    846 bounded and 787 implementation-relevant claims, with 3.8% strict and
+    21.5% half-credit parity.
+  - Boundary: README keeps proposition review for 266 sentences, independent
+    semantic review, mathematical and citation correctness, result reproduction,
+    and AlphaEvolve-scale execution explicitly open.

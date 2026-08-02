@@ -102,6 +102,8 @@ def test_tex_prose_inventory_maps_new_claims_and_disambiguates_repeated_anchors(
         "section3_1_standard_gradient_baseline_components",
         "section3_1_natural_language_near_integrality_prompt",
         "section3_1_most_table2_simple_initial_program",
+        "section3_2_evolve_heuristics_not_direct_constructions",
+        "section3_2_fast_objective_evaluations_common_in_math",
     } <= mapped_ids
     assert {
         ref["claim_id"] for ref in records[("main.tex", 34, 0)]["claim_refs"]
@@ -185,6 +187,20 @@ def test_tex_prose_inventory_maps_new_claims_and_disambiguates_repeated_anchors(
         "section3_1_most_table2_simple_initial_program",
         "section3_1_researcher_ideas_boost_performance",
         "section3_1_scientific_collaboration_possibility",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("results.tex", 78, 1)]["claim_refs"]
+    } == {
+        "section3_2_diverse_constructions_and_conjectures",
+        "section3_2_evolve_heuristics_not_direct_constructions",
+        "section3_2_less_expert_tailoring_than_bespoke",
+        "section3_2_rapid_deployment",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("results.tex", 80, 1)]["claim_refs"]
+    } == {
+        "section3_2_fast_objective_evaluations_common_in_math",
+        "section3_2_iterative_refinement_strategy",
     }
     assert [
         ref["claim_id"] for ref in records[("ablations.tex", 8, 3)]["claim_refs"]

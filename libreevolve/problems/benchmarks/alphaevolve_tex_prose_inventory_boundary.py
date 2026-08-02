@@ -336,6 +336,18 @@ _DIRECT_CLAIM_MAP: dict[
         "section3_1_researcher_ideas_boost_performance",
         "section3_1_scientific_collaboration_possibility",
     ),
+    ("results.tex", 78, 1): _claim_refs(
+        "math",
+        "section3_2_evolve_heuristics_not_direct_constructions",
+        "section3_2_rapid_deployment",
+        "section3_2_diverse_constructions_and_conjectures",
+        "section3_2_less_expert_tailoring_than_bespoke",
+    ),
+    ("results.tex", 80, 1): _claim_refs(
+        "math",
+        "section3_2_iterative_refinement_strategy",
+        "section3_2_fast_objective_evaluations_common_in_math",
+    ),
     ("results.tex", 68, 1): _claim_refs(
         "math",
         "section3_2_seventy_five_percent_rediscovery",

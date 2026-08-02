@@ -6681,21 +6681,27 @@
       "claim_refs": [
         {
           "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
-          "claim_id": "section3_2_diverse_constructions_and_conjectures",
+          "claim_id": "section3_2_evolve_heuristics_not_direct_constructions",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
-        },
-        {
-          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
-          "claim_id": "section3_2_less_expert_tailoring_than_bespoke",
-          "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         },
         {
           "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
           "claim_id": "section3_2_rapid_deployment",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_diverse_constructions_and_conjectures",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_less_expert_tailoring_than_bespoke",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null
@@ -6815,7 +6821,13 @@
           "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
           "claim_id": "section3_2_iterative_refinement_strategy",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_fast_objective_evaluations_common_in_math",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null

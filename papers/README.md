@@ -1687,10 +1687,11 @@ have row/cell
 dispositions; and all 8 retained code listings and 305 physical source lines
 have line-level dispositions; all 309 explicit TeX math constructs have
 delimiter-level dispositions; prose sentences also have dispositions. This is
-supplemented by 297 atomic-proposition dispositions across all 114 Abstract,
-Introduction, Methods, and Section 3.1 matrix-result sentences, with 267 mapped
-to bounded claims and 30 classified as context, outlook, or interpretation.
-This is not proposition review for the remaining 288 prose sentences or
+supplemented by 382 atomic-proposition dispositions across all 136 Abstract,
+Introduction, Methods, Section 3.1 matrix-result, and Section 3.2 constructive-
+math overview/search-methodology sentences, with 345 mapped to bounded claims
+and 37 classified as context, outlook, or interpretation. This is not
+proposition review for the remaining 266 prose sentences or
 independent semantic review,
 mathematical correctness,
 image-pixel or citation-semantic review, or per-phrase sufficiency proof,
@@ -4214,16 +4215,17 @@ independent semantic review, mathematical correctness, result reproduction, or
 AlphaEvolve parity.
 
 The scoped semantic review in
-`papers/alphaevolve_tex_proposition_inventory_boundary.json` decomposes all 114
-retained Abstract, Introduction, Methods, and Section 3.1 matrix-result
-sentences into 297 atomic propositions. Two hundred sixty-seven map through 287
-resolved references to 122 existing bounded claims; 25 are background context,
-2 are author outlook, and 3 are qualified author interpretations. The cumulative
+`papers/alphaevolve_tex_proposition_inventory_boundary.json` decomposes all 136
+retained Abstract, Introduction, Methods, Section 3.1 matrix-result, and Section
+3.2 constructive-math overview/search-methodology sentences into 382 atomic
+propositions. Three hundred forty-five map through 365 resolved references to
+159 existing bounded claims; 29 are background context, 2 are author outlook,
+and 6 are qualified author interpretations. The cumulative
 review adds the previously unbounded direct-versus-instrumental-search and
-expensive-evaluation sample-efficiency claims. Section 3.1 adds no new bounded
-claim or parity credit, but repairs five sentence mappings for the gradient
-baseline, prompt context, per-program evaluation and hill climbing, near-
-integrality prompting, and simple initial programs. It is a single-reviewer
-scoped inventory, not proposition coverage for the remaining 288 prose
+expensive-evaluation sample-efficiency claims. The Section 3.2 methodology
+extension adds no new bounded claim or parity credit, but repairs two sentence
+mappings for heuristic-program evolution rather than direct constructions and
+fast objective evaluations common in constructive mathematics. It is a single-
+reviewer scoped inventory, not proposition coverage for the remaining 266 prose
 sentences, independent
 semantic agreement, mathematical correctness, result reproduction, or parity.

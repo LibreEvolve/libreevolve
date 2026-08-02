@@ -16,14 +16,14 @@
     "duplicate_group_count": 123,
     "duplicate_record_count": 246,
     "inflation_count": 123,
-    "raw_total_count": 5357,
-    "collapsed_total_estimate": 5234,
-    "inflation_percent_of_raw_total": 2.296,
+    "raw_total_count": 5361,
+    "collapsed_total_estimate": 5238,
+    "inflation_percent_of_raw_total": 2.294,
     "canonical_gap_denominator_ready": false
   },
   "source_exact_duplicate_record_count": 246,
   "source_exact_duplicate_inflation_count": 123,
-  "source_exact_duplicate_collapsed_total_estimate": 5234,
+  "source_exact_duplicate_collapsed_total_estimate": 5238,
   "source_exact_duplicate_owner_status_report": {
     "policy": "exact_normalized_title_duplicate_groups_by_owner_and_status",
     "duplicate_group_count": 123,

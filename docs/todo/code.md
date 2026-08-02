@@ -145,14 +145,13 @@ sidecars, tests, and active TODOs.
     correctness, proof validity, and result reproduction remain owned by this
     TODO. The supplemental
     `papers/alphaevolve_tex_proposition_inventory_boundary.json` now reviews all
-    136 Abstract, Introduction, Methods, Section 3.1 matrix-result, and Section
-    3.2 constructive-math overview/search-methodology sentences as 382 atomic
-    propositions. It maps 345 propositions through 365 references to 159
-    bounded claims and classifies 37 as context, outlook, or interpretation.
-    The Section 3.2 methodology extension adds no new bounded claim or parity
-    credit, but repairs two sentence mappings for heuristic-program evolution
-    rather than direct constructions and fast objective evaluations common in
-    constructive mathematics. Remaining proposition coverage and independent semantic
+    153 sentences from the Abstract through the complete Section 3.2
+    constructive-mathematics section as 432 atomic propositions. It maps 386
+    propositions through 408 references to 172 bounded claims and classifies 46
+    as context, outlook, or interpretation. Completing Section 3.2 adds no new
+    bounded claim, sentence-mapping repair, or parity credit; its named result,
+    artifact, and collaboration propositions resolve to existing constructive-
+    math claims. Remaining proposition coverage and independent semantic
     review stay open.
     Meanwhile,
     `papers/status_claim_inventory.json` now records checked row-level paper
@@ -181,11 +180,11 @@ sidecars, tests, and active TODOs.
     constructs have dispositions, all 83 table rows and 240 cells have
     row/cell dispositions,
     all 8 code listings and 305 source lines have line-level dispositions, and
-    all 309 TeX math constructs and 402 prose sentences have dispositions; 382
-    propositions across 136 sentences through Section 3.2 constructive-math
-    overview/search methodology are reviewed.
+    all 309 TeX math constructs and 402 prose sentences have dispositions; 432
+    propositions across all 153 sentences through the complete Section 3.2 are
+    reviewed.
     Citation roles/sufficiency and implementation relevance remain unclassified,
-    and 266 prose sentences lack proposition review;
+    and 249 prose sentences lack proposition review;
     mathematical-correctness, image-pixel or citation-semantic level
     across remaining source details and the other paper
     spans and all code modules, tests, runtime report

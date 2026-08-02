@@ -1856,15 +1856,15 @@ Important limits:
   sentences. The walk contributed seven new bounded claims; it does not prove
   sentence-internal clause/proposition exhaustiveness, independent semantic
   review, mathematical correctness, or result reproduction.
-- Retained-TeX proposition evidence decomposes all 136 Abstract, Introduction,
-  Methods, Section 3.1 matrix-result, and Section 3.2 constructive-math
-  overview/search-methodology sentences into 382 atomic propositions. Three
-  hundred forty-five map through 365 references to 159 bounded claims, 29 are
-  background context, 2 are author outlook, and 6 are qualified
-  interpretations. The Section 3.2 methodology extension adds no bounded claim
-  or parity credit, but repairs two sentence mappings covering heuristic-program
-  evolution rather than direct constructions and fast objective evaluations
-  common in constructive mathematics. The remaining 266 prose sentences, independent
+- Retained-TeX proposition evidence decomposes all 153 sentences from the
+  Abstract through the complete Section 3.2 constructive-mathematics section
+  into 432 atomic propositions. Three hundred eighty-six map through 408
+  references to 172 bounded claims, 37 are source context, 2 are author outlook,
+  and 7 are qualified interpretations. Completing Section 3.2 adds no bounded
+  claim, sentence-mapping repair, or parity credit; its named result, artifact,
+  and collaboration propositions resolve to existing constructive-math claims.
+  The preceding methodology slice repaired two broad sentence mappings. The
+  remaining 249 prose sentences, independent
   semantic review, mathematical correctness, and result reproduction remain
   open.
 - ROADMAP source-span coverage evidence now records eight coverage surfaces
@@ -1876,10 +1876,10 @@ Important limits:
   claims through Appendix B and Figures 10-14, and the 30 construct-level TeX
   source-detail dispositions, plus all 83 table rows, 240 table cells, 8 code
   listings, 305 listing source lines, 309 explicit TeX math constructs, 128
-  retained prose paragraphs, 402 grammatical sentences, and 382 proposition
-  dispositions across the 136 Abstract, Introduction, Methods, Section 3.1
-  matrix-result, and Section 3.2 constructive-math overview/search-methodology
-  sentences. The 787 implementation-relevant claims currently
+  retained prose paragraphs, 402 grammatical sentences, and 432 proposition
+  dispositions across all 153 sentences from the Abstract through the complete
+  Section 3.2 constructive-mathematics section. The 787 implementation-relevant
+  claims currently
   yield 3.8% strict implemented
   parity or 21.5% with partial claims counted at half credit. The weighted
   value rises because Appendix B registry metadata is partial, not because its
@@ -1887,7 +1887,7 @@ Important limits:
   the retained TeX, and caption/equation-environment/footnote construct
   dispositions are complete, and all table rows/cells, listing lines, and
   explicit math delimiters and retained prose sentences have dispositions, but
-  this is not proposition review for the remaining 266 prose sentences,
+  this is not proposition review for the remaining 249 prose sentences,
   mathematical-correctness, image-pixel, citation-semantic, or independent-
   review audit, joined
   figure/table/appendix reproduction matrix, complete

@@ -198,16 +198,16 @@ Important limits:
   the prose walk, but complete sentence disposition is not sentence-internal
   clause/proposition exhaustiveness or independent semantic review.
 - `papers/alphaevolve_tex_proposition_inventory_boundary.json` decomposes all
-  136 retained Abstract, Introduction, Methods, Section 3.1 matrix-result, and
-  Section 3.2 constructive-math overview/search-methodology sentences into 382
-  atomic propositions. Three hundred forty-five map through 365 references to
-  159 bounded claims; 29 are background context, 2 are author outlook, and 6
-  are qualified author interpretations. The cumulative review
+  153 retained sentences from the Abstract through the complete Section 3.2
+  constructive-mathematics section into 432 atomic propositions. Three hundred
+  eighty-six map through 408 references to 172 bounded claims; 37 are source
+  context, 2 are author outlook, and 7 are qualified author interpretations.
+  The cumulative review
   adds the previously unbounded direct-versus-instrumental-search and expensive-
-  evaluation sample-efficiency claims. The Section 3.2 methodology extension
-  adds no new claim or parity credit, but repairs two sentence mappings for
-  evolving heuristic programs rather than direct constructions and for fast
-  objective evaluations common in constructive mathematics. The remaining 266
+  evaluation sample-efficiency claims. Completing Section 3.2 adds no new claim,
+  sentence-mapping repair, or parity credit; its named result, artifact, and
+  collaboration propositions resolve to existing constructive-math claims. The
+  preceding methodology slice repaired two broad sentence mappings. The remaining 249
   prose sentences and independent semantic review remain open.
 - Together the twelve bounded inventories cover 846 claims: 30 locally
   implemented, 278 partial, 110 not implemented, 369 not demonstrated, and 59
@@ -222,10 +222,10 @@ Important limits:
   all 8 retained code listings and 305 physical source lines have line-level
   dispositions; all 309 explicit TeX math constructs have delimiter-level
   dispositions; and all 128 retained prose paragraphs and 402 grammatical
-  sentences have dispositions; 136 Abstract, Introduction, Methods, Section
-  3.1 matrix-result, and Section 3.2 constructive-math overview/search-
-  methodology sentences also have 382 atomic-proposition dispositions.
-  Coverage still excludes proposition review for the remaining 266 sentences,
+  sentences have dispositions; all 153 sentences from the Abstract through the
+  complete Section 3.2 constructive-mathematics section also have 432 atomic-
+  proposition dispositions. Coverage still excludes proposition review for the
+  remaining 249 sentences,
   mathematical correctness,
   image-pixel and citation-semantic review, independent result reproduction,
   independent proof of semantic completeness, and AlphaEvolve-scale execution.

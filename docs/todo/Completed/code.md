@@ -19827,3 +19827,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused proposition, prose, aggregate, TODO, and manifest
     checks validate source spans, references, counts, drift rejection, and
     non-parity boundaries.
+
+- [x] Complete retained-TeX proposition evidence for AlphaEvolve Section 3.2.
+  - Status: the boundary reviews the final 17 Section 3.2 example, artifact,
+    follow-on, and collaboration sentences as 50 propositions, bringing the
+    cumulative scope to 153 sentences and 432 propositions. Of those, 386 map
+    through 408 references to 172 bounded claims and 46 are context, outlook,
+    or interpretation.
+  - Ownership result: every substantive proposition resolves to an existing
+    constructive-math claim and active TODO. The slice adds no bounded claim,
+    sentence-mapping repair, active TODO, or functional parity credit.
+  - Remaining code gap: proposition review for 249 prose sentences, independent
+    semantic review, mathematical/image/citation correctness, result
+    reproduction, and AlphaEvolve-scale execution remain open.
+  - Verification: focused proposition, aggregate, TODO, and manifest checks
+    validate exact quotes, references, counts, ownership, drift rejection, and
+    non-parity boundaries.

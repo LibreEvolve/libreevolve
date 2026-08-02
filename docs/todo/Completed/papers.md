@@ -14780,3 +14780,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     and AlphaEvolve parity remain unproven.
   - Verification: the paper manifest and focused tests reject source, count,
     reference, mapping, TODO-ownership, and parity drift.
+
+- [x] Complete AlphaEvolve Section 3.2 proposition review.
+  - Paper evidence: the final 17 retained Section 3.2 sentences cover named
+    autocorrelation, uncertainty, Erdos-overlap, kissing-number, and packing
+    results plus Appendix/Colab, follow-on-paper, and mathematician-
+    collaboration statements.
+  - Status: those sentences decompose into 50 propositions, bringing cumulative
+    coverage to 153 sentences and 432 propositions; 386 map through 408
+    references to 172 bounded claims and 46 are context, outlook, or
+    interpretation.
+  - Ownership result: all substantive propositions use existing constructive-
+    math claims and TODOs, so this slice adds no claim, mapping repair, TODO, or
+    parity credit.
+  - Remaining paper gap: 249 sentence propositions, independent semantic
+    agreement, mathematical/image/citation correctness, result reproduction,
+    and AlphaEvolve parity remain unproven.

@@ -101,15 +101,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     inherits 34 source-detail and 75 table-cell dispositions and maps the other
     200 constructs directly to existing bounded claim ids with no unmapped or
     unresolved references and no new claim or parity credit. The supplemental
-    `papers/alphaevolve_tex_proposition_inventory_boundary.json` reviews all 136
-    Abstract, Introduction, Methods, Section 3.1 matrix-result, and Section 3.2
-    constructive-math overview/search-methodology sentences as 382 atomic
-    propositions: 345 map through 365 references to 159 bounded claims, and 37
-    are context, outlook, or interpretation. The Section 3.2 methodology
-    extension adds no new bounded claim or parity credit, but repairs two broad
-    sentence mappings for heuristic-program evolution rather than direct
-    constructions and fast objective evaluations common in constructive
-    mathematics. The paper
+    `papers/alphaevolve_tex_proposition_inventory_boundary.json` reviews all 153
+    sentences from the Abstract through the complete Section 3.2 constructive-
+    mathematics section as 432 atomic propositions: 386 map through 408
+    references to 172 bounded claims, and 46 are context, outlook, or
+    interpretation. Completing Section 3.2 adds no new bounded claim, sentence-
+    mapping repair, or parity credit; its named result, artifact, and
+    collaboration propositions resolve to existing constructive-math claims.
+    The paper
     manifest rejects any inventory sidecar's absence, source/reference
     drift, status drift, stale TODO ownership, result-reproduction overclaims,
     and parity overclaims.
@@ -121,9 +120,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     inventory
     dispositions all 8 environments and 305 source lines; the math inventory
     covers 309 TeX constructs; prose maps 402 sentences, and review
-    covers 382 propositions across 136 sentences through Section 3.2
-    constructive-math overview/search methodology. Citation role and
-    implementation relevance remain unclassified. Remaining 266
+    covers 432 propositions across all 153 sentences through the complete
+    Section 3.2. Citation role and implementation relevance remain
+    unclassified. Remaining 249
     sentence propositions, math/image-pixel/citation semantics, evidence sufficiency,
     result reproduction, and independent reviewer proof that any bounded inventory
     is semantically exhaustive also remain open.

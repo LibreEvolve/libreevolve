@@ -8,7 +8,7 @@ from libreevolve.problems.benchmarks.alphaevolve_tex_proposition_inventory_bound
 )
 
 
-def test_tex_proposition_inventory_accepts_reviewed_math_methodology_scope():
+def test_tex_proposition_inventory_accepts_complete_section3_2_scope():
     boundary = alphaevolve_tex_proposition_inventory_boundary_record()
 
     validation = validate_alphaevolve_tex_proposition_inventory_boundary(boundary)
@@ -23,12 +23,12 @@ def test_tex_proposition_inventory_accepts_reviewed_math_methodology_scope():
     assert boundary["review_scope_complete"] is True
     assert boundary["whole_paper_semantic_exhaustiveness_claim_ready"] is False
     assert boundary["independent_semantic_review_ready"] is False
-    assert validation.reviewed_sentence_count == 136
-    assert validation.proposition_count == 382
-    assert validation.remaining_sentence_count == 266
+    assert validation.reviewed_sentence_count == 153
+    assert validation.proposition_count == 432
+    assert validation.remaining_sentence_count == 249
     assert validation.unmapped_proposition_count == 0
     assert validation.unresolved_reference_count == 0
-    assert boundary["reviewed_sentence_fraction"] == 136 / 402
+    assert boundary["reviewed_sentence_fraction"] == 153 / 402
     assert boundary["reviewed_source_files"] == [
         "introduction.tex",
         "main.tex",
@@ -36,21 +36,21 @@ def test_tex_proposition_inventory_accepts_reviewed_math_methodology_scope():
         "results.tex",
     ]
     assert boundary["disposition_counts"] == {
-        "author_interpretation": 6,
+        "author_interpretation": 7,
         "author_outlook": 2,
-        "existing_bounded_claim_mapping": 345,
-        "source_context_only": 29,
+        "existing_bounded_claim_mapping": 386,
+        "source_context_only": 37,
     }
-    assert boundary["claim_reference_count"] == 365
-    assert boundary["unique_claim_reference_count"] == 159
-    assert boundary["implementation_relevant_proposition_count"] == 335
+    assert boundary["claim_reference_count"] == 408
+    assert boundary["unique_claim_reference_count"] == 172
+    assert boundary["implementation_relevant_proposition_count"] == 376
 
 
 def test_tex_proposition_inventory_resolves_every_reviewed_record():
     boundary = alphaevolve_tex_proposition_inventory_boundary_record()
 
-    assert len(boundary["reviewed_sentence_records"]) == 136
-    assert len(boundary["proposition_records"]) == 382
+    assert len(boundary["reviewed_sentence_records"]) == 153
+    assert len(boundary["proposition_records"]) == 432
     assert all(
         record["review_status"]
         == "manual_static_semantic_decomposition_complete"
@@ -100,6 +100,21 @@ def test_tex_proposition_inventory_records_new_and_repaired_claims():
     }
     assert set(boundary["new_bounded_claim_ids"]) <= mapped_ids
     assert set(boundary["repaired_sentence_claim_ids"]) <= mapped_ids
+    assert {
+        "section3_2_ai_human_math_partnership_potential",
+        "section3_2_autocorrelation_bounds_improved",
+        "section3_2_erdos_new_upper_bound",
+        "section3_2_external_advice_on_input_formulation",
+        "section3_2_heilbronn_small_triangle_avoidance",
+        "section3_2_javier_gomez_serrano_and_terence_tao",
+        "section3_2_kissing_number_d11_593_vs_592",
+        "section3_2_most_discoveries_externally_suggested",
+        "section3_2_n_point_max_min_distance_packing",
+        "section3_2_new_constructions_in_companion_colab",
+        "section3_2_polygon_in_polygon_packing",
+        "section3_2_uncertainty_fourier_upper_bound",
+        "section3_2_upcoming_math_paper_follow_on",
+    } <= mapped_ids
 
 
 def test_tex_proposition_inventory_rejects_record_and_overclaim_drift():
@@ -148,7 +163,7 @@ def test_render_tex_proposition_inventory_summary_reports_shape():
 
     assert "AlphaEvolve TeX proposition inventory boundary" in summary
     assert "| schema_status | ok |" in summary
-    assert "| reviewed_sentence_count | 136 |" in summary
-    assert "| proposition_count | 382 |" in summary
-    assert "| remaining_sentence_count | 266 |" in summary
+    assert "| reviewed_sentence_count | 153 |" in summary
+    assert "| proposition_count | 432 |" in summary
+    assert "| remaining_sentence_count | 249 |" in summary
     assert "| validation_status | ok |" in summary

@@ -1,7 +1,7 @@
 {
-  "schema": "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v4",
+  "schema": "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v5",
   "source_paper_id": "2506.13131",
-  "boundary_status": "abstract_through_section3_2_math_methodology_proposition_review_complete_without_remaining_paper_or_independent_semantic_exhaustiveness",
+  "boundary_status": "abstract_through_complete_section3_2_proposition_review_complete_without_remaining_paper_or_independent_semantic_exhaustiveness",
   "source_prose_schema": "libreevolve.alphaevolve_tex_prose_inventory_boundary.v1",
   "source_prose_boundary_status": "retained_tex_paragraph_and_sentence_inventory_complete_without_semantic_clause_exhaustiveness",
   "source_prose_ready": true,
@@ -15,9 +15,9 @@
   "source_errors": [],
   "parse_errors": [],
   "source_sentence_count": 402,
-  "reviewed_sentence_count": 136,
-  "remaining_sentence_count": 266,
-  "reviewed_sentence_fraction": 0.3383084577114428,
+  "reviewed_sentence_count": 153,
+  "remaining_sentence_count": 249,
+  "reviewed_sentence_fraction": 0.3805970149253731,
   "reviewed_source_files": [
     "introduction.tex",
     "main.tex",
@@ -31,16 +31,16 @@
     "discussion.tex",
     "related_work.tex"
   ],
-  "proposition_count": 382,
+  "proposition_count": 432,
   "disposition_counts": {
-    "author_interpretation": 6,
+    "author_interpretation": 7,
     "author_outlook": 2,
-    "existing_bounded_claim_mapping": 345,
-    "source_context_only": 29
+    "existing_bounded_claim_mapping": 386,
+    "source_context_only": 37
   },
-  "claim_reference_count": 365,
-  "unique_claim_reference_count": 159,
-  "implementation_relevant_proposition_count": 335,
+  "claim_reference_count": 408,
+  "unique_claim_reference_count": 172,
+  "implementation_relevant_proposition_count": 376,
   "unmapped_proposition_count": 0,
   "unresolved_reference_count": 0,
   "new_bounded_claim_ids": [
@@ -1941,6 +1941,243 @@
       "proposition_ids": [
         "tex_proposition_0381",
         "tex_proposition_0382"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0137",
+      "source_file": "results.tex",
+      "source_line": 85,
+      "source_text_sha256": "61426d1fc8636ce0829644901515bd35b7d2f90ab0edec39fd19b4463ed41b3a",
+      "rendered_text_sha256": "e70d8eb9050021ad51462409f6024d4133e0d9706eb1d0d29100984370ae3d70",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0383"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0138",
+      "source_file": "results.tex",
+      "source_line": 87,
+      "source_text_sha256": "b1b5cb7706b18f5002f83e58ff07e308ad83f95bfc5104c5811ad24d2a0d6f27",
+      "rendered_text_sha256": "f29dbe403044d72288bfef7560c0c24bc5dcc0123e3b93e74a2717e0faf6e096",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0384"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0139",
+      "source_file": "results.tex",
+      "source_line": 87,
+      "source_text_sha256": "768286c3d761e7adf2eeb9ce0e2b02e98b6f445b863a1f4769d8b2c6f83f1700",
+      "rendered_text_sha256": "993d42785aa31b59a23cedceaa7e87e6a914930bbbd4a46cc38d90f8f94d7e95",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0385",
+        "tex_proposition_0386",
+        "tex_proposition_0387"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0140",
+      "source_file": "results.tex",
+      "source_line": 88,
+      "source_text_sha256": "6d4ee8086bd699c4b049b2f7415180bb3a7c4d2f2ec08d2863d0d5e0098fff46",
+      "rendered_text_sha256": "e2f2044c94d582d0d837e81c48dbbc4322149606471b52b70edb1a04b2b80ffa",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0388"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0141",
+      "source_file": "results.tex",
+      "source_line": 88,
+      "source_text_sha256": "b5ac6bbdcb6b6bd68d9db8fac6580ab1111513b3ad304dfaae24276ee38be18e",
+      "rendered_text_sha256": "d8049cd71248e3eca97144990b912867a27fa7efd2ed5850f138ced796ee6176",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0389",
+        "tex_proposition_0390",
+        "tex_proposition_0391",
+        "tex_proposition_0392"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0142",
+      "source_file": "results.tex",
+      "source_line": 91,
+      "source_text_sha256": "62ceb6b3a0216e67c789533ff22362bb166e7b7a42da6a484b638a0256a0b53c",
+      "rendered_text_sha256": "e01c9edb4628b43623842e79d470b84cfedbb43d539ad6a867086acece15c56f",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0393"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0143",
+      "source_file": "results.tex",
+      "source_line": 93,
+      "source_text_sha256": "66b1aa9e49f7d2c86b1a63a6a6a7c7ce13f536e32d804c45f82a9a7c9930fc10",
+      "rendered_text_sha256": "c87371b3943bf5aa2c284691f444450de4f62dc33ed7dfa3dcab20d178e448c8",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0394"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0144",
+      "source_file": "results.tex",
+      "source_line": 93,
+      "source_text_sha256": "19d59342cb5d19dfa2a9b39c66ed1954eee940ec5d042bac3195148174a98344",
+      "rendered_text_sha256": "cfafaf7120f352bd83af19db64be064a1d382b514ef6ab942fcf1c65c70b954c",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0395",
+        "tex_proposition_0396",
+        "tex_proposition_0397"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0145",
+      "source_file": "results.tex",
+      "source_line": 96,
+      "source_text_sha256": "7856043e5ffd9edf246b1fd44c3c08d70f08e4b5cb2abf504ddce98b77aba20a",
+      "rendered_text_sha256": "d56fee63e4802da7a23969f3cef8f1b7bcb493cb42f362ceb1267d1a7a761e25",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0398"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0146",
+      "source_file": "results.tex",
+      "source_line": 98,
+      "source_text_sha256": "c41565f5a8ef85bdf6c2717cf97916b4065733ffc7a7d75333c69df25cb3f5ad",
+      "rendered_text_sha256": "070a6f1873bd30a6304d4246bbf42ab5e5d29721f50ea12a22bad68278e26708",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0399"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0147",
+      "source_file": "results.tex",
+      "source_line": 98,
+      "source_text_sha256": "6e60b4c05ada78085a9898aa4e947bdc2505ad084fba18068d5a8cd1f3b0bd31",
+      "rendered_text_sha256": "4571ecaac59e9d709af4c36a90795ce1428d1d6d87f5983c0f9cd6b1672d117a",
+      "proposition_count": 6,
+      "proposition_ids": [
+        "tex_proposition_0400",
+        "tex_proposition_0401",
+        "tex_proposition_0402",
+        "tex_proposition_0403",
+        "tex_proposition_0404",
+        "tex_proposition_0405"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0148",
+      "source_file": "results.tex",
+      "source_line": 99,
+      "source_text_sha256": "388e2b0963637ac3695a9153e90a2f83f3fd3ae6f5e60b5ef935c18670083751",
+      "rendered_text_sha256": "398dfc8387c9d279cb4152b0d7152448792619076003d4d34ee2ba9accd48704",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0406"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0149",
+      "source_file": "results.tex",
+      "source_line": 99,
+      "source_text_sha256": "b704e366064bd0016333a02a60d92cf1dd0485e6775528116773361623befd06",
+      "rendered_text_sha256": "57fba551aa854d8763a27515cdaffc2aac3d23a4ff5b08a199fe2cced29e3caa",
+      "proposition_count": 8,
+      "proposition_ids": [
+        "tex_proposition_0407",
+        "tex_proposition_0408",
+        "tex_proposition_0409",
+        "tex_proposition_0410",
+        "tex_proposition_0411",
+        "tex_proposition_0412",
+        "tex_proposition_0413",
+        "tex_proposition_0414"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0150",
+      "source_file": "results.tex",
+      "source_line": 103,
+      "source_text_sha256": "b15b22fddf67a05836bdf9c0fd46ae72c76eed134ff82e21cf713037ccf4ae45",
+      "rendered_text_sha256": "7d03413f9e94d1e62698a6e8534bf1f9aadb329b0a0e9501c6e0bf52c0dc305b",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0415",
+        "tex_proposition_0416",
+        "tex_proposition_0417"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0151",
+      "source_file": "results.tex",
+      "source_line": 104,
+      "source_text_sha256": "5f53be4eecc3efd79a83819da87b95a61422f80a63f56313cb3fdea825408bd5",
+      "rendered_text_sha256": "5f53be4eecc3efd79a83819da87b95a61422f80a63f56313cb3fdea825408bd5",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0418",
+        "tex_proposition_0419",
+        "tex_proposition_0420",
+        "tex_proposition_0421"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0152",
+      "source_file": "results.tex",
+      "source_line": 105,
+      "source_text_sha256": "79bdeb5960fdc71fcc1b6f42e458c0c47e1ff63fd53e835dbdec9df725aa7022",
+      "rendered_text_sha256": "ca40a9e6663da8e4e91d56f59ed84ad3ee8fbb97c0cb69726cdfa5cc68bfc743",
+      "proposition_count": 7,
+      "proposition_ids": [
+        "tex_proposition_0422",
+        "tex_proposition_0423",
+        "tex_proposition_0424",
+        "tex_proposition_0425",
+        "tex_proposition_0426",
+        "tex_proposition_0427",
+        "tex_proposition_0428"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0153",
+      "source_file": "results.tex",
+      "source_line": 106,
+      "source_text_sha256": "b9fad93646911ade3af2f130958bf9cae74ae71e5aaeae20228ab27df0f3a617",
+      "rendered_text_sha256": "94395c1f70bbc45112f873a7d179517730f8a5efa7da990aa4ddf95d2ae74b37",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0429",
+        "tex_proposition_0430",
+        "tex_proposition_0431",
+        "tex_proposition_0432"
       ],
       "review_status": "manual_static_semantic_decomposition_complete"
     }
@@ -10974,6 +11211,1155 @@
       ],
       "implementation_relevant": true,
       "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0383",
+      "sentence_id": "tex_prose_sentence_0137",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 85,
+      "source_end_line": 85,
+      "source_quote": "Analysis",
+      "source_quote_start": 0,
+      "source_quote_end": 8,
+      "source_quote_sha256": "e70d8eb9050021ad51462409f6024d4133e0d9706eb1d0d29100984370ae3d70",
+      "statement": "Analysis is the category heading for the following mathematical examples.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This is document structure rather than a standalone implementation requirement."
+    },
+    {
+      "proposition_id": "tex_proposition_0384",
+      "sentence_id": "tex_prose_sentence_0138",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 87,
+      "source_end_line": 87,
+      "source_quote": "Autocorrelation inequalities.",
+      "source_quote_start": 0,
+      "source_quote_end": 29,
+      "source_quote_sha256": "f29dbe403044d72288bfef7560c0c24bc5dcc0123e3b93e74a2717e0faf6e096",
+      "statement": "Autocorrelation inequalities is a problem label for the following result.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "The result sentence owns the substantive bounded claim."
+    },
+    {
+      "proposition_id": "tex_proposition_0385",
+      "sentence_id": "tex_prose_sentence_0139",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 87,
+      "source_end_line": 87,
+      "source_quote": "AlphaEvolve was able to improve",
+      "source_quote_start": 0,
+      "source_quote_end": 31,
+      "source_quote_sha256": "39d51ed7a5543052ea2421766194fa1229781ee54a3bc5bdaa51e2d216d912d9",
+      "statement": "AlphaEvolve is reported to improve autocorrelation-inequality bounds.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_autocorrelation_bounds_improved",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0386",
+      "sentence_id": "tex_prose_sentence_0139",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 87,
+      "source_end_line": 87,
+      "source_quote": "the best known bounds",
+      "source_quote_start": 32,
+      "source_quote_end": 53,
+      "source_quote_sha256": "9c394946ae4a31be8dc362fecc60510589087bfe3ffb5a7eb18820bc58c5ce19",
+      "statement": "The improved autocorrelation bounds were the best known bounds.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_autocorrelation_bounds_improved",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0387",
+      "sentence_id": "tex_prose_sentence_0139",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 87,
+      "source_end_line": 87,
+      "source_quote": "several autocorrelation inequalities",
+      "source_quote_start": 57,
+      "source_quote_end": 93,
+      "source_quote_sha256": "b81b783ed52dc8bc782c7b3aef1040511080b5c1acffed40a791af7b62e16a6a",
+      "statement": "The reported improvement covers several autocorrelation inequalities.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_autocorrelation_bounds_improved",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0388",
+      "sentence_id": "tex_prose_sentence_0140",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 88,
+      "source_end_line": 88,
+      "source_quote": "Uncertainty principles.",
+      "source_quote_start": 0,
+      "source_quote_end": 23,
+      "source_quote_sha256": "e2f2044c94d582d0d837e81c48dbbc4322149606471b52b70edb1a04b2b80ffa",
+      "statement": "Uncertainty principles is a problem label for the following result.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "The result sentence owns the substantive bounded claim."
+    },
+    {
+      "proposition_id": "tex_proposition_0389",
+      "sentence_id": "tex_prose_sentence_0141",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 88,
+      "source_end_line": 88,
+      "source_quote": "AlphaEvolve was able to produce a refined configuration",
+      "source_quote_start": 0,
+      "source_quote_end": 55,
+      "source_quote_sha256": "d112f64a6c781fc075ea22608b15be1ec3ad22a8f0ceeb68d6328936f4acf99c",
+      "statement": "AlphaEvolve is reported to produce a refined configuration.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_uncertainty_fourier_upper_bound",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0390",
+      "sentence_id": "tex_prose_sentence_0141",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 88,
+      "source_end_line": 88,
+      "source_quote": "for a problem arising in Fourier analysis",
+      "source_quote_start": 56,
+      "source_quote_end": 97,
+      "source_quote_sha256": "6b6b310a022d1adededa9cc856b99bac649a68f472457d22321117147ad6a8bf",
+      "statement": "The refined-configuration problem arises in Fourier analysis.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_uncertainty_fourier_upper_bound",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0391",
+      "sentence_id": "tex_prose_sentence_0141",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 88,
+      "source_end_line": 88,
+      "source_quote": "by polishing an uncertainty principle construction",
+      "source_quote_start": 99,
+      "source_quote_end": 149,
+      "source_quote_sha256": "9493472a11b8be4fe07b263c721ad52a3a6e9606b1faecd2b32b477c5c77bcfb",
+      "statement": "The refinement polishes an uncertainty-principle construction.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_uncertainty_fourier_upper_bound",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0392",
+      "sentence_id": "tex_prose_sentence_0141",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 88,
+      "source_end_line": 88,
+      "source_quote": "leading to a slightly better upper bound",
+      "source_quote_start": 161,
+      "source_quote_end": 201,
+      "source_quote_sha256": "96b8cb00148b12e719498f892860ab4fe4552404672285c46bbaecc7b02b2a2a",
+      "statement": "The polished construction is reported to yield a slightly better upper bound.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_uncertainty_fourier_upper_bound",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0393",
+      "sentence_id": "tex_prose_sentence_0142",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 91,
+      "source_end_line": 91,
+      "source_quote": "Combinatorics and number theory",
+      "source_quote_start": 0,
+      "source_quote_end": 31,
+      "source_quote_sha256": "e01c9edb4628b43623842e79d470b84cfedbb43d539ad6a867086acece15c56f",
+      "statement": "Combinatorics and number theory is a category heading.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This is document structure rather than a standalone implementation requirement."
+    },
+    {
+      "proposition_id": "tex_proposition_0394",
+      "sentence_id": "tex_prose_sentence_0143",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 93,
+      "source_end_line": 93,
+      "source_quote": "Erd o s's minimum overlap problem.",
+      "source_quote_start": 0,
+      "source_quote_end": 34,
+      "source_quote_sha256": "c87371b3943bf5aa2c284691f444450de4f62dc33ed7dfa3dcab20d178e448c8",
+      "statement": "The Erdos minimum-overlap text is a problem label for the following result.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "The result sentence owns the substantive bounded claim."
+    },
+    {
+      "proposition_id": "tex_proposition_0395",
+      "sentence_id": "tex_prose_sentence_0144",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 93,
+      "source_end_line": 93,
+      "source_quote": "AlphaEvolve established a new upper bound",
+      "source_quote_start": 0,
+      "source_quote_end": 41,
+      "source_quote_sha256": "989a095c46b836af6703b3e0137421739206e4e0600cff8be48c017e12e41334",
+      "statement": "AlphaEvolve is reported to establish a new upper bound.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_erdos_new_upper_bound",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0396",
+      "sentence_id": "tex_prose_sentence_0144",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 93,
+      "source_end_line": 93,
+      "source_quote": "for the minimum overlap problem",
+      "source_quote_start": 42,
+      "source_quote_end": 73,
+      "source_quote_sha256": "c98e655b884c938c0c8c3d88343b7e075cd30cb4981cf63df30e4cb0db0751d9",
+      "statement": "The new upper bound applies to the minimum-overlap problem.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_erdos_new_upper_bound",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0397",
+      "sentence_id": "tex_prose_sentence_0144",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 93,
+      "source_end_line": 93,
+      "source_quote": "slightly improving upon the previous record",
+      "source_quote_start": 87,
+      "source_quote_end": 130,
+      "source_quote_sha256": "900d25d92ebc79417d51ef2eae1b69cd0c8a74ee16f7c44daa3d082f333b40ef",
+      "statement": "The reported upper bound slightly improves the previous record.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_erdos_new_upper_bound",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0398",
+      "sentence_id": "tex_prose_sentence_0145",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 96,
+      "source_end_line": 96,
+      "source_quote": "Geometry and packing",
+      "source_quote_start": 0,
+      "source_quote_end": 20,
+      "source_quote_sha256": "d56fee63e4802da7a23969f3cef8f1b7bcb493cb42f362ceb1267d1a7a761e25",
+      "statement": "Geometry and packing is a category heading.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This is document structure rather than a standalone implementation requirement."
+    },
+    {
+      "proposition_id": "tex_proposition_0399",
+      "sentence_id": "tex_prose_sentence_0146",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 98,
+      "source_end_line": 98,
+      "source_quote": "Kissing number problem.",
+      "source_quote_start": 0,
+      "source_quote_end": 23,
+      "source_quote_sha256": "070a6f1873bd30a6304d4246bbf42ab5e5d29721f50ea12a22bad68278e26708",
+      "statement": "Kissing number problem is a problem label for the following result.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "The result sentence owns the substantive bounded claim."
+    },
+    {
+      "proposition_id": "tex_proposition_0400",
+      "sentence_id": "tex_prose_sentence_0147",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 98,
+      "source_end_line": 98,
+      "source_quote": "In 11 dimensions",
+      "source_quote_start": 0,
+      "source_quote_end": 16,
+      "source_quote_sha256": "8e438f311bf73e477516153a8ac9c8e9cf022869abe34d87c277ede4a6159fee",
+      "statement": "The reported kissing-number result is in dimension 11.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_kissing_number_d11_593_vs_592",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0401",
+      "sentence_id": "tex_prose_sentence_0147",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 98,
+      "source_end_line": 98,
+      "source_quote": "AlphaEvolve improved the lower bound on the kissing number",
+      "source_quote_start": 18,
+      "source_quote_end": 76,
+      "source_quote_sha256": "e0f34b73347bd82c274865727c93f762b14e5b348f7982b615d669f67f049bbd",
+      "statement": "AlphaEvolve is reported to improve the kissing-number lower bound.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_kissing_number_d11_593_vs_592",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0402",
+      "sentence_id": "tex_prose_sentence_0147",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 98,
+      "source_end_line": 98,
+      "source_quote": "finding a configuration of 593",
+      "source_quote_start": 78,
+      "source_quote_end": 108,
+      "source_quote_sha256": "895cbc9e9a123bbd11122473eedb9b543f01eaa5b336d39f00b6a2a953bfc9ed",
+      "statement": "The reported dimension-11 configuration contains 593 spheres.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_kissing_number_d11_593_vs_592",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0403",
+      "sentence_id": "tex_prose_sentence_0147",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 98,
+      "source_end_line": 98,
+      "source_quote": "non-overlapping unit spheres",
+      "source_quote_start": 109,
+      "source_quote_end": 137,
+      "source_quote_sha256": "09e03c03c3f30dcaf4dfa9dfa10c1545a7e70c74889188fea2c0d9cf99f27a50",
+      "statement": "The 593 spheres are non-overlapping unit spheres.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_kissing_number_d11_593_vs_592",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0404",
+      "sentence_id": "tex_prose_sentence_0147",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 98,
+      "source_end_line": 98,
+      "source_quote": "simultaneously touch a central unit sphere",
+      "source_quote_start": 147,
+      "source_quote_end": 189,
+      "source_quote_sha256": "59e7de75706c05c9bc2a531fccf136ce96503e6d9c856e6e0e060b4be078d992",
+      "statement": "All 593 spheres can simultaneously touch a central unit sphere.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_kissing_number_d11_593_vs_592",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0405",
+      "sentence_id": "tex_prose_sentence_0147",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 98,
+      "source_end_line": 98,
+      "source_quote": "surpassing the previous record of 592",
+      "source_quote_start": 191,
+      "source_quote_end": 228,
+      "source_quote_sha256": "52b64543f0ca1b5f026e4d83fb4f0f7baa832ade21302e72e6a3d0f549725701",
+      "statement": "The 593-sphere configuration is reported to surpass the previous record of 592.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_kissing_number_d11_593_vs_592",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0406",
+      "sentence_id": "tex_prose_sentence_0148",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 99,
+      "source_end_line": 99,
+      "source_quote": "Packing problems.",
+      "source_quote_start": 0,
+      "source_quote_end": 17,
+      "source_quote_sha256": "398dfc8387c9d279cb4152b0d7152448792619076003d4d34ee2ba9accd48704",
+      "statement": "Packing problems is a problem label for the following results.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "The result sentence owns the substantive bounded claims."
+    },
+    {
+      "proposition_id": "tex_proposition_0407",
+      "sentence_id": "tex_prose_sentence_0149",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 99,
+      "source_end_line": 99,
+      "source_quote": "AlphaEvolve achieved several new results in packing problems",
+      "source_quote_start": 0,
+      "source_quote_end": 60,
+      "source_quote_sha256": "3f0033c046aaa6b16a7a027ef887b6db4a6a481b425cbdcbb824ab68429b89d7",
+      "statement": "AlphaEvolve is reported to achieve several new packing results.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_n_point_max_min_distance_packing",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_polygon_in_polygon_packing",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_heilbronn_small_triangle_avoidance",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0408",
+      "sentence_id": "tex_prose_sentence_0149",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 99,
+      "source_end_line": 99,
+      "source_quote": "packing N points in a shape",
+      "source_quote_start": 70,
+      "source_quote_end": 97,
+      "source_quote_sha256": "bdb58684e4cfbc720c0e699763497fc2cb445f6223670f52fc62a762356b5f57",
+      "statement": "One reported packing task places N points in a shape.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_n_point_max_min_distance_packing",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0409",
+      "sentence_id": "tex_prose_sentence_0149",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 99,
+      "source_end_line": 99,
+      "source_quote": "to minimize the ratio of the maximum and minimum distance",
+      "source_quote_start": 98,
+      "source_quote_end": 155,
+      "source_quote_sha256": "636553091f431ccdfe4894759c31cbb78975b516a7d8e549fb1d136e3e0d5d90",
+      "statement": "The N-point packing objective minimizes the maximum-to-minimum distance ratio.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_n_point_max_min_distance_packing",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0410",
+      "sentence_id": "tex_prose_sentence_0149",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 99,
+      "source_end_line": 99,
+      "source_quote": "packing various polygons in other polygons",
+      "source_quote_start": 157,
+      "source_quote_end": 199,
+      "source_quote_sha256": "cd33f0cc6431f693632669c717f6d0482feb1a5b8754155ec0de57fb18837c78",
+      "statement": "Another reported task packs various polygons inside other polygons.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_polygon_in_polygon_packing",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0411",
+      "sentence_id": "tex_prose_sentence_0149",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 99,
+      "source_end_line": 99,
+      "source_quote": "in the most efficient way",
+      "source_quote_start": 200,
+      "source_quote_end": 225,
+      "source_quote_sha256": "476e8a4bd69c5b92c6a6c83b2db51288bb668307eb6303972742e44c40863670",
+      "statement": "The polygon-in-polygon task seeks the most efficient packing.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_polygon_in_polygon_packing",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0412",
+      "sentence_id": "tex_prose_sentence_0149",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 99,
+      "source_end_line": 99,
+      "source_quote": "variants of the Heilbronn problem",
+      "source_quote_start": 231,
+      "source_quote_end": 264,
+      "source_quote_sha256": "fdcb48c555a869dc84bf8c239201388f4e1551de38e4a8bf0fa59b41e9614efc",
+      "statement": "The reported packing results include variants of the Heilbronn problem.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_heilbronn_small_triangle_avoidance",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0413",
+      "sentence_id": "tex_prose_sentence_0149",
+      "sentence_proposition_ordinal": 7,
+      "source_file": "results.tex",
+      "source_line": 99,
+      "source_end_line": 99,
+      "source_quote": "concerning point sets",
+      "source_quote_start": 265,
+      "source_quote_end": 286,
+      "source_quote_sha256": "22e96d9e27a64c0f4180712be8491f8cd31e2424df49b7c1d7a01c2f390a38bb",
+      "statement": "The reported Heilbronn variants concern point sets.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_heilbronn_small_triangle_avoidance",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0414",
+      "sentence_id": "tex_prose_sentence_0149",
+      "sentence_proposition_ordinal": 8,
+      "source_file": "results.tex",
+      "source_line": 99,
+      "source_end_line": 99,
+      "source_quote": "avoiding small-area triangles",
+      "source_quote_start": 287,
+      "source_quote_end": 316,
+      "source_quote_sha256": "e1a171fe94a8fad6647d6d3710c098c5588aef55004da209e3ce35fefb4f1984",
+      "statement": "The reported Heilbronn point sets avoid small-area triangles.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_heilbronn_small_triangle_avoidance",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0415",
+      "sentence_id": "tex_prose_sentence_0150",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 103,
+      "source_end_line": 103,
+      "source_quote": "The full list of problems appears in Appendix [citation]",
+      "source_quote_start": 0,
+      "source_quote_end": 56,
+      "source_quote_sha256": "63d5ddc71e6642a3ef4287fee431c241567a9295ba940c6fd09cb8f1055a31dc",
+      "statement": "The paper reports that the full problem list appears in Appendix B.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_full_list_and_details_in_appendix_b",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0416",
+      "sentence_id": "tex_prose_sentence_0150",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 103,
+      "source_end_line": 103,
+      "source_quote": "new constructions found by AlphaEvolve",
+      "source_quote_start": 65,
+      "source_quote_end": 103,
+      "source_quote_sha256": "c45d2860716c916d11dc026d2a8e1af536f58e959ab8afb90deda0d580626de9",
+      "statement": "The linked constructions are attributed to AlphaEvolve.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_new_constructions_in_companion_colab",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0417",
+      "sentence_id": "tex_prose_sentence_0150",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 103,
+      "source_end_line": 103,
+      "source_quote": "the new constructions found by AlphaEvolve can be found in .",
+      "source_quote_start": 61,
+      "source_quote_end": 121,
+      "source_quote_sha256": "0ca6c86fcf6664037e6e5f178d75fe804d4881c0c58e04623828189e843a8a09",
+      "statement": "The source links an external companion artifact containing the reported constructions.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_new_constructions_in_companion_colab",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0418",
+      "sentence_id": "tex_prose_sentence_0151",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 104,
+      "source_end_line": 104,
+      "source_quote": "More examples",
+      "source_quote_start": 0,
+      "source_quote_end": 13,
+      "source_quote_sha256": "290894c78dfb4546fddc2825f16e1b6b734ae21e5339d6c8991c68a945b14c91",
+      "statement": "The authors plan to provide more examples in a follow-on paper.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_upcoming_math_paper_follow_on",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0419",
+      "sentence_id": "tex_prose_sentence_0151",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 104,
+      "source_end_line": 104,
+      "source_quote": "details on these problems",
+      "source_quote_start": 18,
+      "source_quote_end": 43,
+      "source_quote_sha256": "e97c256bf2ae8f9ed36e2ac66443b9eac8d9e8120a0481319804ba7f3dc016f9",
+      "statement": "The authors plan to provide more problem details in a follow-on paper.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_upcoming_math_paper_follow_on",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0420",
+      "sentence_id": "tex_prose_sentence_0151",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 104,
+      "source_end_line": 104,
+      "source_quote": "the methods used",
+      "source_quote_start": 48,
+      "source_quote_end": 64,
+      "source_quote_sha256": "fa5dfe664d9274ed65d41ff9e2a36d1277ade6836b8cad7aeaa226dcc4545d1c",
+      "statement": "The authors plan to provide method details in a follow-on paper.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_upcoming_math_paper_follow_on",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0421",
+      "sentence_id": "tex_prose_sentence_0151",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 104,
+      "source_end_line": 104,
+      "source_quote": "will be provided in an upcoming paper",
+      "source_quote_start": 65,
+      "source_quote_end": 102,
+      "source_quote_sha256": "3d498474d58796a37c1b54143479a4efdc6f09ec2deba7b4b466a7f5271f4ecd",
+      "statement": "The additional examples, problem details, and method details are planned for an upcoming paper.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_upcoming_math_paper_follow_on",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0422",
+      "sentence_id": "tex_prose_sentence_0152",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 105,
+      "source_end_line": 105,
+      "source_quote": "Most of these discoveries are on open problems",
+      "source_quote_start": 0,
+      "source_quote_end": 46,
+      "source_quote_sha256": "9aaf3a6eec38b68ea61f54b181778cebf295c5d399e8079dff3b34ff1ee771dd",
+      "statement": "Most reported discoveries in this set concern open problems.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_most_discoveries_externally_suggested",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0423",
+      "sentence_id": "tex_prose_sentence_0152",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 105,
+      "source_end_line": 105,
+      "source_quote": "suggested to us by external mathematicians",
+      "source_quote_start": 47,
+      "source_quote_end": 89,
+      "source_quote_sha256": "23ba16ba93512a7e615457369c9b7ed845407f9739a8682b1c00d80936056ea6",
+      "statement": "External mathematicians suggested most of the reported open problems.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_most_discoveries_externally_suggested",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0424",
+      "sentence_id": "tex_prose_sentence_0152",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 105,
+      "source_end_line": 105,
+      "source_quote": "Javier Gomez Serrano",
+      "source_quote_start": 90,
+      "source_quote_end": 110,
+      "source_quote_sha256": "4c21cec6909e268757d9b1bbfc0032775f8ff48fec969fd691d4b9179911ca39",
+      "statement": "Javier Gomez Serrano is named among the external mathematicians.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_javier_gomez_serrano_and_terence_tao",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0425",
+      "sentence_id": "tex_prose_sentence_0152",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 105,
+      "source_end_line": 105,
+      "source_quote": "Terence Tao",
+      "source_quote_start": 115,
+      "source_quote_end": 126,
+      "source_quote_sha256": "375e48822d00c64ab82389f126f23ce107d3961f39d54b17b92504e47cda350c",
+      "statement": "Terence Tao is named among the external mathematicians.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_javier_gomez_serrano_and_terence_tao",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0426",
+      "sentence_id": "tex_prose_sentence_0152",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 105,
+      "source_end_line": 105,
+      "source_quote": "also advised",
+      "source_quote_start": 132,
+      "source_quote_end": 144,
+      "source_quote_sha256": "9071a767f1aed46a8c765af911fc3efce77ad842ebca4d9fdc99874b18231eee",
+      "statement": "The named external mathematicians also provided formulation advice.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_external_advice_on_input_formulation",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0427",
+      "sentence_id": "tex_prose_sentence_0152",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 105,
+      "source_end_line": 105,
+      "source_quote": "how to best formulate them",
+      "source_quote_start": 148,
+      "source_quote_end": 174,
+      "source_quote_sha256": "097502f0cab7601c8524fdd75c6fe5c66b27ee62996406edbe126f87c7efc989",
+      "statement": "The advice addressed how best to formulate the problems.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_external_advice_on_input_formulation",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0428",
+      "sentence_id": "tex_prose_sentence_0152",
+      "sentence_proposition_ordinal": 7,
+      "source_file": "results.tex",
+      "source_line": 105,
+      "source_end_line": 105,
+      "source_quote": "as inputs to AlphaEvolve",
+      "source_quote_start": 175,
+      "source_quote_end": 199,
+      "source_quote_sha256": "b0fa9d908d34d2652f1e8bdc89704463771974aa5bdb803f32a13f2355c2dffb",
+      "statement": "The advised formulations were inputs to AlphaEvolve.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_external_advice_on_input_formulation",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0429",
+      "sentence_id": "tex_prose_sentence_0153",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 106,
+      "source_end_line": 106,
+      "source_quote": "This highlights",
+      "source_quote_start": 0,
+      "source_quote_end": 15,
+      "source_quote_sha256": "055b1fb5ca1bb5220064d4be337f294c3c04dd96350183644b5df13270261c7d",
+      "statement": "The authors interpret the preceding examples as evidence for a partnership opportunity.",
+      "disposition": "author_interpretation",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "The inferential framing is author interpretation; the partnership proposition is mapped separately."
+    },
+    {
+      "proposition_id": "tex_proposition_0430",
+      "sentence_id": "tex_prose_sentence_0153",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 106,
+      "source_end_line": 106,
+      "source_quote": "potential for synergistic partnerships",
+      "source_quote_start": 20,
+      "source_quote_end": 58,
+      "source_quote_sha256": "def00e9d3002fd3597ed6f668d0fa472346d67e37b56670782cfcc42b6f5148c",
+      "statement": "The authors claim potential for synergistic AI-human mathematical partnerships.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_ai_human_math_partnership_potential",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0431",
+      "sentence_id": "tex_prose_sentence_0153",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 106,
+      "source_end_line": 106,
+      "source_quote": "AI-driven discovery engines like AlphaEvolve",
+      "source_quote_start": 67,
+      "source_quote_end": 111,
+      "source_quote_sha256": "73a36f1e2f817d86e5af3c0ac9a03d4f7918a4fd8ff37268beb6b77e06bc15c0",
+      "statement": "The proposed partnership includes AI-driven discovery engines such as AlphaEvolve.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_ai_human_math_partnership_potential",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0432",
+      "sentence_id": "tex_prose_sentence_0153",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 106,
+      "source_end_line": 106,
+      "source_quote": "human mathematical expertise",
+      "source_quote_start": 116,
+      "source_quote_end": 144,
+      "source_quote_sha256": "f0801959ff5bf27d82b390149e3ddd5e4b7c8ddd0a673763bc24f3d136212de0",
+      "statement": "The proposed partnership includes human mathematical expertise.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_ai_human_math_partnership_potential",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
     }
   ],
   "inventory_scope": {
@@ -10982,17 +12368,17 @@
       "all 29 retained Introduction sentences in introduction.tex",
       "all 61 retained Methods sentences in methods.tex",
       "all 16 retained Section 3.1 matrix-result sentences in results.tex",
-      "all 22 retained Section 3.2 overview and methodology sentences in results.tex",
+      "all 39 retained Section 3.2 sentences in results.tex",
       "manual atomic-proposition statements and exact rendered-source quote offsets",
       "resolved bounded-claim mappings or explicit context, outlook, and interpretation dispositions"
     ],
     "excluded": [
-      "the remaining 266 retained prose sentences",
+      "the remaining 249 retained prose sentences",
       "separately audited captions, tables, equations, listings, footnotes, and explicit math constructs",
       "independent second-reviewer semantic agreement",
       "mathematical correctness, citation sufficiency, image-pixel semantics, or result reproduction",
       "AlphaEvolve system parity"
     ]
   },
-  "claim_boundary": "This boundary records a single-reviewer atomic-proposition decomposition for every retained sentence from the Abstract through the Section 3.2 constructive-math overview and search methodology. Complete disposition inside this 136-sentence scope does not cover the remaining 266 prose sentences and does not prove independent semantic exhaustiveness, mathematical correctness, result reproduction, or AlphaEvolve parity."
+  "claim_boundary": "This boundary records a single-reviewer atomic-proposition decomposition for every retained sentence from the Abstract through the complete Section 3.2 constructive-mathematics section. Complete disposition inside this 153-sentence scope does not cover the remaining 249 prose sentences and does not prove independent semantic exhaustiveness, mathematical correctness, result reproduction, or AlphaEvolve parity."
 }

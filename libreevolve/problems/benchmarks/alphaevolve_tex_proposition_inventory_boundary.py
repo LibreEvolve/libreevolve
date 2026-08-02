@@ -20,16 +20,16 @@ from libreevolve.problems.benchmarks.paper_bibliography import (
 
 
 ALPHAEVOLVE_TEX_PROPOSITION_INVENTORY_BOUNDARY_SCHEMA = (
-    "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v4"
+    "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v5"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "abstract_through_section3_2_math_methodology_proposition_review_complete_without_"
+    "abstract_through_complete_section3_2_proposition_review_complete_without_"
     "remaining_paper_or_independent_semantic_exhaustiveness"
 )
-EXPECTED_REVIEWED_SENTENCE_COUNT = 136
-EXPECTED_PROPOSITION_COUNT = 382
+EXPECTED_REVIEWED_SENTENCE_COUNT = 153
+EXPECTED_PROPOSITION_COUNT = 432
 EXPECTED_REVIEWED_SENTENCE_IDS = tuple(
-    f"tex_prose_sentence_{ordinal:04d}" for ordinal in range(1, 137)
+    f"tex_prose_sentence_{ordinal:04d}" for ordinal in range(1, 154)
 )
 EXPECTED_NEW_BOUNDED_CLAIM_IDS = (
     "introduction_algorithm_search_outperforms_direct_solution_search",
@@ -933,6 +933,298 @@ _PROPOSITION_SPECS.update(
                 "for problems with non-symmetric solutions it works better to evolve customized search algorithms",
                 "The authors hypothesize that non-symmetric problems favor customized search algorithms.",
                 _ref("system", "task_symmetry_guided_abstraction_bias"),
+            ),
+        ),
+    }
+)
+
+_PROPOSITION_SPECS.update(
+    {
+        "tex_prose_sentence_0137": (
+            _reviewed_context(
+                "Analysis",
+                "Analysis is the category heading for the following mathematical examples.",
+                "This is document structure rather than a standalone implementation requirement.",
+            ),
+        ),
+        "tex_prose_sentence_0138": (
+            _reviewed_context(
+                "Autocorrelation inequalities.",
+                "Autocorrelation inequalities is a problem label for the following result.",
+                "The result sentence owns the substantive bounded claim.",
+            ),
+        ),
+        "tex_prose_sentence_0139": (
+            _mapped(
+                "AlphaEvolve was able to improve",
+                "AlphaEvolve is reported to improve autocorrelation-inequality bounds.",
+                _ref("math", "section3_2_autocorrelation_bounds_improved"),
+            ),
+            _mapped(
+                "the best known bounds",
+                "The improved autocorrelation bounds were the best known bounds.",
+                _ref("math", "section3_2_autocorrelation_bounds_improved"),
+            ),
+            _mapped(
+                "several autocorrelation inequalities",
+                "The reported improvement covers several autocorrelation inequalities.",
+                _ref("math", "section3_2_autocorrelation_bounds_improved"),
+            ),
+        ),
+        "tex_prose_sentence_0140": (
+            _reviewed_context(
+                "Uncertainty principles.",
+                "Uncertainty principles is a problem label for the following result.",
+                "The result sentence owns the substantive bounded claim.",
+            ),
+        ),
+        "tex_prose_sentence_0141": (
+            _mapped(
+                "AlphaEvolve was able to produce a refined configuration",
+                "AlphaEvolve is reported to produce a refined configuration.",
+                _ref("math", "section3_2_uncertainty_fourier_upper_bound"),
+            ),
+            _mapped(
+                "for a problem arising in Fourier analysis",
+                "The refined-configuration problem arises in Fourier analysis.",
+                _ref("math", "section3_2_uncertainty_fourier_upper_bound"),
+            ),
+            _mapped(
+                "by polishing an uncertainty principle construction",
+                "The refinement polishes an uncertainty-principle construction.",
+                _ref("math", "section3_2_uncertainty_fourier_upper_bound"),
+            ),
+            _mapped(
+                "leading to a slightly better upper bound",
+                "The polished construction is reported to yield a slightly better upper bound.",
+                _ref("math", "section3_2_uncertainty_fourier_upper_bound"),
+            ),
+        ),
+        "tex_prose_sentence_0142": (
+            _reviewed_context(
+                "Combinatorics and number theory",
+                "Combinatorics and number theory is a category heading.",
+                "This is document structure rather than a standalone implementation requirement.",
+            ),
+        ),
+        "tex_prose_sentence_0143": (
+            _reviewed_context(
+                "Erd o s's minimum overlap problem.",
+                "The Erdos minimum-overlap text is a problem label for the following result.",
+                "The result sentence owns the substantive bounded claim.",
+            ),
+        ),
+        "tex_prose_sentence_0144": (
+            _mapped(
+                "AlphaEvolve established a new upper bound",
+                "AlphaEvolve is reported to establish a new upper bound.",
+                _ref("math", "section3_2_erdos_new_upper_bound"),
+            ),
+            _mapped(
+                "for the minimum overlap problem",
+                "The new upper bound applies to the minimum-overlap problem.",
+                _ref("math", "section3_2_erdos_new_upper_bound"),
+            ),
+            _mapped(
+                "slightly improving upon the previous record",
+                "The reported upper bound slightly improves the previous record.",
+                _ref("math", "section3_2_erdos_new_upper_bound"),
+            ),
+        ),
+        "tex_prose_sentence_0145": (
+            _reviewed_context(
+                "Geometry and packing",
+                "Geometry and packing is a category heading.",
+                "This is document structure rather than a standalone implementation requirement.",
+            ),
+        ),
+        "tex_prose_sentence_0146": (
+            _reviewed_context(
+                "Kissing number problem.",
+                "Kissing number problem is a problem label for the following result.",
+                "The result sentence owns the substantive bounded claim.",
+            ),
+        ),
+        "tex_prose_sentence_0147": (
+            _mapped(
+                "In 11 dimensions",
+                "The reported kissing-number result is in dimension 11.",
+                _ref("math", "section3_2_kissing_number_d11_593_vs_592"),
+            ),
+            _mapped(
+                "AlphaEvolve improved the lower bound on the kissing number",
+                "AlphaEvolve is reported to improve the kissing-number lower bound.",
+                _ref("math", "section3_2_kissing_number_d11_593_vs_592"),
+            ),
+            _mapped(
+                "finding a configuration of 593",
+                "The reported dimension-11 configuration contains 593 spheres.",
+                _ref("math", "section3_2_kissing_number_d11_593_vs_592"),
+            ),
+            _mapped(
+                "non-overlapping unit spheres",
+                "The 593 spheres are non-overlapping unit spheres.",
+                _ref("math", "section3_2_kissing_number_d11_593_vs_592"),
+            ),
+            _mapped(
+                "simultaneously touch a central unit sphere",
+                "All 593 spheres can simultaneously touch a central unit sphere.",
+                _ref("math", "section3_2_kissing_number_d11_593_vs_592"),
+            ),
+            _mapped(
+                "surpassing the previous record of 592",
+                "The 593-sphere configuration is reported to surpass the previous record of 592.",
+                _ref("math", "section3_2_kissing_number_d11_593_vs_592"),
+            ),
+        ),
+        "tex_prose_sentence_0148": (
+            _reviewed_context(
+                "Packing problems.",
+                "Packing problems is a problem label for the following results.",
+                "The result sentence owns the substantive bounded claims.",
+            ),
+        ),
+        "tex_prose_sentence_0149": (
+            _mapped(
+                "AlphaEvolve achieved several new results in packing problems",
+                "AlphaEvolve is reported to achieve several new packing results.",
+                _ref("math", "section3_2_n_point_max_min_distance_packing"),
+                _ref("math", "section3_2_polygon_in_polygon_packing"),
+                _ref("math", "section3_2_heilbronn_small_triangle_avoidance"),
+            ),
+            _mapped(
+                "packing N points in a shape",
+                "One reported packing task places N points in a shape.",
+                _ref("math", "section3_2_n_point_max_min_distance_packing"),
+            ),
+            _mapped(
+                "to minimize the ratio of the maximum and minimum distance",
+                "The N-point packing objective minimizes the maximum-to-minimum distance ratio.",
+                _ref("math", "section3_2_n_point_max_min_distance_packing"),
+            ),
+            _mapped(
+                "packing various polygons in other polygons",
+                "Another reported task packs various polygons inside other polygons.",
+                _ref("math", "section3_2_polygon_in_polygon_packing"),
+            ),
+            _mapped(
+                "in the most efficient way",
+                "The polygon-in-polygon task seeks the most efficient packing.",
+                _ref("math", "section3_2_polygon_in_polygon_packing"),
+            ),
+            _mapped(
+                "variants of the Heilbronn problem",
+                "The reported packing results include variants of the Heilbronn problem.",
+                _ref("math", "section3_2_heilbronn_small_triangle_avoidance"),
+            ),
+            _mapped(
+                "concerning point sets",
+                "The reported Heilbronn variants concern point sets.",
+                _ref("math", "section3_2_heilbronn_small_triangle_avoidance"),
+            ),
+            _mapped(
+                "avoiding small-area triangles",
+                "The reported Heilbronn point sets avoid small-area triangles.",
+                _ref("math", "section3_2_heilbronn_small_triangle_avoidance"),
+            ),
+        ),
+        "tex_prose_sentence_0150": (
+            _mapped(
+                "The full list of problems appears in Appendix [citation]",
+                "The paper reports that the full problem list appears in Appendix B.",
+                _ref("math", "section3_2_full_list_and_details_in_appendix_b"),
+            ),
+            _mapped(
+                "new constructions found by AlphaEvolve",
+                "The linked constructions are attributed to AlphaEvolve.",
+                _ref("math", "section3_2_new_constructions_in_companion_colab"),
+            ),
+            _mapped(
+                "the new constructions found by AlphaEvolve can be found in .",
+                "The source links an external companion artifact containing the reported constructions.",
+                _ref("math", "section3_2_new_constructions_in_companion_colab"),
+            ),
+        ),
+        "tex_prose_sentence_0151": (
+            _mapped(
+                "More examples",
+                "The authors plan to provide more examples in a follow-on paper.",
+                _ref("math", "section3_2_upcoming_math_paper_follow_on"),
+            ),
+            _mapped(
+                "details on these problems",
+                "The authors plan to provide more problem details in a follow-on paper.",
+                _ref("math", "section3_2_upcoming_math_paper_follow_on"),
+            ),
+            _mapped(
+                "the methods used",
+                "The authors plan to provide method details in a follow-on paper.",
+                _ref("math", "section3_2_upcoming_math_paper_follow_on"),
+            ),
+            _mapped(
+                "will be provided in an upcoming paper",
+                "The additional examples, problem details, and method details are planned for an upcoming paper.",
+                _ref("math", "section3_2_upcoming_math_paper_follow_on"),
+            ),
+        ),
+        "tex_prose_sentence_0152": (
+            _mapped(
+                "Most of these discoveries are on open problems",
+                "Most reported discoveries in this set concern open problems.",
+                _ref("math", "section3_2_most_discoveries_externally_suggested"),
+            ),
+            _mapped(
+                "suggested to us by external mathematicians",
+                "External mathematicians suggested most of the reported open problems.",
+                _ref("math", "section3_2_most_discoveries_externally_suggested"),
+            ),
+            _mapped(
+                "Javier Gomez Serrano",
+                "Javier Gomez Serrano is named among the external mathematicians.",
+                _ref("math", "section3_2_javier_gomez_serrano_and_terence_tao"),
+            ),
+            _mapped(
+                "Terence Tao",
+                "Terence Tao is named among the external mathematicians.",
+                _ref("math", "section3_2_javier_gomez_serrano_and_terence_tao"),
+            ),
+            _mapped(
+                "also advised",
+                "The named external mathematicians also provided formulation advice.",
+                _ref("math", "section3_2_external_advice_on_input_formulation"),
+            ),
+            _mapped(
+                "how to best formulate them",
+                "The advice addressed how best to formulate the problems.",
+                _ref("math", "section3_2_external_advice_on_input_formulation"),
+            ),
+            _mapped(
+                "as inputs to AlphaEvolve",
+                "The advised formulations were inputs to AlphaEvolve.",
+                _ref("math", "section3_2_external_advice_on_input_formulation"),
+            ),
+        ),
+        "tex_prose_sentence_0153": (
+            _reviewed_context(
+                "This highlights",
+                "The authors interpret the preceding examples as evidence for a partnership opportunity.",
+                "The inferential framing is author interpretation; the partnership proposition is mapped separately.",
+                disposition="author_interpretation",
+            ),
+            _mapped(
+                "potential for synergistic partnerships",
+                "The authors claim potential for synergistic AI-human mathematical partnerships.",
+                _ref("math", "section3_2_ai_human_math_partnership_potential"),
+            ),
+            _mapped(
+                "AI-driven discovery engines like AlphaEvolve",
+                "The proposed partnership includes AI-driven discovery engines such as AlphaEvolve.",
+                _ref("math", "section3_2_ai_human_math_partnership_potential"),
+            ),
+            _mapped(
+                "human mathematical expertise",
+                "The proposed partnership includes human mathematical expertise.",
+                _ref("math", "section3_2_ai_human_math_partnership_potential"),
             ),
         ),
     }
@@ -2506,7 +2798,7 @@ class AlphaEvolveTexPropositionInventoryBoundaryValidation:
 def alphaevolve_tex_proposition_inventory_boundary_record(
     root: str | Path = ".",
 ) -> dict[str, Any]:
-    """Review atomic propositions through retained Section 3.2 methodology."""
+    """Review atomic propositions through the complete retained Section 3.2."""
 
     root_path = Path(root)
     prose = alphaevolve_tex_prose_inventory_boundary_record(root_path)
@@ -2711,12 +3003,12 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
                 "all 29 retained Introduction sentences in introduction.tex",
                 "all 61 retained Methods sentences in methods.tex",
                 "all 16 retained Section 3.1 matrix-result sentences in results.tex",
-                "all 22 retained Section 3.2 overview and methodology sentences in results.tex",
+                "all 39 retained Section 3.2 sentences in results.tex",
                 "manual atomic-proposition statements and exact rendered-source quote offsets",
                 "resolved bounded-claim mappings or explicit context, outlook, and interpretation dispositions",
             ],
             "excluded": [
-                "the remaining 266 retained prose sentences",
+                "the remaining 249 retained prose sentences",
                 "separately audited captions, tables, equations, listings, footnotes, and explicit math constructs",
                 "independent second-reviewer semantic agreement",
                 "mathematical correctness, citation sufficiency, image-pixel semantics, or result reproduction",
@@ -2725,9 +3017,9 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
         },
         "claim_boundary": (
             "This boundary records a single-reviewer atomic-proposition decomposition "
-            "for every retained sentence from the Abstract through the Section 3.2 "
-            "constructive-math overview and search methodology. Complete disposition "
-            "inside this 136-sentence scope does not cover the remaining 266 prose "
+            "for every retained sentence from the Abstract through the complete "
+            "Section 3.2 constructive-mathematics section. Complete disposition "
+            "inside this 153-sentence scope does not cover the remaining 249 prose "
             "sentences and does not prove independent semantic exhaustiveness, "
             "mathematical correctness, result reproduction, or AlphaEvolve parity."
         ),

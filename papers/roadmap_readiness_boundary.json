@@ -26,15 +26,15 @@
           "path": "docs/todo/Completed/code.md",
           "exists": true,
           "active_count": 0,
-          "completed_count": 1279,
-          "total_count": 1279
+          "completed_count": 1280,
+          "total_count": 1280
         }
       ],
       "active_count": 222,
-      "completed_count": 1279,
-      "total_count": 1501,
-      "raw_todo_completion_percent": 85.21,
-      "weighted_todo_completion_points": 42.605
+      "completed_count": 1280,
+      "total_count": 1502,
+      "raw_todo_completion_percent": 85.22,
+      "weighted_todo_completion_points": 42.61
     },
     {
       "category_id": "paper_source_and_benchmark_evidence",
@@ -56,15 +56,15 @@
           "path": "docs/todo/Completed/papers.md",
           "exists": true,
           "active_count": 0,
-          "completed_count": 1096,
-          "total_count": 1096
+          "completed_count": 1097,
+          "total_count": 1097
         }
       ],
       "active_count": 252,
-      "completed_count": 1096,
-      "total_count": 1348,
-      "raw_todo_completion_percent": 81.306,
-      "weighted_todo_completion_points": 20.326
+      "completed_count": 1097,
+      "total_count": 1349,
+      "raw_todo_completion_percent": 81.319,
+      "weighted_todo_completion_points": 20.33
     },
     {
       "category_id": "documentation_truthfulness_and_user_scope",
@@ -86,15 +86,15 @@
           "path": "docs/todo/Completed/readme.md",
           "exists": true,
           "active_count": 0,
-          "completed_count": 1219,
-          "total_count": 1219
+          "completed_count": 1220,
+          "total_count": 1220
         }
       ],
       "active_count": 32,
-      "completed_count": 1219,
-      "total_count": 1251,
-      "raw_todo_completion_percent": 97.442,
-      "weighted_todo_completion_points": 14.616
+      "completed_count": 1220,
+      "total_count": 1252,
+      "raw_todo_completion_percent": 97.444,
+      "weighted_todo_completion_points": 14.617
     },
     {
       "category_id": "roadmap_priority_and_phase_evidence",
@@ -116,22 +116,22 @@
           "path": "docs/todo/Completed/roadmap.md",
           "exists": true,
           "active_count": 0,
-          "completed_count": 1245,
-          "total_count": 1245
+          "completed_count": 1246,
+          "total_count": 1246
         }
       ],
       "active_count": 16,
-      "completed_count": 1245,
-      "total_count": 1261,
-      "raw_todo_completion_percent": 98.731,
+      "completed_count": 1246,
+      "total_count": 1262,
+      "raw_todo_completion_percent": 98.732,
       "weighted_todo_completion_points": 9.873
     }
   ],
   "raw_todo_ledger_active_count": 522,
-  "raw_todo_ledger_completed_count": 4839,
-  "raw_todo_ledger_total_count": 5361,
-  "raw_todo_ledger_completion_percent": 90.263,
-  "weighted_todo_ledger_completion_percent": 87.42,
+  "raw_todo_ledger_completed_count": 4843,
+  "raw_todo_ledger_total_count": 5365,
+  "raw_todo_ledger_completion_percent": 90.27,
+  "weighted_todo_ledger_completion_percent": 87.43,
   "readiness_percent_status": "todo_ledger_only_not_semantic_alphaevolve_readiness",
   "required_evidence_fields": [
     "stable_readiness_categories",

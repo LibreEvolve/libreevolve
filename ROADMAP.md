@@ -1031,17 +1031,17 @@ AlphaEvolve reproduction.
   bounded claims but does not prove sentence-internal clause/proposition
   exhaustiveness, independent semantic review, or result reproduction. The
   supplemental `papers/alphaevolve_tex_proposition_inventory_boundary.json`
-  decomposes all 136 retained Abstract, Introduction, Methods, Section 3.1
-  matrix-result, and Section 3.2 constructive-math overview/search-methodology
-  sentences into 382 atomic propositions: 345 map through 365 references to 159
-  bounded claims, 29 are background context, 2 are author outlook, and 6 are
-  qualified author interpretations. It cumulatively bounds
+  decomposes all 153 retained sentences from the Abstract through the complete
+  Section 3.2 constructive-mathematics section into 432 atomic propositions:
+  386 map through 408 references to 172 bounded claims, 37 are source context,
+  2 are author outlook, and 7 are qualified author interpretations. It
+  cumulatively bounds
   the previously missed direct-versus-instrumental-search comparison and the
-  expensive-evaluation sample-efficiency claim. The Section 3.2 methodology
-  extension adds no new claim or parity credit, but repairs two sentence
-  mappings covering heuristic-program evolution rather than direct
-  constructions and fast objective evaluations common in constructive
-  mathematics. The other 266 prose
+  expensive-evaluation sample-efficiency claim. Completing Section 3.2 adds no
+  new claim, sentence-mapping repair, or parity credit; its named result,
+  artifact, and collaboration propositions resolve to existing constructive-
+  math claims. The preceding methodology slice repaired two broad sentence
+  mappings. The other 249 prose
   sentences and independent semantic review remain open. The twelve bounded
   claim inventories now disposition 846 claims in total: 30 locally
   implemented, 278 partial, 110 not
@@ -1069,11 +1069,10 @@ AlphaEvolve reproduction.
   for all 83 rows and 240 cells in Tables 1-3, plus line-level disposition for all 8 retained
   code listings and 305 physical source lines, plus delimiter-level disposition
   for all 309 explicit TeX math constructs, plus paragraph/sentence disposition
-  for all 128 retained prose paragraphs and 402 grammatical sentences, plus 382
-  atomic-proposition dispositions across the 136 Abstract, Introduction,
-  Methods, Section 3.1 matrix-result, and Section 3.2 constructive-math
-  overview/search-methodology sentences. It is not proposition review for the
-  remaining 266 sentences,
+  for all 128 retained prose paragraphs and 402 grammatical sentences, plus 432
+  atomic-proposition dispositions across all 153 sentences from the Abstract
+  through the complete Section 3.2 constructive-mathematics section. It is not
+  proposition review for the remaining 249 sentences,
   mathematical-correctness proof, image-pixel or citation-semantic review,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,
   implemented-benchmark bullet semantic verifier,

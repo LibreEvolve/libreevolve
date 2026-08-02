@@ -4,6 +4,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## Papers Todo: Reference and Specification Gaps
 
+- [x] Inventory AlphaEvolve Appendix A, Table 3, and Figure 9 claims.
+  - Paper evidence: source pages 34-37 provide the 54-target full matrix table,
+    suite curation and scaling notes, aggregate/exactness/scalar-field claims,
+    concurrent-work note, and all three magnified program-diff panels.
+  - Status: `papers/alphaevolve_appendix_a_claim_inventory_boundary.json`
+    records 131 exact-page claims: 13 partial metadata dispositions and 118
+    undemonstrated result/program dispositions, all with active ownership.
+  - Remaining gap: independent baseline verification, 54 construction and
+    certificate artifacts, companion notebook evidence, resource-frontier
+    attempts, panel exports, and stochastic rediscovery remain unproven.
+
 - [x] Inventory AlphaEvolve Section 5 Related Work claims.
   - Paper evidence: source pages 18-20 cover evolutionary methods, FunSearch,
     adjacent LLM-evolution work, AI Co-Scientist, superoptimization,

@@ -45,6 +45,12 @@ def test_alphaevolve_source_inventory_accepts_pdf_verified_named_structure():
     assert "papers/alphaevolve_related_work_claim_inventory_boundary.json" in {
         ref["path"] for ref in section_5["sidecar_refs"]
     }
+    appendix_a = next(
+        record for record in boundary["span_records"] if record["span_id"] == "appendix_a"
+    )
+    assert "papers/alphaevolve_appendix_a_claim_inventory_boundary.json" in {
+        ref["path"] for ref in appendix_a["sidecar_refs"]
+    }
     assert len(section_5["active_todo_refs"]) == 2
     assert "requirement-level exhaustiveness" in boundary["claim_boundary"]
 

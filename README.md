@@ -141,11 +141,19 @@ Important limits:
   source-context-only descriptions of cited work. All 20 implementation gaps
   have live TODO ownership; literature context is not counted as local
   implementation debt.
-- Together the ten bounded inventories cover 514 claims: 29 locally
-  implemented, 167 partial, 84 not implemented, 175 not demonstrated, and 59
-  source-context-only, leaving 426 implementation gaps. They still exclude
-  claim-level coverage for Figures 9-14, Table 3, detailed appendices,
-  source-detail exhaustiveness, and independent result reproduction.
+- `papers/alphaevolve_appendix_a_claim_inventory_boundary.json` audits 131
+  exact-page claims from Appendix A, Table 3, and Figure 9: 29 prose/caption
+  claims, all 54 matrix-result rows, and 48 panel-level program claims.
+  Thirteen have partial metadata support and 118 are not demonstrated; all
+  131 gaps have live TODO ownership. The registry is not decomposition or
+  rediscovery evidence.
+- Together the eleven bounded inventories cover 645 claims: 29 locally
+  implemented, 180 partial, 84 not implemented, 293 not demonstrated, and 59
+  source-context-only, leaving 557 implementation gaps. Across the 586
+  implementation-relevant claims, strict implemented parity is 4.9%; counting
+  partial claims at half credit gives 20.3%. Coverage still excludes Figures
+  10-14, detailed Appendix B claims, source-detail exhaustiveness, and
+  independent result reproduction.
 - The local paper cache is source inventory. A cached paper or `papers/README.md`
   row does not mean the paper's method or results are implemented.
 - `papers/related_work_taxonomy_boundary.json` records a bounded AlphaEvolve

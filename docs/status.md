@@ -703,6 +703,13 @@ Important limits:
   `papers/related_work_taxonomy_boundary.json`. Exhaustive reference coverage,
   independent positioning review, local parity, and benchmark reproduction
   remain unproven.
+- Appendix A, Table 3, and Figure 9 now have 131 exact-page claim records in
+  `papers/alphaevolve_appendix_a_claim_inventory_boundary.json`: 13 partial
+  metadata implementations and 118 undemonstrated result/program claims. The
+  inventory covers 29 prose/caption claims, all 54 Table 3 rows, and 48
+  Figure 9 code/caption claims with live TODO ownership for every gap. It does
+  not provide decomposition artifacts, exactness certificates, local
+  resource-frontier runs, panel exports, or stochastic rediscovery.
 - Candidate execution uses a task-primary bounded text-workspace abstraction,
   with Python autodetection as the default and an optional stage-bound local
   language/build command path. The
@@ -1799,8 +1806,10 @@ Important limits:
   A matrix targets, Appendix B constructive math, application-result claims,
   paper-status row dispositions, and TODO/non-goal/phase proof. It links the
   existing core source-span disposition input, paper-status row counts, sidecar
-  refs, active TODO refs, validation-gate labels, readiness labels, and 514
-  bounded claims through Section 5. This
+  refs, active TODO refs, validation-gate labels, readiness labels, and 645
+  bounded claims through Appendix A, Table 3, and Figure 9. The 586
+  implementation-relevant claims currently yield 4.9% strict implemented
+  parity or 20.3% with partial claims counted at half credit. This
   is not an exhaustive PDF section walk, complete figure/table/appendix
   matrix, complete application-result claim matrix, status-row to ROADMAP
   disposition map, missing/partial TODO proof, non-goal decision map,

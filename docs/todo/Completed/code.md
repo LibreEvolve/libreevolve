@@ -4,6 +4,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add the bounded Appendix A, Table 3, and Figure 9 claim inventory.
+  - Status: the public boundary records 131 stable claims with exact PDF pages
+    and anchors, implementation status, ROADMAP routing, evidence links, and
+    live TODO ownership. It covers 29 prose/caption claims, all 54 Table 3
+    rows, and 48 Figure 9 code/caption claims.
+  - Accounting: 13 claims have partial metadata support and 118 are not
+    demonstrated; none is counted as locally implemented merely because the
+    paper values appear in a registry.
+  - Remaining code gap: generated decompositions, exactness certificates,
+    notebook exports, local scaling/OOM evidence, Figure 9 artifacts, emitted
+    sweep/near-integrality records, and stochastic result reproduction remain
+    open in the active domain TODOs.
+  - Verification: focused inventory, source, aggregate ROADMAP, and manifest
+    tests reject anchor, count, reference, ownership, reproduction, and parity
+    drift.
+
 - [x] Add the bounded Section 5 code claim inventory.
   - Status: the new claim boundary records 85 exact-page claims with 6 locally
     implemented, 9 partial, 4 not implemented, 7 not demonstrated, and 59

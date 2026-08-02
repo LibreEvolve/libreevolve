@@ -1615,15 +1615,21 @@ exact-page Section 5 claims. It classifies 6 as locally implemented, 9 as
 partial, 4 as not implemented, 7 as not demonstrated, and 59 as
 source-context-only descriptions of cited systems and research. All 20
 implementation gaps have live TODO ownership; source context does not create
-implementation debt. Together the ten bounded inventories disposition 514
-claims: 29 locally implemented, 167 partial, 84 not implemented, 175 not
-demonstrated, and 59 source-context-only. The corrected
+implementation debt. `papers/alphaevolve_appendix_a_claim_inventory_boundary.json`
+adds 131 exact-page Appendix A, Table 3, and Figure 9 claims: 29 prose/caption
+claims, all 54 Table 3 rows, and 48 panel-level program claims. Thirteen are
+partial and 118 are not demonstrated, with live TODO ownership for every gap.
+Together the eleven bounded inventories disposition 645 claims: 29 locally
+implemented, 180 partial, 84 not implemented, 293 not demonstrated, and 59
+source-context-only. Across 586 implementation-relevant claims this is 4.9%
+strict implemented parity, or 20.3% when partial claims receive half credit.
+The corrected
 `papers/implementation_evidence_map_boundary.json` records six broad requirement
 anchors for markers, prompt sampling/creative generation, evaluation,
 evolution, distributed execution, and published benchmark coverage with 81
 existence-checked source-span/module/test/sidecar/TODO references. This is not a
 whole-paper sentence-, paragraph-, equation-, footnote-, citation-, or detailed
-remaining-exhibit/appendix claim inventory, per-phrase evidence-link
+Figures 10-14/Appendix B claim inventory, per-phrase evidence-link
 sufficiency proof, coverage detector,
 generated code-audit report, or CI exhaustiveness gate. The checked
 `papers/status_claim_inventory.json` sidecar records row-level paper-index
@@ -2099,6 +2105,13 @@ Implemented:
   `appendix_a_matrix_registry.py` adds the 54 AlphaEvolve Appendix A Table 3
   target identities and dimensions, and matrix reports for
   `alphaevolve_appendix_a` must match that registry.
+  `papers/alphaevolve_appendix_a_claim_inventory_boundary.json` separately
+  records the complete bounded claim walk for PDF pages 34-37: 29 Appendix A
+  prose/caption claims, all 54 Table 3 rows with baseline references and
+  outcomes, and 48 Figure 9 code/caption claims. Its 13 partial and 118
+  undemonstrated dispositions have active TODO ownership; it does not convert
+  registry metadata into construction, certificate, panel, or rediscovery
+  evidence.
   The same module now adds
   `libreevolve.alphaevolve_appendix_a_matrix_curation.v1`, a target-suite
   curation contract for the paper's rough size-selection wording, sorted

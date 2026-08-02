@@ -959,9 +959,15 @@ AlphaEvolve reproduction.
   85 Section 5 claims: 6 are locally implemented, 9 partial, 4 not
   implemented, 7 not demonstrated, and 59 source-context-only. All 20
   implementation gaps have live TODO ownership, while cited-work context is
-  excluded from implementation debt. The ten bounded inventories now
-  disposition 514 claims in total: 29 locally implemented, 167 partial, 84
-  not implemented, 175 not demonstrated, and 59 source-context-only,
+  excluded from implementation debt. The additional
+  `papers/alphaevolve_appendix_a_claim_inventory_boundary.json` dispositions
+  131 Appendix A, Table 3, and Figure 9 claims: 13 are partial and 118 are not
+  demonstrated, with live TODO ownership for all 131 gaps. It covers 29 prose
+  and caption claims, all 54 Table 3 rows, and 48 panel-level program claims
+  without treating registry metadata as result reproduction. The eleven
+  bounded inventories now disposition 645 claims in total: 29 locally
+  implemented, 180 partial, 84 not implemented, 293 not demonstrated, and 59
+  source-context-only,
   and `papers/status_claim_inventory.json` records checked row-level paper
   status inventory plus status-cell phrase hashes, source offsets, local
   artifact mention source offsets, and candidate evidence-link lists plus
@@ -973,7 +979,9 @@ AlphaEvolve reproduction.
   benchmark coverage bullets plus file character offsets, source-token match
   file offsets, referenced local artifact mention file offsets/existence checks, and limitation-signal term/source-offset
   classification.
-  This is complete named-structure coverage plus bounded 514-claim coverage,
+  Across 586 implementation-relevant claims, strict implemented parity is
+  4.9%, while a half-credit weighting for partial claims is 20.3%. This is
+  complete named-structure coverage plus bounded 645-claim coverage,
   not a whole-paper sentence-, paragraph-, equation-,
   footnote-, citation-, or claim-level requirement inventory,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,

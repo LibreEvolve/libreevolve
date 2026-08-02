@@ -2,6 +2,17 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Advance bounded AlphaEvolve ROADMAP coverage through Appendix A.
+  - Status: ROADMAP disposition, coverage, exhaustiveness, and implementation-
+    evidence boundaries now include 131 Appendix A, Table 3, and Figure 9
+    claims and report 645 bounded claims in total.
+  - Accounting: all 54 Table 3 rows and 48 Figure 9 panel claims are mapped;
+    13 claims are partial and 118 are not demonstrated. Strict implemented
+    parity is 4.9% across 586 implementation-relevant claims, or 20.3% with
+    partial claims counted at half credit.
+  - Remaining boundary: Figures 10-14, detailed Appendix B, semantic
+    exhaustiveness, result reproduction, and owner/CI proof remain open.
+
 - [x] Advance bounded AlphaEvolve ROADMAP coverage through Section 5.
   - Status: ROADMAP disposition, coverage, and exhaustiveness boundaries now
     include 85 Section 5 claims and report 514 bounded claims in total.

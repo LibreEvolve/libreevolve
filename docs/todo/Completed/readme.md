@@ -4,6 +4,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document the bounded Appendix A, Table 3, and Figure 9 audit in README.
+  - Status: README now reports the 131-claim inventory, its 13 partial and 118
+    undemonstrated split, all 54 table rows, 48 panel claims, and the eleven-
+    inventory 645-claim aggregate.
+  - Boundary: README distinguishes registry and exhibit metadata from
+    generated decompositions, exactness certificates, Figure 9 artifacts,
+    stochastic rediscovery, and AlphaEvolve parity, and reports both strict
+    and half-credit weighted percentages.
+
 - [x] Document the bounded Section 5 Related Work claim audit in README.
   - Status: README now reports the 85-claim inventory, its 6/9/4/7/59 status
     split, the 20 implementation gaps, and the ten-inventory 514-claim total.

@@ -93,9 +93,14 @@ sidecars, tests, and active TODOs.
     `papers/alphaevolve_related_work_claim_inventory_boundary.json` adds 85
     Section 5 claims: 6 locally implemented, 9 partial, 4 not implemented, 7
     not demonstrated, and 59 source-context-only, with live ownership for all
-    20 implementation gaps. The ten bounded inventories therefore cover 514
-    claims: 29 locally implemented, 167 partial, 84 not implemented, 175 not
-    demonstrated, and 59 source-context-only. This is not
+    20 implementation gaps. The committed
+    `papers/alphaevolve_appendix_a_claim_inventory_boundary.json` adds 131
+    Appendix A, Table 3, and Figure 9 claims: 13 partial and 118 not
+    demonstrated, with 29 prose/caption claims, all 54 table rows, 48
+    panel-level program claims, and live ownership for every gap. The eleven
+    bounded inventories therefore cover 645 claims: 29 locally implemented,
+    180 partial, 84 not implemented, 293 not demonstrated, and 59
+    source-context-only. This is not
     whole-paper completeness. Meanwhile,
     `papers/status_claim_inventory.json` now records checked row-level paper
     status inventory plus status-cell phrase hashes, source offsets, local
@@ -113,14 +118,14 @@ sidecars, tests, and active TODOs.
     per-phrase evidence-link sufficiency, status-cell semantic verification,
     implemented-benchmark bullet semantic verification, and
     absence-sentence freshness checks as missing evidence.
-  - Current gap: the named source structure and 514 bounded system, context,
+  - Current gap: the named source structure and 645 bounded system, context,
     matrix-result, constructive-math, scheduling, kernel-engineering, and
     hardware-circuit-design, compiler-generated-code, Section 4/Figure 8
-    ablation, and Section 5 Related Work claims are now machine-readable and
-    PDF-verified, but there
+    ablation, Section 5 Related Work, Appendix A, Table 3, and Figure 9 claims
+    are now machine-readable and PDF-verified, but there
     is no AlphaEvolve requirement inventory exhaustive at sentence, paragraph,
-    equation, footnote, citation, or claim level across remaining exhibits,
-    Table 3, detailed appendices, and the other paper
+    equation, footnote, citation, or claim level across Figures 10-14, detailed
+    Appendix B, remaining source details, and the other paper
     spans and all code modules, tests, runtime report
     schemas, sidecar JSON records, TODO entries, and completion evidence; no
     detector flags source modules or paper claims that lack mapped audit

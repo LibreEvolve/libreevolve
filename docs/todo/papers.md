@@ -56,14 +56,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/alphaevolve_related_work_claim_inventory_boundary.json` adds 85
     exact-page Section 5 claims: 6 implemented, 9 partial, 4 not implemented,
     7 not demonstrated, and 59 source-context-only, with live ownership for
-    all 20 implementation gaps. Combined coverage is 514 claims: 29
-    implemented, 167 partial, 84 not implemented, 175 not demonstrated, and
+    all 20 implementation gaps. The
+    `papers/alphaevolve_appendix_a_claim_inventory_boundary.json` adds 131
+    exact-page Appendix A, Table 3, and Figure 9 claims: 13 partial and 118 not
+    demonstrated, with all 29 prose/caption claims, 54 table rows, 48 panel
+    claims, and live ownership for every gap. Combined coverage is 645 claims:
+    29 implemented, 180 partial, 84 not implemented, 293 not demonstrated, and
     59 source-context-only. The
     paper manifest rejects any inventory sidecar's absence, source/reference
     drift, status drift, stale TODO ownership, result-reproduction overclaims,
     and parity overclaims.
-  - Current gap: the combined 514-claim inventory deliberately excludes
-    claim-level coverage for Figures 9-14, Table 3, detailed appendices,
+  - Current gap: the combined 645-claim inventory deliberately excludes
+    claim-level coverage for Figures 10-14, detailed Appendix B,
     equation/footnote/citation-level requirements, result reproduction, and
     independent reviewer proof that any bounded inventory is
     semantically exhaustive.

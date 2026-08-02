@@ -207,9 +207,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `papers/alphaevolve_related_work_claim_inventory_boundary.json` adds 85
     exact-page Section 5 claims: 6 locally implemented, 9 partial, 4 not
     implemented, 7 not demonstrated, and 59 source-context-only, with active
-    ownership for all 20 implementation gaps. The bounded claim-level ROADMAP
-    surface therefore covers 514 claims: 29 locally implemented, 167 partial,
-    84 not implemented, 175 not demonstrated, and 59 source-context-only.
+    ownership for all 20 implementation gaps. The
+    `papers/alphaevolve_appendix_a_claim_inventory_boundary.json` adds 131
+    exact-page Appendix A, Table 3, and Figure 9 dispositions: 13 partial and
+    118 not demonstrated, with ownership for all 131 gaps. The bounded
+    claim-level ROADMAP surface therefore covers 645 claims: 29 locally
+    implemented, 180 partial, 84 not implemented, 293 not demonstrated, and 59
+    source-context-only.
     `papers/roadmap_source_span_disposition_boundary.json` now maps all 55
     named spans to ROADMAP section ids, phase buckets, local status, sidecars,
     and audit TODO links, and records that only the AlphaEvolve
@@ -223,7 +227,7 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     rows, and TODO/non-goal/phase proof.
     `papers/roadmap_source_span_exhaustiveness_boundary.json` now records a
     bounded eight-criterion exhaustiveness gate that credits the named PDF
-    structure walk and all ten bounded claim inventories while preserving
+    structure walk and all eleven bounded claim inventories while preserving
     remaining claim-level work for the figure/table/appendix matrix,
     application-result reproduction/non-goal proof beyond the bounded Section
     3.3/Section 4/Section 5 claim matrices,
@@ -231,9 +235,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     TODO proof, phase-priority map, and CI/owner signoff.
   - Current gap: the retained PDF's named sections, figures, tables, and
     appendices now have verified dispositions, local status classes, ROADMAP
-    sections, and phases, and 514 bounded system/context/matrix-result/
+    sections, and phases, and 645 bounded system/context/matrix-result/
     constructive-math/scheduling/kernel-engineering/hardware/compiler/ablation/
-    related-work claims have
+    related-work/Appendix-A/Table-3/Figure-9 claims have
     claim-level mappings. The matrix is not
     exhaustive across the rest of
     the paper: it

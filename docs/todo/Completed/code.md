@@ -4,6 +4,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add the retained-TeX table row and cell disposition inventory.
+  - Status: the public boundary parses all 3 retained table environments, 5
+    tabular blocks, 83 rows, and 240 top-level cells with source anchors,
+    hashes, semantic roles, claim references, and lexical citation keys.
+  - Accounting: all 78 data rows map to 78 existing bounded claim ids; 218
+    cells are bounded-claim components, 8 are FunSearch baseline context, and
+    14 are structural headers. Nothing is unmapped or unresolved, and the
+    inventory adds zero claims or parity credit.
+  - Remaining code gap: sentence/paragraph/inline-math/listing/image-pixel and
+    citation semantics, source sufficiency, table-result reproduction,
+    independent review, and whole-paper CI exhaustiveness remain active.
+  - Verification: focused boundary and paper-manifest tests reject source,
+    row/cell count, mapping, reference, sidecar, semantic-overclaim,
+    reproduction-overclaim, and parity drift.
+
 - [x] Add the retained-TeX caption, equation, and footnote construct inventory.
   - Status: the public boundary parses the recursive 14-file `main.tex` closure
     and records source file, line, column, section path, command text, hashes,

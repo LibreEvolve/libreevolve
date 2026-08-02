@@ -990,7 +990,16 @@ AlphaEvolve reproduction.
   locators, and three are decorative Figure 3 icon markers. There are no
   unmapped constructs, unresolved references, or new bounded claims, so this
   construct-level audit does not change the implementation-parity numerator or
-  denominator. The twelve bounded claim inventories still disposition 833 claims
+  denominator. The supplemental
+  `papers/alphaevolve_tex_table_cell_inventory_boundary.json` separately
+  inventories all 3 retained table environments, 5 tabular blocks, 83 rows,
+  and 240 top-level cells. All 78 data rows map to 78 existing bounded claim
+  ids; 218 cells are bounded-claim components, 8 are FunSearch baseline
+  context, and 14 are structural headers. All references resolve, nothing is
+  unmapped, and the inventory adds zero claims. Its 71 lexical citation-command
+  occurrences and 72 key links do not establish citation semantics, and its
+  row/cell mapping does not reproduce any table result, so parity remains
+  unchanged. The twelve bounded claim inventories still disposition 833 claims
   in total: 29 locally implemented,
   275 partial, 108 not implemented, 362 not demonstrated, and 59
   source-context-only,
@@ -1011,8 +1020,9 @@ AlphaEvolve reproduction.
   credit; no Appendix B result was reproduced. This is complete named-structure
   coverage, bounded 833-claim coverage, complete lexical citation linkage, and
   construct-level disposition of all retained-source captions, displayed
-  equations, and semantic footnotes, not a whole-paper sentence-, paragraph-,
-  inline-math-, table-cell-, listing-, image-pixel-, citation-semantic, or
+  equations, and semantic footnotes, plus row/cell disposition for all 83 rows
+  and 240 cells in Tables 1-3, not a whole-paper sentence-, paragraph-,
+  inline-math-, listing-, image-pixel-, citation-semantic, or
   claim-level proposition inventory,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,
   implemented-benchmark bullet semantic verifier,

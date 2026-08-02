@@ -1827,6 +1827,13 @@ Important limits:
   unresolved references. This closes construct-level disposition only; it
   adds no claims or functional parity credit and does not prove proposition-
   level semantic exhaustiveness or result reproduction.
+- Retained-TeX table-cell evidence inventories all 3 table environments, 5
+  tabular blocks, 83 rows, and 240 top-level cells. All 78 data rows map to 78
+  existing bounded claims; 218 cells are bounded-claim components, 8 are
+  FunSearch baseline context, and 14 are structural headers. There are no
+  unmapped units or unresolved references, and no claims or functional parity
+  credit are added. This closes table row/cell disposition only, not citation
+  semantics, baseline verification, or Table 2/3 result reproduction.
 - ROADMAP source-span coverage evidence now records eight coverage surfaces
   for main-text section walk, figure exhibits, table/capability rows, Appendix
   A matrix targets, Appendix B constructive math, application-result claims,
@@ -1834,14 +1841,15 @@ Important limits:
   existing core source-span disposition input, paper-status row counts, sidecar
   refs, active TODO refs, validation-gate labels, readiness labels, 833 bounded
   claims through Appendix B and Figures 10-14, and the 30 construct-level TeX
-  source-detail dispositions. The 774
+  source-detail dispositions, plus all 83 table rows and 240 table cells. The 774
   implementation-relevant claims currently yield 3.7% strict implemented
   parity or 21.5% with partial claims counted at half credit. The weighted
   value rises because Appendix B registry metadata is partial, not because its
   results were reproduced. Citation syntax and key linkage are exhaustive for
   the retained TeX, and caption/equation/footnote construct dispositions are
-  complete, but this is not a whole-paper sentence/paragraph/inline-math/
-  table-cell/listing/image-pixel/citation-semantic proposition audit, joined
+  complete, and all table rows/cells have dispositions, but this is not a
+  whole-paper sentence/paragraph/inline-math/listing/image-pixel/
+  citation-semantic proposition audit, joined
   figure/table/appendix reproduction matrix, complete
   application-result claim matrix, status-row to ROADMAP
   disposition map, missing/partial TODO proof, non-goal decision map,

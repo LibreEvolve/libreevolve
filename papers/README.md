@@ -1645,7 +1645,15 @@ macro template excluded. Twenty-four constructs map through 80 references to
 existing bounded claim ids, one maps to reviewed publication metadata, two are
 non-additive named-span locators, and three are decorative Figure 3 markers.
 All constructs and references resolve, and this inventory adds zero claims or
-implementation-parity credit. Together the twelve bounded claim inventories
+implementation-parity credit. The separate
+`papers/alphaevolve_tex_table_cell_inventory_boundary.json` inventories all 3
+retained table environments, 5 tabular blocks, 83 rows, and 240 top-level
+cells. All 78 data rows map to 78 existing bounded claim ids; 218 cells are
+bounded-claim components, 8 are FunSearch baseline context, and 14 are
+structural headers. Nothing is unmapped or unresolved, and no claim or parity
+credit is added. The 71 lexical citation-command occurrences and 72 key links
+do not establish citation semantics, and row/cell mapping is not table-result
+reproduction. Together the twelve bounded claim inventories
 still disposition 833 claims: 29 locally
 implemented, 275 partial, 108 not implemented, 362 not demonstrated, and 59
 source-context-only. Across 774 implementation-relevant claims this is 3.7%
@@ -1659,8 +1667,9 @@ evolution, distributed execution, and published benchmark coverage with 81
 existence-checked source-span/module/test/sidecar/TODO references. Citation
 syntax and key linkage are exhaustive for the retained TeX source, and all
 retained-source captions, displayed equations, and semantic footnotes have
-construct-level dispositions. This is not a whole-paper sentence-, paragraph-,
-inline-math-, table-cell-, listing-, image-pixel-, citation-semantic, or
+construct-level dispositions; all 83 table rows and 240 cells have row/cell
+dispositions. This is not a whole-paper sentence-, paragraph-,
+inline-math-, listing-, image-pixel-, citation-semantic, or
 proposition-level exhaustive inventory, per-phrase evidence-link sufficiency proof,
 coverage detector,
 generated code-audit report, or CI exhaustiveness gate. The checked
@@ -4033,8 +4042,16 @@ Implemented:
   constructs through 80 references to existing bounded claim ids, one to
   publication metadata boundaries, two to named-span locators, and three to
   decorative-marker dispositions. It adds no bounded claims and does not prove
-  sentence/paragraph/inline-math/table-cell/listing/image-pixel/citation
+  sentence/paragraph/inline-math/listing/image-pixel/citation
   semantics, result reproduction, independent review, or AlphaEvolve parity.
+- `papers/alphaevolve_tex_table_cell_inventory_boundary.json`: retained-TeX
+  table-row and top-level-cell disposition sidecar for all 3 table
+  environments, 5 tabular blocks, 83 rows, and 240 cells. It maps all 78 data
+  rows to 78 existing bounded claim ids, classifies 218 bounded-claim component
+  cells, 8 FunSearch baseline-context cells, and 14 structural-header cells,
+  and records zero unmapped units or unresolved references. It adds no claims
+  and does not establish citation semantics, baseline correctness, table-result
+  reproduction, whole-paper proposition exhaustiveness, or AlphaEvolve parity.
 - `papers/alphaevolve_current_version_boundary.json`: AlphaEvolve
   current-version/floating-PDF sidecar with pinned current abstract URL,
   retrieval date, status, content type, byte count, SHA-256 digest, title,

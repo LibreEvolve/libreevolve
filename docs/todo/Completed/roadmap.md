@@ -2,6 +2,17 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Add retained-TeX table row/cell dispositions to the AlphaEvolve ROADMAP audit.
+  - Status: ROADMAP and its implementation-evidence, disposition, coverage, and
+    exhaustiveness boundaries now include all 3 retained tables, 5 tabular
+    blocks, 83 rows, and 240 top-level cells.
+  - Accounting: all 78 data rows map to 78 existing bounded claim ids; 218
+    cells are bounded-claim components, 8 are FunSearch baseline context, and
+    14 are structural headers. No claim count or parity estimate changes.
+  - Remaining boundary: citation semantics, baseline correctness, result
+    reproduction, whole-paper proposition semantics, status/application joins,
+    independent review, and owner/CI signoff remain open.
+
 - [x] Add retained-TeX source-detail dispositions to the AlphaEvolve ROADMAP audit.
   - Status: ROADMAP and its implementation-evidence, disposition, coverage, and
     exhaustiveness boundaries now include all 30 retained-source captions,

@@ -4,6 +4,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## Papers Todo: Reference and Specification Gaps
 
+- [x] Inventory retained AlphaEvolve table rows and cells.
+  - Paper evidence: the pinned `2506.13131v1` TeX closure contains 3 table
+    environments, 5 tabular blocks, 83 rows, and 240 top-level cells across
+    Tables 1-3.
+  - Status: `papers/alphaevolve_tex_table_cell_inventory_boundary.json` maps
+    all 78 data rows to 78 existing bounded claim ids and classifies 218
+    bounded-claim component cells, 8 FunSearch baseline-context cells, and 14
+    structural-header cells, with no unmapped unit or unresolved reference.
+  - Remaining gap: citation semantics, baseline correctness, Table 2/3 result
+    reproduction, sentence/paragraph/inline-math/listing/image-pixel semantic
+    exhaustiveness, independent review, and AlphaEvolve parity remain open.
+
 - [x] Inventory retained AlphaEvolve captions, displayed equations, and footnotes.
   - Paper evidence: the pinned `2506.13131v1` recursive TeX closure contains 22
     caption commands, 5 displayed equation environments, 3 semantic footnote

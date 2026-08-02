@@ -228,7 +228,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     equations, and 3 semantic footnotes. Twenty-four map through 80 resolved
     references to existing bounded claim ids, one maps to publication metadata,
     two are named-span locators, and three are decorative markers; this adds no
-    claims or parity credit.
+    claims or parity credit. The supplemental
+    `papers/alphaevolve_tex_table_cell_inventory_boundary.json` dispositions
+    all 83 rows and 240 top-level cells across Tables 1-3. All 78 data rows map
+    to 78 existing bounded claim ids; 218 cells are bounded-claim components,
+    8 are FunSearch baseline context, and 14 are structural headers. There are
+    no unmapped units or unresolved references, and no claims or parity credit
+    are added.
     `papers/roadmap_source_span_disposition_boundary.json` now maps all 55
     named spans to ROADMAP section ids, phase buckets, local status, sidecars,
     and audit TODO links, and records that only the AlphaEvolve
@@ -255,11 +261,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     related-work/Appendix-A/Table-3/Figure-9/Appendix-B/Figures-10-14 claims have
     claim-level mappings, citation syntax plus bibliography-key linkage is
     exhaustive for the retained TeX, and all caption/equation/footnote
-    constructs have dispositions. The matrix is not
+    constructs have dispositions, while all 83 table rows and 240 cells have
+    row/cell dispositions. The matrix is not
     exhaustive across the rest of
     the paper: it
     does not extract every remaining
-    sentence-, paragraph-, inline-math-, table-cell-, listing-, image-pixel-,
+    sentence-, paragraph-, inline-math-, listing-, image-pixel-,
     citation-semantic, capability-, or result-claim proposition; prove domain-specific TODO
     ownership for every missing or partial claim; provide a complete
     application-result claim matrix; or disposition all paper/status sidecar

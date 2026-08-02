@@ -119,7 +119,14 @@ sidecars, tests, and active TODOs.
     resolved references to existing bounded claim ids, one maps to reviewed
     publication metadata, two are named-span locators, and three are decorative
     markers. It adds no claims or implementation-parity credit. This is not
-    whole-paper completeness. Meanwhile,
+    whole-paper completeness. The supplemental
+    `papers/alphaevolve_tex_table_cell_inventory_boundary.json` parses all 3
+    table environments, 5 tabular blocks, 83 rows, and 240 top-level cells.
+    All 78 data rows map to 78 existing bounded claim ids; 218 cells are
+    bounded-claim components, 8 are FunSearch baseline context, and 14 are
+    structural headers. Nothing is unmapped or unresolved, and this adds no
+    claims or parity credit. Citation semantics and table-result reproduction
+    remain owned by this TODO. Meanwhile,
     `papers/status_claim_inventory.json` now records checked row-level paper
     status inventory plus status-cell phrase hashes, source offsets, local
     artifact mention source offsets, and candidate evidence-link lists with
@@ -143,10 +150,11 @@ sidecars, tests, and active TODOs.
     and Figures 10-14 claims are now machine-readable and PDF-verified, and
     citation commands plus bibliography-key linkage are lexically exhaustive
     for the retained TeX, and all caption/equation/footnote constructs have
+    dispositions, and all 83 table rows and 240 cells have row/cell
     dispositions. However, citation proposition/role/sufficiency and
     implementation relevance remain unclassified, and there is no AlphaEvolve
     requirement inventory exhaustive at sentence, paragraph, inline-math,
-    table-cell, listing, image-pixel, citation-semantic, or proposition level
+    listing, image-pixel, citation-semantic, or proposition level
     across remaining source details and the other paper
     spans and all code modules, tests, runtime report
     schemas, sidecar JSON records, TODO entries, and completion evidence; no

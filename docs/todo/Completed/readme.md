@@ -4,6 +4,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document the retained-TeX table row and cell audit in README.
+  - Status: README now reports all 3 table environments, 5 tabular blocks, 83
+    rows, 240 cells, 78 existing claim mappings, 218 bounded-claim components,
+    8 baseline-context cells, 14 headers, and zero unmapped units or new claims.
+  - Boundary: README distinguishes row/cell disposition from citation
+    semantics, baseline correctness, result reproduction, proposition-level
+    exhaustiveness, and AlphaEvolve parity; parity percentages remain unchanged.
+
 - [x] Document the retained-TeX source-detail construct audit in README.
   - Status: README now reports all 22 captions, 5 displayed equations, 3
     semantic footnotes, the excluded preamble macro template, 30 stable

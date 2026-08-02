@@ -80,16 +80,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     disposition. Twenty-four constructs map through 80 resolved references to
     existing bounded claim ids, one maps to reviewed publication metadata, two
     are named-span locators, and three are decorative markers. It adds no new
-    claim rows or parity credit. The
+    claim rows or parity credit. The separate
+    `papers/alphaevolve_tex_table_cell_inventory_boundary.json` dispositions
+    all 83 rows and 240 top-level cells across the 3 retained tables and 5
+    tabular blocks. All 78 data rows map to 78 existing bounded claim ids; 218
+    cells are bounded-claim components, 8 are FunSearch baseline context, and
+    14 are structural headers. Nothing is unmapped or unresolved, and no claim
+    or parity credit is added. The
     paper manifest rejects any inventory sidecar's absence, source/reference
     drift, status drift, stale TODO ownership, result-reproduction overclaims,
     and parity overclaims.
   - Current gap: the combined 833-claim inventory covers every named source
     span, the supplemental citation inventory covers citation syntax plus
     bibliography-key linkage, and the source-detail inventory dispositions all
-    caption/equation/footnote constructs. Every citation's supported
+    caption/equation/footnote constructs, while the table-cell inventory
+    dispositions all retained rows and cells. Every citation's supported
     proposition, source-sufficiency role, and implementation relevance remain
-    unclassified. Whole-paper sentence/paragraph/inline-math/table-cell/listing/
+    unclassified. Whole-paper sentence/paragraph/inline-math/listing/
     image-pixel/citation semantics, semantic evidence sufficiency, result
     reproduction, and independent reviewer proof that any bounded inventory is
     semantically exhaustive also remain open.

@@ -167,6 +167,13 @@ Important limits:
   metadata, two are named-span locators, and three are decorative markers.
   Nothing is unmapped, no reference is unresolved, and the inventory adds no
   claims or implementation-parity credit.
+- `papers/alphaevolve_tex_table_cell_inventory_boundary.json` inventories all
+  3 retained table environments, 5 tabular blocks, 83 rows, and 240 top-level
+  cells. All 78 data rows map to 78 existing bounded claims; 218 cells are
+  bounded-claim components, 8 are FunSearch baseline context, and 14 are
+  structural headers. Nothing is unmapped or unresolved, and no claims or
+  parity credit are added. Citation semantics and Table 2/3 result reproduction
+  remain open.
 - Together the twelve bounded inventories cover 833 claims: 29 locally
   implemented, 275 partial, 108 not implemented, 362 not demonstrated, and 59
   source-context-only, leaving 745 implementation gaps. Across the 774
@@ -175,8 +182,9 @@ Important limits:
   Appendix B registry metadata is partial, not because its results were
   reproduced. Citation linkage is lexically complete and every retained-source
   caption, displayed equation, and semantic footnote has a construct-level
-  disposition. Coverage still excludes whole-paper sentence/paragraph,
-  inline-math, table-cell, listing, image-pixel, citation-semantic, and
+  disposition; all 83 table rows and 240 cells have row/cell dispositions.
+  Coverage still excludes whole-paper sentence/paragraph,
+  inline-math, listing, image-pixel, citation-semantic, and
   proposition-level exhaustiveness, independent result reproduction, and
   AlphaEvolve-scale execution.
 - The local paper cache is source inventory. A cached paper or `papers/README.md`

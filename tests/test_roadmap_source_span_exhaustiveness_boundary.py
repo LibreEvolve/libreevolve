@@ -14,7 +14,7 @@ def test_roadmap_source_span_exhaustiveness_accepts_bounded_gate():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "named_structure_plus_833_bounded_claims_195_citation_uses_and_30_tex_source_details_without_whole_paper_claim_walk"
+        == "named_structure_plus_833_bounded_claims_195_citation_uses_30_tex_source_details_and_240_table_cells_without_whole_paper_claim_walk"
     )
     assert boundary["schema"] == ROADMAP_SOURCE_SPAN_EXHAUSTIVENESS_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -28,7 +28,7 @@ def test_roadmap_source_span_exhaustiveness_accepts_bounded_gate():
     assert boundary["source_paper_status_row_dispositioned_count"] == 1
     assert boundary["source_missing_evidence_count"] == 8
     assert boundary["exhaustiveness_criterion_count"] == 8
-    assert boundary["sidecar_ref_count"] == 41
+    assert boundary["sidecar_ref_count"] == 42
     assert boundary["active_todo_ref_count"] == 16
     assert [record["criterion_id"] for record in boundary["exhaustiveness_criteria"]] == [
         "pdf_section_walk",
@@ -51,7 +51,7 @@ def test_roadmap_source_span_exhaustiveness_accepts_bounded_gate():
         for ref in record["active_todo_refs"]
     )
     assert boundary["missing_evidence"] == {
-        "claim_level_requirement_inventory": "833_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_and_30_tex_source_details_have_construct_dispositions_without_whole_paper_proposition_semantic_or_reproduction_exhaustiveness",
+        "claim_level_requirement_inventory": "833_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_and_240_table_cells_have_row_cell_dispositions_without_whole_paper_sentence_paragraph_inline_math_listing_image_pixel_citation_semantic_or_reproduction_exhaustiveness",
         "claim_level_figure_table_appendix_matrix": "bounded_named_matrix_recorded_without_result_reproduction_or_whole_paper_semantic_exhaustiveness",
         "application_result_claim_matrix": "section_3_3_claim_dispositions_recorded_without_reproduction_phase_priority_or_non_goal_proof",
         "status_row_to_roadmap_disposition_map": "not_recorded_locally",
@@ -71,6 +71,10 @@ def test_roadmap_source_span_exhaustiveness_accepts_bounded_gate():
     assert boundary["completed_evidence"]["unused_bibtex_entry_count"] == 52
     assert boundary["completed_evidence"]["tex_source_detail_count"] == 30
     assert boundary["completed_evidence"]["tex_source_detail_mapped_claim_ref_count"] == 80
+    assert boundary["completed_evidence"]["tex_table_row_count"] == 83
+    assert boundary["completed_evidence"]["tex_table_cell_count"] == 240
+    assert boundary["completed_evidence"]["tex_table_data_row_claim_count"] == 78
+    assert "all 83 rows and 240 cells" in boundary["claim_boundary"]
 
 
 def test_roadmap_source_span_exhaustiveness_rejects_overclaim_and_drift():
@@ -108,10 +112,10 @@ def test_render_roadmap_source_span_exhaustiveness_summary_reports_shape():
     assert "ROADMAP source-span exhaustiveness boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | named_structure_plus_833_bounded_claims_195_citation_uses_and_30_tex_source_details_without_whole_paper_claim_walk |"
+        "| boundary_status | named_structure_plus_833_bounded_claims_195_citation_uses_30_tex_source_details_and_240_table_cells_without_whole_paper_claim_walk |"
         in summary
     )
     assert "| exhaustiveness_criterion_count | 8 |" in summary
-    assert "| sidecar_ref_count | 41 |" in summary
+    assert "| sidecar_ref_count | 42 |" in summary
     assert "| active_todo_ref_count | 16 |" in summary
     assert "| missing_evidence_count | 9 |" in summary

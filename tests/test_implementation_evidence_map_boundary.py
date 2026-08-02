@@ -14,7 +14,7 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "verified_core_anchors_plus_833_bounded_claims_195_citation_uses_and_30_tex_source_details_without_whole_paper_exhaustiveness"
+        == "verified_core_anchors_plus_833_bounded_claims_195_citation_uses_30_tex_source_details_and_240_table_cells_without_whole_paper_exhaustiveness"
     )
     assert validation.requirement_count == 6
     assert validation.reference_check_count == 81
@@ -60,11 +60,17 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
     assert boundary["tex_source_detail_inventory_ref"] == (
         "papers/alphaevolve_tex_source_detail_inventory_boundary.json"
     )
+    assert boundary["tex_table_cell_inventory_ref"] == (
+        "papers/alphaevolve_tex_table_cell_inventory_boundary.json"
+    )
     assert boundary["recorded_evidence"]["lexical_citation_use_inventory"] == (
         "195_tex_citation_uses_240_key_links_and_120_compiled_references"
     )
     assert boundary["recorded_evidence"]["tex_source_detail_disposition_inventory"] == (
         "30_tex_constructs_22_captions_5_equations_3_footnotes"
+    )
+    assert boundary["recorded_evidence"]["tex_table_cell_disposition_inventory"] == (
+        "83_rows_240_cells_78_existing_claims_218_claim_components"
     )
     assert boundary["missing_evidence"]["citation_semantic_mapping"] == (
         "195_citation_uses_lexically_linked_without_supported_proposition_source_sufficiency_or_implementation_relevance_classification"
@@ -103,6 +109,7 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
     assert "absence-sentence freshness matrix" in boundary["claim_boundary"]
     assert "does not classify citation semantics" in boundary["claim_boundary"]
     assert "all 30 retained-source captions" in boundary["claim_boundary"]
+    assert "all 83 rows and 240 cells" in boundary["claim_boundary"]
 
 
 def test_implementation_evidence_map_boundary_rejects_exhaustive_overclaim():
@@ -153,7 +160,7 @@ def test_render_implementation_evidence_map_boundary_summary_reports_shape():
     assert "Implementation evidence map boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | verified_core_anchors_plus_833_bounded_claims_195_citation_uses_and_30_tex_source_details_without_whole_paper_exhaustiveness |"
+        "| boundary_status | verified_core_anchors_plus_833_bounded_claims_195_citation_uses_30_tex_source_details_and_240_table_cells_without_whole_paper_exhaustiveness |"
         in summary
     )
     assert "| requirement_count | 6 |" in summary

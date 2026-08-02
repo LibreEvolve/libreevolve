@@ -1,7 +1,7 @@
 {
-  "schema": "libreevolve.roadmap_source_span_disposition_boundary.v10",
+  "schema": "libreevolve.roadmap_source_span_disposition_boundary.v11",
   "source_paper_id": "2506.13131",
-  "boundary_status": "named_span_dispositions_plus_645_bounded_claims_without_whole_paper_exhaustiveness",
+  "boundary_status": "named_span_dispositions_plus_833_bounded_claims_without_whole_paper_exhaustiveness",
   "claim_ready": false,
   "source_boundary_input": "papers/alphaevolve_source_inventory_boundary.json",
   "implementation_evidence_map_input": "papers/implementation_evidence_map_boundary.json",
@@ -15,6 +15,7 @@
   "ablation_claim_inventory_input": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
   "related_work_claim_inventory_input": "papers/alphaevolve_related_work_claim_inventory_boundary.json",
   "appendix_a_claim_inventory_input": "papers/alphaevolve_appendix_a_claim_inventory_boundary.json",
+  "appendix_b_claim_inventory_input": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
   "system_requirement_inventory_input": "papers/alphaevolve_system_requirement_inventory_boundary.json",
   "source_status_inventory_input": "papers/status_claim_inventory.json",
   "disposition_record_count": 55,
@@ -368,7 +369,8 @@
       "sidecar_refs": [
         "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/math_outcome_boundary.json",
-        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+        "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
       ],
       "todo_refs": [
         {
@@ -759,7 +761,8 @@
       "sidecar_refs": [
         "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/math_outcome_boundary.json",
-        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+        "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
       ],
       "todo_refs": [
         {
@@ -790,7 +793,8 @@
       "sidecar_refs": [
         "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/math_outcome_boundary.json",
-        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+        "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
       ],
       "todo_refs": [
         {
@@ -821,7 +825,8 @@
       "sidecar_refs": [
         "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/math_outcome_boundary.json",
-        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+        "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
       ],
       "todo_refs": [
         {
@@ -852,7 +857,8 @@
       "sidecar_refs": [
         "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/math_outcome_boundary.json",
-        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+        "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
       ],
       "todo_refs": [
         {
@@ -883,7 +889,8 @@
       "sidecar_refs": [
         "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/math_outcome_boundary.json",
-        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+        "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
       ],
       "todo_refs": [
         {
@@ -914,7 +921,8 @@
       "sidecar_refs": [
         "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/math_outcome_boundary.json",
-        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+        "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
       ],
       "todo_refs": [
         {
@@ -945,7 +953,8 @@
       "sidecar_refs": [
         "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/math_outcome_boundary.json",
-        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+        "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
       ],
       "todo_refs": [
         {
@@ -976,7 +985,8 @@
       "sidecar_refs": [
         "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/math_outcome_boundary.json",
-        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+        "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
       ],
       "todo_refs": [
         {
@@ -1007,7 +1017,8 @@
       "sidecar_refs": [
         "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/math_outcome_boundary.json",
-        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+        "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
       ],
       "todo_refs": [
         {
@@ -1038,7 +1049,8 @@
       "sidecar_refs": [
         "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/math_outcome_boundary.json",
-        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+        "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
       ],
       "todo_refs": [
         {
@@ -1069,7 +1081,8 @@
       "sidecar_refs": [
         "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/math_outcome_boundary.json",
-        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+        "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
       ],
       "todo_refs": [
         {
@@ -1100,7 +1113,8 @@
       "sidecar_refs": [
         "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/math_outcome_boundary.json",
-        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+        "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
       ],
       "todo_refs": [
         {
@@ -1131,7 +1145,8 @@
       "sidecar_refs": [
         "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/math_outcome_boundary.json",
-        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+        "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
       ],
       "todo_refs": [
         {
@@ -1162,7 +1177,8 @@
       "sidecar_refs": [
         "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/math_outcome_boundary.json",
-        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+        "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
       ],
       "todo_refs": [
         {
@@ -1315,7 +1331,8 @@
       "sidecar_refs": [
         "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/math_outcome_boundary.json",
-        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+        "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
       ],
       "todo_refs": [
         {
@@ -1478,7 +1495,8 @@
       "sidecar_refs": [
         "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/math_outcome_boundary.json",
-        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+        "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
       ],
       "todo_refs": [
         {
@@ -1509,7 +1527,8 @@
       "sidecar_refs": [
         "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/math_outcome_boundary.json",
-        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+        "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
       ],
       "todo_refs": [
         {
@@ -1540,7 +1559,8 @@
       "sidecar_refs": [
         "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/math_outcome_boundary.json",
-        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+        "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
       ],
       "todo_refs": [
         {
@@ -1571,7 +1591,8 @@
       "sidecar_refs": [
         "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/math_outcome_boundary.json",
-        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+        "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
       ],
       "todo_refs": [
         {
@@ -1602,7 +1623,8 @@
       "sidecar_refs": [
         "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/math_outcome_boundary.json",
-        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+        "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
       ],
       "todo_refs": [
         {
@@ -1785,7 +1807,8 @@
     "compiler_claims": "44_pdf_anchored_section_3_3_4_dispositions",
     "ablation_claims": "51_pdf_anchored_section_4_and_figure_8_dispositions",
     "related_work_claims": "85_pdf_anchored_section_5_dispositions_with_59_source_context_only",
-    "appendix_a_claims": "131_pdf_anchored_appendix_a_table_3_and_figure_9_dispositions"
+    "appendix_a_claims": "131_pdf_anchored_appendix_a_table_3_and_figure_9_dispositions",
+    "appendix_b_claims": "188_pdf_and_visual_anchored_appendix_b_and_figures_10_14_dispositions"
   },
   "required_evidence_fields": [
     "pdf_verified_named_source_span_dispositions",
@@ -1799,11 +1822,11 @@
     "ci_source_span_exhaustiveness_gate"
   ],
   "missing_evidence": {
-    "claim_level_requirement_inventory": "645_bounded_claims_remaining_figures_10_14_and_detailed_appendix_b_not_recorded",
+    "claim_level_requirement_inventory": "833_bounded_claims_cover_all_named_spans_without_whole_paper_source_detail_semantic_or_reproduction_exhaustiveness",
     "application_result_claim_matrix": "not_recorded_locally",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
     "missing_partial_todo_proof": "not_recorded_locally",
     "ci_source_span_exhaustiveness_gate": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records ROADMAP dispositions for all 55 PDF-verified named AlphaEvolve structural spans, including sections, figures, tables, appendices, source pages, local status, roadmap section, phase bucket, sidecars, and active audit TODO links, plus 645 bounded claim-level records: 50 Table 1/Section 2 system requirements and 41 Abstract, Introduction, Discussion, and collaborator-context claims, plus 41 Section 3.1, Table 2, Figure 4, and footnote 3 matrix-result claims, plus 63 Section 3.2 and Figure 5 constructive-math claims, plus 45 Section 3.3 opening, Section 3.3.1, and Figure 6 scheduling claims, plus 59 Section 3.3.2 and Figure 7 kernel-engineering claims, plus 35 Section 3.3.3 hardware-circuit-design claims, plus 44 Section 3.3.4 compiler-generated-code claims, plus 51 Section 4 and Figure 8 ablation claims, plus 85 Section 5 Related Work claims separated into 59 source-context-only and 26 implementation-relevant claims, plus 131 Appendix A, Table 3, and Figure 9 claims. It does not claim whole-paper sentence-, paragraph-, equation-, footnote-, citation-, or requirement-level exhaustiveness, a claim-level application-result matrix, complete paper-index row to ROADMAP disposition map, proof that every missing or partial source span has a live TODO, or a CI source-span exhaustiveness gate."
+  "claim_boundary": "This boundary records ROADMAP dispositions for all 55 PDF-verified named AlphaEvolve structural spans, including sections, figures, tables, appendices, source pages, local status, roadmap section, phase bucket, sidecars, and active audit TODO links, plus 833 bounded claim-level records: 50 Table 1/Section 2 system requirements and 41 Abstract, Introduction, Discussion, and collaborator-context claims, plus 41 Section 3.1, Table 2, Figure 4, and footnote 3 matrix-result claims, plus 63 Section 3.2 and Figure 5 constructive-math claims, plus 45 Section 3.3 opening, Section 3.3.1, and Figure 6 scheduling claims, plus 59 Section 3.3.2 and Figure 7 kernel-engineering claims, plus 35 Section 3.3.3 hardware-circuit-design claims, plus 44 Section 3.3.4 compiler-generated-code claims, plus 51 Section 4 and Figure 8 ablation claims, plus 85 Section 5 Related Work claims separated into 59 source-context-only and 26 implementation-relevant claims, plus 131 Appendix A, Table 3, and Figure 9 claims, plus 188 Appendix B and Figures 10-14 claims across all 13 subsections. It does not claim whole-paper sentence-, paragraph-, equation-, footnote-, citation-, or requirement-level exhaustiveness, a claim-level application-result matrix, complete paper-index row to ROADMAP disposition map, proof that every missing or partial source span has a live TODO, or a CI source-span exhaustiveness gate."
 }

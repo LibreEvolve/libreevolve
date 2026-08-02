@@ -182,14 +182,22 @@ Appendix B says reported construction data and verification code
 appear in an accompanying Google Colab; this registry is not that
 Colab-equivalent evidence surface and does not yet store construction-data
 exports or runnable verifier-code artifacts. The committed
+`papers/alphaevolve_appendix_b_claim_inventory_boundary.json` records 188
+PDF- and visible-panel-anchored claims across all 13 subsections and Figures
+10-14, with both code and paper TODO ownership for every gap. Its 95 partial
+rows credit only registry or method support; 24 claims are not implemented and
+69 reported constructions, results, captions, or panel semantics remain
+undemonstrated. It is not companion-Colab, witness, verifier,
+rendered-exhibit, recomputation, or rediscovery evidence. The committed
 `papers/math_outcome_boundary.json`,
 `papers/math_starting_construction_boundary.json`,
 `papers/math_heuristic_handoff_boundary.json`, and
 `papers/math_heuristic_stage_sequence_boundary.json` sidecars emit the current
 Section 3.2 constructive-math absence boundaries and are validated by
 `validate_paper_manifest()`.
-The top-level Appendix B `figure_exhibit_boundary` now records the missing
-Figures 10-14 exhibit layer separately from family/result boundaries. It
+The Appendix B claim inventory records 27 caption and visible-panel claims for
+Figures 10-14. The top-level `figure_exhibit_boundary` separately records the
+missing local exhibit-reproduction layer. It
 requires future figure/subfigure ids, caption values, previous/current metric
 values, rendered visual artifacts, render parameters, source Colab locators,
 and verifier links while keeping those rows and artifacts `not_recorded_locally`.
@@ -1619,18 +1627,23 @@ implementation debt. `papers/alphaevolve_appendix_a_claim_inventory_boundary.jso
 adds 131 exact-page Appendix A, Table 3, and Figure 9 claims: 29 prose/caption
 claims, all 54 Table 3 rows, and 48 panel-level program claims. Thirteen are
 partial and 118 are not demonstrated, with live TODO ownership for every gap.
-Together the eleven bounded inventories disposition 645 claims: 29 locally
-implemented, 180 partial, 84 not implemented, 293 not demonstrated, and 59
-source-context-only. Across 586 implementation-relevant claims this is 4.9%
-strict implemented parity, or 20.3% when partial claims receive half credit.
+`papers/alphaevolve_appendix_b_claim_inventory_boundary.json` adds 188
+exact-page and visible-panel Appendix B/Figures 10-14 claims: 95 partial, 24
+not implemented, and 69 not demonstrated, with ownership for all 188 gaps.
+Together the twelve bounded inventories disposition 833 claims: 29 locally
+implemented, 275 partial, 108 not implemented, 362 not demonstrated, and 59
+source-context-only. Across 774 implementation-relevant claims this is 3.7%
+strict implemented parity, or 21.5% when partial claims receive half credit.
+The weighted value rises because Appendix B registry metadata receives partial
+credit, not because any Appendix B result was reproduced.
 The corrected
 `papers/implementation_evidence_map_boundary.json` records six broad requirement
 anchors for markers, prompt sampling/creative generation, evaluation,
 evolution, distributed execution, and published benchmark coverage with 81
 existence-checked source-span/module/test/sidecar/TODO references. This is not a
-whole-paper sentence-, paragraph-, equation-, footnote-, citation-, or detailed
-Figures 10-14/Appendix B claim inventory, per-phrase evidence-link
-sufficiency proof, coverage detector,
+whole-paper sentence-, paragraph-, equation-, footnote-, citation-, or
+source-detail exhaustive inventory, per-phrase evidence-link sufficiency proof,
+coverage detector,
 generated code-audit report, or CI exhaustiveness gate. The checked
 `papers/status_claim_inventory.json` sidecar records row-level paper-index
 status inventory with status text hashes, status classes, local artifact

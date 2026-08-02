@@ -964,9 +964,16 @@ AlphaEvolve reproduction.
   131 Appendix A, Table 3, and Figure 9 claims: 13 are partial and 118 are not
   demonstrated, with live TODO ownership for all 131 gaps. It covers 29 prose
   and caption claims, all 54 Table 3 rows, and 48 panel-level program claims
-  without treating registry metadata as result reproduction. The eleven
-  bounded inventories now disposition 645 claims in total: 29 locally
-  implemented, 180 partial, 84 not implemented, 293 not demonstrated, and 59
+  without treating registry metadata as result reproduction. The additional
+  `papers/alphaevolve_appendix_b_claim_inventory_boundary.json` dispositions
+  188 Appendix B and Figures 10-14 claims across all 13 subsections: 95 are
+  partial, 24 are not implemented, and 69 are not demonstrated, with live code
+  and paper TODO ownership for all 188 gaps. It preserves the distinct B.9
+  prose and Figure 13 caption thresholds, the distinct B.13 prose and Figure
+  14 caption values, and 27 caption/visual claims without treating registry or
+  source-image inspection as local result reproduction. The twelve bounded
+  inventories now disposition 833 claims in total: 29 locally implemented,
+  275 partial, 108 not implemented, 362 not demonstrated, and 59
   source-context-only,
   and `papers/status_claim_inventory.json` records checked row-level paper
   status inventory plus status-cell phrase hashes, source offsets, local
@@ -979,9 +986,11 @@ AlphaEvolve reproduction.
   benchmark coverage bullets plus file character offsets, source-token match
   file offsets, referenced local artifact mention file offsets/existence checks, and limitation-signal term/source-offset
   classification.
-  Across 586 implementation-relevant claims, strict implemented parity is
-  4.9%, while a half-credit weighting for partial claims is 20.3%. This is
-  complete named-structure coverage plus bounded 645-claim coverage,
+  Across 774 implementation-relevant claims, strict implemented parity is
+  3.7%, while a half-credit weighting for partial claims is 21.5%. The weighted
+  value rises only because Appendix B registry metadata receives partial
+  credit; no Appendix B result was reproduced. This is complete named-structure
+  coverage plus bounded 833-claim coverage,
   not a whole-paper sentence-, paragraph-, equation-,
   footnote-, citation-, or claim-level requirement inventory,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,
@@ -1639,8 +1648,10 @@ by `papers/lineage_replay_boundary.json`.
   value-reconciliation certificate, canonicalization policy, recomputed sum,
   and companion Colab link remain open.
 - Keep Appendix B figure-exhibit claims scoped separately from family/result
-  boundaries: the top-level `figure_exhibit_boundary` now validates the
-  missing Figures 10-14 exhibit layer, including required future
+  boundaries: the bounded Appendix B inventory now records 27 source-caption
+  and visible-panel claims for Figures 10-14, while the top-level
+  `figure_exhibit_boundary` validates the still-missing local exhibit layer,
+  including required future
   figure/subfigure ids, caption values, previous/current metric values,
   rendered visual artifacts, render parameters, source Colab locators, and
   verifier links, while the actual exhibit rows and artifacts remain

@@ -147,13 +147,22 @@ Important limits:
   Thirteen have partial metadata support and 118 are not demonstrated; all
   131 gaps have live TODO ownership. The registry is not decomposition or
   rediscovery evidence.
-- Together the eleven bounded inventories cover 645 claims: 29 locally
-  implemented, 180 partial, 84 not implemented, 293 not demonstrated, and 59
-  source-context-only, leaving 557 implementation gaps. Across the 586
-  implementation-relevant claims, strict implemented parity is 4.9%; counting
-  partial claims at half credit gives 20.3%. Coverage still excludes Figures
-  10-14, detailed Appendix B claims, source-detail exhaustiveness, and
-  independent result reproduction.
+- `papers/alphaevolve_appendix_b_claim_inventory_boundary.json` audits 188
+  exact-page and visible-panel claims from all 13 Appendix B subsections and
+  Figures 10-14. Ninety-five have partial registry or method support, 24 are
+  not implemented, and 69 reported constructions, results, captions, or panel
+  semantics are not demonstrated; all 188 gaps have live code and paper TODO
+  ownership. The inventory is not construction, verifier, rendered-exhibit,
+  recomputation, or rediscovery evidence.
+- Together the twelve bounded inventories cover 833 claims: 29 locally
+  implemented, 275 partial, 108 not implemented, 362 not demonstrated, and 59
+  source-context-only, leaving 745 implementation gaps. Across the 774
+  implementation-relevant claims, strict implemented parity is 3.7%; counting
+  partial claims at half credit gives 21.5%. The weighted value rises because
+  Appendix B registry metadata is partial, not because its results were
+  reproduced. Coverage still excludes whole-paper source-detail and semantic
+  exhaustiveness, independent result reproduction, and AlphaEvolve-scale
+  execution.
 - The local paper cache is source inventory. A cached paper or `papers/README.md`
   row does not mean the paper's method or results are implemented.
 - `papers/related_work_taxonomy_boundary.json` records a bounded AlphaEvolve

@@ -489,17 +489,19 @@ Important limits:
   locators, Figure 5 panel artifacts, value-extraction certificates,
   normalized values, rounding or canonicalization policy, value-reconciliation
   certificate, recomputed sum, or companion Colab link.
-- Appendix B Figures 10-14 figure-exhibit provenance remains absent: the
-  registry names Erdos minimum overlap, regular-hexagon packing,
-  maximum/minimum-distance point sets, Heilbronn variants, and
-  circle/rectangle sum-of-radii packing figure scopes, not normalized
-  figure-exhibit rows, subfigure ids, caption-value extraction,
+- Appendix B Figures 10-14 source claims are now inventoried, but local
+  figure-exhibit provenance remains absent: the 188-claim Appendix B sidecar
+  includes 27 caption and visible-panel claims for Erdos minimum overlap,
+  regular-hexagon packing, maximum/minimum-distance point sets, Heilbronn
+  variants, and circle/rectangle sum-of-radii packing, not normalized local
+  reproduction rows, subfigure artifacts, certified caption-value extraction,
   previous/current metric rows, construction payload artifacts, rendered panel
   artifacts, rendering parameters, source Colab cells/artifacts, or verifier
   links.
-- Appendix B numeric-result provenance remains absent: the registry enumerates
-  B.1-B.13 family/status metadata and the 19 expected future result ids,
-  including the B.4 revision row, not normalized per-result metric/value rows,
+- Appendix B executable numeric-result provenance remains absent: the registry
+  and claim inventory enumerate B.1-B.13 source metadata, reported values, and
+  the 19 expected future result ids, including the B.4 revision row, not
+  normalized executable per-result metric/value rows,
   parameter tuples, inequality or optimization direction records, previous-best
   values/sources, AlphaEvolve reported-value rows, source locations,
   construction-representation schemas, construction/verifier artifact hashes,
@@ -710,6 +712,14 @@ Important limits:
   Figure 9 code/caption claims with live TODO ownership for every gap. It does
   not provide decomposition artifacts, exactness certificates, local
   resource-frontier runs, panel exports, or stochastic rediscovery.
+- Appendix B and Figures 10-14 now have 188 PDF- and visible-panel-anchored
+  claim records in
+  `papers/alphaevolve_appendix_b_claim_inventory_boundary.json`: 95 partial,
+  24 not implemented, and 69 not demonstrated. The inventory covers all 13
+  subsections, all 19 registry result instances, and 27 caption/visual claims,
+  with code and paper TODO ownership for every gap. It does not provide the
+  companion Colab, construction or verifier payloads, rendered local exhibits,
+  recomputed results, or stochastic rediscovery.
 - Candidate execution uses a task-primary bounded text-workspace abstraction,
   with Python autodetection as the default and an optional stage-bound local
   language/build command path. The
@@ -1795,23 +1805,25 @@ Important limits:
   all 12 missing evidence keys, including the owner-review signoff field that
   was previously only covered in the rollup gate. This is structural TODO
   coverage only, not implementation of those missing readiness fields.
-- ROADMAP source-span disposition evidence currently maps the six core
-  AlphaEvolve anchors from `papers/implementation_evidence_map_boundary.json`
-  to ROADMAP section ids, phase buckets, sidecars, and TODO links, and records
-  53 paper-index rows with only the AlphaEvolve source row dispositioned by
-  this core matrix. This is not an exhaustive retained-PDF section/figure/
-  table/appendix/application-result coverage matrix.
+- ROADMAP source-span disposition evidence maps all 55 PDF-verified named
+  AlphaEvolve spans to ROADMAP section ids, phase buckets, sidecars, and TODO
+  links and connects twelve bounded inventories containing 833 claims. It also
+  records 53 paper-index rows with only the AlphaEvolve source row
+  dispositioned by this matrix. This is not a whole-paper source-detail,
+  semantic-evidence, or result-reproduction proof.
 - ROADMAP source-span coverage evidence now records eight coverage surfaces
   for main-text section walk, figure exhibits, table/capability rows, Appendix
   A matrix targets, Appendix B constructive math, application-result claims,
   paper-status row dispositions, and TODO/non-goal/phase proof. It links the
   existing core source-span disposition input, paper-status row counts, sidecar
-  refs, active TODO refs, validation-gate labels, readiness labels, and 645
-  bounded claims through Appendix A, Table 3, and Figure 9. The 586
-  implementation-relevant claims currently yield 4.9% strict implemented
-  parity or 20.3% with partial claims counted at half credit. This
-  is not an exhaustive PDF section walk, complete figure/table/appendix
-  matrix, complete application-result claim matrix, status-row to ROADMAP
+  refs, active TODO refs, validation-gate labels, readiness labels, and 833
+  bounded claims through Appendix B and Figures 10-14. The 774
+  implementation-relevant claims currently yield 3.7% strict implemented
+  parity or 21.5% with partial claims counted at half credit. The weighted
+  value rises because Appendix B registry metadata is partial, not because its
+  results were reproduced. This is not a whole-paper source-detail or semantic
+  audit, joined figure/table/appendix reproduction matrix, complete
+  application-result claim matrix, status-row to ROADMAP
   disposition map, missing/partial TODO proof, non-goal decision map,
   phase-priority map, CI source-span exhaustiveness gate, or owner review
   signoff.
@@ -1819,7 +1831,8 @@ Important limits:
   PDF section walk, figure/table/appendix matrix, application-result claim
   matrix, status-row disposition map, span status classification,
   missing/partial TODO proof, phase-priority map, and CI/owner signoff. This
-  is not evidence of an exhaustive retained AlphaEvolve source-span walk.
+  is not evidence of whole-paper source-detail or semantic exhaustiveness,
+  result reproduction, or AlphaEvolve production-scale parity.
 - ROADMAP non-goal contradiction evidence now assigns stable ids to the three
   current ROADMAP non-goals, maps nine constrained documentation surfaces,
   validates required safe-scope phrases, and records zero exact forbidden

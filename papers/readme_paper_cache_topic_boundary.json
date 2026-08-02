@@ -66,62 +66,62 @@
       "row_signal_records": [
         {
           "id": "2506.13131",
-          "line": 474,
+          "line": 482,
           "role": "Primary specification target"
         },
         {
           "id": "1504.04909",
-          "line": 476,
+          "line": 484,
           "role": "Foundational archive algorithm"
         },
         {
           "id": "auer-cesa-bianchi-fischer-2002",
-          "line": 477,
+          "line": 485,
           "role": "Foundational bandit policy"
         },
         {
           "id": "2510.14150",
-          "line": 479,
+          "line": 487,
           "role": "Agentic code-evolution inspiration"
         },
         {
           "id": "2511.23473",
-          "line": 480,
+          "line": 488,
           "role": "Test-time training inspiration"
         },
         {
           "id": "2602.10233",
-          "line": 481,
+          "line": 489,
           "role": "Modular search inspiration"
         },
         {
           "id": "2602.15951",
-          "line": 482,
+          "line": 490,
           "role": "Domain evolution inspiration"
         },
         {
           "id": "2603.14575",
-          "line": 483,
+          "line": 491,
           "role": "Causal-guidance inspiration"
         },
         {
           "id": "2510.06056",
-          "line": 484,
+          "line": 492,
           "role": "Retrieval/debug loop inspiration"
         },
         {
           "id": "2601.21096",
-          "line": 485,
+          "line": 493,
           "role": "AlphaEvolve compiler-optimization application context"
         },
         {
           "id": "2605.14718",
-          "line": 486,
+          "line": 494,
           "role": "AlphaEvolve compiler-optimization application context"
         },
         {
           "id": "2605.05921",
-          "line": 487,
+          "line": 495,
           "role": "AlphaEvolve HCI/user-study context"
         }
       ]
@@ -133,32 +133,32 @@
       "row_signal_records": [
         {
           "id": "2510.14150",
-          "line": 479,
+          "line": 487,
           "role": "Agentic code-evolution inspiration"
         },
         {
           "id": "2510.06056",
-          "line": 484,
+          "line": 492,
           "role": "Retrieval/debug loop inspiration"
         },
         {
           "id": "2601.21096",
-          "line": 485,
+          "line": 493,
           "role": "AlphaEvolve compiler-optimization application context"
         },
         {
           "id": "2605.14718",
-          "line": 486,
+          "line": 494,
           "role": "AlphaEvolve compiler-optimization application context"
         },
         {
           "id": "2512.18746",
-          "line": 503,
+          "line": 511,
           "role": "Memory-architecture evolution context"
         },
         {
           "id": "2603.28052",
-          "line": 513,
+          "line": 521,
           "role": "Outer-loop harness-code optimization context"
         }
       ]
@@ -170,17 +170,17 @@
       "row_signal_records": [
         {
           "id": "1504.04909",
-          "line": 476,
+          "line": 484,
           "role": "Foundational archive algorithm"
         },
         {
           "id": "auer-cesa-bianchi-fischer-2002",
-          "line": 477,
+          "line": 485,
           "role": "Foundational bandit policy"
         },
         {
           "id": "2605.09764",
-          "line": 492,
+          "line": 500,
           "role": "Cost-aware search-architecture context"
         }
       ]
@@ -192,62 +192,62 @@
       "row_signal_records": [
         {
           "id": "2511.02864",
-          "line": 475,
+          "line": 483,
           "role": "Constructive math benchmark candidate"
         },
         {
           "id": "2511.17592",
-          "line": 478,
+          "line": 486,
           "role": "Framework inspiration"
         },
         {
           "id": "2602.10233",
-          "line": 481,
+          "line": 489,
           "role": "Modular search inspiration"
         },
         {
           "id": "2601.21096",
-          "line": 485,
+          "line": 493,
           "role": "AlphaEvolve compiler-optimization application context"
         },
         {
           "id": "2605.14718",
-          "line": 486,
+          "line": 494,
           "role": "AlphaEvolve compiler-optimization application context"
         },
         {
           "id": "2605.01794",
-          "line": 488,
+          "line": 496,
           "role": "AlphaEvolve radar/resource-allocation application context"
         },
         {
           "id": "2602.23413",
-          "line": 489,
+          "line": 497,
           "role": "Meta-evolution framework context"
         },
         {
           "id": "2602.02919",
-          "line": 490,
+          "line": 498,
           "role": "Context-memory framework context"
         },
         {
           "id": "2606.06473",
-          "line": 491,
+          "line": 499,
           "role": "Long-horizon MLE framework context"
         },
         {
           "id": "2601.10657",
-          "line": 493,
+          "line": 501,
           "role": "Long-horizon consistency framework context"
         },
         {
           "id": "2605.01120",
-          "line": 496,
+          "line": 504,
           "role": "Constructive math benchmark candidate"
         },
         {
           "id": "2605.13821",
-          "line": 498,
+          "line": 506,
           "role": "Harnessed meta-editing context"
         }
       ]

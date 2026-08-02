@@ -14,7 +14,7 @@ def test_roadmap_source_span_coverage_accepts_bounded_matrix():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "named_structure_plus_645_bounded_claims_without_whole_paper_claim_walk"
+        == "named_structure_plus_833_bounded_claims_without_whole_paper_claim_walk"
     )
     assert boundary["schema"] == ROADMAP_SOURCE_SPAN_COVERAGE_BOUNDARY_SCHEMA
     assert boundary["source_paper_id"] == "2506.13131"
@@ -24,7 +24,7 @@ def test_roadmap_source_span_coverage_accepts_bounded_matrix():
     assert boundary["paper_status_row_dispositioned_count"] == 1
     assert boundary["coverage_surface_count"] == 8
     assert boundary["active_todo_ref_count"] == 15
-    assert boundary["sidecar_ref_count"] == 58
+    assert boundary["sidecar_ref_count"] == 61
     assert [record["surface_id"] for record in boundary["coverage_surface_records"]] == [
         "main_text_section_walk",
         "figure_exhibit_matrix",
@@ -46,7 +46,7 @@ def test_roadmap_source_span_coverage_accepts_bounded_matrix():
         for todo_ref in record["active_todo_refs"]
     )
     assert boundary["missing_evidence"] == {
-        "claim_level_requirement_inventory": "645_bounded_claims_remaining_figures_10_14_and_detailed_appendix_b_not_recorded",
+        "claim_level_requirement_inventory": "833_bounded_claims_cover_all_named_spans_without_whole_paper_source_detail_semantic_or_reproduction_exhaustiveness",
         "application_result_claim_matrix": "section_3_3_claim_dispositions_recorded_without_reproduction_phase_priority_or_non_goal_proof",
         "status_row_to_roadmap_disposition_map": "not_recorded_locally",
         "missing_partial_todo_proof": "not_recorded_locally",
@@ -88,7 +88,7 @@ def test_render_roadmap_source_span_coverage_summary_reports_shape():
     assert "ROADMAP source-span coverage boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | named_structure_plus_645_bounded_claims_without_whole_paper_claim_walk |"
+        "| boundary_status | named_structure_plus_833_bounded_claims_without_whole_paper_claim_walk |"
         in summary
     )
     assert "| coverage_surface_count | 8 |" in summary

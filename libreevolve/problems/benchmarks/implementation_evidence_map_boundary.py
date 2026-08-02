@@ -12,11 +12,11 @@ from libreevolve.problems.benchmarks.alphaevolve_source_inventory_boundary impor
 
 
 IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_SCHEMA = (
-    "libreevolve.alphaevolve_implementation_evidence_map_boundary.v13"
+    "libreevolve.alphaevolve_implementation_evidence_map_boundary.v14"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_BOUNDARY_STATUS = (
-    "verified_core_anchors_plus_645_bounded_claims_without_whole_paper_exhaustiveness"
+    "verified_core_anchors_plus_833_bounded_claims_without_whole_paper_exhaustiveness"
 )
 EXPECTED_SOURCE_INVENTORY_REF = "papers/alphaevolve_source_inventory_boundary.json"
 EXPECTED_CONTEXT_CLAIM_INVENTORY_REF = (
@@ -48,6 +48,9 @@ EXPECTED_RELATED_WORK_CLAIM_INVENTORY_REF = (
 )
 EXPECTED_APPENDIX_A_CLAIM_INVENTORY_REF = (
     "papers/alphaevolve_appendix_a_claim_inventory_boundary.json"
+)
+EXPECTED_APPENDIX_B_CLAIM_INVENTORY_REF = (
+    "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
 )
 EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF = (
     "papers/alphaevolve_system_requirement_inventory_boundary.json"
@@ -85,13 +88,16 @@ EXPECTED_RECORDED_EVIDENCE = {
     "bounded_appendix_a_claim_inventory": (
         "131_pdf_anchored_appendix_a_table_3_and_figure_9_claims"
     ),
+    "bounded_appendix_b_claim_inventory": (
+        "188_pdf_and_visual_anchored_appendix_b_and_figures_10_14_claims"
+    ),
     "reference_existence_checks": (
         "module_test_sidecar_todo_paths_and_todo_phrases"
     ),
 }
 EXPECTED_MISSING_EVIDENCE = {
-    "exhaustive_requirement_inventory": "remaining_figures_tables_and_appendices_not_fully_recorded",
-    "claim_level_source_span_coverage_matrix": "645_bounded_claims_remaining_figures_10_14_and_detailed_appendix_b_not_recorded",
+    "exhaustive_requirement_inventory": "833_bounded_claims_without_whole_paper_source_detail_semantic_or_reproduction_exhaustiveness",
+    "claim_level_source_span_coverage_matrix": "833_bounded_claims_cover_all_named_spans_without_whole_paper_source_detail_semantic_or_reproduction_exhaustiveness",
     "status_cell_semantic_verifier": "not_recorded_locally",
     "implemented_benchmark_bullet_semantic_verifier": "not_recorded_locally",
     "absence_sentence_freshness_matrix": "not_recorded_locally",
@@ -379,6 +385,7 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
         "ablation_claim_inventory_ref": EXPECTED_ABLATION_CLAIM_INVENTORY_REF,
         "related_work_claim_inventory_ref": EXPECTED_RELATED_WORK_CLAIM_INVENTORY_REF,
         "appendix_a_claim_inventory_ref": EXPECTED_APPENDIX_A_CLAIM_INVENTORY_REF,
+        "appendix_b_claim_inventory_ref": EXPECTED_APPENDIX_B_CLAIM_INVENTORY_REF,
         "system_requirement_inventory_ref": EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF,
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "claim_ready": False,
@@ -403,7 +410,8 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
             "plus the bounded 85-claim Section 5 Related Work inventory, which "
             "separates 59 source-context-only claims from 26 implementation-"
             "relevant claims, plus the bounded 131-claim Appendix A, Table 3, "
-            "and Figure 9 inventory. It "
+            "and Figure 9 inventory, plus the bounded 188-claim Appendix B "
+            "and Figures 10-14 inventory across all 13 subsections. It "
             "does not claim a whole-paper "
             "exhaustive requirement inventory or whole-paper claim-level source-span coverage matrix, "
             "paper-index phrase evidence-link sufficiency, status-cell "
@@ -475,6 +483,10 @@ def validate_implementation_evidence_map_boundary(
         issues.append(_issue("invalid_appendix_a_claim_inventory_ref", f"appendix_a_claim_inventory_ref must be {EXPECTED_APPENDIX_A_CLAIM_INVENTORY_REF}"))
     if not (Path(root) / EXPECTED_APPENDIX_A_CLAIM_INVENTORY_REF).is_file():
         issues.append(_issue("missing_appendix_a_claim_inventory_ref", f"{EXPECTED_APPENDIX_A_CLAIM_INVENTORY_REF} is missing"))
+    if data.get("appendix_b_claim_inventory_ref") != EXPECTED_APPENDIX_B_CLAIM_INVENTORY_REF:
+        issues.append(_issue("invalid_appendix_b_claim_inventory_ref", f"appendix_b_claim_inventory_ref must be {EXPECTED_APPENDIX_B_CLAIM_INVENTORY_REF}"))
+    if not (Path(root) / EXPECTED_APPENDIX_B_CLAIM_INVENTORY_REF).is_file():
+        issues.append(_issue("missing_appendix_b_claim_inventory_ref", f"{EXPECTED_APPENDIX_B_CLAIM_INVENTORY_REF} is missing"))
     if data.get("system_requirement_inventory_ref") != EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF:
         issues.append(_issue("invalid_system_requirement_inventory_ref", f"system_requirement_inventory_ref must be {EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF}"))
     if not (Path(root) / EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF).is_file():

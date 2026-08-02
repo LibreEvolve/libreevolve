@@ -210,9 +210,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     ownership for all 20 implementation gaps. The
     `papers/alphaevolve_appendix_a_claim_inventory_boundary.json` adds 131
     exact-page Appendix A, Table 3, and Figure 9 dispositions: 13 partial and
-    118 not demonstrated, with ownership for all 131 gaps. The bounded
-    claim-level ROADMAP surface therefore covers 645 claims: 29 locally
-    implemented, 180 partial, 84 not implemented, 293 not demonstrated, and 59
+    118 not demonstrated, with ownership for all 131 gaps. The
+    `papers/alphaevolve_appendix_b_claim_inventory_boundary.json` adds 188
+    exact-page and visible-panel Appendix B/Figures 10-14 dispositions: 95
+    partial, 24 not implemented, and 69 not demonstrated, with code and paper
+    TODO ownership for all 188 gaps. The bounded claim-level ROADMAP surface
+    therefore covers 833 claims: 29 locally implemented, 275 partial, 108 not
+    implemented, 362 not demonstrated, and 59
     source-context-only.
     `papers/roadmap_source_span_disposition_boundary.json` now maps all 55
     named spans to ROADMAP section ids, phase buckets, local status, sidecars,
@@ -227,17 +231,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     rows, and TODO/non-goal/phase proof.
     `papers/roadmap_source_span_exhaustiveness_boundary.json` now records a
     bounded eight-criterion exhaustiveness gate that credits the named PDF
-    structure walk and all eleven bounded claim inventories while preserving
-    remaining claim-level work for the figure/table/appendix matrix,
+    structure walk and all twelve bounded claim inventories while preserving
+    remaining whole-paper and joined-semantic work for the figure/table/appendix matrix,
     application-result reproduction/non-goal proof beyond the bounded Section
     3.3/Section 4/Section 5 claim matrices,
     status-row disposition map, span status classification, missing/partial
     TODO proof, phase-priority map, and CI/owner signoff.
   - Current gap: the retained PDF's named sections, figures, tables, and
     appendices now have verified dispositions, local status classes, ROADMAP
-    sections, and phases, and 645 bounded system/context/matrix-result/
+    sections, and phases, and 833 bounded system/context/matrix-result/
     constructive-math/scheduling/kernel-engineering/hardware/compiler/ablation/
-    related-work/Appendix-A/Table-3/Figure-9 claims have
+    related-work/Appendix-A/Table-3/Figure-9/Appendix-B/Figures-10-14 claims have
     claim-level mappings. The matrix is not
     exhaustive across the rest of
     the paper: it
@@ -248,8 +252,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     application-result claim matrix; or disposition all paper/status sidecar
     rows.
   - Required result: implement the missing readiness fields recorded by the
-    exhaustiveness sidecar: claim-level requirement and figure/table/appendix
-    matrices, application-result claim matrix, status-row to ROADMAP
+    exhaustiveness sidecar: whole-paper requirement and joined semantic
+    figure/table/appendix matrices, application-result claim matrix, status-row to ROADMAP
     disposition map, domain-specific missing/partial TODO proof, non-goal
     decision map, claim-level phase-priority map, CI
     source-span exhaustiveness gate, and owner review signoff.

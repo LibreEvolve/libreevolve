@@ -4,6 +4,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## Papers Todo: Reference and Specification Gaps
 
+- [x] Inventory AlphaEvolve Appendix B and Figures 10-14 claims.
+  - Paper evidence: source pages 38-44 contain all 13 constructive-math
+    subsections, their definitions, bounds, derivations, reported results,
+    revision notes, lemma/proof text, and Figures 10-14.
+  - Status: `papers/alphaevolve_appendix_b_claim_inventory_boundary.json`
+    records 188 PDF- and visible-panel-anchored claims: 95 partial, 24 not
+    implemented, and 69 not demonstrated, all with active code and paper TODO
+    ownership.
+  - Remaining gap: companion-Colab artifacts, independent mathematical
+    verification, construction payloads, local figure reproduction,
+    recomputation, and stochastic rediscovery remain unproven.
+
 - [x] Inventory AlphaEvolve Appendix A, Table 3, and Figure 9 claims.
   - Paper evidence: source pages 34-37 provide the 54-target full matrix table,
     suite curation and scaling notes, aggregate/exactness/scalar-field claims,

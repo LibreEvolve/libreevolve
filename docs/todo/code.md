@@ -97,9 +97,13 @@ sidecars, tests, and active TODOs.
     `papers/alphaevolve_appendix_a_claim_inventory_boundary.json` adds 131
     Appendix A, Table 3, and Figure 9 claims: 13 partial and 118 not
     demonstrated, with 29 prose/caption claims, all 54 table rows, 48
-    panel-level program claims, and live ownership for every gap. The eleven
-    bounded inventories therefore cover 645 claims: 29 locally implemented,
-    180 partial, 84 not implemented, 293 not demonstrated, and 59
+    panel-level program claims, and live ownership for every gap. The committed
+    `papers/alphaevolve_appendix_b_claim_inventory_boundary.json` adds 188
+    exact-page and visible-panel claims across all 13 Appendix B subsections and
+    Figures 10-14: 95 partial, 24 not implemented, and 69 not demonstrated,
+    with both code and paper TODO ownership for every gap. The twelve bounded
+    inventories therefore cover 833 claims: 29 locally implemented, 275
+    partial, 108 not implemented, 362 not demonstrated, and 59
     source-context-only. This is not
     whole-paper completeness. Meanwhile,
     `papers/status_claim_inventory.json` now records checked row-level paper
@@ -118,14 +122,15 @@ sidecars, tests, and active TODOs.
     per-phrase evidence-link sufficiency, status-cell semantic verification,
     implemented-benchmark bullet semantic verification, and
     absence-sentence freshness checks as missing evidence.
-  - Current gap: the named source structure and 645 bounded system, context,
+  - Current gap: the named source structure and 833 bounded system, context,
     matrix-result, constructive-math, scheduling, kernel-engineering, and
     hardware-circuit-design, compiler-generated-code, Section 4/Figure 8
-    ablation, Section 5 Related Work, Appendix A, Table 3, and Figure 9 claims
+    ablation, Section 5 Related Work, Appendix A, Table 3, Figure 9, Appendix B,
+    and Figures 10-14 claims
     are now machine-readable and PDF-verified, but there
     is no AlphaEvolve requirement inventory exhaustive at sentence, paragraph,
-    equation, footnote, citation, or claim level across Figures 10-14, detailed
-    Appendix B, remaining source details, and the other paper
+    equation, footnote, citation, bibliography, or claim level across remaining
+    source details and the other paper
     spans and all code modules, tests, runtime report
     schemas, sidecar JSON records, TODO entries, and completion evidence; no
     detector flags source modules or paper claims that lack mapped audit

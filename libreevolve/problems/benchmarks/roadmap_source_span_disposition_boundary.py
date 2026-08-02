@@ -11,11 +11,11 @@ from libreevolve.problems.benchmarks.alphaevolve_source_inventory_boundary impor
 
 
 ROADMAP_SOURCE_SPAN_DISPOSITION_BOUNDARY_SCHEMA = (
-    "libreevolve.roadmap_source_span_disposition_boundary.v10"
+    "libreevolve.roadmap_source_span_disposition_boundary.v11"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_BOUNDARY_STATUS = (
-    "named_span_dispositions_plus_645_bounded_claims_without_whole_paper_exhaustiveness"
+    "named_span_dispositions_plus_833_bounded_claims_without_whole_paper_exhaustiveness"
 )
 STATUS_CLAIM_INVENTORY_PATH = "papers/status_claim_inventory.json"
 SOURCE_INVENTORY_PATH = "papers/alphaevolve_source_inventory_boundary.json"
@@ -49,6 +49,9 @@ RELATED_WORK_CLAIM_INVENTORY_PATH = (
 APPENDIX_A_CLAIM_INVENTORY_PATH = (
     "papers/alphaevolve_appendix_a_claim_inventory_boundary.json"
 )
+APPENDIX_B_CLAIM_INVENTORY_PATH = (
+    "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
+)
 SYSTEM_REQUIREMENT_INVENTORY_PATH = (
     "papers/alphaevolve_system_requirement_inventory_boundary.json"
 )
@@ -64,7 +67,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "ci_source_span_exhaustiveness_gate",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "claim_level_requirement_inventory": "645_bounded_claims_remaining_figures_10_14_and_detailed_appendix_b_not_recorded",
+    "claim_level_requirement_inventory": "833_bounded_claims_cover_all_named_spans_without_whole_paper_source_detail_semantic_or_reproduction_exhaustiveness",
     "application_result_claim_matrix": "not_recorded_locally",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
     "missing_partial_todo_proof": "not_recorded_locally",
@@ -115,6 +118,7 @@ def roadmap_source_span_disposition_boundary_record(
         "ablation_claim_inventory_input": ABLATION_CLAIM_INVENTORY_PATH,
         "related_work_claim_inventory_input": RELATED_WORK_CLAIM_INVENTORY_PATH,
         "appendix_a_claim_inventory_input": APPENDIX_A_CLAIM_INVENTORY_PATH,
+        "appendix_b_claim_inventory_input": APPENDIX_B_CLAIM_INVENTORY_PATH,
         "system_requirement_inventory_input": SYSTEM_REQUIREMENT_INVENTORY_PATH,
         "source_status_inventory_input": STATUS_CLAIM_INVENTORY_PATH,
         "disposition_record_count": len(disposition_records),
@@ -144,6 +148,7 @@ def roadmap_source_span_disposition_boundary_record(
             "ablation_claims": "51_pdf_anchored_section_4_and_figure_8_dispositions",
             "related_work_claims": "85_pdf_anchored_section_5_dispositions_with_59_source_context_only",
             "appendix_a_claims": "131_pdf_anchored_appendix_a_table_3_and_figure_9_dispositions",
+            "appendix_b_claims": "188_pdf_and_visual_anchored_appendix_b_and_figures_10_14_dispositions",
         },
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
@@ -151,7 +156,7 @@ def roadmap_source_span_disposition_boundary_record(
             "This boundary records ROADMAP dispositions for all 55 PDF-verified "
             "named AlphaEvolve structural spans, including sections, figures, "
             "tables, appendices, source pages, local status, roadmap section, "
-            "phase bucket, sidecars, and active audit TODO links, plus 645 "
+            "phase bucket, sidecars, and active audit TODO links, plus 833 "
             "bounded claim-level records: 50 Table 1/Section 2 system "
             "requirements and 41 Abstract, Introduction, Discussion, and "
             "collaborator-context claims, plus 41 Section 3.1, Table 2, "
@@ -164,7 +169,8 @@ def roadmap_source_span_disposition_boundary_record(
             "Figure 8 ablation claims, plus 85 Section 5 Related Work claims "
             "separated into 59 source-context-only and 26 implementation-"
             "relevant claims, plus 131 Appendix A, Table 3, and Figure 9 "
-            "claims. It does not "
+            "claims, plus 188 Appendix B and Figures 10-14 claims across all "
+            "13 subsections. It does not "
             "claim whole-paper sentence-, paragraph-, equation-, footnote-, "
             "citation-, or requirement-level exhaustiveness, a claim-level application-result matrix, complete "
             "paper-index row to ROADMAP disposition map, proof that every "
@@ -212,6 +218,7 @@ def validate_roadmap_source_span_disposition_boundary(
         "ablation_claim_inventory_input",
         "related_work_claim_inventory_input",
         "appendix_a_claim_inventory_input",
+        "appendix_b_claim_inventory_input",
         "system_requirement_inventory_input",
         "source_status_inventory_input",
         "disposition_record_count",

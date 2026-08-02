@@ -4,6 +4,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document the retained-TeX citation-use audit in README.
+  - Status: README now reports 195 logical citation uses, 240 key links, all
+    120 compiled references, 52 unused BibTeX entries, and zero unresolved
+    links across the retained TeX closure.
+  - Boundary: README keeps lexical source coverage separate from semantic
+    citation classification, implementation relevance, result reproduction,
+    and AlphaEvolve parity; the functional parity percentages remain unchanged.
+
 - [x] Document the bounded Appendix B and Figures 10-14 audit in README.
   - Status: README now reports the 188-claim inventory, its 95 partial, 24 not
     implemented, and 69 not demonstrated split, all 13 subsections, 27 figure

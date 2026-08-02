@@ -623,7 +623,10 @@ def _cached_source_artifact(
 ) -> tuple[dict[str, Any], tuple[str, ...]]:
     path = Path(resolved_path)
     try:
-        payload = path.read_bytes()
+        digest = hashlib.sha256()
+        with path.open("rb") as stream:
+            for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+                digest.update(chunk)
         reader = PdfReader(path, strict=True)
         page_texts = tuple(page.extract_text() or "" for page in reader.pages)
     except Exception as exc:  # pragma: no cover - exact pypdf errors vary.
@@ -640,7 +643,7 @@ def _cached_source_artifact(
             },
             (),
         )
-    actual_sha256 = hashlib.sha256(payload).hexdigest()
+    actual_sha256 = digest.hexdigest()
     page_count = len(page_texts)
     return (
         {

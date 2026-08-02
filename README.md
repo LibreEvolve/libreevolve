@@ -154,13 +154,19 @@ Important limits:
   semantics are not demonstrated; all 188 gaps have live code and paper TODO
   ownership. The inventory is not construction, verifier, rendered-exhibit,
   recomputation, or rediscovery evidence.
+- `papers/alphaevolve_citation_use_inventory_boundary.json` scans the retained
+  TeX input closure and inventories all 195 logical citation uses and 240 key
+  links. All 120 compiled references resolve through `literature.bib`,
+  `main.bbl`, and `papers/references.json`; 52 unused BibTeX entries are listed.
+  Citation semantics and implementation relevance remain unclassified.
 - Together the twelve bounded inventories cover 833 claims: 29 locally
   implemented, 275 partial, 108 not implemented, 362 not demonstrated, and 59
   source-context-only, leaving 745 implementation gaps. Across the 774
   implementation-relevant claims, strict implemented parity is 3.7%; counting
   partial claims at half credit gives 21.5%. The weighted value rises because
   Appendix B registry metadata is partial, not because its results were
-  reproduced. Coverage still excludes whole-paper source-detail and semantic
+  reproduced. Citation linkage is lexically complete for the retained TeX, but
+  coverage still excludes whole-paper equation/footnote/caption and semantic
   exhaustiveness, independent result reproduction, and AlphaEvolve-scale
   execution.
 - The local paper cache is source inventory. A cached paper or `papers/README.md`

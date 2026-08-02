@@ -11,11 +11,11 @@ from libreevolve.problems.benchmarks.alphaevolve_source_inventory_boundary impor
 
 
 ROADMAP_SOURCE_SPAN_DISPOSITION_BOUNDARY_SCHEMA = (
-    "libreevolve.roadmap_source_span_disposition_boundary.v11"
+    "libreevolve.roadmap_source_span_disposition_boundary.v12"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_BOUNDARY_STATUS = (
-    "named_span_dispositions_plus_833_bounded_claims_without_whole_paper_exhaustiveness"
+    "named_span_dispositions_plus_833_bounded_claims_and_195_citation_uses_without_whole_paper_exhaustiveness"
 )
 STATUS_CLAIM_INVENTORY_PATH = "papers/status_claim_inventory.json"
 SOURCE_INVENTORY_PATH = "papers/alphaevolve_source_inventory_boundary.json"
@@ -52,6 +52,9 @@ APPENDIX_A_CLAIM_INVENTORY_PATH = (
 APPENDIX_B_CLAIM_INVENTORY_PATH = (
     "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
 )
+CITATION_USE_INVENTORY_PATH = (
+    "papers/alphaevolve_citation_use_inventory_boundary.json"
+)
 SYSTEM_REQUIREMENT_INVENTORY_PATH = (
     "papers/alphaevolve_system_requirement_inventory_boundary.json"
 )
@@ -67,7 +70,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "ci_source_span_exhaustiveness_gate",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "claim_level_requirement_inventory": "833_bounded_claims_cover_all_named_spans_without_whole_paper_source_detail_semantic_or_reproduction_exhaustiveness",
+    "claim_level_requirement_inventory": "833_bounded_claims_cover_all_named_spans_and_195_citation_uses_have_lexical_linkage_without_whole_paper_semantic_or_reproduction_exhaustiveness",
     "application_result_claim_matrix": "not_recorded_locally",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
     "missing_partial_todo_proof": "not_recorded_locally",
@@ -119,6 +122,7 @@ def roadmap_source_span_disposition_boundary_record(
         "related_work_claim_inventory_input": RELATED_WORK_CLAIM_INVENTORY_PATH,
         "appendix_a_claim_inventory_input": APPENDIX_A_CLAIM_INVENTORY_PATH,
         "appendix_b_claim_inventory_input": APPENDIX_B_CLAIM_INVENTORY_PATH,
+        "citation_use_inventory_input": CITATION_USE_INVENTORY_PATH,
         "system_requirement_inventory_input": SYSTEM_REQUIREMENT_INVENTORY_PATH,
         "source_status_inventory_input": STATUS_CLAIM_INVENTORY_PATH,
         "disposition_record_count": len(disposition_records),
@@ -149,6 +153,7 @@ def roadmap_source_span_disposition_boundary_record(
             "related_work_claims": "85_pdf_anchored_section_5_dispositions_with_59_source_context_only",
             "appendix_a_claims": "131_pdf_anchored_appendix_a_table_3_and_figure_9_dispositions",
             "appendix_b_claims": "188_pdf_and_visual_anchored_appendix_b_and_figures_10_14_dispositions",
+            "citation_uses": "195_tex_source_anchored_uses_with_240_key_links_and_120_compiled_references_without_semantic_classification",
         },
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
@@ -170,9 +175,12 @@ def roadmap_source_span_disposition_boundary_record(
             "separated into 59 source-context-only and 26 implementation-"
             "relevant claims, plus 131 Appendix A, Table 3, and Figure 9 "
             "claims, plus 188 Appendix B and Figures 10-14 claims across all "
-            "13 subsections. It does not "
+            "13 subsections, plus lexical source and bibliography linkage for "
+            "all 195 TeX citation uses, 240 key links, and 120 compiled "
+            "references. It does not classify citation semantics, source "
+            "sufficiency, or implementation relevance, and does not "
             "claim whole-paper sentence-, paragraph-, equation-, footnote-, "
-            "citation-, or requirement-level exhaustiveness, a claim-level application-result matrix, complete "
+            "citation-semantic, or requirement-level exhaustiveness, a claim-level application-result matrix, complete "
             "paper-index row to ROADMAP disposition map, proof that every "
             "missing or partial source span has a live TODO, or a CI "
             "source-span exhaustiveness gate."
@@ -219,6 +227,7 @@ def validate_roadmap_source_span_disposition_boundary(
         "related_work_claim_inventory_input",
         "appendix_a_claim_inventory_input",
         "appendix_b_claim_inventory_input",
+        "citation_use_inventory_input",
         "system_requirement_inventory_input",
         "source_status_inventory_input",
         "disposition_record_count",

@@ -14,11 +14,11 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "verified_core_anchors_plus_833_bounded_claims_without_whole_paper_exhaustiveness"
+        == "verified_core_anchors_plus_833_bounded_claims_and_195_citation_uses_without_whole_paper_exhaustiveness"
     )
     assert validation.requirement_count == 6
     assert validation.reference_check_count == 81
-    assert validation.missing_evidence_count == 9
+    assert validation.missing_evidence_count == 10
     assert boundary["schema"] == IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
     assert boundary["context_claim_inventory_ref"] == (
@@ -54,6 +54,15 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
     assert boundary["appendix_b_claim_inventory_ref"] == (
         "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
     )
+    assert boundary["citation_use_inventory_ref"] == (
+        "papers/alphaevolve_citation_use_inventory_boundary.json"
+    )
+    assert boundary["recorded_evidence"]["lexical_citation_use_inventory"] == (
+        "195_tex_citation_uses_240_key_links_and_120_compiled_references"
+    )
+    assert boundary["missing_evidence"]["citation_semantic_mapping"] == (
+        "195_citation_uses_lexically_linked_without_supported_proposition_source_sufficiency_or_implementation_relevance_classification"
+    )
     requirement_ids = {
         requirement["requirement_id"] for requirement in boundary["requirements"]
     }
@@ -86,6 +95,7 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
     assert "does not claim a whole-paper exhaustive requirement inventory" in boundary["claim_boundary"]
     assert "whole-paper claim-level source-span coverage matrix" in boundary["claim_boundary"]
     assert "absence-sentence freshness matrix" in boundary["claim_boundary"]
+    assert "does not classify citation semantics" in boundary["claim_boundary"]
 
 
 def test_implementation_evidence_map_boundary_rejects_exhaustive_overclaim():
@@ -136,9 +146,9 @@ def test_render_implementation_evidence_map_boundary_summary_reports_shape():
     assert "Implementation evidence map boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | verified_core_anchors_plus_833_bounded_claims_without_whole_paper_exhaustiveness |"
+        "| boundary_status | verified_core_anchors_plus_833_bounded_claims_and_195_citation_uses_without_whole_paper_exhaustiveness |"
         in summary
     )
     assert "| requirement_count | 6 |" in summary
     assert "| reference_check_count | 81 |" in summary
-    assert "| missing_evidence_count | 9 |" in summary
+    assert "| missing_evidence_count | 10 |" in summary

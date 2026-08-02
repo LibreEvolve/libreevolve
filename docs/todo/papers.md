@@ -66,21 +66,30 @@ directory and using the AlphaEvolve paper as the primary specification.
     Figures 10-14: 95 partial, 24 not implemented, and 69 not demonstrated,
     with live code and paper TODO ownership for every gap. Combined coverage is
     833 claims: 29 implemented, 275 partial, 108 not implemented, 362 not
-    demonstrated, and 59 source-context-only. The
+    demonstrated, and 59 source-context-only. The supplemental
+    `papers/alphaevolve_citation_use_inventory_boundary.json` now inventories
+    the retained 14-file `main.tex` closure, all 195 logical citation uses, all
+    240 citation-key links, and all 120 unique compiled references. Every cited
+    key resolves through `literature.bib`, `main.bbl`, and
+    `papers/references.json`; the 52 unused BibTeX entries are explicit. All 195
+    citation uses remain semantically unclassified and retain this code/paper
+    TODO ownership. The
     paper manifest rejects any inventory sidecar's absence, source/reference
     drift, status drift, stale TODO ownership, result-reproduction overclaims,
     and parity overclaims.
   - Current gap: the combined 833-claim inventory covers every named source
-    span but deliberately excludes whole-paper equation/footnote/citation/
-    bibliography detail, semantic evidence sufficiency, result reproduction, and
-    independent reviewer proof that any bounded inventory is
-    semantically exhaustive.
+    span, and the supplemental TeX inventory now covers citation syntax plus
+    bibliography-key linkage, but every citation's supported proposition,
+    source-sufficiency role, and implementation relevance remain unclassified.
+    Whole-paper sentence/paragraph/equation/footnote/caption semantics, semantic
+    evidence sufficiency, result reproduction, and independent reviewer proof
+    that any bounded inventory is semantically exhaustive also remain open.
   - Required result: extract every remaining implementation-bearing claim,
-    assign stable ids and exact source spans, classify implementation and
-    reproduction status, link modules/tests/runtime evidence and domain TODOs
-    or explicit non-goals, add phase/dependency ownership, then require
-    independent review and CI coverage before claiming a complete AlphaEvolve
-    specification audit.
+    assign stable ids and exact source spans, semantically classify every
+    citation use, classify implementation and reproduction status, link
+    modules/tests/runtime evidence and domain TODOs or explicit non-goals, add
+    phase/dependency ownership, then require independent review and CI coverage
+    before claiming a complete AlphaEvolve specification audit.
 
 - [ ] Add semantic evidence mapping for every paper-index status row.
   - Paper evidence: `papers/README.md` is the paper-facing implementation

@@ -1630,7 +1630,15 @@ partial and 118 are not demonstrated, with live TODO ownership for every gap.
 `papers/alphaevolve_appendix_b_claim_inventory_boundary.json` adds 188
 exact-page and visible-panel Appendix B/Figures 10-14 claims: 95 partial, 24
 not implemented, and 69 not demonstrated, with ownership for all 188 gaps.
-Together the twelve bounded inventories disposition 833 claims: 29 locally
+The supplemental `papers/alphaevolve_citation_use_inventory_boundary.json`
+scans the retained `main.tex` input closure and inventories all 195 logical
+citation uses, 240 key links, and 120 unique compiled references across seven
+citing files. Every cited key resolves through `literature.bib`, `main.bbl`,
+and `papers/references.json`; the 52 BibTeX entries omitted from the compiled
+bibliography are listed. This is lexical source linkage, while every citation's
+supported proposition and implementation relevance remain unclassified with
+active code/paper TODO ownership. Together the twelve bounded claim inventories
+still disposition 833 claims: 29 locally
 implemented, 275 partial, 108 not implemented, 362 not demonstrated, and 59
 source-context-only. Across 774 implementation-relevant claims this is 3.7%
 strict implemented parity, or 21.5% when partial claims receive half credit.
@@ -1640,9 +1648,10 @@ The corrected
 `papers/implementation_evidence_map_boundary.json` records six broad requirement
 anchors for markers, prompt sampling/creative generation, evaluation,
 evolution, distributed execution, and published benchmark coverage with 81
-existence-checked source-span/module/test/sidecar/TODO references. This is not a
-whole-paper sentence-, paragraph-, equation-, footnote-, citation-, or
-source-detail exhaustive inventory, per-phrase evidence-link sufficiency proof,
+existence-checked source-span/module/test/sidecar/TODO references. Citation
+syntax and key linkage are exhaustive for the retained TeX source, but this is
+not a whole-paper sentence-, paragraph-, equation-, footnote-, caption-semantic,
+citation-semantic, or source-detail exhaustive inventory, per-phrase evidence-link sufficiency proof,
 coverage detector,
 generated code-audit report, or CI exhaustiveness gate. The checked
 `papers/status_claim_inventory.json` sidecar records row-level paper-index
@@ -2664,8 +2673,13 @@ Implemented:
   `papers/references.json`, whose 120 rows use the PDF References text through
   the reference 120 continuation on page 33, preserving raw citation text,
   author/title/venue/year fields, DOI/URL/arXiv fields where detected,
-  local-cache linkage, and citation-use categories. It is normalized
-  bibliography metadata, not complete per-claim citation linkage.
+  local-cache linkage, and citation-use categories. The paired
+  `libreevolve/problems/benchmarks/alphaevolve_citation_use_inventory_boundary.py`
+  scanner and `papers/alphaevolve_citation_use_inventory_boundary.json` map all
+  195 retained-TeX citation uses and 240 key links through `main.bbl` ordinal
+  order to those 120 rows and list 52 unused BibTeX entries. This is complete
+  lexical linkage, not semantic claim-to-citation sufficiency, cited-source
+  verification, or implementation-relevance classification.
 - `libreevolve/problems/benchmarks/companion_sources.py`: AlphaEvolve companion
   Colab source-evidence contract. It validates the pinned
   `google-deepmind/alphaevolve_results` commit, `mathematical_results.ipynb`
@@ -3994,6 +4008,14 @@ Implemented:
   `2506.13131v1` linkage, 58-member inventory, per-file sizes, and per-file
   SHA-256 digests. It is not an automated TeX-source refresh gate and is paired
   with the metadata extraction-script sidecar.
+- `papers/alphaevolve_citation_use_inventory_boundary.json`: retained-TeX
+  citation-use sidecar with the recursive 14-file `main.tex` closure, source
+  file/line/column/section anchors for 195 logical citation commands, 240
+  citation-key links, all 120 compiled `main.bbl` references linked by ordinal
+  to `papers/references.json`, and 52 unused `literature.bib` entries. It does
+  not classify citation semantics or implementation relevance, independently
+  verify cited sources, inventory equations or footnotes, reproduce results,
+  or establish AlphaEvolve parity.
 - `papers/alphaevolve_current_version_boundary.json`: AlphaEvolve
   current-version/floating-PDF sidecar with pinned current abstract URL,
   retrieval date, status, content type, byte count, SHA-256 digest, title,

@@ -971,8 +971,17 @@ AlphaEvolve reproduction.
   and paper TODO ownership for all 188 gaps. It preserves the distinct B.9
   prose and Figure 13 caption thresholds, the distinct B.13 prose and Figure
   14 caption values, and 27 caption/visual claims without treating registry or
-  source-image inspection as local result reproduction. The twelve bounded
-  inventories now disposition 833 claims in total: 29 locally implemented,
+  source-image inspection as local result reproduction. The supplemental
+  `papers/alphaevolve_citation_use_inventory_boundary.json` now scans the
+  retained `main.tex` input closure and inventories all 195 logical citation
+  uses, 240 citation-key links, and 120 unique compiled references across seven
+  citing source files. Every cited key resolves through `literature.bib`,
+  `main.bbl`, and `papers/references.json`; all 52 source-BibTeX entries not
+  present in the compiled bibliography are listed explicitly. This is lexical
+  source linkage, not a thirteenth implementation-claim inventory: all 195
+  citation uses still have unclassified semantics and active code/paper TODO
+  ownership. The twelve bounded claim inventories still disposition 833 claims
+  in total: 29 locally implemented,
   275 partial, 108 not implemented, 362 not demonstrated, and 59
   source-context-only,
   and `papers/status_claim_inventory.json` records checked row-level paper
@@ -990,9 +999,9 @@ AlphaEvolve reproduction.
   3.7%, while a half-credit weighting for partial claims is 21.5%. The weighted
   value rises only because Appendix B registry metadata receives partial
   credit; no Appendix B result was reproduced. This is complete named-structure
-  coverage plus bounded 833-claim coverage,
-  not a whole-paper sentence-, paragraph-, equation-,
-  footnote-, citation-, or claim-level requirement inventory,
+  coverage, bounded 833-claim coverage, and complete lexical citation linkage,
+  not a whole-paper sentence-, paragraph-, equation-, footnote-, caption-
+  semantic, citation-semantic, or claim-level requirement inventory,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,
   implemented-benchmark bullet semantic verifier,
   absence-sentence freshness matrix, coverage detector, generated code-audit
@@ -1761,9 +1770,13 @@ by `papers/lineage_replay_boundary.json`.
   `papers/references.json` companion manifest adds normalized rows for all
   120 references, including the reference 120 continuation on page 33, raw
   citation text, author/title/venue/year fields, DOI/URL/arXiv fields where
-  detected, local-cache linkage, and citation-use categories. Per-claim
-  citation links remain scoped separately from the normalized bibliography
-  table.
+  detected, local-cache linkage, and citation-use categories. The committed
+  `papers/alphaevolve_citation_use_inventory_boundary.json` now adds the
+  retained-TeX side of that linkage: 195 logical citation occurrences, 240 key
+  links, all 120 compiled keys mapped by `main.bbl` ordinal to the normalized
+  rows, and 52 unused `literature.bib` entries. It deliberately leaves each
+  citation's supported proposition, implementation relevance, source
+  sufficiency, and external-reference verification unclassified.
 - Keep companion Colab source evidence separate from local generated exports:
   `libreevolve.alphaevolve_companion_colab_source.v1` now validates the pinned
   `google-deepmind/alphaevolve_results` commit, `mathematical_results.ipynb`

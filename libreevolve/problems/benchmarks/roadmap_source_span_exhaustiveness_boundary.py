@@ -11,10 +11,10 @@ from libreevolve.problems.benchmarks.roadmap_source_span_coverage_boundary impor
 
 
 ROADMAP_SOURCE_SPAN_EXHAUSTIVENESS_BOUNDARY_SCHEMA = (
-    "libreevolve.roadmap_source_span_exhaustiveness_boundary.v11"
+    "libreevolve.roadmap_source_span_exhaustiveness_boundary.v12"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "named_structure_plus_833_bounded_claims_without_whole_paper_claim_walk"
+    "named_structure_plus_833_bounded_claims_and_195_citation_uses_without_whole_paper_claim_walk"
 )
 SOURCE_COVERAGE_BOUNDARY_INPUT = "papers/roadmap_source_span_coverage_boundary.json"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
@@ -28,7 +28,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "ci_exhaustiveness_and_owner_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "claim_level_requirement_inventory": "833_bounded_claims_cover_all_named_spans_without_whole_paper_source_detail_semantic_or_reproduction_exhaustiveness",
+    "claim_level_requirement_inventory": "833_bounded_claims_cover_all_named_spans_and_195_citation_uses_have_lexical_linkage_without_whole_paper_semantic_or_reproduction_exhaustiveness",
     "claim_level_figure_table_appendix_matrix": "bounded_named_matrix_recorded_without_result_reproduction_or_whole_paper_semantic_exhaustiveness",
     "application_result_claim_matrix": "section_3_3_claim_dispositions_recorded_without_reproduction_phase_priority_or_non_goal_proof",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
@@ -44,8 +44,8 @@ CRITERION_SPECS = (
     {
         "criterion_id": "pdf_section_walk",
         "source_surface": "retained AlphaEvolve source PDF sections and requirement spans",
-        "current_scope": "all 38 named structural spans are page- and anchor-verified and 833 bounded Table 1/Section 2, context, Section 3.1/Table 2/Figure 4 matrix-result, Section 3.2/Figure 5 constructive-math, Section 3.3 opening/Section 3.3.1/Figure 6 scheduling, Section 3.3.2/Figure 7 kernel-engineering, Section 3.3.3 hardware-circuit-design, Section 3.3.4 compiler-generated-code, Section 4/Figure 8 ablation, Section 5 Related Work, Appendix A/Table 3/Figure 9, and Appendix B/Figures 10-14 claims have dispositions",
-        "missing_exhaustiveness": "remaining whole-paper equations, footnotes, citations, bibliography detail, semantic implementation evidence, and result reproduction",
+        "current_scope": "all 38 named structural spans are page- and anchor-verified; 833 bounded Table 1/Section 2, context, Section 3.1/Table 2/Figure 4 matrix-result, Section 3.2/Figure 5 constructive-math, Section 3.3 opening/Section 3.3.1/Figure 6 scheduling, Section 3.3.2/Figure 7 kernel-engineering, Section 3.3.3 hardware-circuit-design, Section 3.3.4 compiler-generated-code, Section 4/Figure 8 ablation, Section 5 Related Work, Appendix A/Table 3/Figure 9, and Appendix B/Figures 10-14 claims have dispositions; and all 195 retained-TeX citation uses have lexical key linkage",
+        "missing_exhaustiveness": "remaining whole-paper equation, footnote, caption, citation-semantic, implementation-semantic, and result-reproduction evidence",
         "sidecars": (
             "papers/alphaevolve_system_requirement_inventory_boundary.json",
             "papers/alphaevolve_context_claim_inventory_boundary.json",
@@ -59,15 +59,16 @@ CRITERION_SPECS = (
             "papers/alphaevolve_related_work_claim_inventory_boundary.json",
             "papers/alphaevolve_appendix_a_claim_inventory_boundary.json",
             "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+            "papers/alphaevolve_citation_use_inventory_boundary.json",
             "papers/roadmap_source_span_coverage_boundary.json",
             "papers/roadmap_source_span_disposition_boundary.json",
         ),
         "active_todos": (
-            {"path": "docs/todo/roadmap.md", "required_phrase": "whole-paper requirement and joined semantic"},
+            {"path": "docs/todo/roadmap.md", "required_phrase": "whole-paper requirement"},
             {"path": "docs/todo/roadmap.md", "required_phrase": "every relevant AlphaEvolve source span"},
         ),
         "validation_gate": "retained PDF section-walk exhaustiveness gate",
-        "readiness_status": "833_bounded_claims_cover_all_named_spans_without_whole_paper_requirements",
+        "readiness_status": "833_bounded_claims_plus_195_lexical_citation_uses_without_whole_paper_semantic_requirements",
     },
     {
         "criterion_id": "figure_table_appendix_matrix",
@@ -273,6 +274,11 @@ def roadmap_source_span_exhaustiveness_boundary_record(root: str | Path = ".") -
             "appendix_b_subsection_count": 13,
             "appendix_b_figures_10_14_claim_count": 27,
             "appendix_b_claim_inventory": "pdf_visual_anchor_and_todo_owner_verified",
+            "citation_use_count": 195,
+            "citation_key_link_count": 240,
+            "unique_compiled_reference_count": 120,
+            "unused_bibtex_entry_count": 52,
+            "citation_use_inventory": "tex_source_line_and_bibliography_key_linkage_verified_without_semantic_classification",
         },
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
@@ -286,7 +292,11 @@ def roadmap_source_span_exhaustiveness_boundary_record(root: str | Path = ".") -
             "3.3.3, Section 3.3.4, Section 4, Figure 8, Section 5, Appendix A, "
             "Table 3, Figure 9, Appendix B, and Figures 10-14 claims. "
             "The Section 5 inventory classifies 59 literature-context claims as "
-            "source context rather than implementation requirements. "
+            "source context rather than implementation requirements. It also "
+            "records lexical source and bibliography linkage for all 195 TeX "
+            "citation uses, 240 key links, and 120 compiled references without "
+            "classifying supported propositions, source sufficiency, or "
+            "implementation relevance. "
             "It does not claim whole-paper claim-level requirement exhaustiveness, a "
             "claim-level figure/table/appendix matrix, application-result claim matrix, status-row to ROADMAP "
             "disposition map, missing/partial TODO proof, non-goal decision "

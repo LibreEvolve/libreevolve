@@ -2,6 +2,17 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Add retained-TeX citation linkage to the AlphaEvolve ROADMAP audit.
+  - Status: ROADMAP now reports 195 logical citation uses, 240 key links, all
+    120 compiled references, and 52 unused BibTeX entries under a
+    manifest-enforced lexical inventory.
+  - Accounting: this is supplemental source coverage, not a thirteenth claim
+    inventory; the 833-claim aggregate and 3.7% strict/21.5% weighted parity
+    estimates do not change.
+  - Remaining boundary: citation semantics and implementation relevance,
+    equation/footnote/caption semantics, result reproduction, independent
+    review, and whole-paper CI exhaustiveness remain open.
+
 - [x] Advance bounded AlphaEvolve ROADMAP coverage through Appendix B.
   - Status: ROADMAP disposition, coverage, exhaustiveness, and implementation-
     evidence boundaries now include 188 Appendix B/Figures 10-14 claims and

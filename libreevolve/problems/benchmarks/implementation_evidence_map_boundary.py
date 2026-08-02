@@ -12,11 +12,11 @@ from libreevolve.problems.benchmarks.alphaevolve_source_inventory_boundary impor
 
 
 IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_SCHEMA = (
-    "libreevolve.alphaevolve_implementation_evidence_map_boundary.v14"
+    "libreevolve.alphaevolve_implementation_evidence_map_boundary.v15"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_BOUNDARY_STATUS = (
-    "verified_core_anchors_plus_833_bounded_claims_without_whole_paper_exhaustiveness"
+    "verified_core_anchors_plus_833_bounded_claims_and_195_citation_uses_without_whole_paper_exhaustiveness"
 )
 EXPECTED_SOURCE_INVENTORY_REF = "papers/alphaevolve_source_inventory_boundary.json"
 EXPECTED_CONTEXT_CLAIM_INVENTORY_REF = (
@@ -51,6 +51,9 @@ EXPECTED_APPENDIX_A_CLAIM_INVENTORY_REF = (
 )
 EXPECTED_APPENDIX_B_CLAIM_INVENTORY_REF = (
     "papers/alphaevolve_appendix_b_claim_inventory_boundary.json"
+)
+EXPECTED_CITATION_USE_INVENTORY_REF = (
+    "papers/alphaevolve_citation_use_inventory_boundary.json"
 )
 EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF = (
     "papers/alphaevolve_system_requirement_inventory_boundary.json"
@@ -91,13 +94,17 @@ EXPECTED_RECORDED_EVIDENCE = {
     "bounded_appendix_b_claim_inventory": (
         "188_pdf_and_visual_anchored_appendix_b_and_figures_10_14_claims"
     ),
+    "lexical_citation_use_inventory": (
+        "195_tex_citation_uses_240_key_links_and_120_compiled_references"
+    ),
     "reference_existence_checks": (
         "module_test_sidecar_todo_paths_and_todo_phrases"
     ),
 }
 EXPECTED_MISSING_EVIDENCE = {
-    "exhaustive_requirement_inventory": "833_bounded_claims_without_whole_paper_source_detail_semantic_or_reproduction_exhaustiveness",
-    "claim_level_source_span_coverage_matrix": "833_bounded_claims_cover_all_named_spans_without_whole_paper_source_detail_semantic_or_reproduction_exhaustiveness",
+    "exhaustive_requirement_inventory": "833_bounded_claims_plus_195_lexical_citation_uses_without_whole_paper_semantic_or_reproduction_exhaustiveness",
+    "claim_level_source_span_coverage_matrix": "833_bounded_claims_cover_all_named_spans_and_195_citation_uses_have_lexical_linkage_without_whole_paper_semantic_or_reproduction_exhaustiveness",
+    "citation_semantic_mapping": "195_citation_uses_lexically_linked_without_supported_proposition_source_sufficiency_or_implementation_relevance_classification",
     "status_cell_semantic_verifier": "not_recorded_locally",
     "implemented_benchmark_bullet_semantic_verifier": "not_recorded_locally",
     "absence_sentence_freshness_matrix": "not_recorded_locally",
@@ -386,6 +393,7 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
         "related_work_claim_inventory_ref": EXPECTED_RELATED_WORK_CLAIM_INVENTORY_REF,
         "appendix_a_claim_inventory_ref": EXPECTED_APPENDIX_A_CLAIM_INVENTORY_REF,
         "appendix_b_claim_inventory_ref": EXPECTED_APPENDIX_B_CLAIM_INVENTORY_REF,
+        "citation_use_inventory_ref": EXPECTED_CITATION_USE_INVENTORY_REF,
         "system_requirement_inventory_ref": EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF,
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "claim_ready": False,
@@ -411,7 +419,11 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
             "separates 59 source-context-only claims from 26 implementation-"
             "relevant claims, plus the bounded 131-claim Appendix A, Table 3, "
             "and Figure 9 inventory, plus the bounded 188-claim Appendix B "
-            "and Figures 10-14 inventory across all 13 subsections. It "
+            "and Figures 10-14 inventory across all 13 subsections, plus "
+            "lexical linkage for 195 TeX citation uses, 240 citation-key "
+            "links, and all 120 compiled references. It does not classify "
+            "citation semantics, source sufficiency, or implementation "
+            "relevance. It "
             "does not claim a whole-paper "
             "exhaustive requirement inventory or whole-paper claim-level source-span coverage matrix, "
             "paper-index phrase evidence-link sufficiency, status-cell "
@@ -487,6 +499,10 @@ def validate_implementation_evidence_map_boundary(
         issues.append(_issue("invalid_appendix_b_claim_inventory_ref", f"appendix_b_claim_inventory_ref must be {EXPECTED_APPENDIX_B_CLAIM_INVENTORY_REF}"))
     if not (Path(root) / EXPECTED_APPENDIX_B_CLAIM_INVENTORY_REF).is_file():
         issues.append(_issue("missing_appendix_b_claim_inventory_ref", f"{EXPECTED_APPENDIX_B_CLAIM_INVENTORY_REF} is missing"))
+    if data.get("citation_use_inventory_ref") != EXPECTED_CITATION_USE_INVENTORY_REF:
+        issues.append(_issue("invalid_citation_use_inventory_ref", f"citation_use_inventory_ref must be {EXPECTED_CITATION_USE_INVENTORY_REF}"))
+    if not (Path(root) / EXPECTED_CITATION_USE_INVENTORY_REF).is_file():
+        issues.append(_issue("missing_citation_use_inventory_ref", f"{EXPECTED_CITATION_USE_INVENTORY_REF} is missing"))
     if data.get("system_requirement_inventory_ref") != EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF:
         issues.append(_issue("invalid_system_requirement_inventory_ref", f"system_requirement_inventory_ref must be {EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF}"))
     if not (Path(root) / EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF).is_file():
@@ -512,6 +528,7 @@ def validate_implementation_evidence_map_boundary(
         not isinstance(boundary_text, str)
         or "does not claim a whole-paper exhaustive requirement inventory" not in boundary_text
         or "whole-paper claim-level source-span coverage matrix" not in boundary_text
+        or "does not classify citation semantics" not in boundary_text
         or "paper-index phrase evidence-link sufficiency" not in boundary_text
         or "implemented benchmark bullet semantic verifier" not in boundary_text
         or "absence-sentence freshness matrix" not in boundary_text

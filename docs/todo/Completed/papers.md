@@ -4,6 +4,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## Papers Todo: Reference and Specification Gaps
 
+- [x] Inventory retained AlphaEvolve TeX citation uses and bibliography keys.
+  - Paper evidence: the retained `2506.13131v1` TeX archive includes the
+    recursive `main.tex` source closure, `literature.bib`, and compiled
+    `main.bbl`; the normalized PDF bibliography contains 120 rows.
+  - Status: `papers/alphaevolve_citation_use_inventory_boundary.json` records
+    all 195 logical citation uses, 240 key links, 120 unique compiled
+    references, and 52 unused BibTeX entries with zero unresolved keys.
+  - Remaining gap: lexical linkage does not identify the proposition each
+    citation supports, prove source sufficiency, classify implementation
+    relevance, verify cited work, or complete equation/footnote/claim semantics.
+
 - [x] Inventory AlphaEvolve Appendix B and Figures 10-14 claims.
   - Paper evidence: source pages 38-44 contain all 13 constructive-math
     subsections, their definitions, bounds, derivations, reported results,

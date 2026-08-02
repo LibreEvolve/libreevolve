@@ -104,7 +104,14 @@ sidecars, tests, and active TODOs.
     with both code and paper TODO ownership for every gap. The twelve bounded
     inventories therefore cover 833 claims: 29 locally implemented, 275
     partial, 108 not implemented, 362 not demonstrated, and 59
-    source-context-only. This is not
+    source-context-only. The supplemental
+    `papers/alphaevolve_citation_use_inventory_boundary.json` now scans the
+    retained 14-file TeX closure and records all 195 logical citation uses, 240
+    key links, and 120 unique compiled references. Every cited key resolves
+    through `literature.bib`, `main.bbl`, and `papers/references.json`, and all
+    52 unused BibTeX entries are listed. It deliberately leaves all 195
+    citation semantics and implementation-relevance decisions unclassified
+    under this code/paper TODO. This is not
     whole-paper completeness. Meanwhile,
     `papers/status_claim_inventory.json` now records checked row-level paper
     status inventory plus status-cell phrase hashes, source offsets, local
@@ -126,11 +133,13 @@ sidecars, tests, and active TODOs.
     matrix-result, constructive-math, scheduling, kernel-engineering, and
     hardware-circuit-design, compiler-generated-code, Section 4/Figure 8
     ablation, Section 5 Related Work, Appendix A, Table 3, Figure 9, Appendix B,
-    and Figures 10-14 claims
-    are now machine-readable and PDF-verified, but there
-    is no AlphaEvolve requirement inventory exhaustive at sentence, paragraph,
-    equation, footnote, citation, bibliography, or claim level across remaining
-    source details and the other paper
+    and Figures 10-14 claims are now machine-readable and PDF-verified, and
+    citation commands plus bibliography-key linkage are lexically exhaustive
+    for the retained TeX. However, citation proposition/role/sufficiency and
+    implementation relevance remain unclassified, and there is no AlphaEvolve
+    requirement inventory exhaustive at sentence, paragraph, equation,
+    footnote, caption-semantic, citation-semantic, or claim level across
+    remaining source details and the other paper
     spans and all code modules, tests, runtime report
     schemas, sidecar JSON records, TODO entries, and completion evidence; no
     detector flags source modules or paper claims that lack mapped audit
@@ -148,9 +157,10 @@ sidecars, tests, and active TODOs.
     AlphaEvolve-facing behavior has been classified.
   - Required result: extend the bounded system inventory through every
     remaining implementation-bearing paper claim with requirement ids,
-    source-paper spans, relevant modules/tests, runtime/report artifacts,
-    sidecar/TODO or non-goal links, claim status, freshness checks, independent
-    review, and CI validation before treating the code audit as exhaustive.
+    source-paper spans, semantic citation classifications, relevant
+    modules/tests, runtime/report artifacts, sidecar/TODO or non-goal links,
+    claim status, freshness checks, independent review, and CI validation
+    before treating the code audit as exhaustive.
 
 - [ ] Classify tracked legacy implementation-plan surfaces.
   - Spec evidence: an AlphaEvolve-facing repository audit should make clear

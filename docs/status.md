@@ -1811,6 +1811,13 @@ Important limits:
   records 53 paper-index rows with only the AlphaEvolve source row
   dispositioned by this matrix. This is not a whole-paper source-detail,
   semantic-evidence, or result-reproduction proof.
+- Retained-TeX citation-use evidence recursively scans the 14-file `main.tex`
+  closure and records all 195 logical citation uses, 240 key links, 120 unique
+  compiled references, and 52 unused `literature.bib` entries. Every cited key
+  resolves through `literature.bib`, `main.bbl`, and `papers/references.json`.
+  This is complete lexical linkage for the retained source, not citation-
+  semantic classification, source-sufficiency proof, implementation relevance,
+  external-reference verification, or additional functional parity credit.
 - ROADMAP source-span coverage evidence now records eight coverage surfaces
   for main-text section walk, figure exhibits, table/capability rows, Appendix
   A matrix targets, Appendix B constructive math, application-result claims,
@@ -1821,7 +1828,8 @@ Important limits:
   implementation-relevant claims currently yield 3.7% strict implemented
   parity or 21.5% with partial claims counted at half credit. The weighted
   value rises because Appendix B registry metadata is partial, not because its
-  results were reproduced. This is not a whole-paper source-detail or semantic
+  results were reproduced. Citation syntax and key linkage are exhaustive for
+  the retained TeX, but this is not a whole-paper source-detail or semantic
   audit, joined figure/table/appendix reproduction matrix, complete
   application-result claim matrix, status-row to ROADMAP
   disposition map, missing/partial TODO proof, non-goal decision map,

@@ -4,6 +4,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add the retained-TeX citation-use and bibliography-linkage inventory.
+  - Status: the public boundary recursively scans the 14-file `main.tex` input
+    closure and records source file, line, column, section path, command text,
+    optional notes, and keys for all 195 logical citation uses.
+  - Accounting: the 195 uses contain 240 key links to 120 unique compiled
+    references. Every key resolves through `literature.bib`, `main.bbl`, and
+    `papers/references.json`; all 52 unused BibTeX entries are explicit.
+  - Remaining code gap: supported-proposition semantics, citation role/source
+    sufficiency, implementation relevance, external-source verification,
+    equation/footnote/caption semantics, and claim-level exhaustiveness remain
+    owned by the active code and paper TODOs.
+  - Verification: focused scanner and paper-manifest tests reject archive,
+    count, command, source-anchor, key-link, sidecar, semantic-overclaim, and
+    parity drift.
+
 - [x] Add the bounded Appendix B and Figures 10-14 claim inventory.
   - Status: the public boundary records 188 stable claims across all 13
     Appendix B subsections with exact PDF pages and anchors, implementation

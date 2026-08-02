@@ -217,7 +217,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     TODO ownership for all 188 gaps. The bounded claim-level ROADMAP surface
     therefore covers 833 claims: 29 locally implemented, 275 partial, 108 not
     implemented, 362 not demonstrated, and 59
-    source-context-only.
+    source-context-only. The supplemental
+    `papers/alphaevolve_citation_use_inventory_boundary.json` adds lexical
+    coverage for all 195 retained-TeX citation uses, 240 key links, all 120
+    compiled references, and 52 unused BibTeX entries. It does not add claims
+    to the 833-row implementation aggregate because citation semantics and
+    implementation relevance remain unclassified under active TODO ownership.
     `papers/roadmap_source_span_disposition_boundary.json` now maps all 55
     named spans to ROADMAP section ids, phase buckets, local status, sidecars,
     and audit TODO links, and records that only the AlphaEvolve
@@ -242,17 +247,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     sections, and phases, and 833 bounded system/context/matrix-result/
     constructive-math/scheduling/kernel-engineering/hardware/compiler/ablation/
     related-work/Appendix-A/Table-3/Figure-9/Appendix-B/Figures-10-14 claims have
-    claim-level mappings. The matrix is not
+    claim-level mappings, and citation syntax plus bibliography-key linkage is
+    exhaustive for the retained TeX. The matrix is not
     exhaustive across the rest of
     the paper: it
     does not extract every remaining
-    sentence-, paragraph-, equation-, footnote-, citation-, capability-, or
-    result-claim span; prove domain-specific TODO
+    sentence-, paragraph-, equation-, footnote-, caption-semantic, citation-
+    semantic, capability-, or result-claim span; prove domain-specific TODO
     ownership for every missing or partial claim; provide a complete
     application-result claim matrix; or disposition all paper/status sidecar
     rows.
   - Required result: implement the missing readiness fields recorded by the
-    exhaustiveness sidecar: whole-paper requirement and joined semantic
+    exhaustiveness sidecar: whole-paper requirement, citation-semantic, and joined semantic
     figure/table/appendix matrices, application-result claim matrix, status-row to ROADMAP
     disposition map, domain-specific missing/partial TODO proof, non-goal
     decision map, claim-level phase-priority map, CI

@@ -47,11 +47,11 @@ sidecars, tests, and active TODOs.
     Section 2.4 evaluation, Section 2.5 evolution, Section 2.6 distributed
     execution, and published benchmarks with 81 existence-checked source-span,
     module, test, sidecar, and active-TODO references. The committed
-    `papers/alphaevolve_system_requirement_inventory_boundary.json` adds 55
+    `papers/alphaevolve_system_requirement_inventory_boundary.json` adds 56
     PDF-anchored implementation requirements covering all eight Table 1 rows,
     Sections 2.1-2.6, and Figures 1-3. It classifies 14 requirements as locally
-    implemented, 31 as partial, 4 as not implemented, and 6 as not demonstrated;
-    all 41 incomplete requirements resolve to live domain TODO titles. The
+    implemented, 31 as partial, 4 as not implemented, and 7 as not demonstrated;
+    all 42 incomplete requirements resolve to live domain TODO titles. The
     committed `papers/alphaevolve_context_claim_inventory_boundary.json` adds
     45 anchored Abstract, Introduction, Discussion, and collaborator-context
     claims. It classifies 6 as locally implemented, 11 partial, 4 not
@@ -105,8 +105,8 @@ sidecars, tests, and active TODOs.
     exact-page and visible-panel claims across all 13 Appendix B subsections and
     Figures 10-14: 95 partial, 24 not implemented, and 69 not demonstrated,
     with both code and paper TODO ownership for every gap. The twelve bounded
-    inventories therefore cover 845 claims: 30 locally implemented, 278
-    partial, 110 not implemented, 368 not demonstrated, and 59
+    inventories therefore cover 846 claims: 30 locally implemented, 278
+    partial, 110 not implemented, 369 not demonstrated, and 59
     source-context-only. The supplemental
     `papers/alphaevolve_citation_use_inventory_boundary.json` now scans the
     retained 14-file TeX closure and records all 195 logical citation uses, 240
@@ -143,7 +143,16 @@ sidecars, tests, and active TODOs.
     remaining 200 constructs directly to existing bounded claim ids. Nothing
     is unmapped or unresolved, and it adds no claims or parity credit. Formula
     correctness, proof validity, and result reproduction remain owned by this
-    TODO. Meanwhile,
+    TODO. The supplemental
+    `papers/alphaevolve_tex_proposition_inventory_boundary.json` now reviews all
+    98 Abstract, Introduction, and Methods sentences as 244 atomic
+    propositions. It maps 226 propositions through 245 references to 104
+    bounded claims, dispositions 18 as context, outlook, or interpretation,
+    adds the missing sample-efficiency/enabling-expensive-evaluation claim, and
+    repairs overbroad or cross-inventory sentence mappings. The sample-
+    efficiency gap resolves to the existing active sample-efficiency TODO.
+    Remaining proposition coverage and independent semantic review stay open.
+    Meanwhile,
     `papers/status_claim_inventory.json` now records checked row-level paper
     status inventory plus status-cell phrase hashes, source offsets, local
     artifact mention source offsets, and candidate evidence-link lists with
@@ -160,7 +169,7 @@ sidecars, tests, and active TODOs.
     per-phrase evidence-link sufficiency, status-cell semantic verification,
     implemented-benchmark bullet semantic verification, and
     absence-sentence freshness checks as missing evidence.
-  - Current gap: the named source structure and 845 bounded system, context,
+  - Current gap: the named source structure and 846 bounded system, context,
     matrix-result, constructive-math, scheduling, kernel-engineering, and
     hardware-circuit-design, compiler-generated-code, Section 4/Figure 8
     ablation, Section 5 Related Work, Appendix A, Table 3, Figure 9, Appendix B,
@@ -170,10 +179,10 @@ sidecars, tests, and active TODOs.
     constructs have dispositions, all 83 table rows and 240 cells have
     row/cell dispositions,
     all 8 code listings and 305 source lines have line-level dispositions, and
-    all 309 TeX math constructs and 402 prose sentences have dispositions; 93
-    propositions across 37 Abstract/Introduction sentences are reviewed.
+    all 309 TeX math constructs and 402 prose sentences have dispositions; 244
+    propositions across 98 Abstract/Introduction/Methods sentences are reviewed.
     Citation roles/sufficiency and implementation relevance remain unclassified,
-    and 365 prose sentences lack proposition review;
+    and 304 prose sentences lack proposition review;
     mathematical-correctness, image-pixel or citation-semantic level
     across remaining source details and the other paper
     spans and all code modules, tests, runtime report

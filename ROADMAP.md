@@ -914,10 +914,10 @@ AlphaEvolve reproduction.
   `papers/implementation_evidence_map_boundary.json` records six corrected core
   AlphaEvolve requirement anchors with 81 existence-checked source-span,
   module, test, sidecar, and TODO references. The bounded
-  `papers/alphaevolve_system_requirement_inventory_boundary.json` adds 55
+  `papers/alphaevolve_system_requirement_inventory_boundary.json` adds 56
   PDF-anchored implementation requirements across all eight Table 1 rows,
   Sections 2.1-2.6, and Figures 1-3, classifies 14 as locally implemented and
-  41 as incomplete, and verifies live domain TODO ownership for every
+  42 as incomplete, and verifies live domain TODO ownership for every
   incomplete requirement. The separate
   `papers/alphaevolve_context_claim_inventory_boundary.json` adds 45 anchored
   Abstract, Introduction, Discussion, and collaborator-context claims: 6 are
@@ -1031,14 +1031,16 @@ AlphaEvolve reproduction.
   bounded claims but does not prove sentence-internal clause/proposition
   exhaustiveness, independent semantic review, or result reproduction. The
   supplemental `papers/alphaevolve_tex_proposition_inventory_boundary.json`
-  decomposes all 37 retained Abstract and Introduction sentences into 93
-  atomic propositions: 81 map through 94 references to 62 bounded claims, 9
-  are background context, 2 are author outlook, and 1 is a qualified author
-  interpretation. It bounds the previously missed direct-versus-instrumental-
-  search comparison and repairs four sentence mappings, while leaving the
-  other 365 prose sentences and independent semantic review open. The twelve
-  bounded claim inventories now disposition 845 claims in total: 30 locally
-  implemented, 278 partial, 110 not implemented, 368 not demonstrated,
+  decomposes all 98 retained Abstract, Introduction, and Methods sentences into
+  244 atomic propositions: 226 map through 245 references to 104 bounded
+  claims, 14 are background context, 2 are author outlook, and 2 are qualified
+  author interpretations. It bounds the previously missed direct-versus-
+  instrumental-search comparison and the claim that sample efficiency makes
+  roughly 100 compute-hours per candidate feasible, while repairing broad or
+  TeX-obscured sentence mappings. The other 304 prose sentences and independent
+  semantic review remain open. The twelve bounded claim inventories now
+  disposition 846 claims in total: 30 locally implemented, 278 partial, 110 not
+  implemented, 369 not demonstrated,
   and 59
   source-context-only,
   and `papers/status_claim_inventory.json` records checked row-level paper
@@ -1052,19 +1054,19 @@ AlphaEvolve reproduction.
   benchmark coverage bullets plus file character offsets, source-token match
   file offsets, referenced local artifact mention file offsets/existence checks, and limitation-signal term/source-offset
   classification.
-  Across 786 implementation-relevant claims, strict implemented parity is
+  Across 787 implementation-relevant claims, strict implemented parity is
   3.8%, while a half-credit weighting for partial claims is 21.5%. The weighted
   value rises only because Appendix B registry metadata receives partial
   credit; no Appendix B result was reproduced. This is complete named-structure
-  coverage, bounded 845-claim coverage, complete lexical citation linkage, and
+  coverage, bounded 846-claim coverage, complete lexical citation linkage, and
   construct-level disposition of all retained-source captions, equation-
   environment constructs, and semantic footnotes, plus row/cell disposition
   for all 83 rows and 240 cells in Tables 1-3, plus line-level disposition for all 8 retained
   code listings and 305 physical source lines, plus delimiter-level disposition
   for all 309 explicit TeX math constructs, plus paragraph/sentence disposition
-  for all 128 retained prose paragraphs and 402 grammatical sentences, plus 93
-  atomic-proposition dispositions across the 37 Abstract and Introduction
-  sentences. It is not proposition review for the remaining 365 sentences,
+  for all 128 retained prose paragraphs and 402 grammatical sentences, plus 244
+  atomic-proposition dispositions across the 98 Abstract, Introduction, and
+  Methods sentences. It is not proposition review for the remaining 304 sentences,
   mathematical-correctness proof, image-pixel or citation-semantic review,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,
   implemented-benchmark bullet semantic verifier,

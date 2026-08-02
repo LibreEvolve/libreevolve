@@ -4281,6 +4281,12 @@
           "claim_id": "task_scalar_metric_mapping",
           "resolved": true,
           "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_context_claim_inventory_boundary.json",
+          "claim_id": "introduction_automatically_evaluable_problem_scope",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null
@@ -4614,25 +4620,13 @@
       "claim_refs": [
         {
           "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
-          "claim_id": "task_raw_representation_abstraction",
+          "claim_id": "task_problem_specific_abstraction_choice",
           "resolved": true,
           "match_kind": "manual_source_line_mapping"
         },
         {
-          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
-          "claim_id": "task_constructor_function_abstraction",
-          "resolved": true,
-          "match_kind": "manual_source_line_mapping"
-        },
-        {
-          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
-          "claim_id": "task_bespoke_search_abstraction",
-          "resolved": true,
-          "match_kind": "manual_source_line_mapping"
-        },
-        {
-          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
-          "claim_id": "task_solution_search_coevolution",
+          "inventory_path": "papers/alphaevolve_context_claim_inventory_boundary.json",
+          "claim_id": "introduction_algorithm_discovery_instrumental_goal",
           "resolved": true,
           "match_kind": "manual_source_line_mapping"
         }
@@ -5314,7 +5308,13 @@
           "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
           "claim_id": "evaluation_every_proposal",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evolution_database_resurfacing",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null
@@ -5532,7 +5532,13 @@
           "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
           "claim_id": "evaluation_order_hundred_compute_hours_per_candidate",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_sample_efficiency_enables_expensive_evaluation",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null

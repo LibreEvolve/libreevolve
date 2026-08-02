@@ -220,7 +220,12 @@ _DIRECT_CLAIM_MAP: dict[
     ("introduction.tex", 56, 0): _claim_refs(
         "context", "introduction_four_google_compute_stack_results"
     ),
-    ("methods.tex", 32, 0): _claim_refs("system", "task_scalar_metric_mapping"),
+    ("methods.tex", 32, 0): _claim_refs(
+        "system", "task_scalar_metric_mapping"
+    )
+    + _claim_refs(
+        "context", "introduction_automatically_evaluable_problem_scope"
+    ),
     ("methods.tex", 37, 1): _claim_refs(
         "system", "task_evaluation_workload_range"
     ),
@@ -235,11 +240,10 @@ _DIRECT_CLAIM_MAP: dict[
         "task_bespoke_search_abstraction",
     ),
     ("methods.tex", 48, 0): _claim_refs(
-        "system",
-        "task_raw_representation_abstraction",
-        "task_constructor_function_abstraction",
-        "task_bespoke_search_abstraction",
-        "task_solution_search_coevolution",
+        "system", "task_problem_specific_abstraction_choice"
+    )
+    + _claim_refs(
+        "context", "introduction_algorithm_discovery_instrumental_goal"
     ),
     ("methods.tex", 76, 0): _claim_refs(
         "system",
@@ -267,6 +271,9 @@ _DIRECT_CLAIM_MAP: dict[
     ("methods.tex", 101, 0): _claim_refs(
         "system", "generation_fast_strong_model_mix"
     ),
+    ("methods.tex", 107, 0): _claim_refs(
+        "system", "evaluation_every_proposal", "evolution_database_resurfacing"
+    ),
     ("methods.tex", 108, 0): _claim_refs(
         "system", "evaluation_every_proposal", "task_scalar_metric_mapping"
     ),
@@ -278,6 +285,11 @@ _DIRECT_CLAIM_MAP: dict[
     ),
     ("methods.tex", 115, 0): _claim_refs(
         "system", "evaluation_llm_generated_feedback"
+    ),
+    ("methods.tex", 118, 0): _claim_refs(
+        "system",
+        "evaluation_order_hundred_compute_hours_per_candidate",
+        "evaluation_sample_efficiency_enables_expensive_evaluation",
     ),
     ("methods.tex", 119, 0): _claim_refs(
         "system",

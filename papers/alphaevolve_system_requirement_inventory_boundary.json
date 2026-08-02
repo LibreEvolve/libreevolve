@@ -30,12 +30,12 @@
       "AlphaEvolve production scale, benchmark results, or system parity"
     ]
   },
-  "requirement_count": 55,
-  "expected_requirement_count": 55,
+  "requirement_count": 56,
+  "expected_requirement_count": 56,
   "category_counts": {
     "creative_generation": 7,
     "distributed_pipeline": 3,
-    "evaluation": 8,
+    "evaluation": 9,
     "evolution": 4,
     "platform_overview": 5,
     "prompt_sampling": 6,
@@ -44,13 +44,13 @@
   },
   "implementation_status_counts": {
     "implemented_local": 14,
-    "not_demonstrated": 6,
+    "not_demonstrated": 7,
     "not_implemented": 4,
     "partially_implemented": 31
   },
   "implemented_local_count": 14,
-  "implementation_gap_count": 41,
-  "todo_owned_gap_count": 41,
+  "implementation_gap_count": 42,
+  "todo_owned_gap_count": 42,
   "missing_anchor_count": 0,
   "missing_reference_count": 0,
   "requirement_records": [
@@ -1770,6 +1770,47 @@
       ]
     },
     {
+      "requirement_id": "evaluation_sample_efficiency_enables_expensive_evaluation",
+      "source_span_id": "section_2_4",
+      "source_page": 8,
+      "source_anchor": "sample efficiency of AlphaEvolve makes it feasible to spend on the order of 100 compute-hours",
+      "source_anchor_present": true,
+      "requirement": "Demonstrate that proposal sample efficiency makes roughly 100 compute-hours of evaluation per candidate feasible.",
+      "category": "evaluation",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "sample_efficiency",
+      "roadmap_phase": "mid_term",
+      "evidence_refs": [
+        {
+          "path": "papers/sample_efficiency_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_sample_efficiency_boundary.v1",
+          "boundary_status": "single_run_counts_only",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/expensive_evaluation_budget_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.expensive_evaluation_budget_boundary.v1",
+          "boundary_status": "local_cooperative_budgets_without_compute_hour_runtime",
+          "claim_ready": false
+        },
+        {
+          "path": "tests/test_sample_efficiency_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "sample_efficiency",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add sample-efficiency reporting for AlphaEvolve-scale LLM proposal",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
       "requirement_id": "evaluation_async_cluster_parallelism",
       "source_span_id": "section_2_4",
       "source_page": 8,
@@ -2228,5 +2269,5 @@
       ]
     }
   ],
-  "claim_boundary": "This sidecar certifies a bounded claim-level inventory of 50 implementation-bearing AlphaEvolve requirements from Table 1, Sections 2.1 through 2.6, and Figures 1 through 3. Local status labels distinguish implemented behavior from partial, missing, and undemonstrated claims. It does not claim whole-paper claim-level exhaustiveness, semantic reviewer signoff, benchmark reproduction, production-scale evidence, or AlphaEvolve system parity."
+  "claim_boundary": "This sidecar certifies a bounded claim-level inventory of 56 implementation-bearing AlphaEvolve requirements from Table 1, Sections 2.1 through 2.6, and Figures 1 through 3. Local status labels distinguish implemented behavior from partial, missing, and undemonstrated claims. It does not claim whole-paper claim-level exhaustiveness, semantic reviewer signoff, benchmark reproduction, production-scale evidence, or AlphaEvolve system parity."
 }

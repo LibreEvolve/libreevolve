@@ -19706,6 +19706,24 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     paper-manifest tests validate anchors, counts, references, TODO ownership,
     source wording, drift rejection, and result/parity disclaimers.
 
+- [x] Extend AlphaEvolve atomic-proposition evidence through Methods.
+  - Status: `alphaevolve_tex_proposition_inventory_boundary.py` now reviews all
+    61 retained Methods sentences in addition to the Abstract and Introduction.
+    The cumulative boundary covers 98 sentences and 244 propositions, with 226
+    mapped through 245 resolved references to 104 bounded claims and 18
+    classified as context, outlook, or interpretation.
+  - Claim correction: the system inventory now separately bounds the paper's
+    undemonstrated claim that proposal sample efficiency makes roughly 100
+    compute-hours per candidate feasible. Sentence mappings now preserve the
+    machine-gradeable scope and evaluation-guided resurfacing clauses and no
+    longer attach four concrete abstraction modes to the preceding general
+    abstraction sentence.
+  - Ownership: the new gap resolves to the existing active sample-efficiency
+    TODO; no duplicate implementation item was added.
+  - Remaining code gap: 304 prose sentences, independent semantic review,
+    citation semantics, mathematical correctness, image-pixel review, result
+    reproduction, and whole-paper implementation exhaustiveness remain open.
+
 - [x] Add scoped AlphaEvolve Abstract and Introduction proposition evidence.
   - Status: `alphaevolve_tex_proposition_inventory_boundary.py` decomposes all
     37 retained Abstract and Introduction sentences into 93 atomic

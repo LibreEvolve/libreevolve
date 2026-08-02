@@ -20,25 +20,30 @@ from libreevolve.problems.benchmarks.paper_bibliography import (
 
 
 ALPHAEVOLVE_TEX_PROPOSITION_INVENTORY_BOUNDARY_SCHEMA = (
-    "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v1"
+    "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v2"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "abstract_and_introduction_proposition_review_complete_without_"
+    "abstract_introduction_and_methods_proposition_review_complete_without_"
     "remaining_paper_or_independent_semantic_exhaustiveness"
 )
-EXPECTED_REVIEWED_SENTENCE_COUNT = 37
-EXPECTED_PROPOSITION_COUNT = 93
+EXPECTED_REVIEWED_SENTENCE_COUNT = 98
+EXPECTED_PROPOSITION_COUNT = 244
 EXPECTED_REVIEWED_SENTENCE_IDS = tuple(
-    f"tex_prose_sentence_{ordinal:04d}" for ordinal in range(1, 38)
+    f"tex_prose_sentence_{ordinal:04d}" for ordinal in range(1, 99)
 )
 EXPECTED_NEW_BOUNDED_CLAIM_IDS = (
     "introduction_algorithm_search_outperforms_direct_solution_search",
+    "evaluation_sample_efficiency_enables_expensive_evaluation",
 )
 EXPECTED_REPAIRED_SENTENCE_CLAIM_IDS = (
     "abstract_complex_4x4_matrix_48_multiplications",
+    "introduction_algorithm_discovery_instrumental_goal",
+    "introduction_automatically_evaluable_problem_scope",
     "introduction_complex_4x4_matrix_48_multiplications",
     "introduction_erdos_minimum_overlap_result",
     "introduction_seventy_five_percent_math_best_known",
+    "evolution_database_resurfacing",
+    "task_problem_specific_abstraction_choice",
 )
 
 
@@ -644,6 +649,920 @@ _PROPOSITION_SPECS: dict[str, tuple[_PropositionSpec, ...]] = {
     ),
 }
 
+_PROPOSITION_SPECS.update(
+    {
+        "tex_prose_sentence_0038": (
+            _mapped(
+                "AlphaEvolve is a coding agent",
+                "AlphaEvolve is presented as a coding agent.",
+                _ref("system", "section2_autonomous_pipeline"),
+            ),
+            _mapped(
+                "orchestrates an autonomous pipeline of computations including queries to LLMs",
+                "The coding agent orchestrates an autonomous computation pipeline that queries LLMs.",
+                _ref("system", "section2_autonomous_pipeline"),
+            ),
+            _mapped(
+                "produces algorithms that address a user-specified task",
+                "The pipeline produces algorithms for a user-specified task.",
+                _ref("system", "section2_user_specified_task"),
+            ),
+        ),
+        "tex_prose_sentence_0039": (
+            _mapped(
+                "the orchestrating procedure is an evolutionary algorithm",
+                "The orchestration procedure is an evolutionary algorithm.",
+                _ref("system", "section2_evolutionary_metric_improvement"),
+            ),
+            _mapped(
+                "gradually develops programs that improve the score on the automated evaluation metrics associated with the task",
+                "Evolution gradually develops programs that improve automated task metrics.",
+                _ref("system", "section2_evolutionary_metric_improvement"),
+            ),
+        ),
+        "tex_prose_sentence_0040": (
+            _reviewed_context(
+                "A high-level overview of AlphaEvolve is shown in [citation]",
+                "The prose directs readers to the high-level overview figure.",
+                "Figure navigation is source structure already covered by the figure inventory, not a separate implementation claim.",
+            ),
+            _reviewed_context(
+                "[citation] gives an expanded view",
+                "The prose directs readers to an expanded process figure.",
+                "Figure navigation is source structure already covered by the figure inventory, not a separate implementation claim.",
+            ),
+        ),
+        "tex_prose_sentence_0041": (
+            _mapped(
+                "AlphaEvolve tackles problems with machine-gradeable solutions",
+                "AlphaEvolve's autonomous task scope requires machine-gradeable solutions.",
+                _ref(
+                    "context",
+                    "introduction_automatically_evaluable_problem_scope",
+                ),
+            ),
+            _mapped(
+                "the user must provide a mechanism for automatically assessing generated solutions",
+                "The user must supply an automatic candidate-assessment mechanism.",
+                _ref("system", "task_scalar_metric_mapping"),
+            ),
+        ),
+        "tex_prose_sentence_0042": (
+            _mapped(
+                "a function h mapping a solution to a set of scalar evaluation metrics",
+                "The assessment mechanism maps each solution to scalar evaluation metrics.",
+                _ref("system", "task_scalar_metric_mapping"),
+            ),
+        ),
+        "tex_prose_sentence_0043": (
+            _mapped(
+                "these metrics are maximized",
+                "Evaluation metrics are maximized by convention.",
+                _ref("system", "task_metric_maximization_convention"),
+            ),
+        ),
+        "tex_prose_sentence_0044": (
+            _mapped(
+                "h is typically implemented as a Python function",
+                "The paper's current evaluator setup typically uses Python.",
+                _ref("system", "task_fixed_evaluate_signature"),
+            ),
+            _mapped(
+                "called evaluate",
+                "The paper-style evaluator entrypoint is named evaluate.",
+                _ref("system", "task_fixed_evaluate_signature"),
+            ),
+            _mapped(
+                "with a fixed input/output signature",
+                "The evaluate function has a fixed input/output signature.",
+                _ref("system", "task_fixed_evaluate_signature"),
+            ),
+            _mapped(
+                "returning a dictionary of scalars",
+                "The evaluate function returns a dictionary of scalar metrics.",
+                _ref("system", "task_fixed_evaluate_signature"),
+            ),
+        ),
+        "tex_prose_sentence_0045": (
+            _mapped(
+                "executing this function may take only seconds on a single device",
+                "An evaluator may complete in seconds on one device.",
+                _ref("system", "task_evaluation_workload_range"),
+            ),
+            _mapped(
+                "spawn extensive computations",
+                "An evaluator may instead launch extensive computation.",
+                _ref("system", "task_evaluation_workload_range"),
+            ),
+        ),
+        "tex_prose_sentence_0046": (
+            _mapped(
+                "For mathematical problems, the function h is typically very simple",
+                "The paper reports that mathematical-problem evaluators are typically simple.",
+                _ref("system", "task_evaluation_workload_range"),
+            ),
+        ),
+        "tex_prose_sentence_0047": (
+            _mapped(
+                "find largest possible graphs satisfying a given property",
+                "The illustrative task searches for the largest graph satisfying a property.",
+                _ref("system", "task_scalar_metric_mapping"),
+                _ref("system", "task_constructor_function_abstraction"),
+            ),
+            _mapped(
+                "h invokes the evolved code to generate a graph",
+                "The evaluator invokes evolved constructor code to generate a graph.",
+                _ref("system", "task_constructor_function_abstraction"),
+            ),
+            _mapped(
+                "checks whether the property holds",
+                "The evaluator checks the generated graph's required property.",
+                _ref("system", "task_scalar_metric_mapping"),
+            ),
+            _mapped(
+                "returns the size of the graph as the score",
+                "The evaluator uses graph size as the scalar score.",
+                _ref("system", "task_scalar_metric_mapping"),
+            ),
+        ),
+        "tex_prose_sentence_0048": (
+            _mapped(
+                "h might involve performing an evolved search algorithm",
+                "A complex evaluator may execute an evolved search algorithm.",
+                _ref("system", "task_bespoke_search_abstraction"),
+                _ref("system", "task_evaluation_workload_range"),
+            ),
+            _mapped(
+                "training and evaluating a machine learning model",
+                "A complex evaluator may train and evaluate a machine-learning model.",
+                _ref("system", "task_evaluation_workload_range"),
+            ),
+        ),
+        "tex_prose_sentence_0049": (
+            _mapped(
+                "support evolving multiple components across a codebase",
+                "AlphaEvolve supports evolving multiple codebase components.",
+                _ref("system", "task_multiple_marked_components"),
+            ),
+            _mapped(
+                "exposes an input API where blocks of code can be annotated as to-be-evolved-by-the-system",
+                "Its input API marks code blocks for evolution.",
+                _ref("system", "task_multiple_marked_components"),
+            ),
+            _reviewed_context(
+                "see Figure [citation] for an illustration",
+                "The prose points to an API illustration.",
+                "The cross-reference is navigation to separately inventoried Figure 3 evidence.",
+            ),
+        ),
+        "tex_prose_sentence_0050": (
+            _mapped(
+                "integrating it with existing codebases while requiring only minimal changes",
+                "The marker API is intended to integrate with existing codebases through minimal changes.",
+                _ref("system", "task_minimal_marker_integration"),
+            ),
+            _mapped(
+                "# EVOLVE-BLOCK-START and # EVOLVE-BLOCK-END",
+                "Special start and end comments delimit evolved blocks.",
+                _ref("system", "task_minimal_marker_integration"),
+            ),
+        ),
+        "tex_prose_sentence_0051": (
+            _mapped(
+                "code inside such evolution blocks serves as the initial solution",
+                "User code inside evolution blocks supplies the initial solution.",
+                _ref("system", "task_evolved_blocks_and_skeleton"),
+            ),
+            _mapped(
+                "the rest of the code forms a skeleton that ties the evolved pieces together",
+                "Non-evolved code remains a skeleton connecting evolved pieces.",
+                _ref("system", "task_evolved_blocks_and_skeleton"),
+            ),
+            _mapped(
+                "they can be invoked from evaluate",
+                "The skeleton makes evolved pieces callable from evaluate.",
+                _ref("system", "task_evolved_blocks_and_skeleton"),
+            ),
+        ),
+        "tex_prose_sentence_0052": (
+            _mapped(
+                "this initial implementation must be complete",
+                "The initial implementation must be complete.",
+                _ref("system", "task_complete_initial_program"),
+            ),
+            _mapped(
+                "it can be rudimentary",
+                "A complete initial implementation may be rudimentary.",
+                _ref("system", "task_complete_initial_program"),
+            ),
+            _mapped(
+                "single-line functions that return constants of the appropriate types",
+                "A type-correct constant-returning function is an allowed rudimentary seed example.",
+                _ref("system", "task_complete_initial_program"),
+            ),
+        ),
+        "tex_prose_sentence_0053": (
+            _mapped(
+                "applied to the same problem in very different ways",
+                "The same problem can use different evolved abstractions.",
+                _ref("system", "task_problem_specific_abstraction_choice"),
+            ),
+            _mapped(
+                "the evolved programs are not the final output but a means to discover solutions",
+                "An evolved program may be instrumental to discovering the final solution.",
+                _ref(
+                    "context",
+                    "introduction_algorithm_discovery_instrumental_goal",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0054": (
+            _mapped(
+                "evolve the solution in raw string representation",
+                "AlphaEvolve can evolve a raw solution representation.",
+                _ref("system", "task_raw_representation_abstraction"),
+            ),
+            _mapped(
+                "evolve a function of a definite form that specifies how to construct the solution from scratch",
+                "AlphaEvolve can evolve a fixed-form constructor function.",
+                _ref("system", "task_constructor_function_abstraction"),
+            ),
+            _mapped(
+                "evolve a bespoke search algorithm to find the solution within some fixed compute budget",
+                "AlphaEvolve can evolve a budgeted bespoke search algorithm.",
+                _ref("system", "task_bespoke_search_abstraction"),
+            ),
+            _mapped(
+                "co-evolve intermediate solutions and search algorithms together",
+                "AlphaEvolve can co-evolve intermediate solutions and search algorithms.",
+                _ref("system", "task_solution_search_coevolution"),
+            ),
+            _mapped(
+                "each search algorithm is specifically tailored to further improve upon a particular intermediate solution",
+                "A co-evolved search algorithm is tailored to its paired intermediate solution.",
+                _ref("system", "task_solution_search_coevolution"),
+            ),
+        ),
+        "tex_prose_sentence_0055": (
+            _mapped(
+                "different levels of abstraction work better for different problems",
+                "The paper reports problem-dependent performance across abstraction levels.",
+                _ref("system", "task_problem_specific_abstraction_choice"),
+            ),
+        ),
+        "tex_prose_sentence_0056": (
+            _mapped(
+                "for problems with highly symmetric solutions it is advantageous to evolve constructor functions",
+                "The authors hypothesize that symmetric problems favor constructor functions.",
+                _ref("system", "task_symmetry_guided_abstraction_bias"),
+            ),
+            _mapped(
+                "these tend to be more concise",
+                "Constructor functions are hypothesized to be more concise for symmetric solutions.",
+                _ref("system", "task_symmetry_guided_abstraction_bias"),
+            ),
+            _mapped(
+                "for problems with non-symmetric solutions it works better to evolve customized search algorithms",
+                "The authors hypothesize that non-symmetric problems favor customized search algorithms.",
+                _ref("system", "task_symmetry_guided_abstraction_bias"),
+            ),
+        ),
+    }
+)
+
+_PROPOSITION_SPECS.update(
+    {
+        "tex_prose_sentence_0077": (
+            _mapped(
+                "each new solution proposed by the LLMs is automatically evaluated",
+                "Every newly proposed solution is automatically evaluated.",
+                _ref("system", "evaluation_every_proposal"),
+            ),
+            _mapped(
+                "To track AlphaEvolve's progress",
+                "Automatic evaluation tracks evolutionary progress.",
+                _ref("system", "evaluation_every_proposal"),
+            ),
+            _mapped(
+                "select which ideas to propagate in future generations",
+                "Evaluation results inform which ideas are resurfaced in future generations.",
+                _ref("system", "evolution_database_resurfacing"),
+            ),
+        ),
+        "tex_prose_sentence_0078": (
+            _mapped(
+                "executing the user-provided evaluation function h on the generated solution",
+                "Evaluation executes the user-provided function on a generated solution.",
+                _ref("system", "evaluation_every_proposal"),
+                _ref("system", "task_scalar_metric_mapping"),
+            ),
+        ),
+        "tex_prose_sentence_0079": (
+            _reviewed_context(
+                "supports optional mechanisms to make this evaluation more flexible and more efficient",
+                "The prose introduces optional evaluation mechanisms for flexibility and efficiency.",
+                "The substantive mechanisms are decomposed in the following cascade, feedback, and parallel-evaluation sentences.",
+            ),
+        ),
+        "tex_prose_sentence_0080": (
+            _mapped(
+                "ensembles of test cases of increasing difficulty",
+                "An evaluation cascade can contain test ensembles of increasing difficulty.",
+                _ref("system", "evaluation_increasing_difficulty_cascade"),
+            ),
+            _mapped(
+                "evaluated on the next stage only if they achieve sufficiently promising results in all earlier stages",
+                "Candidates advance only after promising results in every earlier stage.",
+                _ref("system", "evaluation_increasing_difficulty_cascade"),
+            ),
+        ),
+        "tex_prose_sentence_0081": (
+            _mapped(
+                "prune out less promising solutions more quickly",
+                "The evaluation cascade prunes weak candidates early.",
+                _ref("system", "evaluation_increasing_difficulty_cascade"),
+            ),
+        ),
+        "tex_prose_sentence_0082": (
+            _mapped(
+                "new solutions are initially evaluated on a small scale",
+                "New candidates are initially evaluated at small scale.",
+                _ref("system", "evaluation_increasing_difficulty_cascade"),
+            ),
+            _mapped(
+                "before being subjected to the main test cases",
+                "Main test cases run only after the small-scale evaluation.",
+                _ref("system", "evaluation_increasing_difficulty_cascade"),
+            ),
+            _mapped(
+                "filter out faulty programs early",
+                "Small-scale evaluation is intended to reject faulty programs early.",
+                _ref("system", "evaluation_increasing_difficulty_cascade"),
+            ),
+        ),
+        "tex_prose_sentence_0083": (
+            _mapped(
+                "desirable solutions have certain characteristics that are difficult to capture precisely in the user-provided evaluation function h",
+                "Some desirable candidate qualities are difficult to encode in the user evaluator.",
+                _ref("system", "evaluation_llm_generated_feedback"),
+            ),
+            _mapped(
+                "simplicity of the discovered program",
+                "Program simplicity is given as an example of a difficult-to-encode quality.",
+                _ref("system", "evaluation_llm_generated_feedback"),
+            ),
+        ),
+        "tex_prose_sentence_0084": (
+            _mapped(
+                "graded using separate LLM calls",
+                "Separate LLM calls can grade qualitative candidate properties.",
+                _ref("system", "evaluation_llm_generated_feedback"),
+            ),
+            _mapped(
+                "added to the dictionary of scores to steer evolution",
+                "LLM grades can become score signals that steer evolution.",
+                _ref("system", "evaluation_llm_generated_feedback"),
+            ),
+            _mapped(
+                "used to discard solutions when a criterion is not fulfilled",
+                "LLM grades can act as candidate-discard criteria.",
+                _ref("system", "evaluation_llm_generated_feedback"),
+            ),
+        ),
+        "tex_prose_sentence_0085": (
+            _mapped(
+                "the sample efficiency of AlphaEvolve makes it feasible",
+                "The paper claims AlphaEvolve is sample-efficient enough to make expensive evaluation feasible.",
+                _ref(
+                    "system",
+                    "evaluation_sample_efficiency_enables_expensive_evaluation",
+                ),
+            ),
+            _mapped(
+                "on the order of 100 compute-hours to evaluate any new solution",
+                "A candidate evaluation may consume roughly 100 compute-hours.",
+                _ref(
+                    "system",
+                    "evaluation_order_hundred_compute_hours_per_candidate",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0086": (
+            _mapped(
+                "individual evaluations are parallelized to reduce their wall-clock duration",
+                "Individual evaluations need parallelism to reduce wall-clock duration.",
+                _ref("system", "evaluation_async_cluster_parallelism"),
+            ),
+            _mapped(
+                "slow down the rate at which new generations appear",
+                "Long serial evaluations reduce generation throughput.",
+                _ref(
+                    "system",
+                    "evaluation_order_hundred_compute_hours_per_candidate",
+                ),
+                _ref("system", "evaluation_async_cluster_parallelism"),
+            ),
+            _mapped(
+                "limiting the ability of the evolutionary algorithm to apply several consecutive mutations",
+                "Reduced generation throughput limits consecutive mutation depth.",
+                _ref("system", "evaluation_async_cluster_parallelism"),
+            ),
+        ),
+        "tex_prose_sentence_0087": (
+            _mapped(
+                "evaluation is embarrassingly parallel",
+                "The paper reports that many application evaluators are embarrassingly parallel.",
+                _ref("system", "evaluation_async_cluster_parallelism"),
+            ),
+            _mapped(
+                "running a search algorithm from multiple randomized initializations",
+                "Multiple randomized search initializations are an evaluation-parallelism example.",
+                _ref("system", "evaluation_async_cluster_parallelism"),
+            ),
+            _mapped(
+                "distribute this work through asynchronous calls to an evaluation cluster",
+                "AlphaEvolve distributes evaluation through asynchronous cluster calls.",
+                _ref("system", "evaluation_async_cluster_parallelism"),
+            ),
+        ),
+        "tex_prose_sentence_0088": (
+            _mapped(
+                "optimizing multiple user-provided scores",
+                "AlphaEvolve supports multiple user-provided optimization scores.",
+                _ref("system", "evaluation_multiple_user_scores"),
+            ),
+            _mapped(
+                "achieve a high score under one or multiple evaluation metrics",
+                "Candidate objects may target one metric or several metrics.",
+                _ref("system", "evaluation_multiple_user_scores"),
+            ),
+        ),
+        "tex_prose_sentence_0089": (
+            _mapped(
+                "an intrinsic",
+                "Multiple-score optimization can be intrinsically valuable when multiple outcomes matter.",
+                _ref("system", "evaluation_multiple_user_scores"),
+            ),
+            _mapped(
+                "instrumental value",
+                "Multiple-score optimization can be instrumentally valuable to a target metric.",
+                _ref("system", "evaluation_multi_metric_single_target_uplift"),
+            ),
+        ),
+        "tex_prose_sentence_0090": (
+            _mapped(
+                "developing solutions for multiple evaluation metrics",
+                "Some applications intrinsically require performance across multiple metrics.",
+                _ref("system", "evaluation_multiple_user_scores"),
+            ),
+            _mapped(
+                "one solution that is strong on all of them simultaneously",
+                "A single candidate may need to be strong on all metrics simultaneously.",
+                _ref("system", "evaluation_multiple_user_scores"),
+            ),
+            _mapped(
+                "optimizing for multiple metrics often improves results for the single target metric",
+                "The paper reports target-metric uplift from multi-metric optimization.",
+                _ref("system", "evaluation_multi_metric_single_target_uplift"),
+            ),
+        ),
+        "tex_prose_sentence_0091": (
+            _reviewed_context(
+                "programs excelling under different evaluation criteria often possess distinct structures or logic",
+                "The authors hypothesize that different metric elites often have distinct program structure or logic.",
+                "The sentence explicitly presents this causal explanation as a possibility rather than a demonstrated system result.",
+                disposition="author_interpretation",
+            ),
+            _mapped(
+                "incorporating examples of these diverse, high-performing programs",
+                "Metric-diverse high-performing programs are incorporated into model prompts.",
+                _ref("system", "evaluation_metric_diverse_prompting"),
+            ),
+            _mapped(
+                "each representing a different definition of ``good''",
+                "Each metric-diverse prompt example represents a different evaluation definition of good.",
+                _ref("system", "evaluation_metric_diverse_prompting"),
+            ),
+            _mapped(
+                "stimulate the generation of more varied candidate solutions",
+                "Metric-diverse prompt examples are intended to increase candidate diversity.",
+                _ref("system", "evaluation_metric_diverse_prompting"),
+            ),
+            _mapped(
+                "increasing the chances of discovering novel approaches that are highly effective for the target metric",
+                "The proposed diversity mechanism is intended to improve target-metric discovery probability.",
+                _ref("system", "evaluation_multi_metric_single_target_uplift"),
+                _ref("system", "evaluation_metric_diverse_prompting"),
+            ),
+        ),
+        "tex_prose_sentence_0092": (
+            _mapped(
+                "continually generates a growing number of solutions",
+                "Evolution continually grows the solution population.",
+                _ref("system", "evolution_results_attached_to_solutions"),
+            ),
+            _mapped(
+                "scores",
+                "Evaluation scores are attached to generated solutions.",
+                _ref("system", "evolution_results_attached_to_solutions"),
+            ),
+            _mapped(
+                "program outputs",
+                "Program outputs are attached to generated solutions.",
+                _ref("system", "evolution_results_attached_to_solutions"),
+            ),
+        ),
+        "tex_prose_sentence_0093": (
+            _mapped(
+                "solutions are stored in an evolutionary database",
+                "Generated solutions are stored in an evolutionary database.",
+                _ref("system", "evolution_database_resurfacing"),
+            ),
+            _mapped(
+                "optimally resurface previously explored ideas in future generations",
+                "The database is intended to resurface prior ideas in future generations.",
+                _ref("system", "evolution_database_resurfacing"),
+            ),
+        ),
+        "tex_prose_sentence_0094": (
+            _mapped(
+                "balancing exploration and exploitation",
+                "The evolutionary database must balance exploration and exploitation.",
+                _ref("system", "evolution_exploration_exploitation_balance"),
+            ),
+            _mapped(
+                "continuously improve the best programs",
+                "Exploitation is intended to continuously improve strong programs.",
+                _ref("system", "evolution_exploration_exploitation_balance"),
+            ),
+            _mapped(
+                "maintaining diversity",
+                "The database is intended to preserve solution diversity.",
+                _ref("system", "evolution_exploration_exploitation_balance"),
+            ),
+            _mapped(
+                "encourage exploration of the entire search space",
+                "Diversity is intended to encourage broad search-space exploration.",
+                _ref("system", "evolution_exploration_exploitation_balance"),
+            ),
+        ),
+        "tex_prose_sentence_0095": (
+            _mapped(
+                "inspired by a combination of the MAP elites algorithm",
+                "The evolutionary database is inspired by MAP-Elites.",
+                _ref("system", "evolution_map_elites_and_islands"),
+            ),
+            _mapped(
+                "island-based population models",
+                "The evolutionary database is also inspired by island population models.",
+                _ref("system", "evolution_map_elites_and_islands"),
+            ),
+        ),
+        "tex_prose_sentence_0096": (
+            _mapped(
+                "an asynchronous computational pipeline (using the asyncio Python library)",
+                "AlphaEvolve uses a Python asyncio computational pipeline.",
+                _ref("system", "distributed_asyncio_dependency_pipeline"),
+            ),
+            _mapped(
+                "many computations are run concurrently",
+                "The pipeline runs many computations concurrently.",
+                _ref("system", "distributed_asyncio_dependency_pipeline"),
+            ),
+            _mapped(
+                "each computation blocking (waiting) whenever its next step relies on the result of another, yet unfinished computation",
+                "A pipeline computation waits when its next step depends on unfinished work.",
+                _ref("system", "distributed_asyncio_dependency_pipeline"),
+            ),
+        ),
+        "tex_prose_sentence_0097": (
+            _mapped(
+                "a controller",
+                "The asynchronous pipeline includes a controller.",
+                _ref("system", "distributed_controller_sampler_evaluator_nodes"),
+            ),
+            _mapped(
+                "LLM samplers",
+                "The asynchronous pipeline includes LLM samplers.",
+                _ref("system", "distributed_controller_sampler_evaluator_nodes"),
+            ),
+            _mapped(
+                "evaluation nodes",
+                "The asynchronous pipeline includes evaluation nodes.",
+                _ref("system", "distributed_controller_sampler_evaluator_nodes"),
+            ),
+        ),
+        "tex_prose_sentence_0098": (
+            _mapped(
+                "optimized for throughput (rather than the speed of any one particular computation)",
+                "The pipeline optimizes aggregate throughput rather than individual-operation latency.",
+                _ref("system", "distributed_throughput_budget_optimization"),
+            ),
+            _mapped(
+                "maximize the number of ideas that can be proposed and evaluated",
+                "Throughput optimization targets the number of proposed and evaluated ideas.",
+                _ref("system", "distributed_throughput_budget_optimization"),
+            ),
+            _mapped(
+                "within a specific overall computation budget",
+                "Pipeline throughput is optimized under an overall compute budget.",
+                _ref("system", "distributed_throughput_budget_optimization"),
+            ),
+        ),
+    }
+)
+
+_PROPOSITION_SPECS.update(
+    {
+        "tex_prose_sentence_0057": (
+            _mapped(
+                "AlphaEvolve leverages SOTA LLMs",
+                "AlphaEvolve uses state-of-the-art LLMs in its generation pipeline.",
+                _ref("system", "generation_model_ensemble"),
+            ),
+            _mapped(
+                "supports various types of customization",
+                "The primary evolution prompt supports multiple customization types.",
+                _ref("system", "prompt_long_context_customization"),
+            ),
+            _mapped(
+                "providing long contexts as part of the primary evolution prompt",
+                "The primary evolution prompt supports long context.",
+                _ref("system", "prompt_long_context_customization"),
+            ),
+        ),
+        "tex_prose_sentence_0058": (
+            _mapped(
+                "multiple previously discovered solutions sampled from the program database",
+                "Primary prompts include multiple sampled prior solutions.",
+                _ref("system", "prompt_prior_solutions_and_instructions"),
+            ),
+            _mapped(
+                "system instructions on how to propose changes to a particular solution",
+                "Primary prompts instruct the model how to modify a selected solution.",
+                _ref("system", "prompt_prior_solutions_and_instructions"),
+            ),
+        ),
+        "tex_prose_sentence_0059": (
+            _reviewed_context(
+                "users can further tailor prompts to their specific needs in different ways",
+                "The prose introduces a list of prompt-tailoring mechanisms.",
+                "The substantive prompt mechanisms are decomposed in the following four sentences.",
+            ),
+        ),
+        "tex_prose_sentence_0060": (
+            _mapped(
+                "details about the problem being solved",
+                "Explicit prompt context can describe the problem.",
+                _ref("system", "prompt_explicit_context"),
+            ),
+            _mapped(
+                "fixed human-written instructions",
+                "Explicit prompt context can contain fixed human instructions.",
+                _ref("system", "prompt_explicit_context"),
+            ),
+            _mapped(
+                "equations",
+                "Explicit prompt context can contain equations.",
+                _ref("system", "prompt_explicit_context"),
+            ),
+            _mapped(
+                "code snippets",
+                "Explicit prompt context can contain code snippets.",
+                _ref("system", "prompt_explicit_context"),
+            ),
+            _mapped(
+                "relevant literature (e.g., pdf files)",
+                "Explicit prompt context can contain literature such as PDFs.",
+                _ref("system", "prompt_explicit_context"),
+            ),
+        ),
+        "tex_prose_sentence_0061": (
+            _mapped(
+                "template placeholders with human-provided alternatives",
+                "Stochastic prompt formatting uses placeholders with human-provided alternatives.",
+                _ref("system", "prompt_stochastic_formatting"),
+            ),
+            _mapped(
+                "for increased diversity",
+                "Stochastic prompt formatting is intended to increase diversity.",
+                _ref("system", "prompt_stochastic_formatting"),
+            ),
+            _mapped(
+                "instantiated using probability distributions",
+                "Prompt alternatives are sampled from probability distributions.",
+                _ref("system", "prompt_stochastic_formatting"),
+            ),
+            _mapped(
+                "provided in a separate config file",
+                "The probability distributions are provided through a separate configuration file.",
+                _ref("system", "prompt_stochastic_formatting"),
+            ),
+        ),
+        "tex_prose_sentence_0062": (
+            _mapped(
+                "this will include a program",
+                "Rendered evaluation context usually includes the candidate program.",
+                _ref("system", "prompt_rendered_evaluation_results"),
+            ),
+            _mapped(
+                "the result of executing that program",
+                "Rendered evaluation context usually includes program output.",
+                _ref("system", "prompt_rendered_evaluation_results"),
+            ),
+            _mapped(
+                "the scores assigned by the evaluate function",
+                "Rendered evaluation context usually includes evaluator scores.",
+                _ref("system", "prompt_rendered_evaluation_results"),
+            ),
+        ),
+        "tex_prose_sentence_0063": (
+            _mapped(
+                "instructions and context suggested by the LLM itself",
+                "Meta-prompt evolution lets an LLM suggest prompt instructions and context.",
+                _ref("system", "prompt_meta_evolution_database"),
+            ),
+            _mapped(
+                "in an additional prompt-generation step",
+                "Meta-prompt suggestions are generated in an additional model step.",
+                _ref("system", "prompt_meta_evolution_database"),
+            ),
+            _mapped(
+                "co-evolved",
+                "Prompt instructions and context are co-evolved.",
+                _ref("system", "prompt_meta_evolution_database"),
+            ),
+            _mapped(
+                "in a separate database analogous to the solution programs",
+                "Meta prompts use a separate database analogous to the solution database.",
+                _ref("system", "prompt_meta_evolution_database"),
+            ),
+        ),
+        "tex_prose_sentence_0064": (
+            _mapped(
+                "leverages the capabilities of SOTA LLMs",
+                "Creative generation uses state-of-the-art LLM capability.",
+                _ref("system", "generation_model_ensemble"),
+            ),
+            _mapped(
+                "digest information about previously developed solutions",
+                "The generation model consumes information about prior solutions.",
+                _ref("system", "prompt_prior_solutions_and_instructions"),
+            ),
+            _mapped(
+                "propose new, diverse ways to improve the solutions",
+                "The generation model proposes diverse solution improvements.",
+                _ref("system", "generation_model_ensemble"),
+            ),
+        ),
+        "tex_prose_sentence_0065": (
+            _mapped(
+                "AlphaEvolve is model-agnostic",
+                "AlphaEvolve is designed to be model-agnostic.",
+                _ref("system", "generation_model_agnostic"),
+            ),
+            _mapped(
+                "performs increasingly better as the underlying LLM improves",
+                "The paper reports increasing search performance with stronger underlying LLMs.",
+                _ref("system", "generation_stronger_model_effect"),
+            ),
+        ),
+        "tex_prose_sentence_0066": (
+            _mapped(
+                "asks an LLM to modify existing code, especially within larger codebases",
+                "The generation path asks LLMs to modify existing code, including larger codebases.",
+                _ref("system", "generation_search_replace_blocks"),
+            ),
+            _mapped(
+                "provided as a sequence of diff blocks in a specific format",
+                "Code modifications are requested as specifically formatted diff blocks.",
+                _ref("system", "generation_search_replace_blocks"),
+            ),
+        ),
+        "tex_prose_sentence_0067": (
+            _mapped(
+                "the exact segment to match in the current program version",
+                "The SEARCH block must exactly match current program text.",
+                _ref("system", "generation_search_replace_blocks"),
+            ),
+        ),
+        "tex_prose_sentence_0068": (
+            _mapped(
+                "the new segment that will replace the original one",
+                "The REPLACE block supplies replacement text for the matched segment.",
+                _ref("system", "generation_search_replace_blocks"),
+            ),
+        ),
+        "tex_prose_sentence_0069": (
+            _mapped(
+                "targeted updates to specific parts of the code",
+                "SEARCH/REPLACE blocks enable targeted code updates.",
+                _ref("system", "generation_search_replace_blocks"),
+            ),
+        ),
+        "tex_prose_sentence_0070": (
+            _mapped(
+                "the code being evolved is very short",
+                "Short evolved code can use complete-output mode.",
+                _ref("system", "generation_direct_full_code_output"),
+            ),
+            _mapped(
+                "a complete rewrite is more appropriate than a small modification",
+                "Complete-output mode can be selected when rewriting is more appropriate than a diff.",
+                _ref("system", "generation_direct_full_code_output"),
+            ),
+            _mapped(
+                "output the entire code block directly, rather than using the diff format",
+                "The LLM can be instructed to output the full code block instead of a diff.",
+                _ref("system", "generation_direct_full_code_output"),
+            ),
+        ),
+        "tex_prose_sentence_0071": (
+            _mapped(
+                "employs an ensemble of large language models",
+                "AlphaEvolve generates with an LLM ensemble.",
+                _ref("system", "generation_model_ensemble"),
+            ),
+        ),
+        "tex_prose_sentence_0072": (
+            _mapped(
+                "Gemini 2.0 Flash",
+                "The reported AlphaEvolve ensemble includes Gemini 2.0 Flash.",
+                _ref("system", "generation_fast_strong_model_mix"),
+            ),
+            _mapped(
+                "Gemini 2.0 Pro",
+                "The reported AlphaEvolve ensemble includes Gemini 2.0 Pro.",
+                _ref("system", "generation_fast_strong_model_mix"),
+            ),
+        ),
+        "tex_prose_sentence_0073": (
+            _mapped(
+                "balance computational throughput with the quality of generated solutions",
+                "The ensemble is intended to balance generation throughput and solution quality.",
+                _ref("system", "generation_model_ensemble"),
+                _ref("system", "generation_fast_strong_model_mix"),
+            ),
+        ),
+        "tex_prose_sentence_0074": (
+            _mapped(
+                "Gemini 2.0 Flash, with its lower latency",
+                "Gemini 2.0 Flash is used as the lower-latency model.",
+                _ref("system", "generation_fast_strong_model_mix"),
+            ),
+            _mapped(
+                "enables a higher rate of candidate generation",
+                "The lower-latency model increases candidate-generation rate.",
+                _ref("system", "generation_fast_strong_model_mix"),
+            ),
+            _mapped(
+                "increasing the number of ideas explored per unit of time",
+                "Higher candidate throughput increases ideas explored per unit time.",
+                _ref("system", "generation_fast_strong_model_mix"),
+            ),
+        ),
+        "tex_prose_sentence_0075": (
+            _mapped(
+                "Gemini 2.0 Pro, possessing greater capabilities",
+                "Gemini 2.0 Pro is used as the higher-capability model.",
+                _ref("system", "generation_fast_strong_model_mix"),
+            ),
+            _mapped(
+                "provides occasional, higher-quality suggestions",
+                "The higher-capability model provides less frequent, higher-quality suggestions.",
+                _ref("system", "generation_fast_strong_model_mix"),
+            ),
+            _mapped(
+                "significantly advance the evolutionary search",
+                "Higher-quality suggestions can substantially advance search.",
+                _ref("system", "generation_fast_strong_model_mix"),
+            ),
+            _mapped(
+                "potentially lead to breakthroughs",
+                "The paper attributes breakthrough potential to higher-capability suggestions.",
+                _ref("system", "generation_fast_strong_model_mix"),
+            ),
+        ),
+        "tex_prose_sentence_0076": (
+            _mapped(
+                "optimizes the overall discovery process",
+                "The reported model mix is intended to optimize discovery.",
+                _ref("system", "generation_fast_strong_model_mix"),
+            ),
+            _mapped(
+                "maximizing the volume of evaluated ideas",
+                "The fast model is intended to maximize evaluated-idea volume.",
+                _ref("system", "generation_fast_strong_model_mix"),
+            ),
+            _mapped(
+                "retaining the potential for substantial improvements driven by the more powerful model",
+                "The strong model preserves the possibility of substantial improvements.",
+                _ref("system", "generation_fast_strong_model_mix"),
+            ),
+        ),
+    }
+)
+
 
 @dataclass(frozen=True)
 class AlphaEvolveTexPropositionInventoryBoundaryIssue:
@@ -666,7 +1585,7 @@ class AlphaEvolveTexPropositionInventoryBoundaryValidation:
 def alphaevolve_tex_proposition_inventory_boundary_record(
     root: str | Path = ".",
 ) -> dict[str, Any]:
-    """Review atomic propositions in retained Abstract and Introduction prose."""
+    """Review atomic propositions in retained Abstract, Introduction, and Methods."""
 
     root_path = Path(root)
     prose = alphaevolve_tex_prose_inventory_boundary_record(root_path)
@@ -788,7 +1707,7 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
             if isinstance(record.get("source_file"), str)
         }
     )
-    expected_source_files = ["introduction.tex", "main.tex"]
+    expected_source_files = ["introduction.tex", "main.tex", "methods.tex"]
     source_prose_ready = bool(
         prose.get("schema") == ALPHAEVOLVE_TEX_PROSE_INVENTORY_BOUNDARY_SCHEMA
         and prose.get("prose_disposition_ready") is True
@@ -864,11 +1783,12 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
             "included": [
                 "all 8 retained Abstract sentences in main.tex",
                 "all 29 retained Introduction sentences in introduction.tex",
+                "all 61 retained Methods sentences in methods.tex",
                 "manual atomic-proposition statements and exact rendered-source quote offsets",
                 "resolved bounded-claim mappings or explicit context, outlook, and interpretation dispositions",
             ],
             "excluded": [
-                "the remaining 365 retained prose sentences",
+                "the remaining 304 retained prose sentences",
                 "separately audited captions, tables, equations, listings, footnotes, and explicit math constructs",
                 "independent second-reviewer semantic agreement",
                 "mathematical correctness, citation sufficiency, image-pixel semantics, or result reproduction",
@@ -877,8 +1797,8 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
         },
         "claim_boundary": (
             "This boundary records a single-reviewer atomic-proposition decomposition "
-            "for every retained Abstract and Introduction sentence. Complete disposition "
-            "inside this 37-sentence scope does not cover the remaining 365 prose "
+            "for every retained Abstract, Introduction, and Methods sentence. Complete "
+            "disposition inside this 98-sentence scope does not cover the remaining 304 prose "
             "sentences and does not prove independent semantic exhaustiveness, "
             "mathematical correctness, result reproduction, or AlphaEvolve parity."
         ),
@@ -920,7 +1840,12 @@ def validate_alphaevolve_tex_proposition_inventory_boundary(
     if data.get("proposition_inventory_ready") is not True:
         issues.append(_issue("proposition_inventory_incomplete", "scoped proposition inventory is incomplete"))
     if data.get("review_scope_complete") is not True:
-        issues.append(_issue("review_scope_incomplete", "Abstract and Introduction review scope is incomplete"))
+        issues.append(
+            _issue(
+                "review_scope_incomplete",
+                "Abstract, Introduction, and Methods review scope is incomplete",
+            )
+        )
     for field in (
         "whole_paper_semantic_exhaustiveness_claim_ready",
         "independent_semantic_review_ready",

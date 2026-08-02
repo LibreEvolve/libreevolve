@@ -167,10 +167,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     verifies the pinned 44-page PDF and all 55 named spans using 57 page-local
     anchors: 38 structural spans, 14 numbered figures, and 3 numbered tables.
     `papers/alphaevolve_system_requirement_inventory_boundary.json` now adds
-    claim-level dispositions for 55 implementation-bearing requirements across
+    claim-level dispositions for 56 implementation-bearing requirements across
     all eight Table 1 rows, Sections 2.1-2.6, and Figures 1-3. It records 14
-    locally implemented, 31 partial, 4 not-implemented, and 6 undemonstrated
-    requirements, with live domain TODO ownership for all 41 incomplete rows.
+    locally implemented, 31 partial, 4 not-implemented, and 7 undemonstrated
+    requirements, with live domain TODO ownership for all 42 incomplete rows.
     `papers/alphaevolve_context_claim_inventory_boundary.json` now adds 45
     exact-page Abstract, Introduction, Discussion, and collaborator-context
     dispositions: 6 locally implemented, 11 partial, 4 not implemented, and 24
@@ -218,13 +218,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     exact-page and visible-panel Appendix B/Figures 10-14 dispositions: 95
     partial, 24 not implemented, and 69 not demonstrated, with code and paper
     TODO ownership for all 188 gaps. The bounded claim-level ROADMAP surface
-    therefore covers 845 claims: 30 locally implemented, 278 partial, 110 not
-    implemented, 368 not demonstrated, and 59
+    therefore covers 846 claims: 30 locally implemented, 278 partial, 110 not
+    implemented, 369 not demonstrated, and 59
     source-context-only. The supplemental
     `papers/alphaevolve_citation_use_inventory_boundary.json` adds lexical
     coverage for all 195 retained-TeX citation uses, 240 key links, all 120
     compiled references, and 52 unused BibTeX entries. It does not add claims
-    to the 845-row implementation aggregate because citation semantics and
+    to the 846-row implementation aggregate because citation semantics and
     implementation relevance remain unclassified under active TODO ownership.
     `papers/alphaevolve_tex_source_detail_inventory_boundary.json` separately
     dispositions all 30 retained-source constructs: 22 captions, 5 equation
@@ -248,7 +248,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     explicit TeX math constructs: 291 inline and 18 display constructs. It
     inherits 34 source-detail and 75 table-cell dispositions and maps the
     remaining 200 constructs directly to existing bounded claim ids, with no
-    unmapped or unresolved references and no new claims or parity credit.
+    unmapped or unresolved references and no new claims or parity credit. The
+    proposition inventory now reviews all 98 Abstract, Introduction, and
+    Methods sentences as 244 atomic propositions, maps 226 through 245
+    references to 104 bounded claims, dispositions 18 as context, outlook, or
+    interpretation, adds the missing sample-efficiency claim, and repairs broad
+    or cross-inventory sentence mappings. Its new gap is owned by the existing
+    sample-efficiency TODO.
     `papers/roadmap_source_span_disposition_boundary.json` now maps all 55
     named spans to ROADMAP section ids, phase buckets, local status, sidecars,
     and audit TODO links, and records that only the AlphaEvolve
@@ -270,7 +276,7 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     TODO proof, phase-priority map, and CI/owner signoff.
   - Current gap: the retained PDF's named sections, figures, tables, and
     appendices now have verified dispositions, local status classes, ROADMAP
-    sections, and phases, and 845 bounded system/context/matrix-result/
+    sections, and phases, and 846 bounded system/context/matrix-result/
     constructive-math/scheduling/kernel-engineering/hardware/compiler/ablation/
     related-work/Appendix-A/Table-3/Figure-9/Appendix-B/Figures-10-14 claims have
     claim-level mappings, citation syntax plus bibliography-key linkage is
@@ -278,9 +284,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     footnote constructs have dispositions, all 83 table rows and 240 cells have
     row/cell dispositions, all 8 code listings and 305 source lines have
     line-level dispositions; all 309 math constructs and 402 prose sentences
-    have dispositions; 93 propositions in 37 Abstract/Introduction sentences
+    have dispositions; 244 propositions in 98 Abstract/Introduction/Methods sentences
     are reviewed. The matrix remains incomplete
-    across the rest of the paper: 365 sentences
+    across the rest of the paper: 304 sentences
     still lack proposition review; it cannot prove
     local math/image/citation correctness and result reproduction;
     show TODO ownership for every gap and add an application matrix;

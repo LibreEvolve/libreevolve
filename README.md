@@ -74,10 +74,10 @@ Important limits:
   source-audit completeness boundary, not sentence-level requirement coverage,
   benchmark reproduction, production-scale evidence, or AlphaEvolve parity.
 - `papers/alphaevolve_system_requirement_inventory_boundary.json` adds a
-  bounded claim-level audit of 55 implementation-bearing requirements from all
+  bounded claim-level audit of 56 implementation-bearing requirements from all
   eight Table 1 rows, Sections 2.1-2.6, and Figures 1-3. Fourteen are locally
-  implemented, 31 are partial, 4 are not implemented, and 6 are not
-  demonstrated; all 41 incomplete requirements have live TODO ownership. This
+  implemented, 31 are partial, 4 are not implemented, and 7 are not
+  demonstrated; all 42 incomplete requirements have live TODO ownership. This
   does not cover the remaining paper claims or prove AlphaEvolve parity.
 - `papers/alphaevolve_context_claim_inventory_boundary.json` separately audits
   45 platform, method, scope, headline-result, capability, self-improvement,
@@ -198,16 +198,18 @@ Important limits:
   the prose walk, but complete sentence disposition is not sentence-internal
   clause/proposition exhaustiveness or independent semantic review.
 - `papers/alphaevolve_tex_proposition_inventory_boundary.json` decomposes all
-  37 retained Abstract and Introduction sentences into 93 atomic propositions.
-  Eighty-one map through 94 references to 62 bounded claims; 9 are background
-  context, 2 are author outlook, and 1 is a qualified author interpretation.
-  It adds the previously unbounded claim that instrumental algorithm search is
-  reported as more effective than direct solution search and repairs four
-  sentence mappings hidden by TeX math or citation rendering. The remaining
-  365 prose sentences and independent semantic review remain open.
-- Together the twelve bounded inventories cover 845 claims: 30 locally
-  implemented, 278 partial, 110 not implemented, 368 not demonstrated, and 59
-  source-context-only, leaving 756 implementation gaps. Across the 786
+  98 retained Abstract, Introduction, and Methods sentences into 244 atomic
+  propositions. Two hundred twenty-six map through 245 references to 104
+  bounded claims; 14 are background context, 2 are author outlook, and 2 are
+  qualified author interpretations. It adds the previously unbounded claims
+  for instrumental algorithm search versus direct solution search and for
+  sample efficiency enabling roughly 100 compute-hours per candidate, while
+  repairing sentence mappings hidden by TeX rendering or broad paragraph
+  matching. The remaining 304 prose sentences and independent semantic review
+  remain open.
+- Together the twelve bounded inventories cover 846 claims: 30 locally
+  implemented, 278 partial, 110 not implemented, 369 not demonstrated, and 59
+  source-context-only, leaving 757 implementation gaps. Across the 787
   implementation-relevant claims, strict implemented parity is 3.8%; counting
   partial claims at half credit gives 21.5%. The weighted value rises because
   Appendix B registry metadata is partial, not because its results were
@@ -218,9 +220,9 @@ Important limits:
   all 8 retained code listings and 305 physical source lines have line-level
   dispositions; all 309 explicit TeX math constructs have delimiter-level
   dispositions; and all 128 retained prose paragraphs and 402 grammatical
-  sentences have dispositions; 37 Abstract and Introduction sentences also
-  have 93 atomic-proposition dispositions. Coverage still excludes proposition
-  review for the remaining 365 sentences, mathematical correctness,
+  sentences have dispositions; 98 Abstract, Introduction, and Methods sentences
+  also have 244 atomic-proposition dispositions. Coverage still excludes
+  proposition review for the remaining 304 sentences, mathematical correctness,
   image-pixel and citation-semantic review, independent result reproduction,
   independent proof of semantic completeness, and AlphaEvolve-scale execution.
 - The local paper cache is source inventory. A cached paper or `papers/README.md`

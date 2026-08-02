@@ -1,7 +1,7 @@
 {
-  "schema": "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v1",
+  "schema": "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v2",
   "source_paper_id": "2506.13131",
-  "boundary_status": "abstract_and_introduction_proposition_review_complete_without_remaining_paper_or_independent_semantic_exhaustiveness",
+  "boundary_status": "abstract_introduction_and_methods_proposition_review_complete_without_remaining_paper_or_independent_semantic_exhaustiveness",
   "source_prose_schema": "libreevolve.alphaevolve_tex_prose_inventory_boundary.v1",
   "source_prose_boundary_status": "retained_tex_paragraph_and_sentence_inventory_complete_without_semantic_clause_exhaustiveness",
   "source_prose_ready": true,
@@ -15,42 +15,47 @@
   "source_errors": [],
   "parse_errors": [],
   "source_sentence_count": 402,
-  "reviewed_sentence_count": 37,
-  "remaining_sentence_count": 365,
-  "reviewed_sentence_fraction": 0.09203980099502487,
+  "reviewed_sentence_count": 98,
+  "remaining_sentence_count": 304,
+  "reviewed_sentence_fraction": 0.24378109452736318,
   "reviewed_source_files": [
     "introduction.tex",
-    "main.tex"
+    "main.tex",
+    "methods.tex"
   ],
   "remaining_source_files": [
     "ablations.tex",
     "acknowledgement.tex",
     "appendix.tex",
     "discussion.tex",
-    "methods.tex",
     "related_work.tex",
     "results.tex"
   ],
-  "proposition_count": 93,
+  "proposition_count": 244,
   "disposition_counts": {
-    "author_interpretation": 1,
+    "author_interpretation": 2,
     "author_outlook": 2,
-    "existing_bounded_claim_mapping": 81,
-    "source_context_only": 9
+    "existing_bounded_claim_mapping": 226,
+    "source_context_only": 14
   },
-  "claim_reference_count": 94,
-  "unique_claim_reference_count": 62,
-  "implementation_relevant_proposition_count": 71,
+  "claim_reference_count": 245,
+  "unique_claim_reference_count": 104,
+  "implementation_relevant_proposition_count": 216,
   "unmapped_proposition_count": 0,
   "unresolved_reference_count": 0,
   "new_bounded_claim_ids": [
-    "introduction_algorithm_search_outperforms_direct_solution_search"
+    "introduction_algorithm_search_outperforms_direct_solution_search",
+    "evaluation_sample_efficiency_enables_expensive_evaluation"
   ],
   "repaired_sentence_claim_ids": [
     "abstract_complex_4x4_matrix_48_multiplications",
+    "introduction_algorithm_discovery_instrumental_goal",
+    "introduction_automatically_evaluable_problem_scope",
     "introduction_complex_4x4_matrix_48_multiplications",
     "introduction_erdos_minimum_overlap_result",
-    "introduction_seventy_five_percent_math_best_known"
+    "introduction_seventy_five_percent_math_best_known",
+    "evolution_database_resurfacing",
+    "task_problem_specific_abstraction_choice"
   ],
   "reviewed_sentence_records": [
     {
@@ -550,6 +555,828 @@
       "proposition_ids": [
         "tex_proposition_0092",
         "tex_proposition_0093"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0038",
+      "source_file": "methods.tex",
+      "source_line": 11,
+      "source_text_sha256": "e3e5184e59dd0d5f914e4895acf123f2deef6142b99467f95c7d142340872da6",
+      "rendered_text_sha256": "8985d085af5fb6e60d91031d69a5d78b10a616793b499c1d1b9d9ce6a7ee776e",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0094",
+        "tex_proposition_0095",
+        "tex_proposition_0096"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0039",
+      "source_file": "methods.tex",
+      "source_line": 12,
+      "source_text_sha256": "d90445f7e6b2fd64387b1701da6602bb3057e7f67518bed2c3bfe3a82f46af4a",
+      "rendered_text_sha256": "d90445f7e6b2fd64387b1701da6602bb3057e7f67518bed2c3bfe3a82f46af4a",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0097",
+        "tex_proposition_0098"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0040",
+      "source_file": "methods.tex",
+      "source_line": 13,
+      "source_text_sha256": "3c62fe05cdbc3f717d2a55f2b8304c0233c579eb51ba67e50a83b11063e7a1e3",
+      "rendered_text_sha256": "279e811a2d3f00c4fbd7c6ce0b85409bb4678ef300ff4dceb0707b7786dd59fc",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0099",
+        "tex_proposition_0100"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0041",
+      "source_file": "methods.tex",
+      "source_line": 32,
+      "source_text_sha256": "a035138523fa36ba063027e0673333c72917c41e6d38aa376abe3f54e3cec558",
+      "rendered_text_sha256": "ea4504f3a1993f66df7a5a5a433273e2707b4dab14be57f54c94a035f67af18a",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0101",
+        "tex_proposition_0102"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0042",
+      "source_file": "methods.tex",
+      "source_line": 33,
+      "source_text_sha256": "dc24e41fb1ae20a1792665a112fee7e75e3183a834579bbaee0f9275f572c632",
+      "rendered_text_sha256": "b202e27e9d32b4932a493768e50e8829de34fcf80c990d97af6e2e3e019c5417",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0103"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0043",
+      "source_file": "methods.tex",
+      "source_line": 34,
+      "source_text_sha256": "aa492e332a3e041184abde803dbe78daaa32f9897569fd84aef37e4ead8aafe6",
+      "rendered_text_sha256": "aa492e332a3e041184abde803dbe78daaa32f9897569fd84aef37e4ead8aafe6",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0104"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0044",
+      "source_file": "methods.tex",
+      "source_line": 35,
+      "source_text_sha256": "302ee8d0abbe9304580abd960deafc4f5e3c25620d9059a5368121ed52cdac12",
+      "rendered_text_sha256": "705e27f7ff5665e203f0d0a62c853e4831b24af60fccd067e50ea039c4b8f98c",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0105",
+        "tex_proposition_0106",
+        "tex_proposition_0107",
+        "tex_proposition_0108"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0045",
+      "source_file": "methods.tex",
+      "source_line": 37,
+      "source_text_sha256": "4cf8695c4da43282afe31252e599188df31fb98965c2a41aec20563cf0badeb0",
+      "rendered_text_sha256": "4cf8695c4da43282afe31252e599188df31fb98965c2a41aec20563cf0badeb0",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0109",
+        "tex_proposition_0110"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0046",
+      "source_file": "methods.tex",
+      "source_line": 37,
+      "source_text_sha256": "d01a3e6e9669d508f4d8be67727ba78a14ac1b8fb91ab865773a53441584be16",
+      "rendered_text_sha256": "5b2dc4e1713178699a8b1794045f0c6bfc30b6d0ed91067d8e4dec47235bb283",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0111"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0047",
+      "source_file": "methods.tex",
+      "source_line": 38,
+      "source_text_sha256": "3453f47acef3a2f9ef45be090eefd7541fb1aa57b15dc4ae8dd9d6d42aa698ae",
+      "rendered_text_sha256": "3f55cd56a8fdcdd593117a0d776f19f3bc4a69ecfc0df38ae48e5db42d5ff0a5",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0112",
+        "tex_proposition_0113",
+        "tex_proposition_0114",
+        "tex_proposition_0115"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0048",
+      "source_file": "methods.tex",
+      "source_line": 39,
+      "source_text_sha256": "c469537dad4a81b61213e5cf066c0a3ee95ec0ae2f3fd765665a9fbc424c1687",
+      "rendered_text_sha256": "922be5c4707f5c1835499d5bb0ca2e03bda6e6690ff28db40466930eab7358b1",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0116",
+        "tex_proposition_0117"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0049",
+      "source_file": "methods.tex",
+      "source_line": 41,
+      "source_text_sha256": "667b0b5a0c37a77e14647e39031ae38f470373491cf84530f4437c6bf54e3042",
+      "rendered_text_sha256": "289f59d790d3d757655da66e36b7b6ce59529c4bf486d86b715ef4b1bacd9900",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0118",
+        "tex_proposition_0119",
+        "tex_proposition_0120"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0050",
+      "source_file": "methods.tex",
+      "source_line": 41,
+      "source_text_sha256": "a20914aaf9fd0df0b13c162d788be3e8aee62704043322c50ef6f7346d91fc38",
+      "rendered_text_sha256": "bb15117b88a1da19de85cdcbdd33303c382cf785d569ba1378e0b61ff98e75c1",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0121",
+        "tex_proposition_0122"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0051",
+      "source_file": "methods.tex",
+      "source_line": 43,
+      "source_text_sha256": "3d72dadd62b854f945c4a101ebbf7f4d95c1476ae4322126a6175aa28942f73f",
+      "rendered_text_sha256": "522b236301f64129e7616b7146758ce9f0ff16a230af3d7940628eab3d4a49a0",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0123",
+        "tex_proposition_0124",
+        "tex_proposition_0125"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0052",
+      "source_file": "methods.tex",
+      "source_line": 44,
+      "source_text_sha256": "c88db707187cc7629184f911fe26a867f4208937008ab23f4313a8eb6621fe1e",
+      "rendered_text_sha256": "c88db707187cc7629184f911fe26a867f4208937008ab23f4313a8eb6621fe1e",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0126",
+        "tex_proposition_0127",
+        "tex_proposition_0128"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0053",
+      "source_file": "methods.tex",
+      "source_line": 48,
+      "source_text_sha256": "c4819f0cf27b4ac068b34090d83af59f39d1f9d4097e222d39fdc6589c065456",
+      "rendered_text_sha256": "82e4833544bda20774152cdb688942586a305a0ea182f4487b5fcfdc132a0ced",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0129",
+        "tex_proposition_0130"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0054",
+      "source_file": "methods.tex",
+      "source_line": 49,
+      "source_text_sha256": "f10d0c6342c7429079bccf388b58d476df8b86a97d44275fe7d7c593e95a5396",
+      "rendered_text_sha256": "3eabb15cb2e42ee73c5b9ab41341d1946d3779bc6f874e7dbe29b1e56d2cb6fc",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0131",
+        "tex_proposition_0132",
+        "tex_proposition_0133",
+        "tex_proposition_0134",
+        "tex_proposition_0135"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0055",
+      "source_file": "methods.tex",
+      "source_line": 51,
+      "source_text_sha256": "5576130836ef0c99d54a77d25bca21be594e33f4503716e3962c977ec2bf96b2",
+      "rendered_text_sha256": "5576130836ef0c99d54a77d25bca21be594e33f4503716e3962c977ec2bf96b2",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0136"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0056",
+      "source_file": "methods.tex",
+      "source_line": 52,
+      "source_text_sha256": "e55542c0a9cea620f088ffac425ca95f35c3e203cc8df41a9a1ed1a71691eced",
+      "rendered_text_sha256": "2ec258b452c7314516b243e44bf3b4f0ba258504ced37e59f706cb1e1ff1ef4d",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0137",
+        "tex_proposition_0138",
+        "tex_proposition_0139"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0057",
+      "source_file": "methods.tex",
+      "source_line": 58,
+      "source_text_sha256": "093b9ae281c1fd9309d97165b32b696e9434c338b2e80b2c7abc6f13acad2bb9",
+      "rendered_text_sha256": "68cd6e19d15d6dc9e0a0687cc0659afd33ef7be14fbc0c08f010f2bf1492af5a",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0140",
+        "tex_proposition_0141",
+        "tex_proposition_0142"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0058",
+      "source_file": "methods.tex",
+      "source_line": 59,
+      "source_text_sha256": "45d88dafa57199148e52b5fdb1c83fcdceaa49aed8ca2f3efc9b3ab19d7e889b",
+      "rendered_text_sha256": "45d88dafa57199148e52b5fdb1c83fcdceaa49aed8ca2f3efc9b3ab19d7e889b",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0143",
+        "tex_proposition_0144"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0059",
+      "source_file": "methods.tex",
+      "source_line": 60,
+      "source_text_sha256": "2399c9825aebc535d0054fe11397ea5fd8d13e0d8138e4fcea96e231b721126c",
+      "rendered_text_sha256": "2399c9825aebc535d0054fe11397ea5fd8d13e0d8138e4fcea96e231b721126c",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0145"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0060",
+      "source_file": "methods.tex",
+      "source_line": 63,
+      "source_text_sha256": "5d97db683a83260668e7d91b1b659668702ab9b7bfcd9725c7c63fdc013ef8fc",
+      "rendered_text_sha256": "933cc77c04d6b74a7b1e7b07a9b6469b95ca8eb3fa6aafae1aeae0be45b9c7ec",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0146",
+        "tex_proposition_0147",
+        "tex_proposition_0148",
+        "tex_proposition_0149",
+        "tex_proposition_0150"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0061",
+      "source_file": "methods.tex",
+      "source_line": 65,
+      "source_text_sha256": "e1884aa2c8a3bf0b948875bfabcab8d4c19c0fd0d94051d837ec57fa41e0b279",
+      "rendered_text_sha256": "aef08189b148ca97d19756b13e1e7d0644f14fb00123fc302aeedcc5429e8b29",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0151",
+        "tex_proposition_0152",
+        "tex_proposition_0153",
+        "tex_proposition_0154"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0062",
+      "source_file": "methods.tex",
+      "source_line": 67,
+      "source_text_sha256": "5656c6ac5eb15c7c2d1a7664b875f22d86cca9833f4ef590fdf8abfdf01c955d",
+      "rendered_text_sha256": "4444e6eeb7f420585602dafe0ff7f2929ba7da67839306cfa8ad78303a100b57",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0155",
+        "tex_proposition_0156",
+        "tex_proposition_0157"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0063",
+      "source_file": "methods.tex",
+      "source_line": 69,
+      "source_text_sha256": "763a732d506bcc6575070733ef356d5b6797ed54bd7d4455e16b2cce8dd12758",
+      "rendered_text_sha256": "781121a07818f4e37bfe2e80dddb151461f128e659a0e2ec308f936ef4ffdc41",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0158",
+        "tex_proposition_0159",
+        "tex_proposition_0160",
+        "tex_proposition_0161"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0064",
+      "source_file": "methods.tex",
+      "source_line": 76,
+      "source_text_sha256": "432108c67088325c786bb725678ef5803db10228c0e2bc1b8cbd5ca1a0ccd3d7",
+      "rendered_text_sha256": "da341920246090cb0e0317a005928382fdbb8257ac25563f439c3253589ceb75",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0162",
+        "tex_proposition_0163",
+        "tex_proposition_0164"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0065",
+      "source_file": "methods.tex",
+      "source_line": 77,
+      "source_text_sha256": "2e33419533cf8d0e76ab7b383f17d5d8adb9bddccd2985946c2a23e5d276e5a6",
+      "rendered_text_sha256": "e872a45c2ec4052568db4d1dd80e77868b6c4012dc3a24bb717c6a7b5c9da695",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0165",
+        "tex_proposition_0166"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0066",
+      "source_file": "methods.tex",
+      "source_line": 81,
+      "source_text_sha256": "00bcf4cd6b00c4ac83c8928bd3bd9ed7851f73842f2669480b107d8b4b22d348",
+      "rendered_text_sha256": "2ae0c02dcf92e35be7e264629c2361d83510a7b1457fa0573a83736011bcebc9",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0167",
+        "tex_proposition_0168"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0067",
+      "source_file": "methods.tex",
+      "source_line": 91,
+      "source_text_sha256": "b7b4c07f71ecf16271488654ff1b5e24a6d54e3c367b9210a06198965f59eb01",
+      "rendered_text_sha256": "4465bcfe349d85a1c5d41ee06a3f965aa49ffa140032243704981b8c8c96ddde",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0169"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0068",
+      "source_file": "methods.tex",
+      "source_line": 91,
+      "source_text_sha256": "c35c433eaa1ebc4ddb997b9eaf11da842ee876cc6c3ed333dddfcc49e41a7e8c",
+      "rendered_text_sha256": "4e0d172ceec16c94e5293d6f822642efaa3028c53cd6478c0928a9c15cfc3613",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0170"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0069",
+      "source_file": "methods.tex",
+      "source_line": 92,
+      "source_text_sha256": "0604839a874f93c04031a55f4ef23d160cd950e453efdd99427e6605c771cea7",
+      "rendered_text_sha256": "0604839a874f93c04031a55f4ef23d160cd950e453efdd99427e6605c771cea7",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0171"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0070",
+      "source_file": "methods.tex",
+      "source_line": 94,
+      "source_text_sha256": "c4c3210c3b93884c17fc594209fbef862fbba03ecda9e71cc15c9e309eca850a",
+      "rendered_text_sha256": "fb17028acabc1793858ae663a7b4adb800ba4f03870ae0e94ee5a1fcaea645a0",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0172",
+        "tex_proposition_0173",
+        "tex_proposition_0174"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0071",
+      "source_file": "methods.tex",
+      "source_line": 97,
+      "source_text_sha256": "35591a2761d58586831f476beb62312213888ab7a710b59b5a021afb79d02c92",
+      "rendered_text_sha256": "26d4929559c9292f92c2d77acddc063076eb96acd175f44986a0acac7b038974",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0175"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0072",
+      "source_file": "methods.tex",
+      "source_line": 97,
+      "source_text_sha256": "b4354c9b6f2e4aec8b745f1860e0c1d9898b8cce10c162c024cec5c75950c735",
+      "rendered_text_sha256": "b4354c9b6f2e4aec8b745f1860e0c1d9898b8cce10c162c024cec5c75950c735",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0176",
+        "tex_proposition_0177"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0073",
+      "source_file": "methods.tex",
+      "source_line": 98,
+      "source_text_sha256": "2e816ad9341d7f12bf82fff15425affafeb048b73ad786b8c85df8214954bf9a",
+      "rendered_text_sha256": "2e816ad9341d7f12bf82fff15425affafeb048b73ad786b8c85df8214954bf9a",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0178"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0074",
+      "source_file": "methods.tex",
+      "source_line": 99,
+      "source_text_sha256": "7b356d8c14c2d5a69c329c329c6695c1868f20bac12461e7faead4ec74e28824",
+      "rendered_text_sha256": "7b356d8c14c2d5a69c329c329c6695c1868f20bac12461e7faead4ec74e28824",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0179",
+        "tex_proposition_0180",
+        "tex_proposition_0181"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0075",
+      "source_file": "methods.tex",
+      "source_line": 100,
+      "source_text_sha256": "24d4aa42da88869b85a6ff46dcc9e9edbeb5799238753dabbc19cc673636c376",
+      "rendered_text_sha256": "24d4aa42da88869b85a6ff46dcc9e9edbeb5799238753dabbc19cc673636c376",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0182",
+        "tex_proposition_0183",
+        "tex_proposition_0184",
+        "tex_proposition_0185"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0076",
+      "source_file": "methods.tex",
+      "source_line": 101,
+      "source_text_sha256": "5b1555cce303c8467289cb3f6ba710079b08c49941f430500e3af43f9ebd60bc",
+      "rendered_text_sha256": "5b1555cce303c8467289cb3f6ba710079b08c49941f430500e3af43f9ebd60bc",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0186",
+        "tex_proposition_0187",
+        "tex_proposition_0188"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0077",
+      "source_file": "methods.tex",
+      "source_line": 107,
+      "source_text_sha256": "510fd8dbd886e8e2038a06bba8d1be37d3b0161f73967f1e0ddeffd75f23f2c2",
+      "rendered_text_sha256": "ceaace84e869557eeeb5d44af6516c9ae635e7e522c231a7cd89ec131de8fe6b",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0189",
+        "tex_proposition_0190",
+        "tex_proposition_0191"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0078",
+      "source_file": "methods.tex",
+      "source_line": 108,
+      "source_text_sha256": "8d81302da6977f20dcc27cba44aae2661c9569a8d120a04bb15499adbeaf3693",
+      "rendered_text_sha256": "0e3883eecbfc3a9b10d25b28a518d5ad00c1e69a0a7dc303da6977155200f609",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0192"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0079",
+      "source_file": "methods.tex",
+      "source_line": 109,
+      "source_text_sha256": "81ac277a4710c4f9d1d947106410b0bc54f740f5070170057a878674709332a0",
+      "rendered_text_sha256": "66e4ced8d8c666b932e9f3a4c81ba0f282464880cdd2e609b050d7d94e3203e8",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0193"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0080",
+      "source_file": "methods.tex",
+      "source_line": 112,
+      "source_text_sha256": "47751f274c34a363f788fe387308bcbd1c36ba75b49e53f6f9d95ababc2fa1e9",
+      "rendered_text_sha256": "6ae74b77f93844b1b9fa87985e98ceb503d83b603612c0100d267c6a9b37fa09",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0194",
+        "tex_proposition_0195"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0081",
+      "source_file": "methods.tex",
+      "source_line": 113,
+      "source_text_sha256": "20c82f79ea51582a2ea158ea7f3ff1d95b2d4280bc677f82dd2c7183f8196561",
+      "rendered_text_sha256": "20c82f79ea51582a2ea158ea7f3ff1d95b2d4280bc677f82dd2c7183f8196561",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0196"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0082",
+      "source_file": "methods.tex",
+      "source_line": 113,
+      "source_text_sha256": "f2d506a33ea91e6c302afd5001df16c882893d78cab8e7140dfb02c7c64d116b",
+      "rendered_text_sha256": "f2d506a33ea91e6c302afd5001df16c882893d78cab8e7140dfb02c7c64d116b",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0197",
+        "tex_proposition_0198",
+        "tex_proposition_0199"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0083",
+      "source_file": "methods.tex",
+      "source_line": 115,
+      "source_text_sha256": "f95f1fba051d5da9b7a9878675deec08524bde980aee2692e106693f64cc37fe",
+      "rendered_text_sha256": "64a09ed79e596d310604557a9427f8572eaa00997fee572f5e5e358497137643",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0200",
+        "tex_proposition_0201"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0084",
+      "source_file": "methods.tex",
+      "source_line": 116,
+      "source_text_sha256": "373e362cb36284e1e6598068af5ca8492c7cb6f8243156d4bedf179b74e0966a",
+      "rendered_text_sha256": "373e362cb36284e1e6598068af5ca8492c7cb6f8243156d4bedf179b74e0966a",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0202",
+        "tex_proposition_0203",
+        "tex_proposition_0204"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0085",
+      "source_file": "methods.tex",
+      "source_line": 118,
+      "source_text_sha256": "9fc4cb1ccc29bd6ca79f1bb485eec7300efe13e4984be5e90ed97a6cc23ae573",
+      "rendered_text_sha256": "117cf9e613eb13deb43fdf58cc444fb2f4fc99115f3feb3ba5d7c7798314f3fb",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0205",
+        "tex_proposition_0206"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0086",
+      "source_file": "methods.tex",
+      "source_line": 119,
+      "source_text_sha256": "30fbaaadb78edf5b888e34d73d482d1ae7b95989c6889b8d458074f7bb81cdb8",
+      "rendered_text_sha256": "30fbaaadb78edf5b888e34d73d482d1ae7b95989c6889b8d458074f7bb81cdb8",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0207",
+        "tex_proposition_0208",
+        "tex_proposition_0209"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0087",
+      "source_file": "methods.tex",
+      "source_line": 120,
+      "source_text_sha256": "7a502acba4b02e2eb7cd01404ee020efa94edb5c5bf4801f4863f90a5e40dcfe",
+      "rendered_text_sha256": "f497e28350ca94da5bfa1bdf594eb95aa52e63d2c633a96b650aeb30b8ebc4b7",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0210",
+        "tex_proposition_0211",
+        "tex_proposition_0212"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0088",
+      "source_file": "methods.tex",
+      "source_line": 124,
+      "source_text_sha256": "ba693b260b93fb87a3cfb11c33dc5760d139876b1cab6fa66afdc4d666a8c06a",
+      "rendered_text_sha256": "a3dde49681d8b725c86c3995b76c1d4fce6e4b0e79f4f8391d72ea284d19e7ec",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0213",
+        "tex_proposition_0214"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0089",
+      "source_file": "methods.tex",
+      "source_line": 125,
+      "source_text_sha256": "cd802c1f8e8e294726648ec13a22da08036f8cc5a75341b1347560d39b36af1c",
+      "rendered_text_sha256": "cd802c1f8e8e294726648ec13a22da08036f8cc5a75341b1347560d39b36af1c",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0215",
+        "tex_proposition_0216"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0090",
+      "source_file": "methods.tex",
+      "source_line": 125,
+      "source_text_sha256": "f03b74e37ce1c68a9aa1560a21dbea90e2196716e7c9ec3ea6b5a1d74ec346cd",
+      "rendered_text_sha256": "f03b74e37ce1c68a9aa1560a21dbea90e2196716e7c9ec3ea6b5a1d74ec346cd",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0217",
+        "tex_proposition_0218",
+        "tex_proposition_0219"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0091",
+      "source_file": "methods.tex",
+      "source_line": 126,
+      "source_text_sha256": "08053a5821c7b6da00adea3133c6c7df641363fd9ffe914f1d5a961e18fa1bb5",
+      "rendered_text_sha256": "08053a5821c7b6da00adea3133c6c7df641363fd9ffe914f1d5a961e18fa1bb5",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0220",
+        "tex_proposition_0221",
+        "tex_proposition_0222",
+        "tex_proposition_0223",
+        "tex_proposition_0224"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0092",
+      "source_file": "methods.tex",
+      "source_line": 132,
+      "source_text_sha256": "c69d86499f21ca43e61a0e133a981254b906776eaa9de33c3494aca60064593a",
+      "rendered_text_sha256": "c3532bd5fabf3ee8578758e51ed26f87e8cc0f41f222eefd1f88a78f48cf1601",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0225",
+        "tex_proposition_0226",
+        "tex_proposition_0227"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0093",
+      "source_file": "methods.tex",
+      "source_line": 133,
+      "source_text_sha256": "d8c352a760fce8a4a6c5f69d6059a13614a3a66400a54dee0ab4e748408c041a",
+      "rendered_text_sha256": "d8c352a760fce8a4a6c5f69d6059a13614a3a66400a54dee0ab4e748408c041a",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0228",
+        "tex_proposition_0229"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0094",
+      "source_file": "methods.tex",
+      "source_line": 134,
+      "source_text_sha256": "568e5543e5c56f2bc59b886d50e04f1ab74f1a2cffd39e1b94e14493372fc417",
+      "rendered_text_sha256": "568e5543e5c56f2bc59b886d50e04f1ab74f1a2cffd39e1b94e14493372fc417",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0230",
+        "tex_proposition_0231",
+        "tex_proposition_0232",
+        "tex_proposition_0233"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0095",
+      "source_file": "methods.tex",
+      "source_line": 135,
+      "source_text_sha256": "b5ca22ab98c5d78f3666c08fc52b0de27c75de62c8e2c3d54d2305d6f6d1449c",
+      "rendered_text_sha256": "c4cfdccd172917457d24cf3479d7527289fe57ece81e5a5f5840b976fcb1079c",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0234",
+        "tex_proposition_0235"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0096",
+      "source_file": "methods.tex",
+      "source_line": 141,
+      "source_text_sha256": "ea7bcb3a0e41ed228cfdc7037050ca7d06a59fc9209050257683493063260f88",
+      "rendered_text_sha256": "504b5496b4816ebfaf5b724d9dc637b61d317c505c424cc4393b3768ac2dfc3c",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0236",
+        "tex_proposition_0237",
+        "tex_proposition_0238"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0097",
+      "source_file": "methods.tex",
+      "source_line": 142,
+      "source_text_sha256": "3af93382ff8b56ddcdab5d40faad8625aa0d6eb445b5da5058b15b3b4c6120e1",
+      "rendered_text_sha256": "3af93382ff8b56ddcdab5d40faad8625aa0d6eb445b5da5058b15b3b4c6120e1",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0239",
+        "tex_proposition_0240",
+        "tex_proposition_0241"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0098",
+      "source_file": "methods.tex",
+      "source_line": 143,
+      "source_text_sha256": "ddafb465a8c696e1fba0d2350337e3b816c9c31627ab06b2e9e69bcd5a897ca1",
+      "rendered_text_sha256": "ddafb465a8c696e1fba0d2350337e3b816c9c31627ab06b2e9e69bcd5a897ca1",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0242",
+        "tex_proposition_0243",
+        "tex_proposition_0244"
       ],
       "review_status": "manual_static_semantic_decomposition_complete"
     }
@@ -2780,22 +3607,3641 @@
       "claim_refs": [],
       "implementation_relevant": false,
       "review_rationale": "This is a workload-value judgment rather than a separate parity requirement."
+    },
+    {
+      "proposition_id": "tex_proposition_0094",
+      "sentence_id": "tex_prose_sentence_0038",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 11,
+      "source_end_line": 11,
+      "source_quote": "AlphaEvolve is a coding agent",
+      "source_quote_start": 0,
+      "source_quote_end": 29,
+      "source_quote_sha256": "24b43e59172933d2e443a980601ba72261beb9495c5d895f03be8e71e3284f3d",
+      "statement": "AlphaEvolve is presented as a coding agent.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "section2_autonomous_pipeline",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0095",
+      "sentence_id": "tex_prose_sentence_0038",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 11,
+      "source_end_line": 11,
+      "source_quote": "orchestrates an autonomous pipeline of computations including queries to LLMs",
+      "source_quote_start": 35,
+      "source_quote_end": 112,
+      "source_quote_sha256": "86c360fad6054c3405a53dbbf7c69f0f904bd173b5eeed3b5b7753b793b84388",
+      "statement": "The coding agent orchestrates an autonomous computation pipeline that queries LLMs.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "section2_autonomous_pipeline",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0096",
+      "sentence_id": "tex_prose_sentence_0038",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 11,
+      "source_end_line": 11,
+      "source_quote": "produces algorithms that address a user-specified task",
+      "source_quote_start": 118,
+      "source_quote_end": 172,
+      "source_quote_sha256": "7683c64a06c081a1dcf377f8d29104734b1749eeae63082a03711f6eb98f2846",
+      "statement": "The pipeline produces algorithms for a user-specified task.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "section2_user_specified_task",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0097",
+      "sentence_id": "tex_prose_sentence_0039",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 12,
+      "source_end_line": 12,
+      "source_quote": "the orchestrating procedure is an evolutionary algorithm",
+      "source_quote_start": 17,
+      "source_quote_end": 73,
+      "source_quote_sha256": "c3fc03cb8e39a613b2609496c6ac3bde6a040bf5cc747261dd6cefe82e1167c2",
+      "statement": "The orchestration procedure is an evolutionary algorithm.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "section2_evolutionary_metric_improvement",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0098",
+      "sentence_id": "tex_prose_sentence_0039",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 12,
+      "source_end_line": 12,
+      "source_quote": "gradually develops programs that improve the score on the automated evaluation metrics associated with the task",
+      "source_quote_start": 79,
+      "source_quote_end": 190,
+      "source_quote_sha256": "2432cdf7acae912acc424e224cf50a5825dc413aae58e16bd162271394e0ca40",
+      "statement": "Evolution gradually develops programs that improve automated task metrics.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "section2_evolutionary_metric_improvement",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0099",
+      "sentence_id": "tex_prose_sentence_0040",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 13,
+      "source_end_line": 13,
+      "source_quote": "A high-level overview of AlphaEvolve is shown in [citation]",
+      "source_quote_start": 0,
+      "source_quote_end": 59,
+      "source_quote_sha256": "2e7af76bd57dbd34f5d43c043d0ecb6055de93187171f4d9a0878e43f5cdafb1",
+      "statement": "The prose directs readers to the high-level overview figure.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "Figure navigation is source structure already covered by the figure inventory, not a separate implementation claim."
+    },
+    {
+      "proposition_id": "tex_proposition_0100",
+      "sentence_id": "tex_prose_sentence_0040",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 13,
+      "source_end_line": 13,
+      "source_quote": "[citation] gives an expanded view",
+      "source_quote_start": 66,
+      "source_quote_end": 99,
+      "source_quote_sha256": "1d31eab16e06fc4140b9dc185d157fc8eb4f9b70f8ca651717e6af14c9d26269",
+      "statement": "The prose directs readers to an expanded process figure.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "Figure navigation is source structure already covered by the figure inventory, not a separate implementation claim."
+    },
+    {
+      "proposition_id": "tex_proposition_0101",
+      "sentence_id": "tex_prose_sentence_0041",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 32,
+      "source_end_line": 32,
+      "source_quote": "AlphaEvolve tackles problems with machine-gradeable solutions",
+      "source_quote_start": 6,
+      "source_quote_end": 67,
+      "source_quote_sha256": "09e9d997ec89bd5b8a98dda67497354dbc32f666a16cf3b1c99182479b8c5bb5",
+      "statement": "AlphaEvolve's autonomous task scope requires machine-gradeable solutions.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_context_claim_inventory_boundary.json",
+          "claim_id": "introduction_automatically_evaluable_problem_scope",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0102",
+      "sentence_id": "tex_prose_sentence_0041",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 32,
+      "source_end_line": 32,
+      "source_quote": "the user must provide a mechanism for automatically assessing generated solutions",
+      "source_quote_start": 69,
+      "source_quote_end": 150,
+      "source_quote_sha256": "df1da2d47a6c249cb2ea99ad70609559bf52ac80b740a00c8fbeff32606979d4",
+      "statement": "The user must supply an automatic candidate-assessment mechanism.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_scalar_metric_mapping",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0103",
+      "sentence_id": "tex_prose_sentence_0042",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 33,
+      "source_end_line": 33,
+      "source_quote": "a function h mapping a solution to a set of scalar evaluation metrics",
+      "source_quote_start": 33,
+      "source_quote_end": 102,
+      "source_quote_sha256": "360f027bf015f55073413111bfa6f42df38c950ac2c681689bf333c0cc1ffbb6",
+      "statement": "The assessment mechanism maps each solution to scalar evaluation metrics.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_scalar_metric_mapping",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0104",
+      "sentence_id": "tex_prose_sentence_0043",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 34,
+      "source_end_line": 34,
+      "source_quote": "these metrics are maximized",
+      "source_quote_start": 15,
+      "source_quote_end": 42,
+      "source_quote_sha256": "a643a09c58ed617ff134e86763e6639e8aa20282fbf327a5dcbe3dabc6315b3b",
+      "statement": "Evaluation metrics are maximized by convention.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_metric_maximization_convention",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0105",
+      "sentence_id": "tex_prose_sentence_0044",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 35,
+      "source_end_line": 35,
+      "source_quote": "h is typically implemented as a Python function",
+      "source_quote_start": 22,
+      "source_quote_end": 69,
+      "source_quote_sha256": "e07f486c262c9a6126f603ad0dcef95fcc39458bc6f9cfa62f51dafc054b934c",
+      "statement": "The paper's current evaluator setup typically uses Python.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_fixed_evaluate_signature",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0106",
+      "sentence_id": "tex_prose_sentence_0044",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 35,
+      "source_end_line": 35,
+      "source_quote": "called evaluate",
+      "source_quote_start": 71,
+      "source_quote_end": 86,
+      "source_quote_sha256": "a81e02c3d1600893acb997e0bda960fbd913be7de432f4a24da0fecdcd86372a",
+      "statement": "The paper-style evaluator entrypoint is named evaluate.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_fixed_evaluate_signature",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0107",
+      "sentence_id": "tex_prose_sentence_0044",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 35,
+      "source_end_line": 35,
+      "source_quote": "with a fixed input/output signature",
+      "source_quote_start": 88,
+      "source_quote_end": 123,
+      "source_quote_sha256": "4ec7d0df27c4f6b2945b2dd95ed6ea6e8ed774aedfae0b329e07e7af2886dfda",
+      "statement": "The evaluate function has a fixed input/output signature.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_fixed_evaluate_signature",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0108",
+      "sentence_id": "tex_prose_sentence_0044",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "methods.tex",
+      "source_line": 35,
+      "source_end_line": 35,
+      "source_quote": "returning a dictionary of scalars",
+      "source_quote_start": 125,
+      "source_quote_end": 158,
+      "source_quote_sha256": "b4f171020d4486a6893219671219af8748c04b870bc0b20e4dad8009a94e21b8",
+      "statement": "The evaluate function returns a dictionary of scalar metrics.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_fixed_evaluate_signature",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0109",
+      "sentence_id": "tex_prose_sentence_0045",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 37,
+      "source_end_line": 37,
+      "source_quote": "executing this function may take only seconds on a single device",
+      "source_quote_start": 30,
+      "source_quote_end": 94,
+      "source_quote_sha256": "6c85cbe417331aed64ab139eb5ed05e3c0c8709324121fbaefda923f22912398",
+      "statement": "An evaluator may complete in seconds on one device.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_evaluation_workload_range",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0110",
+      "sentence_id": "tex_prose_sentence_0045",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 37,
+      "source_end_line": 37,
+      "source_quote": "spawn extensive computations",
+      "source_quote_start": 98,
+      "source_quote_end": 126,
+      "source_quote_sha256": "afa9015c761441fb8b03002c5ddeb7c4db5b9823649c3d408708da9c2d323a35",
+      "statement": "An evaluator may instead launch extensive computation.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_evaluation_workload_range",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0111",
+      "sentence_id": "tex_prose_sentence_0046",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 37,
+      "source_end_line": 37,
+      "source_quote": "For mathematical problems, the function h is typically very simple",
+      "source_quote_start": 0,
+      "source_quote_end": 66,
+      "source_quote_sha256": "5231201f6d6210cd1ddd57c533b6f42b54442d7703e55f3dda80be8d8f91681f",
+      "statement": "The paper reports that mathematical-problem evaluators are typically simple.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_evaluation_workload_range",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0112",
+      "sentence_id": "tex_prose_sentence_0047",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 38,
+      "source_end_line": 38,
+      "source_quote": "find largest possible graphs satisfying a given property",
+      "source_quote_start": 29,
+      "source_quote_end": 85,
+      "source_quote_sha256": "a2cfd246456147e773cee31fdb22498eaa644e4cf40c7a96edfdf25f1d727bb1",
+      "statement": "The illustrative task searches for the largest graph satisfying a property.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_scalar_metric_mapping",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_constructor_function_abstraction",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0113",
+      "sentence_id": "tex_prose_sentence_0047",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 38,
+      "source_end_line": 38,
+      "source_quote": "h invokes the evolved code to generate a graph",
+      "source_quote_start": 87,
+      "source_quote_end": 133,
+      "source_quote_sha256": "33e275348a18d3dc8053e8a6eeaff51286a1ef7a0a9e6b075b390d2572aa04a5",
+      "statement": "The evaluator invokes evolved constructor code to generate a graph.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_constructor_function_abstraction",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0114",
+      "sentence_id": "tex_prose_sentence_0047",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 38,
+      "source_end_line": 38,
+      "source_quote": "checks whether the property holds",
+      "source_quote_start": 135,
+      "source_quote_end": 168,
+      "source_quote_sha256": "9d2bde87857f6cbc3a1edfab74b5274e8294d10a37d2eefb1c81b2a0b2c8024d",
+      "statement": "The evaluator checks the generated graph's required property.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_scalar_metric_mapping",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0115",
+      "sentence_id": "tex_prose_sentence_0047",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "methods.tex",
+      "source_line": 38,
+      "source_end_line": 38,
+      "source_quote": "returns the size of the graph as the score",
+      "source_quote_start": 186,
+      "source_quote_end": 228,
+      "source_quote_sha256": "4101e1ccdf29e6d5fde04a0299f66b60cdf51ca964d11139714af8100889c6b8",
+      "statement": "The evaluator uses graph size as the scalar score.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_scalar_metric_mapping",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0116",
+      "sentence_id": "tex_prose_sentence_0048",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 39,
+      "source_end_line": 39,
+      "source_quote": "h might involve performing an evolved search algorithm",
+      "source_quote_start": 40,
+      "source_quote_end": 94,
+      "source_quote_sha256": "5eb86f5b357714a9b5a1706e74dbee4f952cfd5d9d79e2a4c6fe02a26a4aa485",
+      "statement": "A complex evaluator may execute an evolved search algorithm.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_bespoke_search_abstraction",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_evaluation_workload_range",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0117",
+      "sentence_id": "tex_prose_sentence_0048",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 39,
+      "source_end_line": 39,
+      "source_quote": "training and evaluating a machine learning model",
+      "source_quote_start": 99,
+      "source_quote_end": 147,
+      "source_quote_sha256": "9b46bb34f975bf950ec8197f2e1c8cf22173b6e841c2c31c1c9601c3eddf430f",
+      "statement": "A complex evaluator may train and evaluate a machine-learning model.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_evaluation_workload_range",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0118",
+      "sentence_id": "tex_prose_sentence_0049",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 41,
+      "source_end_line": 41,
+      "source_quote": "support evolving multiple components across a codebase",
+      "source_quote_start": 3,
+      "source_quote_end": 57,
+      "source_quote_sha256": "a70e94a97f10a185769f975f1f51b6808a77a475a28b5383dd1bfd4aac0cd30e",
+      "statement": "AlphaEvolve supports evolving multiple codebase components.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_multiple_marked_components",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0119",
+      "sentence_id": "tex_prose_sentence_0049",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 41,
+      "source_end_line": 41,
+      "source_quote": "exposes an input API where blocks of code can be annotated as to-be-evolved-by-the-system",
+      "source_quote_start": 71,
+      "source_quote_end": 160,
+      "source_quote_sha256": "4c4d72670f3b1d262e6cabb2960385373f4deac69c81b207735a5c20e74ce6fe",
+      "statement": "Its input API marks code blocks for evolution.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_multiple_marked_components",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0120",
+      "sentence_id": "tex_prose_sentence_0049",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 41,
+      "source_end_line": 41,
+      "source_quote": "see Figure [citation] for an illustration",
+      "source_quote_start": 162,
+      "source_quote_end": 203,
+      "source_quote_sha256": "3225a630a6f202410d13b25484900d129a297b5dc808a75f3f03c888deddd30f",
+      "statement": "The prose points to an API illustration.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "The cross-reference is navigation to separately inventoried Figure 3 evidence."
+    },
+    {
+      "proposition_id": "tex_proposition_0121",
+      "sentence_id": "tex_prose_sentence_0050",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 41,
+      "source_end_line": 41,
+      "source_quote": "integrating it with existing codebases while requiring only minimal changes",
+      "source_quote_start": 24,
+      "source_quote_end": 99,
+      "source_quote_sha256": "0437bd8293a0e9a3fdb0f4c2b1ff0bed4a66985e18884a87f3dc30b2b8da4a9f",
+      "statement": "The marker API is intended to integrate with existing codebases through minimal changes.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_minimal_marker_integration",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0122",
+      "sentence_id": "tex_prose_sentence_0050",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 41,
+      "source_end_line": 41,
+      "source_quote": "# EVOLVE-BLOCK-START and # EVOLVE-BLOCK-END",
+      "source_quote_start": 136,
+      "source_quote_end": 179,
+      "source_quote_sha256": "0016e7cf45ab2627aa8a6c7ac2a1fa4d1fc2de2c2c979a79962d69d206c9dc3a",
+      "statement": "Special start and end comments delimit evolved blocks.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_minimal_marker_integration",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0123",
+      "sentence_id": "tex_prose_sentence_0051",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 43,
+      "source_end_line": 43,
+      "source_quote": "code inside such evolution blocks serves as the initial solution",
+      "source_quote_start": 18,
+      "source_quote_end": 82,
+      "source_quote_sha256": "2e0358e6721908af2194dcd4d3c0976f33ea541e376d0c653f0321d860753fe9",
+      "statement": "User code inside evolution blocks supplies the initial solution.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_evolved_blocks_and_skeleton",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0124",
+      "sentence_id": "tex_prose_sentence_0051",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 43,
+      "source_end_line": 43,
+      "source_quote": "the rest of the code forms a skeleton that ties the evolved pieces together",
+      "source_quote_start": 118,
+      "source_quote_end": 193,
+      "source_quote_sha256": "419804e1108d6caf0a7ebaee27dad1cd0973ade667d97805433f06a01d4f3f20",
+      "statement": "Non-evolved code remains a skeleton connecting evolved pieces.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_evolved_blocks_and_skeleton",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0125",
+      "sentence_id": "tex_prose_sentence_0051",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 43,
+      "source_end_line": 43,
+      "source_quote": "they can be invoked from evaluate",
+      "source_quote_start": 203,
+      "source_quote_end": 236,
+      "source_quote_sha256": "1e5017972095166f10fc8d2c28e27792a9ff078074eaf36fe5a55a26836c54c3",
+      "statement": "The skeleton makes evolved pieces callable from evaluate.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_evolved_blocks_and_skeleton",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0126",
+      "sentence_id": "tex_prose_sentence_0052",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 44,
+      "source_end_line": 44,
+      "source_quote": "this initial implementation must be complete",
+      "source_quote_start": 6,
+      "source_quote_end": 50,
+      "source_quote_sha256": "75efe6de4e2e0e05471bd7202505d05332a05e7942c44387e0545b232faf33f2",
+      "statement": "The initial implementation must be complete.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_complete_initial_program",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0127",
+      "sentence_id": "tex_prose_sentence_0052",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 44,
+      "source_end_line": 44,
+      "source_quote": "it can be rudimentary",
+      "source_quote_start": 52,
+      "source_quote_end": 73,
+      "source_quote_sha256": "3aca329f37c36835a255df89e8ca175658b8aefe5054275d31a32290646f9622",
+      "statement": "A complete initial implementation may be rudimentary.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_complete_initial_program",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0128",
+      "sentence_id": "tex_prose_sentence_0052",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 44,
+      "source_end_line": 44,
+      "source_quote": "single-line functions that return constants of the appropriate types",
+      "source_quote_start": 104,
+      "source_quote_end": 172,
+      "source_quote_sha256": "4d843df1c7d39fe1a2ae39b0c6d736313a5f6dfb116d70182bfbf475e56d467f",
+      "statement": "A type-correct constant-returning function is an allowed rudimentary seed example.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_complete_initial_program",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0129",
+      "sentence_id": "tex_prose_sentence_0053",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 48,
+      "source_end_line": 48,
+      "source_quote": "applied to the same problem in very different ways",
+      "source_quote_start": 19,
+      "source_quote_end": 69,
+      "source_quote_sha256": "607ac0195ca299460c7cdc1835aa5b609b1e9eddcec6c9ca78bff64c9894a664",
+      "statement": "The same problem can use different evolved abstractions.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_problem_specific_abstraction_choice",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0130",
+      "sentence_id": "tex_prose_sentence_0053",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 48,
+      "source_end_line": 48,
+      "source_quote": "the evolved programs are not the final output but a means to discover solutions",
+      "source_quote_start": 88,
+      "source_quote_end": 167,
+      "source_quote_sha256": "19616169b6976ff6ac57bf38d4b92392b1b8df0c29abe130d33789c669529d99",
+      "statement": "An evolved program may be instrumental to discovering the final solution.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_context_claim_inventory_boundary.json",
+          "claim_id": "introduction_algorithm_discovery_instrumental_goal",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0131",
+      "sentence_id": "tex_prose_sentence_0054",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 49,
+      "source_end_line": 49,
+      "source_quote": "evolve the solution in raw string representation",
+      "source_quote_start": 29,
+      "source_quote_end": 77,
+      "source_quote_sha256": "56afdfbc2ec0d34692b3152607e831d150aa58bea65b4663cf0070d9359539d0",
+      "statement": "AlphaEvolve can evolve a raw solution representation.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_raw_representation_abstraction",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0132",
+      "sentence_id": "tex_prose_sentence_0054",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 49,
+      "source_end_line": 49,
+      "source_quote": "evolve a function of a definite form that specifies how to construct the solution from scratch",
+      "source_quote_start": 121,
+      "source_quote_end": 215,
+      "source_quote_sha256": "6d5407c65e0518552e6a979f5ba72163debb9a269a3f4a1545b5243a971ce82f",
+      "statement": "AlphaEvolve can evolve a fixed-form constructor function.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_constructor_function_abstraction",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0133",
+      "sentence_id": "tex_prose_sentence_0054",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 49,
+      "source_end_line": 49,
+      "source_quote": "evolve a bespoke search algorithm to find the solution within some fixed compute budget",
+      "source_quote_start": 253,
+      "source_quote_end": 340,
+      "source_quote_sha256": "0b058f99d431e82ca36c129ee19f7b3cb7e4396de576689be92e0cfa286ac678",
+      "statement": "AlphaEvolve can evolve a budgeted bespoke search algorithm.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_bespoke_search_abstraction",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0134",
+      "sentence_id": "tex_prose_sentence_0054",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "methods.tex",
+      "source_line": 49,
+      "source_end_line": 49,
+      "source_quote": "co-evolve intermediate solutions and search algorithms together",
+      "source_quote_start": 350,
+      "source_quote_end": 413,
+      "source_quote_sha256": "fe94ec65185764046dcc64a056501c382ffa01b276bb5464100b0f0fd98e8be0",
+      "statement": "AlphaEvolve can co-evolve intermediate solutions and search algorithms.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_solution_search_coevolution",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0135",
+      "sentence_id": "tex_prose_sentence_0054",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "methods.tex",
+      "source_line": 49,
+      "source_end_line": 49,
+      "source_quote": "each search algorithm is specifically tailored to further improve upon a particular intermediate solution",
+      "source_quote_start": 425,
+      "source_quote_end": 530,
+      "source_quote_sha256": "13aaca537dfb6d51bc5849ff1779bad6349b2574f84a0834a08c89d2a46abf44",
+      "statement": "A co-evolved search algorithm is tailored to its paired intermediate solution.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_solution_search_coevolution",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0136",
+      "sentence_id": "tex_prose_sentence_0055",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 51,
+      "source_end_line": 51,
+      "source_quote": "different levels of abstraction work better for different problems",
+      "source_quote_start": 13,
+      "source_quote_end": 79,
+      "source_quote_sha256": "47750c0e881786e9922484293893ef78d55be63eecf04a23cf4e38012e6f3274",
+      "statement": "The paper reports problem-dependent performance across abstraction levels.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_problem_specific_abstraction_choice",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0137",
+      "sentence_id": "tex_prose_sentence_0056",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 52,
+      "source_end_line": 52,
+      "source_quote": "for problems with highly symmetric solutions it is advantageous to evolve constructor functions",
+      "source_quote_start": 33,
+      "source_quote_end": 128,
+      "source_quote_sha256": "9c1eb256f779158391fea7593bc45c2d048395acf9dc0e49a5446b1045753101",
+      "statement": "The authors hypothesize that symmetric problems favor constructor functions.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_symmetry_guided_abstraction_bias",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0138",
+      "sentence_id": "tex_prose_sentence_0056",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 52,
+      "source_end_line": 52,
+      "source_quote": "these tend to be more concise",
+      "source_quote_start": 132,
+      "source_quote_end": 161,
+      "source_quote_sha256": "75beba39eb4c42380b01f30da31f9acc4ebae3d2f9cf3a28f308ac756f744db3",
+      "statement": "Constructor functions are hypothesized to be more concise for symmetric solutions.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_symmetry_guided_abstraction_bias",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0139",
+      "sentence_id": "tex_prose_sentence_0056",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 52,
+      "source_end_line": 52,
+      "source_quote": "for problems with non-symmetric solutions it works better to evolve customized search algorithms",
+      "source_quote_start": 183,
+      "source_quote_end": 279,
+      "source_quote_sha256": "1ec76a4019811e7cfc3e8688c93ee6d98e944e32af440df121158541e764d7da",
+      "statement": "The authors hypothesize that non-symmetric problems favor customized search algorithms.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_symmetry_guided_abstraction_bias",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0140",
+      "sentence_id": "tex_prose_sentence_0057",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 58,
+      "source_end_line": 58,
+      "source_quote": "AlphaEvolve leverages SOTA LLMs",
+      "source_quote_start": 3,
+      "source_quote_end": 34,
+      "source_quote_sha256": "f476eccb0b53c2370f3f2ec7c4f408da7a33482e4de14c92592d6a521a904078",
+      "statement": "AlphaEvolve uses state-of-the-art LLMs in its generation pipeline.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_model_ensemble",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0141",
+      "sentence_id": "tex_prose_sentence_0057",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 58,
+      "source_end_line": 58,
+      "source_quote": "supports various types of customization",
+      "source_quote_start": 39,
+      "source_quote_end": 78,
+      "source_quote_sha256": "5b11ca1f7e90f34b281e58da4867a8540c4bc2f90d2be577573ce62ab0b8a103",
+      "statement": "The primary evolution prompt supports multiple customization types.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_long_context_customization",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0142",
+      "sentence_id": "tex_prose_sentence_0057",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 58,
+      "source_end_line": 58,
+      "source_quote": "providing long contexts as part of the primary evolution prompt",
+      "source_quote_start": 83,
+      "source_quote_end": 146,
+      "source_quote_sha256": "a4cc577345a47b8250ff268fd270dbd39f16a6a1035402ff86ba0a67a5a83237",
+      "statement": "The primary evolution prompt supports long context.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_long_context_customization",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0143",
+      "sentence_id": "tex_prose_sentence_0058",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 59,
+      "source_end_line": 59,
+      "source_quote": "multiple previously discovered solutions sampled from the program database",
+      "source_quote_start": 22,
+      "source_quote_end": 96,
+      "source_quote_sha256": "7e4f57807b142d293725b18ed3634eeeed7d392fa037071fce8a035a178a9a35",
+      "statement": "Primary prompts include multiple sampled prior solutions.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_prior_solutions_and_instructions",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0144",
+      "sentence_id": "tex_prose_sentence_0058",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 59,
+      "source_end_line": 59,
+      "source_quote": "system instructions on how to propose changes to a particular solution",
+      "source_quote_start": 109,
+      "source_quote_end": 179,
+      "source_quote_sha256": "00fe746d34aa244d4914430653967612d57ebadd4c05161d46e3481cb6b41071",
+      "statement": "Primary prompts instruct the model how to modify a selected solution.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_prior_solutions_and_instructions",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0145",
+      "sentence_id": "tex_prose_sentence_0059",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 60,
+      "source_end_line": 60,
+      "source_quote": "users can further tailor prompts to their specific needs in different ways",
+      "source_quote_start": 30,
+      "source_quote_end": 104,
+      "source_quote_sha256": "7a22e26b556d4b75145866da32a0e8a928d829791f3e7dd80ce2e92393a0d0a3",
+      "statement": "The prose introduces a list of prompt-tailoring mechanisms.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "The substantive prompt mechanisms are decomposed in the following four sentences."
+    },
+    {
+      "proposition_id": "tex_proposition_0146",
+      "sentence_id": "tex_prose_sentence_0060",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 63,
+      "source_end_line": 63,
+      "source_quote": "details about the problem being solved",
+      "source_quote_start": 18,
+      "source_quote_end": 56,
+      "source_quote_sha256": "1b9168eaa02f5c5aa0128c0caaada0260c1b8b1477a1474e66bc2673f0733cbd",
+      "statement": "Explicit prompt context can describe the problem.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_explicit_context",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0147",
+      "sentence_id": "tex_prose_sentence_0060",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 63,
+      "source_end_line": 63,
+      "source_quote": "fixed human-written instructions",
+      "source_quote_start": 66,
+      "source_quote_end": 98,
+      "source_quote_sha256": "738c20a951cb4b9260244e7e729f6d4bac08ee7c07622f97d68c779862257059",
+      "statement": "Explicit prompt context can contain fixed human instructions.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_explicit_context",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0148",
+      "sentence_id": "tex_prose_sentence_0060",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 63,
+      "source_end_line": 63,
+      "source_quote": "equations",
+      "source_quote_start": 100,
+      "source_quote_end": 109,
+      "source_quote_sha256": "f7867daf100069426bd796183e588312d540049df60abf0e9cbca634a132e67d",
+      "statement": "Explicit prompt context can contain equations.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_explicit_context",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0149",
+      "sentence_id": "tex_prose_sentence_0060",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "methods.tex",
+      "source_line": 63,
+      "source_end_line": 63,
+      "source_quote": "code snippets",
+      "source_quote_start": 111,
+      "source_quote_end": 124,
+      "source_quote_sha256": "353a2187ca8938421702f3cd412408dd0267f2103d62a0d3c21c8bef5ed3e1e4",
+      "statement": "Explicit prompt context can contain code snippets.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_explicit_context",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0150",
+      "sentence_id": "tex_prose_sentence_0060",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "methods.tex",
+      "source_line": 63,
+      "source_end_line": 63,
+      "source_quote": "relevant literature (e.g., pdf files)",
+      "source_quote_start": 129,
+      "source_quote_end": 166,
+      "source_quote_sha256": "40ba723c3dd62f9c9432373bc0646f18bee60ba78e9114782a38634b10b1f096",
+      "statement": "Explicit prompt context can contain literature such as PDFs.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_explicit_context",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0151",
+      "sentence_id": "tex_prose_sentence_0061",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 65,
+      "source_end_line": 65,
+      "source_quote": "template placeholders with human-provided alternatives",
+      "source_quote_start": 23,
+      "source_quote_end": 77,
+      "source_quote_sha256": "3b0699c5eace58c7e0c5a34f3577c6a2c359462d51f0906edb3cc26d48ae8b16",
+      "statement": "Stochastic prompt formatting uses placeholders with human-provided alternatives.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_stochastic_formatting",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0152",
+      "sentence_id": "tex_prose_sentence_0061",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 65,
+      "source_end_line": 65,
+      "source_quote": "for increased diversity",
+      "source_quote_start": 78,
+      "source_quote_end": 101,
+      "source_quote_sha256": "5748706f4be49a9c4e24153b66d930c1f7b14b8c3cdbee43a6ade4a47196b909",
+      "statement": "Stochastic prompt formatting is intended to increase diversity.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_stochastic_formatting",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0153",
+      "sentence_id": "tex_prose_sentence_0061",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 65,
+      "source_end_line": 65,
+      "source_quote": "instantiated using probability distributions",
+      "source_quote_start": 103,
+      "source_quote_end": 147,
+      "source_quote_sha256": "d0b15a075442b1574fc538fcfbf1486157d5b4f5f71f263f11d83c3e8a4a4e05",
+      "statement": "Prompt alternatives are sampled from probability distributions.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_stochastic_formatting",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0154",
+      "sentence_id": "tex_prose_sentence_0061",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "methods.tex",
+      "source_line": 65,
+      "source_end_line": 65,
+      "source_quote": "provided in a separate config file",
+      "source_quote_start": 148,
+      "source_quote_end": 182,
+      "source_quote_sha256": "92f5fd671d8f7a4ddb49fa24a0e63e166417c1f99e1f62a17ff6ec856a026f25",
+      "statement": "The probability distributions are provided through a separate configuration file.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_stochastic_formatting",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0155",
+      "sentence_id": "tex_prose_sentence_0062",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 67,
+      "source_end_line": 67,
+      "source_quote": "this will include a program",
+      "source_quote_start": 37,
+      "source_quote_end": 64,
+      "source_quote_sha256": "e122d173c0ed0d99b7b77cbdb420ba0d9314d792ae70b72b073db660adb1c57a",
+      "statement": "Rendered evaluation context usually includes the candidate program.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_rendered_evaluation_results",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0156",
+      "sentence_id": "tex_prose_sentence_0062",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 67,
+      "source_end_line": 67,
+      "source_quote": "the result of executing that program",
+      "source_quote_start": 66,
+      "source_quote_end": 102,
+      "source_quote_sha256": "574b6f3058fc88c6a58f275ca947654e03e2b33b6a1dd806052a0476ab416065",
+      "statement": "Rendered evaluation context usually includes program output.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_rendered_evaluation_results",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0157",
+      "sentence_id": "tex_prose_sentence_0062",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 67,
+      "source_end_line": 67,
+      "source_quote": "the scores assigned by the evaluate function",
+      "source_quote_start": 108,
+      "source_quote_end": 152,
+      "source_quote_sha256": "a607cbdcf4038dc9490bfc34abe4017ad34f6db8306d048d958d0780f06567e3",
+      "statement": "Rendered evaluation context usually includes evaluator scores.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_rendered_evaluation_results",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0158",
+      "sentence_id": "tex_prose_sentence_0063",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 69,
+      "source_end_line": 69,
+      "source_quote": "instructions and context suggested by the LLM itself",
+      "source_quote_start": 23,
+      "source_quote_end": 75,
+      "source_quote_sha256": "7eb48b789aed42d6e7d4660c3104b8fc832310407abd8e0b5efc886ac4327383",
+      "statement": "Meta-prompt evolution lets an LLM suggest prompt instructions and context.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_meta_evolution_database",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0159",
+      "sentence_id": "tex_prose_sentence_0063",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 69,
+      "source_end_line": 69,
+      "source_quote": "in an additional prompt-generation step",
+      "source_quote_start": 76,
+      "source_quote_end": 115,
+      "source_quote_sha256": "95345b9934c5c003c94050c4dd36c14e4cdfd1ffd07148feb289e49b072e9835",
+      "statement": "Meta-prompt suggestions are generated in an additional model step.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_meta_evolution_database",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0160",
+      "sentence_id": "tex_prose_sentence_0063",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 69,
+      "source_end_line": 69,
+      "source_quote": "co-evolved",
+      "source_quote_start": 117,
+      "source_quote_end": 127,
+      "source_quote_sha256": "e02bc1d52b21b37d826da844a249903fe445c42e0577a96c5e843ac9a62c910c",
+      "statement": "Prompt instructions and context are co-evolved.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_meta_evolution_database",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0161",
+      "sentence_id": "tex_prose_sentence_0063",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "methods.tex",
+      "source_line": 69,
+      "source_end_line": 69,
+      "source_quote": "in a separate database analogous to the solution programs",
+      "source_quote_start": 128,
+      "source_quote_end": 185,
+      "source_quote_sha256": "c560ddd86cb3e8c7079f660b6072498b346be78220d6ce39a91ec27c6d26c820",
+      "statement": "Meta prompts use a separate database analogous to the solution database.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_meta_evolution_database",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0162",
+      "sentence_id": "tex_prose_sentence_0064",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 76,
+      "source_end_line": 76,
+      "source_quote": "leverages the capabilities of SOTA LLMs",
+      "source_quote_start": 49,
+      "source_quote_end": 88,
+      "source_quote_sha256": "f0bcd28081543a89c7670c68b8edca389588fecd2ef3c8a4ec9d6cbcce8856c5",
+      "statement": "Creative generation uses state-of-the-art LLM capability.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_model_ensemble",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0163",
+      "sentence_id": "tex_prose_sentence_0064",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 76,
+      "source_end_line": 76,
+      "source_quote": "digest information about previously developed solutions",
+      "source_quote_start": 117,
+      "source_quote_end": 172,
+      "source_quote_sha256": "0f09240c5227e775f4a1b5d9587172b3bc46c8eb9a0f2be97d15899f2901db7a",
+      "statement": "The generation model consumes information about prior solutions.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_prior_solutions_and_instructions",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0164",
+      "sentence_id": "tex_prose_sentence_0064",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 76,
+      "source_end_line": 76,
+      "source_quote": "propose new, diverse ways to improve the solutions",
+      "source_quote_start": 177,
+      "source_quote_end": 227,
+      "source_quote_sha256": "8c31bd2ce64357d017b4bc2871a99ad0248ee63bab707ccd2582fd3efb1226b2",
+      "statement": "The generation model proposes diverse solution improvements.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_model_ensemble",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0165",
+      "sentence_id": "tex_prose_sentence_0065",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 77,
+      "source_end_line": 77,
+      "source_quote": "AlphaEvolve is model-agnostic",
+      "source_quote_start": 9,
+      "source_quote_end": 38,
+      "source_quote_sha256": "f22e2b9a4f9e8847bc4354447ed81ccd67366a4dd9839632b3db7d7e62deaa23",
+      "statement": "AlphaEvolve is designed to be model-agnostic.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_model_agnostic",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0166",
+      "sentence_id": "tex_prose_sentence_0065",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 77,
+      "source_end_line": 77,
+      "source_quote": "performs increasingly better as the underlying LLM improves",
+      "source_quote_start": 81,
+      "source_quote_end": 140,
+      "source_quote_sha256": "a8186700f3c81946c875e6949dbdc024cccc33680feaac495e27e2e6c43b7c19",
+      "statement": "The paper reports increasing search performance with stronger underlying LLMs.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_stronger_model_effect",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0167",
+      "sentence_id": "tex_prose_sentence_0066",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 81,
+      "source_end_line": 81,
+      "source_quote": "asks an LLM to modify existing code, especially within larger codebases",
+      "source_quote_start": 17,
+      "source_quote_end": 88,
+      "source_quote_sha256": "93c3f972d6c026dc2f7ec5001e3c337fa4a9d61a3e2e900e81961aeb53a2cd9e",
+      "statement": "The generation path asks LLMs to modify existing code, including larger codebases.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_search_replace_blocks",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0168",
+      "sentence_id": "tex_prose_sentence_0066",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 81,
+      "source_end_line": 81,
+      "source_quote": "provided as a sequence of diff blocks in a specific format",
+      "source_quote_start": 120,
+      "source_quote_end": 178,
+      "source_quote_sha256": "5e288ebbbf047af57859479f9316b7c0e39a62e9e547e2435a5910a9f1106307",
+      "statement": "Code modifications are requested as specifically formatted diff blocks.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_search_replace_blocks",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0169",
+      "sentence_id": "tex_prose_sentence_0067",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 91,
+      "source_end_line": 91,
+      "source_quote": "the exact segment to match in the current program version",
+      "source_quote_start": 59,
+      "source_quote_end": 116,
+      "source_quote_sha256": "5aab2dde621b9cd7c7648fe54e5d23d2e124dff5895633be97d1e6801fc14d58",
+      "statement": "The SEARCH block must exactly match current program text.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_search_replace_blocks",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0170",
+      "sentence_id": "tex_prose_sentence_0068",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 91,
+      "source_end_line": 91,
+      "source_quote": "the new segment that will replace the original one",
+      "source_quote_start": 54,
+      "source_quote_end": 104,
+      "source_quote_sha256": "671c740cc62d76bb94f9af670ccf3156a796a1862feec9716ac57daf598a23ab",
+      "statement": "The REPLACE block supplies replacement text for the matched segment.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_search_replace_blocks",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0171",
+      "sentence_id": "tex_prose_sentence_0069",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 92,
+      "source_end_line": 92,
+      "source_quote": "targeted updates to specific parts of the code",
+      "source_quote_start": 16,
+      "source_quote_end": 62,
+      "source_quote_sha256": "0e4ac2183a143d88924826841849e6382c96781cc5b8c6d3adbe3e59a55891c0",
+      "statement": "SEARCH/REPLACE blocks enable targeted code updates.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_search_replace_blocks",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0172",
+      "sentence_id": "tex_prose_sentence_0070",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 94,
+      "source_end_line": 94,
+      "source_quote": "the code being evolved is very short",
+      "source_quote_start": 15,
+      "source_quote_end": 51,
+      "source_quote_sha256": "f12b8f25fc56e5e00cff3786215e50710dcdefa08db0a3eba61d258d7493c786",
+      "statement": "Short evolved code can use complete-output mode.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_direct_full_code_output",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0173",
+      "sentence_id": "tex_prose_sentence_0070",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 94,
+      "source_end_line": 94,
+      "source_quote": "a complete rewrite is more appropriate than a small modification",
+      "source_quote_start": 61,
+      "source_quote_end": 125,
+      "source_quote_sha256": "31edb420fb985b8e1666183cbe5088aa6cb72b68f251857f83abce7dd844dc62",
+      "statement": "Complete-output mode can be selected when rewriting is more appropriate than a diff.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_direct_full_code_output",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0174",
+      "sentence_id": "tex_prose_sentence_0070",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 94,
+      "source_end_line": 94,
+      "source_quote": "output the entire code block directly, rather than using the diff format",
+      "source_quote_start": 180,
+      "source_quote_end": 252,
+      "source_quote_sha256": "7492330fb9ce7620b8e28b3cfbb7a47fc5665526601ba97e9e479a67806059d2",
+      "statement": "The LLM can be instructed to output the full code block instead of a diff.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_direct_full_code_output",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0175",
+      "sentence_id": "tex_prose_sentence_0071",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 97,
+      "source_end_line": 97,
+      "source_quote": "employs an ensemble of large language models",
+      "source_quote_start": 12,
+      "source_quote_end": 56,
+      "source_quote_sha256": "5c2f0767dc1d4185cce4511796d086b6de1db67e111a99f5c1432b0db1e16608",
+      "statement": "AlphaEvolve generates with an LLM ensemble.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_model_ensemble",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0176",
+      "sentence_id": "tex_prose_sentence_0072",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 97,
+      "source_end_line": 97,
+      "source_quote": "Gemini 2.0 Flash",
+      "source_quote_start": 42,
+      "source_quote_end": 58,
+      "source_quote_sha256": "a0089ee0749ba5639d0b56b4089ba089627f964b8a09d3a3bc67b89e42942406",
+      "statement": "The reported AlphaEvolve ensemble includes Gemini 2.0 Flash.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_fast_strong_model_mix",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0177",
+      "sentence_id": "tex_prose_sentence_0072",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 97,
+      "source_end_line": 97,
+      "source_quote": "Gemini 2.0 Pro",
+      "source_quote_start": 63,
+      "source_quote_end": 77,
+      "source_quote_sha256": "5e586978f0322cd71ddbdb3c1fd829ee6b046b9f178b017fd90a7b8f8177e1b0",
+      "statement": "The reported AlphaEvolve ensemble includes Gemini 2.0 Pro.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_fast_strong_model_mix",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0178",
+      "sentence_id": "tex_prose_sentence_0073",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 98,
+      "source_end_line": 98,
+      "source_quote": "balance computational throughput with the quality of generated solutions",
+      "source_quote_start": 36,
+      "source_quote_end": 108,
+      "source_quote_sha256": "684932141a3b19c56471164921b5e2be299c69c752c5cf6814d066a5aa90d598",
+      "statement": "The ensemble is intended to balance generation throughput and solution quality.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_model_ensemble",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_fast_strong_model_mix",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0179",
+      "sentence_id": "tex_prose_sentence_0074",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 99,
+      "source_end_line": 99,
+      "source_quote": "Gemini 2.0 Flash, with its lower latency",
+      "source_quote_start": 0,
+      "source_quote_end": 40,
+      "source_quote_sha256": "4e48ba33826749836cb2be02ec9ba4c474994c54ff7c3b5901c0227072b2606c",
+      "statement": "Gemini 2.0 Flash is used as the lower-latency model.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_fast_strong_model_mix",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0180",
+      "sentence_id": "tex_prose_sentence_0074",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 99,
+      "source_end_line": 99,
+      "source_quote": "enables a higher rate of candidate generation",
+      "source_quote_start": 42,
+      "source_quote_end": 87,
+      "source_quote_sha256": "f63718984c43fcc48880513391c7bb463d895632cf2caf25a3c9859a1c3aab46",
+      "statement": "The lower-latency model increases candidate-generation rate.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_fast_strong_model_mix",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0181",
+      "sentence_id": "tex_prose_sentence_0074",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 99,
+      "source_end_line": 99,
+      "source_quote": "increasing the number of ideas explored per unit of time",
+      "source_quote_start": 89,
+      "source_quote_end": 145,
+      "source_quote_sha256": "f5ad13ef66fac26528e0ba4a6c60e1d8da92b21974365ca9a7c620e0b40032d4",
+      "statement": "Higher candidate throughput increases ideas explored per unit time.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_fast_strong_model_mix",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0182",
+      "sentence_id": "tex_prose_sentence_0075",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 100,
+      "source_end_line": 100,
+      "source_quote": "Gemini 2.0 Pro, possessing greater capabilities",
+      "source_quote_start": 14,
+      "source_quote_end": 61,
+      "source_quote_sha256": "43f33bfc6c8d8bebd176aadfa864d2cf867a50167e0950c7ca588f7ac5865780",
+      "statement": "Gemini 2.0 Pro is used as the higher-capability model.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_fast_strong_model_mix",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0183",
+      "sentence_id": "tex_prose_sentence_0075",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 100,
+      "source_end_line": 100,
+      "source_quote": "provides occasional, higher-quality suggestions",
+      "source_quote_start": 63,
+      "source_quote_end": 110,
+      "source_quote_sha256": "1c56199ee32948f5cedb97bedd7f2fcbe265e22424a4b4b8983a647cba55a9cd",
+      "statement": "The higher-capability model provides less frequent, higher-quality suggestions.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_fast_strong_model_mix",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0184",
+      "sentence_id": "tex_prose_sentence_0075",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 100,
+      "source_end_line": 100,
+      "source_quote": "significantly advance the evolutionary search",
+      "source_quote_start": 120,
+      "source_quote_end": 165,
+      "source_quote_sha256": "278c75b348b578c9fc0290cf0f330e14619a57000a5fa9a30da305378af9d2b6",
+      "statement": "Higher-quality suggestions can substantially advance search.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_fast_strong_model_mix",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0185",
+      "sentence_id": "tex_prose_sentence_0075",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "methods.tex",
+      "source_line": 100,
+      "source_end_line": 100,
+      "source_quote": "potentially lead to breakthroughs",
+      "source_quote_start": 170,
+      "source_quote_end": 203,
+      "source_quote_sha256": "7366892b9b3d1f5c1d667a118f7ed6b61ec2a81605714f98d8d672f35fc52f3d",
+      "statement": "The paper attributes breakthrough potential to higher-capability suggestions.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_fast_strong_model_mix",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0186",
+      "sentence_id": "tex_prose_sentence_0076",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 101,
+      "source_end_line": 101,
+      "source_quote": "optimizes the overall discovery process",
+      "source_quote_start": 19,
+      "source_quote_end": 58,
+      "source_quote_sha256": "26352e3d5fdea876f1f5da77c21becef4212011fcb5e9295067401db303d3e2f",
+      "statement": "The reported model mix is intended to optimize discovery.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_fast_strong_model_mix",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0187",
+      "sentence_id": "tex_prose_sentence_0076",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 101,
+      "source_end_line": 101,
+      "source_quote": "maximizing the volume of evaluated ideas",
+      "source_quote_start": 62,
+      "source_quote_end": 102,
+      "source_quote_sha256": "cafa39707b9a3deb79cd5c2ca1dd0b9337a0b9d987255d2ed0baa4b48fc0ad10",
+      "statement": "The fast model is intended to maximize evaluated-idea volume.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_fast_strong_model_mix",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0188",
+      "sentence_id": "tex_prose_sentence_0076",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 101,
+      "source_end_line": 101,
+      "source_quote": "retaining the potential for substantial improvements driven by the more powerful model",
+      "source_quote_start": 109,
+      "source_quote_end": 195,
+      "source_quote_sha256": "0f39014fcce5dcd21d28667d0bc38b7fc0608b69bbf227899d1a19353fcae970",
+      "statement": "The strong model preserves the possibility of substantial improvements.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "generation_fast_strong_model_mix",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0189",
+      "sentence_id": "tex_prose_sentence_0077",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 107,
+      "source_end_line": 107,
+      "source_quote": "each new solution proposed by the LLMs is automatically evaluated",
+      "source_quote_start": 94,
+      "source_quote_end": 159,
+      "source_quote_sha256": "56b8905c016e4781346b451b6416c208075f7fbd64e1a7addf92470d0e3d51e4",
+      "statement": "Every newly proposed solution is automatically evaluated.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_every_proposal",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0190",
+      "sentence_id": "tex_prose_sentence_0077",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 107,
+      "source_end_line": 107,
+      "source_quote": "To track AlphaEvolve's progress",
+      "source_quote_start": 0,
+      "source_quote_end": 31,
+      "source_quote_sha256": "8b25d8efaa9f78ad6ff819543c4fd59987441bf2af501aeac77e1eac42142c31",
+      "statement": "Automatic evaluation tracks evolutionary progress.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_every_proposal",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0191",
+      "sentence_id": "tex_prose_sentence_0077",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 107,
+      "source_end_line": 107,
+      "source_quote": "select which ideas to propagate in future generations",
+      "source_quote_start": 39,
+      "source_quote_end": 92,
+      "source_quote_sha256": "327bc9588a2b1108fa37c0e5d79431e0d8c0d12a23b341423f297d266c126c29",
+      "statement": "Evaluation results inform which ideas are resurfaced in future generations.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evolution_database_resurfacing",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0192",
+      "sentence_id": "tex_prose_sentence_0078",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 108,
+      "source_end_line": 108,
+      "source_quote": "executing the user-provided evaluation function h on the generated solution",
+      "source_quote_start": 45,
+      "source_quote_end": 120,
+      "source_quote_sha256": "9b086ced4b3ee72b538628d8b404a9bf4377cf0cc60e06cb69c91dc192422a8c",
+      "statement": "Evaluation executes the user-provided function on a generated solution.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_every_proposal",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "task_scalar_metric_mapping",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0193",
+      "sentence_id": "tex_prose_sentence_0079",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 109,
+      "source_end_line": 109,
+      "source_quote": "supports optional mechanisms to make this evaluation more flexible and more efficient",
+      "source_quote_start": 25,
+      "source_quote_end": 110,
+      "source_quote_sha256": "c90d8bedb84bf9d88094dc030954ba6d14d851b82093b39b2dacfe02e3587646",
+      "statement": "The prose introduces optional evaluation mechanisms for flexibility and efficiency.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "The substantive mechanisms are decomposed in the following cascade, feedback, and parallel-evaluation sentences."
+    },
+    {
+      "proposition_id": "tex_proposition_0194",
+      "sentence_id": "tex_prose_sentence_0080",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 112,
+      "source_end_line": 112,
+      "source_quote": "ensembles of test cases of increasing difficulty",
+      "source_quote_start": 62,
+      "source_quote_end": 110,
+      "source_quote_sha256": "61a6dc03b55f63e0f1c5b01cf1d58b207fc8dae0471ff05653e1c1810acda395",
+      "statement": "An evaluation cascade can contain test ensembles of increasing difficulty.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_increasing_difficulty_cascade",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0195",
+      "sentence_id": "tex_prose_sentence_0080",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 112,
+      "source_end_line": 112,
+      "source_quote": "evaluated on the next stage only if they achieve sufficiently promising results in all earlier stages",
+      "source_quote_start": 140,
+      "source_quote_end": 241,
+      "source_quote_sha256": "5a1a5f118272aa850df692b2f57abff0ab6187485bbe80460c1f07efb9dce971",
+      "statement": "Candidates advance only after promising results in every earlier stage.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_increasing_difficulty_cascade",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0196",
+      "sentence_id": "tex_prose_sentence_0081",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 113,
+      "source_end_line": 113,
+      "source_quote": "prune out less promising solutions more quickly",
+      "source_quote_start": 14,
+      "source_quote_end": 61,
+      "source_quote_sha256": "eb18083b66bca64b0acc342eda75a1b5aca19cc59e8e44defab9daf7fe78e96c",
+      "statement": "The evaluation cascade prunes weak candidates early.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_increasing_difficulty_cascade",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0197",
+      "sentence_id": "tex_prose_sentence_0082",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 113,
+      "source_end_line": 113,
+      "source_quote": "new solutions are initially evaluated on a small scale",
+      "source_quote_start": 10,
+      "source_quote_end": 64,
+      "source_quote_sha256": "c9ed0841f96fa4fba92e4e527ecbfba48f76d9507ad82c79c40beb9b0ffe73cd",
+      "statement": "New candidates are initially evaluated at small scale.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_increasing_difficulty_cascade",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0198",
+      "sentence_id": "tex_prose_sentence_0082",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 113,
+      "source_end_line": 113,
+      "source_quote": "before being subjected to the main test cases",
+      "source_quote_start": 65,
+      "source_quote_end": 110,
+      "source_quote_sha256": "d64d3e15537cd626c6ae4dfcee5b7d3f1fc5d1368acd19b68ce50e32b86a2a5e",
+      "statement": "Main test cases run only after the small-scale evaluation.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_increasing_difficulty_cascade",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0199",
+      "sentence_id": "tex_prose_sentence_0082",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 113,
+      "source_end_line": 113,
+      "source_quote": "filter out faulty programs early",
+      "source_quote_start": 115,
+      "source_quote_end": 147,
+      "source_quote_sha256": "939217ee9755a81d0f961735aa27813893105b3c8dd59a0c9b33338c05e2d744",
+      "statement": "Small-scale evaluation is intended to reject faulty programs early.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_increasing_difficulty_cascade",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0200",
+      "sentence_id": "tex_prose_sentence_0083",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "desirable solutions have certain characteristics that are difficult to capture precisely in the user-provided evaluation function h",
+      "source_quote_start": 46,
+      "source_quote_end": 177,
+      "source_quote_sha256": "dba269efb5c088952e0b828541c263a825e8b56d5f02a62ba8e8ad7b6106552f",
+      "statement": "Some desirable candidate qualities are difficult to encode in the user evaluator.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_llm_generated_feedback",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0201",
+      "sentence_id": "tex_prose_sentence_0083",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 115,
+      "source_end_line": 115,
+      "source_quote": "simplicity of the discovered program",
+      "source_quote_start": 193,
+      "source_quote_end": 229,
+      "source_quote_sha256": "4c6ac488469b96842139993755c221a4deb15c18cd70d96e9d8067ede18ccd5b",
+      "statement": "Program simplicity is given as an example of a difficult-to-encode quality.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_llm_generated_feedback",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0202",
+      "sentence_id": "tex_prose_sentence_0084",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 116,
+      "source_end_line": 116,
+      "source_quote": "graded using separate LLM calls",
+      "source_quote_start": 24,
+      "source_quote_end": 55,
+      "source_quote_sha256": "945c72c290ce2dde49f40ccae3edb50f65fd23bae802ff527cf47df0001160e8",
+      "statement": "Separate LLM calls can grade qualitative candidate properties.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_llm_generated_feedback",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0203",
+      "sentence_id": "tex_prose_sentence_0084",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 116,
+      "source_end_line": 116,
+      "source_quote": "added to the dictionary of scores to steer evolution",
+      "source_quote_start": 60,
+      "source_quote_end": 112,
+      "source_quote_sha256": "b64171ed9a9b71d2f287a349ff8e2530d88b4112665e0b76e5036bf2ff20364d",
+      "statement": "LLM grades can become score signals that steer evolution.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_llm_generated_feedback",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0204",
+      "sentence_id": "tex_prose_sentence_0084",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 116,
+      "source_end_line": 116,
+      "source_quote": "used to discard solutions when a criterion is not fulfilled",
+      "source_quote_start": 129,
+      "source_quote_end": 188,
+      "source_quote_sha256": "53cb63f8a47be509baf7a27415d0be1eeac958ba3929a0684b7dff30e40136ae",
+      "statement": "LLM grades can act as candidate-discard criteria.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_llm_generated_feedback",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0205",
+      "sentence_id": "tex_prose_sentence_0085",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 118,
+      "source_end_line": 118,
+      "source_quote": "the sample efficiency of AlphaEvolve makes it feasible",
+      "source_quote_start": 25,
+      "source_quote_end": 79,
+      "source_quote_sha256": "1afe3e56f714f32424a760f465c0e447149daf5c8e0b9de78cb43a69e66b11eb",
+      "statement": "The paper claims AlphaEvolve is sample-efficient enough to make expensive evaluation feasible.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_sample_efficiency_enables_expensive_evaluation",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0206",
+      "sentence_id": "tex_prose_sentence_0085",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 118,
+      "source_end_line": 118,
+      "source_quote": "on the order of 100 compute-hours to evaluate any new solution",
+      "source_quote_start": 89,
+      "source_quote_end": 151,
+      "source_quote_sha256": "4a8f69d1511387721c231c9d63cf56fcae7abad25c62cfb952b6ecf2cb3bcb2e",
+      "statement": "A candidate evaluation may consume roughly 100 compute-hours.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_order_hundred_compute_hours_per_candidate",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0207",
+      "sentence_id": "tex_prose_sentence_0086",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "individual evaluations are parallelized to reduce their wall-clock duration",
+      "source_quote_start": 16,
+      "source_quote_end": 91,
+      "source_quote_sha256": "a50b0bec4406448324168c63b8efbcd8e33b534a144de8c97a7bdee8ef3987fb",
+      "statement": "Individual evaluations need parallelism to reduce wall-clock duration.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_async_cluster_parallelism",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0208",
+      "sentence_id": "tex_prose_sentence_0086",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "slow down the rate at which new generations appear",
+      "source_quote_start": 102,
+      "source_quote_end": 152,
+      "source_quote_sha256": "ed053696d8b11d2a298b97ceec2a48bbcc658b1e24802730c70754bd07aecadd",
+      "statement": "Long serial evaluations reduce generation throughput.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_order_hundred_compute_hours_per_candidate",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_async_cluster_parallelism",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0209",
+      "sentence_id": "tex_prose_sentence_0086",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 119,
+      "source_end_line": 119,
+      "source_quote": "limiting the ability of the evolutionary algorithm to apply several consecutive mutations",
+      "source_quote_start": 154,
+      "source_quote_end": 243,
+      "source_quote_sha256": "ca73941489fae8e845674e1f3b6736042b1a900f5b3c455fb5a154be362c7450",
+      "statement": "Reduced generation throughput limits consecutive mutation depth.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_async_cluster_parallelism",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0210",
+      "sentence_id": "tex_prose_sentence_0087",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 120,
+      "source_end_line": 120,
+      "source_quote": "evaluation is embarrassingly parallel",
+      "source_quote_start": 22,
+      "source_quote_end": 59,
+      "source_quote_sha256": "7173b5bb9cd7a6576c60bbc7567bbacfd2393de55fac82b4b9692a0ed99e7a1f",
+      "statement": "The paper reports that many application evaluators are embarrassingly parallel.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_async_cluster_parallelism",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0211",
+      "sentence_id": "tex_prose_sentence_0087",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 120,
+      "source_end_line": 120,
+      "source_quote": "running a search algorithm from multiple randomized initializations",
+      "source_quote_start": 74,
+      "source_quote_end": 141,
+      "source_quote_sha256": "d1888621318d9039fe0f6237476775857461ccdfe7448399ab692d2c1dfbf365",
+      "statement": "Multiple randomized search initializations are an evaluation-parallelism example.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_async_cluster_parallelism",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0212",
+      "sentence_id": "tex_prose_sentence_0087",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 120,
+      "source_end_line": 120,
+      "source_quote": "distribute this work through asynchronous calls to an evaluation cluster",
+      "source_quote_start": 168,
+      "source_quote_end": 240,
+      "source_quote_sha256": "73aada4de92ca30f6cb30c2087141b8cc9997f3b3f081cafc56a665ec03b1cf8",
+      "statement": "AlphaEvolve distributes evaluation through asynchronous cluster calls.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_async_cluster_parallelism",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0213",
+      "sentence_id": "tex_prose_sentence_0088",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 124,
+      "source_end_line": 124,
+      "source_quote": "optimizing multiple user-provided scores",
+      "source_quote_start": 23,
+      "source_quote_end": 63,
+      "source_quote_sha256": "b3e8b6465b7027a0b58c85ee19d2b956613d313c3848227a238580ef2b0fd27c",
+      "statement": "AlphaEvolve supports multiple user-provided optimization scores.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_multiple_user_scores",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0214",
+      "sentence_id": "tex_prose_sentence_0088",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 124,
+      "source_end_line": 124,
+      "source_quote": "achieve a high score under one or multiple evaluation metrics",
+      "source_quote_start": 93,
+      "source_quote_end": 154,
+      "source_quote_sha256": "87338a9c188df77f4093a713356587b3be9bfa31e76ae3d68ba4d27bd3e5b93a",
+      "statement": "Candidate objects may target one metric or several metrics.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_multiple_user_scores",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0215",
+      "sentence_id": "tex_prose_sentence_0089",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 125,
+      "source_end_line": 125,
+      "source_quote": "an intrinsic",
+      "source_quote_start": 14,
+      "source_quote_end": 26,
+      "source_quote_sha256": "8d5cfce24969f32c58eb23423dae2a17c4ec18c080f7dbfaaa10be055811c8de",
+      "statement": "Multiple-score optimization can be intrinsically valuable when multiple outcomes matter.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_multiple_user_scores",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0216",
+      "sentence_id": "tex_prose_sentence_0089",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 125,
+      "source_end_line": 125,
+      "source_quote": "instrumental value",
+      "source_quote_start": 31,
+      "source_quote_end": 49,
+      "source_quote_sha256": "25fd42248ef4aad44605d3c8af4aacd6e77de46214e0d800e0ef1617c8f478bd",
+      "statement": "Multiple-score optimization can be instrumentally valuable to a target metric.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_multi_metric_single_target_uplift",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0217",
+      "sentence_id": "tex_prose_sentence_0090",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 125,
+      "source_end_line": 125,
+      "source_quote": "developing solutions for multiple evaluation metrics",
+      "source_quote_start": 55,
+      "source_quote_end": 107,
+      "source_quote_sha256": "a2e3d6ae928517e6851bfa52457d0566458bc9c0897fa3285b85ef51ff80fb70",
+      "statement": "Some applications intrinsically require performance across multiple metrics.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_multiple_user_scores",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0218",
+      "sentence_id": "tex_prose_sentence_0090",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 125,
+      "source_end_line": 125,
+      "source_quote": "one solution that is strong on all of them simultaneously",
+      "source_quote_start": 112,
+      "source_quote_end": 169,
+      "source_quote_sha256": "659368d751051150046789035c94d90fb0a5b3666cbe53edaa1bd6470f0df3ef",
+      "statement": "A single candidate may need to be strong on all metrics simultaneously.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_multiple_user_scores",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0219",
+      "sentence_id": "tex_prose_sentence_0090",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 125,
+      "source_end_line": 125,
+      "source_quote": "optimizing for multiple metrics often improves results for the single target metric",
+      "source_quote_start": 231,
+      "source_quote_end": 314,
+      "source_quote_sha256": "35a8bc586da6ad21d2caaf48b822862ed1379a2736c35cd59b304581b4bc056b",
+      "statement": "The paper reports target-metric uplift from multi-metric optimization.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_multi_metric_single_target_uplift",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0220",
+      "sentence_id": "tex_prose_sentence_0091",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 126,
+      "source_end_line": 126,
+      "source_quote": "programs excelling under different evaluation criteria often possess distinct structures or logic",
+      "source_quote_start": 28,
+      "source_quote_end": 125,
+      "source_quote_sha256": "66ba3e0c0749b2e02a5f000b6ec1c67961e81f72fab6b57497fbcb390ff17aab",
+      "statement": "The authors hypothesize that different metric elites often have distinct program structure or logic.",
+      "disposition": "author_interpretation",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "The sentence explicitly presents this causal explanation as a possibility rather than a demonstrated system result."
+    },
+    {
+      "proposition_id": "tex_proposition_0221",
+      "sentence_id": "tex_prose_sentence_0091",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 126,
+      "source_end_line": 126,
+      "source_quote": "incorporating examples of these diverse, high-performing programs",
+      "source_quote_start": 134,
+      "source_quote_end": 199,
+      "source_quote_sha256": "4add22c0f54e72424ee958294e8aae26062f247d24a1ffc701408bb13ebb02e0",
+      "statement": "Metric-diverse high-performing programs are incorporated into model prompts.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_metric_diverse_prompting",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0222",
+      "sentence_id": "tex_prose_sentence_0091",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 126,
+      "source_end_line": 126,
+      "source_quote": "each representing a different definition of ``good''",
+      "source_quote_start": 202,
+      "source_quote_end": 254,
+      "source_quote_sha256": "559ef23f93ec1eb878f85581b05e6ad1af4dc8c796475963cedb538844279ccb",
+      "statement": "Each metric-diverse prompt example represents a different evaluation definition of good.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_metric_diverse_prompting",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0223",
+      "sentence_id": "tex_prose_sentence_0091",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "methods.tex",
+      "source_line": 126,
+      "source_end_line": 126,
+      "source_quote": "stimulate the generation of more varied candidate solutions",
+      "source_quote_start": 313,
+      "source_quote_end": 372,
+      "source_quote_sha256": "53eb590e37a154d88767870d5ee96693f7535aced3ad7b68c145d9fa5dcbdf92",
+      "statement": "Metric-diverse prompt examples are intended to increase candidate diversity.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_metric_diverse_prompting",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0224",
+      "sentence_id": "tex_prose_sentence_0091",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "methods.tex",
+      "source_line": 126,
+      "source_end_line": 126,
+      "source_quote": "increasing the chances of discovering novel approaches that are highly effective for the target metric",
+      "source_quote_start": 374,
+      "source_quote_end": 476,
+      "source_quote_sha256": "cc4121e5ee60de408ef0099ddc1f1db1d0e24578053fd43f4b2bd08d73231a22",
+      "statement": "The proposed diversity mechanism is intended to improve target-metric discovery probability.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_multi_metric_single_target_uplift",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_metric_diverse_prompting",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0225",
+      "sentence_id": "tex_prose_sentence_0092",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 132,
+      "source_end_line": 132,
+      "source_quote": "continually generates a growing number of solutions",
+      "source_quote_start": 47,
+      "source_quote_end": 98,
+      "source_quote_sha256": "4af8e2bc6f30ee635a514d2dc82205759c1591667da97a4f01010fcd78344ec1",
+      "statement": "Evolution continually grows the solution population.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evolution_results_attached_to_solutions",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0226",
+      "sentence_id": "tex_prose_sentence_0092",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 132,
+      "source_end_line": 132,
+      "source_quote": "scores",
+      "source_quote_start": 124,
+      "source_quote_end": 130,
+      "source_quote_sha256": "a6235752ef51e86cdf1d56634948c32f75fe6a492e212797315ea43f5ecfa66e",
+      "statement": "Evaluation scores are attached to generated solutions.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evolution_results_attached_to_solutions",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0227",
+      "sentence_id": "tex_prose_sentence_0092",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 132,
+      "source_end_line": 132,
+      "source_quote": "program outputs",
+      "source_quote_start": 135,
+      "source_quote_end": 150,
+      "source_quote_sha256": "4a69b079eca1b99b8b281f83a03842329bf6edcb5fd638a03cd2d44ec7ac7ba4",
+      "statement": "Program outputs are attached to generated solutions.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evolution_results_attached_to_solutions",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0228",
+      "sentence_id": "tex_prose_sentence_0093",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 133,
+      "source_end_line": 133,
+      "source_quote": "solutions are stored in an evolutionary database",
+      "source_quote_start": 6,
+      "source_quote_end": 54,
+      "source_quote_sha256": "f852a5d0428bc446a78e61bbad0753581bdc53ce41224300d9ca61758a6d73a4",
+      "statement": "Generated solutions are stored in an evolutionary database.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evolution_database_resurfacing",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0229",
+      "sentence_id": "tex_prose_sentence_0093",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 133,
+      "source_end_line": 133,
+      "source_quote": "optimally resurface previously explored ideas in future generations",
+      "source_quote_start": 88,
+      "source_quote_end": 155,
+      "source_quote_sha256": "e56aa047c5dae7b47dea74152767ab16c5f46859c2de7eba30cc85e8207f2a6f",
+      "statement": "The database is intended to resurface prior ideas in future generations.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evolution_database_resurfacing",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0230",
+      "sentence_id": "tex_prose_sentence_0094",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 134,
+      "source_end_line": 134,
+      "source_quote": "balancing exploration and exploitation",
+      "source_quote_start": 47,
+      "source_quote_end": 85,
+      "source_quote_sha256": "8cb01a42ac26c084ece19a1b5f8f29293b03a129767a383243e997c06b325992",
+      "statement": "The evolutionary database must balance exploration and exploitation.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evolution_exploration_exploitation_balance",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0231",
+      "sentence_id": "tex_prose_sentence_0094",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 134,
+      "source_end_line": 134,
+      "source_quote": "continuously improve the best programs",
+      "source_quote_start": 90,
+      "source_quote_end": 128,
+      "source_quote_sha256": "81386cc88ff9783d1c7c8a8055e4839957368e466a1e32e6a987eab3d08129f2",
+      "statement": "Exploitation is intended to continuously improve strong programs.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evolution_exploration_exploitation_balance",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0232",
+      "sentence_id": "tex_prose_sentence_0094",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 134,
+      "source_end_line": 134,
+      "source_quote": "maintaining diversity",
+      "source_quote_start": 135,
+      "source_quote_end": 156,
+      "source_quote_sha256": "7161fd9c552bf0c42dc7abb6cb84d2e2b1bd6361dfc2868fd376a45446479733",
+      "statement": "The database is intended to preserve solution diversity.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evolution_exploration_exploitation_balance",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0233",
+      "sentence_id": "tex_prose_sentence_0094",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "methods.tex",
+      "source_line": 134,
+      "source_end_line": 134,
+      "source_quote": "encourage exploration of the entire search space",
+      "source_quote_start": 160,
+      "source_quote_end": 208,
+      "source_quote_sha256": "c3ddc56902dd20831bae6f937458177ddff76eb8be4dd0de8f45479470d386df",
+      "statement": "Diversity is intended to encourage broad search-space exploration.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evolution_exploration_exploitation_balance",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0234",
+      "sentence_id": "tex_prose_sentence_0095",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 135,
+      "source_end_line": 135,
+      "source_quote": "inspired by a combination of the MAP elites algorithm",
+      "source_quote_start": 74,
+      "source_quote_end": 127,
+      "source_quote_sha256": "549b79214fc8f9ea196591aa510020554be306ea77b20bf6252d21615586649d",
+      "statement": "The evolutionary database is inspired by MAP-Elites.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evolution_map_elites_and_islands",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0235",
+      "sentence_id": "tex_prose_sentence_0095",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 135,
+      "source_end_line": 135,
+      "source_quote": "island-based population models",
+      "source_quote_start": 143,
+      "source_quote_end": 173,
+      "source_quote_sha256": "1f85ff3279a1e7355f7231b4baef8fcc6a8c7dd0ff5560a43a4f292f9ee658ec",
+      "statement": "The evolutionary database is also inspired by island population models.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evolution_map_elites_and_islands",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0236",
+      "sentence_id": "tex_prose_sentence_0096",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 141,
+      "source_end_line": 141,
+      "source_quote": "an asynchronous computational pipeline (using the asyncio Python library)",
+      "source_quote_start": 30,
+      "source_quote_end": 103,
+      "source_quote_sha256": "7390a7570c15ed5b2614c6b14886382a8a31db566f86ed6174f2b8a5bc0deb00",
+      "statement": "AlphaEvolve uses a Python asyncio computational pipeline.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "distributed_asyncio_dependency_pipeline",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0237",
+      "sentence_id": "tex_prose_sentence_0096",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 141,
+      "source_end_line": 141,
+      "source_quote": "many computations are run concurrently",
+      "source_quote_start": 113,
+      "source_quote_end": 151,
+      "source_quote_sha256": "5f2321f1bc15f2ff5dda1021f4d6542898be5a46061d6edc7367e0ea71e95017",
+      "statement": "The pipeline runs many computations concurrently.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "distributed_asyncio_dependency_pipeline",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0238",
+      "sentence_id": "tex_prose_sentence_0096",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 141,
+      "source_end_line": 141,
+      "source_quote": "each computation blocking (waiting) whenever its next step relies on the result of another, yet unfinished computation",
+      "source_quote_start": 158,
+      "source_quote_end": 276,
+      "source_quote_sha256": "e6de39081df46d41ad33bc950e464c8fd35b4300ff0470d5a3cf4d0942f3bc70",
+      "statement": "A pipeline computation waits when its next step depends on unfinished work.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "distributed_asyncio_dependency_pipeline",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0239",
+      "sentence_id": "tex_prose_sentence_0097",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 142,
+      "source_end_line": 142,
+      "source_quote": "a controller",
+      "source_quote_start": 55,
+      "source_quote_end": 67,
+      "source_quote_sha256": "4fbcdbc8660723959c314ebd456b503a343a139df48f3fd30d81b80ebacf5268",
+      "statement": "The asynchronous pipeline includes a controller.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "distributed_controller_sampler_evaluator_nodes",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0240",
+      "sentence_id": "tex_prose_sentence_0097",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 142,
+      "source_end_line": 142,
+      "source_quote": "LLM samplers",
+      "source_quote_start": 69,
+      "source_quote_end": 81,
+      "source_quote_sha256": "bf30ecceda25f385c8976221fc2f421a23b73bf616c168b1babe6d9615eec6ec",
+      "statement": "The asynchronous pipeline includes LLM samplers.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "distributed_controller_sampler_evaluator_nodes",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0241",
+      "sentence_id": "tex_prose_sentence_0097",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 142,
+      "source_end_line": 142,
+      "source_quote": "evaluation nodes",
+      "source_quote_start": 87,
+      "source_quote_end": 103,
+      "source_quote_sha256": "0ff96db4ea00913e3fcaac342d093d92072d9fe0835b6517b0ba0fbf449b1554",
+      "statement": "The asynchronous pipeline includes evaluation nodes.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "distributed_controller_sampler_evaluator_nodes",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0242",
+      "sentence_id": "tex_prose_sentence_0098",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "methods.tex",
+      "source_line": 143,
+      "source_end_line": 143,
+      "source_quote": "optimized for throughput (rather than the speed of any one particular computation)",
+      "source_quote_start": 23,
+      "source_quote_end": 105,
+      "source_quote_sha256": "020541b5a4b943200c37e4cb3ba19e0ea7dcfb482c33852a16d2123313a31847",
+      "statement": "The pipeline optimizes aggregate throughput rather than individual-operation latency.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "distributed_throughput_budget_optimization",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0243",
+      "sentence_id": "tex_prose_sentence_0098",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "methods.tex",
+      "source_line": 143,
+      "source_end_line": 143,
+      "source_quote": "maximize the number of ideas that can be proposed and evaluated",
+      "source_quote_start": 119,
+      "source_quote_end": 182,
+      "source_quote_sha256": "2e680f21687fba326928b3afc103815f3e538c2655a97489612d6a2eb89ece35",
+      "statement": "Throughput optimization targets the number of proposed and evaluated ideas.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "distributed_throughput_budget_optimization",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0244",
+      "sentence_id": "tex_prose_sentence_0098",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "methods.tex",
+      "source_line": 143,
+      "source_end_line": 143,
+      "source_quote": "within a specific overall computation budget",
+      "source_quote_start": 183,
+      "source_quote_end": 227,
+      "source_quote_sha256": "225b248e5806505e6aa6caa4339051be96e958fba2cbf6f71a7471473430a448",
+      "statement": "Pipeline throughput is optimized under an overall compute budget.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "distributed_throughput_budget_optimization",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
     }
   ],
   "inventory_scope": {
     "included": [
       "all 8 retained Abstract sentences in main.tex",
       "all 29 retained Introduction sentences in introduction.tex",
+      "all 61 retained Methods sentences in methods.tex",
       "manual atomic-proposition statements and exact rendered-source quote offsets",
       "resolved bounded-claim mappings or explicit context, outlook, and interpretation dispositions"
     ],
     "excluded": [
-      "the remaining 365 retained prose sentences",
+      "the remaining 304 retained prose sentences",
       "separately audited captions, tables, equations, listings, footnotes, and explicit math constructs",
       "independent second-reviewer semantic agreement",
       "mathematical correctness, citation sufficiency, image-pixel semantics, or result reproduction",
       "AlphaEvolve system parity"
     ]
   },
-  "claim_boundary": "This boundary records a single-reviewer atomic-proposition decomposition for every retained Abstract and Introduction sentence. Complete disposition inside this 37-sentence scope does not cover the remaining 365 prose sentences and does not prove independent semantic exhaustiveness, mathematical correctness, result reproduction, or AlphaEvolve parity."
+  "claim_boundary": "This boundary records a single-reviewer atomic-proposition decomposition for every retained Abstract, Introduction, and Methods sentence. Complete disposition inside this 98-sentence scope does not cover the remaining 304 prose sentences and does not prove independent semantic exhaustiveness, mathematical correctness, result reproduction, or AlphaEvolve parity."
 }

@@ -95,6 +95,7 @@ def test_tex_prose_inventory_maps_new_claims_and_disambiguates_repeated_anchors(
         "task_problem_specific_abstraction_choice",
         "task_symmetry_guided_abstraction_bias",
         "evaluation_order_hundred_compute_hours_per_candidate",
+        "evaluation_sample_efficiency_enables_expensive_evaluation",
         "evaluation_multi_metric_single_target_uplift",
         "section3_1_tensor_decomposition_algorithm_representation",
         "section3_1_low_rank_decomposition_search_objective",
@@ -125,6 +126,30 @@ def test_tex_prose_inventory_maps_new_claims_and_disambiguates_repeated_anchors(
     } == {
         "introduction_erdos_minimum_overlap_result",
         "introduction_kissing_number_d11_improvement",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("methods.tex", 32, 0)]["claim_refs"]
+    } == {
+        "introduction_automatically_evaluable_problem_scope",
+        "task_scalar_metric_mapping",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("methods.tex", 48, 0)]["claim_refs"]
+    } == {
+        "introduction_algorithm_discovery_instrumental_goal",
+        "task_problem_specific_abstraction_choice",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("methods.tex", 118, 0)]["claim_refs"]
+    } == {
+        "evaluation_order_hundred_compute_hours_per_candidate",
+        "evaluation_sample_efficiency_enables_expensive_evaluation",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("methods.tex", 107, 0)]["claim_refs"]
+    } == {
+        "evaluation_every_proposal",
+        "evolution_database_resurfacing",
     }
     assert [
         ref["claim_id"] for ref in records[("ablations.tex", 8, 3)]["claim_refs"]

@@ -1556,11 +1556,11 @@ Named AlphaEvolve source coverage is represented by
 `papers/alphaevolve_source_inventory_boundary.json`, which verifies the pinned
 44-page PDF hash and page count plus 55 named spans, 57 page-local anchors, 38
 structural spans, 14 numbered figures, and 3 numbered tables. The bounded
-`papers/alphaevolve_system_requirement_inventory_boundary.json` adds 55
+`papers/alphaevolve_system_requirement_inventory_boundary.json` adds 56
 PDF-anchored implementation requirements covering all eight Table 1 rows,
 Sections 2.1-2.6, and Figures 1-3. It classifies 14 requirements as locally
-implemented, 31 as partial, 4 as not implemented, and 6 as not demonstrated,
-and verifies live domain TODO ownership for all 41 incomplete rows. The committed
+implemented, 31 as partial, 4 as not implemented, and 7 as not demonstrated,
+and verifies live domain TODO ownership for all 42 incomplete rows. The committed
 `papers/alphaevolve_context_claim_inventory_boundary.json` adds 45 exact-page
 claims from the Abstract, Introduction, Discussion, and one Acknowledgements
 sentence. It classifies 6 as locally implemented, 11 as partial, 4 as not
@@ -1669,9 +1669,9 @@ explicit TeX math constructs: 291 inline and 18 display constructs. It inherits
 constructs directly to existing bounded claims, with zero unmapped or unresolved
 references and no new claim or parity credit. It does not establish formula
 correctness, proof validity, or result reproduction. Together the twelve bounded
-claim inventories now disposition 845 claims: 30 locally implemented, 278
-partial, 110 not implemented, 368 not demonstrated, and 59 source-context-only.
-Across 786 implementation-relevant claims this is 3.8% strict implemented
+claim inventories now disposition 846 claims: 30 locally implemented, 278
+partial, 110 not implemented, 369 not demonstrated, and 59 source-context-only.
+Across 787 implementation-relevant claims this is 3.8% strict implemented
 parity, or 21.5% when partial claims receive half credit.
 The weighted value rises because Appendix B registry metadata receives partial
 credit, not because any Appendix B result was reproduced.
@@ -1687,10 +1687,11 @@ have row/cell
 dispositions; and all 8 retained code listings and 305 physical source lines
 have line-level dispositions; all 309 explicit TeX math constructs have
 delimiter-level dispositions; prose sentences also have dispositions. This is
-supplemented by 93 atomic-proposition dispositions across all 37 Abstract and
-Introduction sentences, with 81 mapped to bounded claims and 12 classified as
-context, outlook, or interpretation. This is not proposition review for the
-remaining 365 prose sentences or independent semantic review, mathematical correctness,
+supplemented by 244 atomic-proposition dispositions across all 98 Abstract,
+Introduction, and Methods sentences, with 226 mapped to bounded claims and 18
+classified as context, outlook, or interpretation. This is not proposition
+review for the remaining 304 prose sentences or independent semantic review,
+mathematical correctness,
 image-pixel or citation-semantic review, or per-phrase sufficiency proof,
 coverage detector,
 generated code-audit report, or CI exhaustiveness gate. The checked
@@ -4212,13 +4213,14 @@ independent semantic review, mathematical correctness, result reproduction, or
 AlphaEvolve parity.
 
 The scoped semantic review in
-`papers/alphaevolve_tex_proposition_inventory_boundary.json` decomposes all 37
-retained Abstract and Introduction sentences into 93 atomic propositions.
-Eighty-one map through 94 resolved references to 62 existing bounded claims; 9
-are background context, 2 are author outlook, and 1 is a qualified author
-interpretation. The review adds the previously unbounded paper claim that an
-instrumental search algorithm is reported as more effective than direct
-solution search and repairs four sentence-to-claim mappings obscured by TeX
-math or citation rendering. It is a single-reviewer scoped inventory, not
-proposition coverage for the remaining 365 prose sentences, independent
+`papers/alphaevolve_tex_proposition_inventory_boundary.json` decomposes all 98
+retained Abstract, Introduction, and Methods sentences into 244 atomic
+propositions. Two hundred twenty-six map through 245 resolved references to
+104 existing bounded claims; 14 are background context, 2 are author outlook,
+and 2 are qualified author interpretations. The review adds the previously
+unbounded claims that instrumental search is reported as more effective than
+direct solution search and that sample efficiency makes roughly 100 compute-
+hours per candidate feasible. It also repairs broad or TeX-obscured sentence-
+to-claim mappings. It is a single-reviewer scoped inventory, not proposition
+coverage for the remaining 304 prose sentences, independent
 semantic agreement, mathematical correctness, result reproduction, or parity.

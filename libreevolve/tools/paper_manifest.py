@@ -8182,7 +8182,7 @@ def _validate_alphaevolve_tex_proposition_inventory_boundary(
                     "alphaevolve_tex_proposition_inventory_boundary_manifest_missing",
                     (
                         f"{ALPHAEVOLVE_TEX_PROPOSITION_INVENTORY_BOUNDARY_FILE} "
-                        "must emit the retained-TeX Abstract and Introduction "
+                        "must emit the retained-TeX Abstract, Introduction, and Methods "
                         "atomic-proposition review inventory"
                     ),
                     "alphaevolve_tex_proposition_inventory",

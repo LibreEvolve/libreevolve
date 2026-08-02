@@ -14619,6 +14619,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: the paper manifest requires the sidecar and rejects source,
     count, status, reference, ownership, result-reproduction, and parity drift.
 
+- [x] Review every retained AlphaEvolve Methods sentence as atomic propositions.
+  - Paper evidence: all 61 grammatical sentences in retained `methods.tex`
+    cover the platform overview, task specification, prompt sampling, creative
+    generation, evaluation, evolutionary database, and distributed pipeline.
+  - Status: the cumulative proposition sidecar now covers 98 Abstract,
+    Introduction, and Methods sentences as 244 propositions. It maps 226
+    propositions through 245 references to 104 claims and explicitly
+    dispositions 18 context, outlook, or interpretation propositions.
+  - Claim correction: the system requirement inventory grows to 56 claims by
+    separating the sample-efficiency basis for expensive evaluation from the
+    roughly 100-compute-hour capability. The new undemonstrated claim has live
+    ownership in the existing sample-efficiency TODO.
+  - Remaining paper gap: proposition review for 304 sentences, independent
+    semantic agreement, citation and image semantics, mathematical correctness,
+    result reproduction, and AlphaEvolve parity remain unproven.
+
 - [x] Add a scoped retained-TeX atomic-proposition inventory.
   - Paper evidence: the retained Abstract and Introduction contain 37
     grammatical sentences, including compound method, comparison, scope, and

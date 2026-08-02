@@ -14,11 +14,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     provenance claims that the full audit must disposition.
   - Current evidence: the committed
     `papers/alphaevolve_system_requirement_inventory_boundary.json` verifies
-    55 page-local source anchors against the pinned PDF and maps every bounded
+    56 page-local source anchors against the pinned PDF and maps every bounded
     requirement to implementation/audit evidence, ROADMAP section and phase,
     local status, and active domain TODO ownership. Its status split is 14
-    locally implemented, 31 partially implemented, 4 not implemented, and 6
-    not demonstrated; all 41 incomplete rows have live TODO-title checks. The
+    locally implemented, 31 partially implemented, 4 not implemented, and 7
+    not demonstrated; all 42 incomplete rows have live TODO-title checks. The
     `papers/alphaevolve_context_claim_inventory_boundary.json` adds 45
     exact-page claims from the Abstract, Introduction, Discussion, and one
     Acknowledgements sentence: 6 locally implemented, 11 partial, 4 not
@@ -68,7 +68,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     exact-page and visible-panel claims from all 13 Appendix B subsections and
     Figures 10-14: 95 partial, 24 not implemented, and 69 not demonstrated,
     with live code and paper TODO ownership for every gap. Combined coverage is
-    845 claims: 30 implemented, 278 partial, 110 not implemented, 368 not
+    846 claims: 30 implemented, 278 partial, 110 not implemented, 369 not
     demonstrated, and 59 source-context-only. The supplemental
     `papers/alphaevolve_citation_use_inventory_boundary.json` now inventories
     the retained 14-file `main.tex` closure, all 195 logical citation uses, all
@@ -100,11 +100,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     explicit TeX math constructs: 291 inline and 18 display constructs. It
     inherits 34 source-detail and 75 table-cell dispositions and maps the other
     200 constructs directly to existing bounded claim ids with no unmapped or
-    unresolved references and no new claim or parity credit. The paper
+    unresolved references and no new claim or parity credit. The supplemental
+    `papers/alphaevolve_tex_proposition_inventory_boundary.json` reviews all 98
+    Abstract, Introduction, and Methods sentences as 244 atomic propositions:
+    226 map through 245 references to 104 bounded claims, and 18 are context,
+    outlook, or interpretation. It adds the missing claim that sample
+    efficiency makes roughly 100 compute-hours per candidate feasible and
+    repairs broad or cross-inventory sentence mappings; the new gap has live
+    ownership in the existing sample-efficiency TODO. The paper
     manifest rejects any inventory sidecar's absence, source/reference
     drift, status drift, stale TODO ownership, result-reproduction overclaims,
     and parity overclaims.
-  - Current gap: the combined 845-claim inventory covers every named source
+  - Current gap: the combined 846-claim inventory covers every named source
     span, the supplemental citation inventory covers citation syntax plus
     bibliography-key linkage, and the source-detail inventory dispositions all
     caption/equation-environment/footnote constructs, while the table-cell
@@ -112,8 +119,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     inventory
     dispositions all 8 environments and 305 source lines; the math inventory
     covers 309 TeX constructs; prose maps 402 sentences, and review
-    covers 93 propositions across 37 Abstract/Introduction sentences. Citation
-    role and implementation relevance remain unclassified. Remaining 365
+    covers 244 propositions across 98 Abstract/Introduction/Methods sentences.
+    Citation role and implementation relevance remain unclassified. Remaining 304
     sentence propositions, math/image-pixel/citation semantics, evidence sufficiency,
     result reproduction, and independent reviewer proof that any bounded inventory
     is semantically exhaustive also remain open.

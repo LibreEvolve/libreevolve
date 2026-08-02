@@ -24,7 +24,7 @@ ALPHAEVOLVE_SYSTEM_REQUIREMENT_INVENTORY_BOUNDARY_SCHEMA = (
 EXPECTED_BOUNDARY_STATUS = (
     "section_2_system_requirements_inventory_complete_without_whole_paper_claim_exhaustiveness"
 )
-EXPECTED_REQUIREMENT_COUNT = 55
+EXPECTED_REQUIREMENT_COUNT = 56
 IMPLEMENTED_STATUS = "implemented_local"
 INCOMPLETE_STATUSES = frozenset(
     {"partially_implemented", "not_implemented", "not_demonstrated"}
@@ -928,6 +928,29 @@ SYSTEM_REQUIREMENT_SPECS = (
         ("expensive_budget", "accelerator_budget"),
     ),
     _requirement(
+        "evaluation_sample_efficiency_enables_expensive_evaluation",
+        "section_2_4",
+        8,
+        (
+            "sample efficiency of AlphaEvolve makes it feasible to spend on "
+            "the order of 100 compute-hours"
+        ),
+        (
+            "Demonstrate that proposal sample efficiency makes roughly 100 "
+            "compute-hours of evaluation per candidate feasible."
+        ),
+        "evaluation",
+        "not_demonstrated",
+        "sample_efficiency",
+        "mid_term",
+        (
+            "papers/sample_efficiency_boundary.json",
+            "papers/expensive_evaluation_budget_boundary.json",
+            "tests/test_sample_efficiency_boundary.py",
+        ),
+        ("sample_efficiency",),
+    ),
+    _requirement(
         "evaluation_async_cluster_parallelism",
         "section_2_4",
         8,
@@ -1224,7 +1247,7 @@ def alphaevolve_system_requirement_inventory_boundary_record(
         "missing_reference_count": missing_reference_count,
         "requirement_records": records,
         "claim_boundary": (
-            "This sidecar certifies a bounded claim-level inventory of 50 "
+            "This sidecar certifies a bounded claim-level inventory of 56 "
             "implementation-bearing AlphaEvolve requirements from Table 1, "
             "Sections 2.1 through 2.6, and Figures 1 through 3. Local status "
             "labels distinguish implemented behavior from partial, missing, "
@@ -1279,7 +1302,7 @@ def validate_alphaevolve_system_requirement_inventory_boundary(
         if data.get(key) != expected[key]:
             issues.append(_issue(f"invalid_{key}", f"{key} drifted from the bounded system requirement inventory"))
     if len(EXPECTED_REQUIREMENT_IDS) != EXPECTED_REQUIREMENT_COUNT:
-        issues.append(_issue("invalid_spec_count", "system requirement spec count must remain 55"))
+        issues.append(_issue("invalid_spec_count", "system requirement spec count must remain 56"))
     if len(set(EXPECTED_REQUIREMENT_IDS)) != len(EXPECTED_REQUIREMENT_IDS):
         issues.append(_issue("duplicate_requirement_id", "system requirement ids must be unique"))
     unknown_spans = sorted(
@@ -1327,7 +1350,7 @@ def validate_alphaevolve_system_requirement_inventory_boundary(
     claim_boundary = data.get("claim_boundary")
     if (
         not isinstance(claim_boundary, str)
-        or "50 implementation-bearing AlphaEvolve requirements" not in claim_boundary
+        or "56 implementation-bearing AlphaEvolve requirements" not in claim_boundary
         or "whole-paper claim-level exhaustiveness" not in claim_boundary
         or "AlphaEvolve system parity" not in claim_boundary
     ):

@@ -6051,9 +6051,21 @@
       "claim_refs": [
         {
           "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_standard_gradient_baseline_components",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
           "claim_id": "section3_1_sophisticated_algorithms_outperform_approaches",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_explicit_context",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null
@@ -6079,6 +6091,12 @@
         {
           "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
           "claim_id": "section3_1_multi_seed_evaluation_cascade",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_every_proposal",
           "resolved": true,
           "match_kind": "manual_source_line_mapping"
         }
@@ -6107,7 +6125,13 @@
           "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
           "claim_id": "section3_1_best_rank_and_seed_hit_fraction",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "section2_evolutionary_metric_improvement",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null
@@ -6134,7 +6158,13 @@
           "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
           "claim_id": "section3_1_integer_half_integer_rounding_exactness",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_natural_language_near_integrality_prompt",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null
@@ -6327,15 +6357,21 @@
       "claim_refs": [
         {
           "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_most_table2_simple_initial_program",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
           "claim_id": "section3_1_researcher_ideas_boost_performance",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         },
         {
           "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
           "claim_id": "section3_1_scientific_collaboration_possibility",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null

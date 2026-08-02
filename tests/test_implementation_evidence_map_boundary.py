@@ -14,7 +14,7 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "verified_core_anchors_plus_846_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_309_tex_math_constructs_402_tex_prose_sentences_and_244_propositions_across_98_abstract_introduction_methods_sentences_without_whole_paper_semantic_exhaustiveness"
+        == "verified_core_anchors_plus_846_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_309_tex_math_constructs_402_tex_prose_sentences_and_297_propositions_across_114_abstract_introduction_methods_and_section3_1_matrix_result_sentences_without_whole_paper_semantic_exhaustiveness"
     )
     assert validation.requirement_count == 6
     assert validation.reference_check_count == 81
@@ -94,7 +94,7 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
         "128_paragraphs_402_sentences_372_existing_claim_mappings_30_reviewed_nonclaims_zero_unmapped"
     )
     assert boundary["recorded_evidence"]["tex_proposition_disposition_inventory"] == (
-        "98_abstract_introduction_methods_sentences_244_atomic_propositions_226_existing_claim_mappings_18_context_outlook_or_interpretation_zero_unmapped"
+        "114_abstract_introduction_methods_and_section3_1_matrix_result_sentences_297_atomic_propositions_267_existing_claim_mappings_30_context_outlook_or_interpretation_zero_unmapped"
     )
     assert boundary["missing_evidence"]["citation_semantic_mapping"] == (
         "195_citation_uses_lexically_linked_without_supported_proposition_source_sufficiency_or_implementation_relevance_classification"
@@ -137,7 +137,7 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
     assert "all 8 retained TeX code listing environments" in boundary["claim_boundary"]
     assert "all 309 explicit TeX math constructs" in boundary["claim_boundary"]
     assert "all 128 retained TeX prose paragraphs" in boundary["claim_boundary"]
-    assert "remaining 304 sentences" in boundary["claim_boundary"]
+    assert "remaining 288 sentences" in boundary["claim_boundary"]
 
 
 def test_implementation_evidence_map_boundary_rejects_exhaustive_overclaim():
@@ -188,7 +188,7 @@ def test_render_implementation_evidence_map_boundary_summary_reports_shape():
     assert "Implementation evidence map boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | verified_core_anchors_plus_846_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_309_tex_math_constructs_402_tex_prose_sentences_and_244_propositions_across_98_abstract_introduction_methods_sentences_without_whole_paper_semantic_exhaustiveness |"
+        "| boundary_status | verified_core_anchors_plus_846_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_309_tex_math_constructs_402_tex_prose_sentences_and_297_propositions_across_114_abstract_introduction_methods_and_section3_1_matrix_result_sentences_without_whole_paper_semantic_exhaustiveness |"
         in summary
     )
     assert "| requirement_count | 6 |" in summary

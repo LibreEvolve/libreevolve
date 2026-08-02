@@ -99,6 +99,9 @@ def test_tex_prose_inventory_maps_new_claims_and_disambiguates_repeated_anchors(
         "evaluation_multi_metric_single_target_uplift",
         "section3_1_tensor_decomposition_algorithm_representation",
         "section3_1_low_rank_decomposition_search_objective",
+        "section3_1_standard_gradient_baseline_components",
+        "section3_1_natural_language_near_integrality_prompt",
+        "section3_1_most_table2_simple_initial_program",
     } <= mapped_ids
     assert {
         ref["claim_id"] for ref in records[("main.tex", 34, 0)]["claim_refs"]
@@ -150,6 +153,38 @@ def test_tex_prose_inventory_maps_new_claims_and_disambiguates_repeated_anchors(
     } == {
         "evaluation_every_proposal",
         "evolution_database_resurfacing",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("results.tex", 45, 0)]["claim_refs"]
+    } == {
+        "prompt_explicit_context",
+        "section3_1_sophisticated_algorithms_outperform_approaches",
+        "section3_1_standard_gradient_baseline_components",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("results.tex", 46, 0)]["claim_refs"]
+    } == {
+        "evaluation_every_proposal",
+        "section3_1_multi_seed_evaluation_cascade",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("results.tex", 47, 0)]["claim_refs"]
+    } == {
+        "section2_evolutionary_metric_improvement",
+        "section3_1_best_rank_and_seed_hit_fraction",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("results.tex", 48, 0)]["claim_refs"]
+    } == {
+        "section3_1_integer_half_integer_rounding_exactness",
+        "section3_1_natural_language_near_integrality_prompt",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("results.tex", 60, 0)]["claim_refs"]
+    } == {
+        "section3_1_most_table2_simple_initial_program",
+        "section3_1_researcher_ideas_boost_performance",
+        "section3_1_scientific_collaboration_possibility",
     }
     assert [
         ref["claim_id"] for ref in records[("ablations.tex", 8, 3)]["claim_refs"]

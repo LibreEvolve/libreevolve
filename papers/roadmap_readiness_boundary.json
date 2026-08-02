@@ -26,15 +26,15 @@
           "path": "docs/todo/Completed/code.md",
           "exists": true,
           "active_count": 0,
-          "completed_count": 1277,
-          "total_count": 1277
+          "completed_count": 1278,
+          "total_count": 1278
         }
       ],
       "active_count": 222,
-      "completed_count": 1277,
-      "total_count": 1499,
-      "raw_todo_completion_percent": 85.19,
-      "weighted_todo_completion_points": 42.595
+      "completed_count": 1278,
+      "total_count": 1500,
+      "raw_todo_completion_percent": 85.2,
+      "weighted_todo_completion_points": 42.6
     },
     {
       "category_id": "paper_source_and_benchmark_evidence",
@@ -56,15 +56,15 @@
           "path": "docs/todo/Completed/papers.md",
           "exists": true,
           "active_count": 0,
-          "completed_count": 1094,
-          "total_count": 1094
+          "completed_count": 1095,
+          "total_count": 1095
         }
       ],
       "active_count": 252,
-      "completed_count": 1094,
-      "total_count": 1346,
-      "raw_todo_completion_percent": 81.278,
-      "weighted_todo_completion_points": 20.32
+      "completed_count": 1095,
+      "total_count": 1347,
+      "raw_todo_completion_percent": 81.292,
+      "weighted_todo_completion_points": 20.323
     },
     {
       "category_id": "documentation_truthfulness_and_user_scope",
@@ -86,14 +86,14 @@
           "path": "docs/todo/Completed/readme.md",
           "exists": true,
           "active_count": 0,
-          "completed_count": 1217,
-          "total_count": 1217
+          "completed_count": 1218,
+          "total_count": 1218
         }
       ],
       "active_count": 32,
-      "completed_count": 1217,
-      "total_count": 1249,
-      "raw_todo_completion_percent": 97.438,
+      "completed_count": 1218,
+      "total_count": 1250,
+      "raw_todo_completion_percent": 97.44,
       "weighted_todo_completion_points": 14.616
     },
     {
@@ -116,22 +116,22 @@
           "path": "docs/todo/Completed/roadmap.md",
           "exists": true,
           "active_count": 0,
-          "completed_count": 1243,
-          "total_count": 1243
+          "completed_count": 1244,
+          "total_count": 1244
         }
       ],
       "active_count": 16,
-      "completed_count": 1243,
-      "total_count": 1259,
-      "raw_todo_completion_percent": 98.729,
+      "completed_count": 1244,
+      "total_count": 1260,
+      "raw_todo_completion_percent": 98.73,
       "weighted_todo_completion_points": 9.873
     }
   ],
   "raw_todo_ledger_active_count": 522,
-  "raw_todo_ledger_completed_count": 4831,
-  "raw_todo_ledger_total_count": 5353,
-  "raw_todo_ledger_completion_percent": 90.248,
-  "weighted_todo_ledger_completion_percent": 87.404,
+  "raw_todo_ledger_completed_count": 4835,
+  "raw_todo_ledger_total_count": 5357,
+  "raw_todo_ledger_completion_percent": 90.256,
+  "weighted_todo_ledger_completion_percent": 87.412,
   "readiness_percent_status": "todo_ledger_only_not_semantic_alphaevolve_readiness",
   "required_evidence_fields": [
     "stable_readiness_categories",

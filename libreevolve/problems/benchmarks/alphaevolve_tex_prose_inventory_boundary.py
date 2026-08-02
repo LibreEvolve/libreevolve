@@ -302,8 +302,24 @@ _DIRECT_CLAIM_MAP: dict[
     ("results.tex", 43, 0): _claim_refs(
         "matrix", "section3_1_3x3_minimum_rank_unknown"
     ),
+    ("results.tex", 45, 0): _claim_refs(
+        "matrix",
+        "section3_1_standard_gradient_baseline_components",
+        "section3_1_sophisticated_algorithms_outperform_approaches",
+    )
+    + _claim_refs("system", "prompt_explicit_context"),
     ("results.tex", 46, 0): _claim_refs(
         "matrix", "section3_1_multi_seed_evaluation_cascade"
+    )
+    + _claim_refs("system", "evaluation_every_proposal"),
+    ("results.tex", 47, 0): _claim_refs(
+        "matrix", "section3_1_best_rank_and_seed_hit_fraction"
+    )
+    + _claim_refs("system", "section2_evolutionary_metric_improvement"),
+    ("results.tex", 48, 0): _claim_refs(
+        "matrix",
+        "section3_1_integer_half_integer_rounding_exactness",
+        "section3_1_natural_language_near_integrality_prompt",
     ),
     ("results.tex", 53, 0): _claim_refs(
         "matrix", "section3_1_recursive_strassen_rank49_any_field"
@@ -313,6 +329,12 @@ _DIRECT_CLAIM_MAP: dict[
     ),
     ("results.tex", 57, 0): _claim_refs(
         "matrix", "section3_1_first_rank48_complex_4x4"
+    ),
+    ("results.tex", 60, 0): _claim_refs(
+        "matrix",
+        "section3_1_most_table2_simple_initial_program",
+        "section3_1_researcher_ideas_boost_performance",
+        "section3_1_scientific_collaboration_possibility",
     ),
     ("results.tex", 68, 1): _claim_refs(
         "math",

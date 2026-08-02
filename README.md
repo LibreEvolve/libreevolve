@@ -198,15 +198,16 @@ Important limits:
   the prose walk, but complete sentence disposition is not sentence-internal
   clause/proposition exhaustiveness or independent semantic review.
 - `papers/alphaevolve_tex_proposition_inventory_boundary.json` decomposes all
-  98 retained Abstract, Introduction, and Methods sentences into 244 atomic
-  propositions. Two hundred twenty-six map through 245 references to 104
-  bounded claims; 14 are background context, 2 are author outlook, and 2 are
-  qualified author interpretations. It adds the previously unbounded claims
-  for instrumental algorithm search versus direct solution search and for
-  sample efficiency enabling roughly 100 compute-hours per candidate, while
-  repairing sentence mappings hidden by TeX rendering or broad paragraph
-  matching. The remaining 304 prose sentences and independent semantic review
-  remain open.
+  114 retained Abstract, Introduction, Methods, and Section 3.1 matrix-result
+  sentences into 297 atomic propositions. Two hundred sixty-seven map through
+  287 references to 122 bounded claims; 25 are background context, 2 are author
+  outlook, and 3 are qualified author interpretations. The cumulative review
+  adds the previously unbounded direct-versus-instrumental-search and expensive-
+  evaluation sample-efficiency claims. The Section 3.1 extension adds no new
+  claim or parity credit, but repairs five sentence mappings for the gradient
+  baseline, prompt context, per-program evaluation, hill-climb signal, near-
+  integrality instruction, and simple initial programs. The remaining 288
+  prose sentences and independent semantic review remain open.
 - Together the twelve bounded inventories cover 846 claims: 30 locally
   implemented, 278 partial, 110 not implemented, 369 not demonstrated, and 59
   source-context-only, leaving 757 implementation gaps. Across the 787
@@ -220,9 +221,10 @@ Important limits:
   all 8 retained code listings and 305 physical source lines have line-level
   dispositions; all 309 explicit TeX math constructs have delimiter-level
   dispositions; and all 128 retained prose paragraphs and 402 grammatical
-  sentences have dispositions; 98 Abstract, Introduction, and Methods sentences
-  also have 244 atomic-proposition dispositions. Coverage still excludes
-  proposition review for the remaining 304 sentences, mathematical correctness,
+  sentences have dispositions; 114 Abstract, Introduction, Methods, and Section
+  3.1 matrix-result sentences also have 297 atomic-proposition dispositions.
+  Coverage still excludes proposition review for the remaining 288 sentences,
+  mathematical correctness,
   image-pixel and citation-semantic review, independent result reproduction,
   independent proof of semantic completeness, and AlphaEvolve-scale execution.
 - The local paper cache is source inventory. A cached paper or `papers/README.md`

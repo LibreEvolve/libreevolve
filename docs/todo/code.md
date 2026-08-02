@@ -145,13 +145,14 @@ sidecars, tests, and active TODOs.
     correctness, proof validity, and result reproduction remain owned by this
     TODO. The supplemental
     `papers/alphaevolve_tex_proposition_inventory_boundary.json` now reviews all
-    98 Abstract, Introduction, and Methods sentences as 244 atomic
-    propositions. It maps 226 propositions through 245 references to 104
-    bounded claims, dispositions 18 as context, outlook, or interpretation,
-    adds the missing sample-efficiency/enabling-expensive-evaluation claim, and
-    repairs overbroad or cross-inventory sentence mappings. The sample-
-    efficiency gap resolves to the existing active sample-efficiency TODO.
-    Remaining proposition coverage and independent semantic review stay open.
+    114 Abstract, Introduction, Methods, and Section 3.1 matrix-result sentences
+    as 297 atomic propositions. It maps 267 propositions through 287 references
+    to 122 bounded claims and classifies 30 as context, outlook, or
+    interpretation. Section 3.1 adds no new bounded claim or parity credit, but
+    repairs five sentence mappings for the gradient baseline, prompt context,
+    evaluation and hill-climb signals, near-integrality prompting, and simple
+    initial programs. Remaining proposition coverage and independent semantic
+    review stay open.
     Meanwhile,
     `papers/status_claim_inventory.json` now records checked row-level paper
     status inventory plus status-cell phrase hashes, source offsets, local
@@ -179,10 +180,10 @@ sidecars, tests, and active TODOs.
     constructs have dispositions, all 83 table rows and 240 cells have
     row/cell dispositions,
     all 8 code listings and 305 source lines have line-level dispositions, and
-    all 309 TeX math constructs and 402 prose sentences have dispositions; 244
-    propositions across 98 Abstract/Introduction/Methods sentences are reviewed.
+    all 309 TeX math constructs and 402 prose sentences have dispositions; 297
+    propositions across 114 sentences through Section 3.1 are reviewed.
     Citation roles/sufficiency and implementation relevance remain unclassified,
-    and 304 prose sentences lack proposition review;
+    and 288 prose sentences lack proposition review;
     mathematical-correctness, image-pixel or citation-semantic level
     across remaining source details and the other paper
     spans and all code modules, tests, runtime report

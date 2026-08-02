@@ -14619,6 +14619,21 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: the paper manifest requires the sidecar and rejects source,
     count, status, reference, ownership, result-reproduction, and parity drift.
 
+- [x] Review every retained AlphaEvolve Section 3.1 matrix-result sentence.
+  - Paper evidence: all 16 grammatical sentences in the retained Section 3.1
+    matrix-multiplication subsection now have clause-level proposition
+    dispositions, including historical context, evaluation design, Table 2
+    claims, Figure 4 navigation, and researcher-seed provenance.
+  - Status: the cumulative proposition sidecar covers 114 sentences and 297
+    propositions. It maps 267 propositions through 287 references to 122 claims
+    and explicitly dispositions 30 as context, outlook, or interpretation.
+  - Claim accounting: no new bounded claim or parity credit was required. Five
+    sentence mappings were repaired against existing matrix-result and system
+    inventories, whose active TODOs continue to own every incomplete claim.
+  - Remaining paper gap: proposition review for 288 sentences, independent
+    semantic agreement, citation and image semantics, mathematical correctness,
+    result reproduction, and AlphaEvolve parity remain unproven.
+
 - [x] Review every retained AlphaEvolve Methods sentence as atomic propositions.
   - Paper evidence: all 61 grammatical sentences in retained `methods.tex`
     cover the platform overview, task specification, prompt sampling, creative

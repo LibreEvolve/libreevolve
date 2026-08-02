@@ -249,12 +249,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     inherits 34 source-detail and 75 table-cell dispositions and maps the
     remaining 200 constructs directly to existing bounded claim ids, with no
     unmapped or unresolved references and no new claims or parity credit. The
-    proposition inventory now reviews all 98 Abstract, Introduction, and
-    Methods sentences as 244 atomic propositions, maps 226 through 245
-    references to 104 bounded claims, dispositions 18 as context, outlook, or
-    interpretation, adds the missing sample-efficiency claim, and repairs broad
-    or cross-inventory sentence mappings. Its new gap is owned by the existing
-    sample-efficiency TODO.
+    proposition inventory now reviews all 114 Abstract, Introduction, Methods,
+    and Section 3.1 matrix-result sentences as 297 atomic propositions, maps 267
+    through 287 references to 122 bounded claims, and classifies 30 as
+    context, outlook, or interpretation. Section 3.1 adds no new bounded claim
+    or parity credit, but repairs five sentence mappings for the gradient
+    baseline, prompt context, evaluation and hill-climb signals, near-integrality
+    prompting, and simple initial programs.
     `papers/roadmap_source_span_disposition_boundary.json` now maps all 55
     named spans to ROADMAP section ids, phase buckets, local status, sidecars,
     and audit TODO links, and records that only the AlphaEvolve
@@ -284,9 +285,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     footnote constructs have dispositions, all 83 table rows and 240 cells have
     row/cell dispositions, all 8 code listings and 305 source lines have
     line-level dispositions; all 309 math constructs and 402 prose sentences
-    have dispositions; 244 propositions in 98 Abstract/Introduction/Methods sentences
+    have dispositions; 297 propositions in 114 sentences through Section 3.1
     are reviewed. The matrix remains incomplete
-    across the rest of the paper: 304 sentences
+    across the rest of the paper: 288 sentences
     still lack proposition review; it cannot prove
     local math/image/citation correctness and result reproduction;
     show TODO ownership for every gap and add an application matrix;

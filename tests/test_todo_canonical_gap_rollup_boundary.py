@@ -36,7 +36,7 @@ def test_todo_canonical_gap_rollup_accepts_bounded_gate():
     )
     assert boundary["source_exact_duplicate_record_count"] == 246
     assert boundary["source_exact_duplicate_inflation_count"] == 123
-    assert boundary["source_exact_duplicate_collapsed_total_estimate"] == 5230
+    assert boundary["source_exact_duplicate_collapsed_total_estimate"] == 5234
     assert boundary["source_exact_duplicate_cross_owner_group_count"] == 122
     assert boundary["source_exact_duplicate_completed_only_group_count"] == 123
     assert boundary["source_exact_duplicate_active_involved_group_count"] == 0
@@ -47,7 +47,7 @@ def test_todo_canonical_gap_rollup_accepts_bounded_gate():
     )
     assert boundary["source_exact_duplicate_raw_count_inflation_report"][
         "inflation_percent_of_raw_total"
-    ] == 2.298
+    ] == 2.296
     assert boundary["source_exact_duplicate_owner_status_report"][
         "canonical_owner_assignments_ready"
     ] is False

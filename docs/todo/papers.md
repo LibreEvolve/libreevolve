@@ -101,13 +101,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     inherits 34 source-detail and 75 table-cell dispositions and maps the other
     200 constructs directly to existing bounded claim ids with no unmapped or
     unresolved references and no new claim or parity credit. The supplemental
-    `papers/alphaevolve_tex_proposition_inventory_boundary.json` reviews all 98
-    Abstract, Introduction, and Methods sentences as 244 atomic propositions:
-    226 map through 245 references to 104 bounded claims, and 18 are context,
-    outlook, or interpretation. It adds the missing claim that sample
-    efficiency makes roughly 100 compute-hours per candidate feasible and
-    repairs broad or cross-inventory sentence mappings; the new gap has live
-    ownership in the existing sample-efficiency TODO. The paper
+    `papers/alphaevolve_tex_proposition_inventory_boundary.json` reviews all 114
+    Abstract, Introduction, Methods, and Section 3.1 matrix-result sentences as
+    297 atomic propositions: 267 map through 287 references to 122 bounded
+    claims, and 30 are context, outlook, or interpretation. Section 3.1 adds no
+    new bounded claim or parity credit, but repairs five broad sentence mappings
+    for the gradient baseline, prompt context, evaluation and hill-climb
+    signals, near-integrality prompting, and simple initial programs. The paper
     manifest rejects any inventory sidecar's absence, source/reference
     drift, status drift, stale TODO ownership, result-reproduction overclaims,
     and parity overclaims.
@@ -119,8 +119,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     inventory
     dispositions all 8 environments and 305 source lines; the math inventory
     covers 309 TeX constructs; prose maps 402 sentences, and review
-    covers 244 propositions across 98 Abstract/Introduction/Methods sentences.
-    Citation role and implementation relevance remain unclassified. Remaining 304
+    covers 297 propositions across 114 sentences through Section 3.1. Citation
+    role and implementation relevance remain unclassified. Remaining 288
     sentence propositions, math/image-pixel/citation semantics, evidence sufficiency,
     result reproduction, and independent reviewer proof that any bounded inventory
     is semantically exhaustive also remain open.

@@ -20,16 +20,16 @@ from libreevolve.problems.benchmarks.paper_bibliography import (
 
 
 ALPHAEVOLVE_TEX_PROPOSITION_INVENTORY_BOUNDARY_SCHEMA = (
-    "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v2"
+    "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v3"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "abstract_introduction_and_methods_proposition_review_complete_without_"
+    "abstract_introduction_methods_and_matrix_results_proposition_review_complete_without_"
     "remaining_paper_or_independent_semantic_exhaustiveness"
 )
-EXPECTED_REVIEWED_SENTENCE_COUNT = 98
-EXPECTED_PROPOSITION_COUNT = 244
+EXPECTED_REVIEWED_SENTENCE_COUNT = 114
+EXPECTED_PROPOSITION_COUNT = 297
 EXPECTED_REVIEWED_SENTENCE_IDS = tuple(
-    f"tex_prose_sentence_{ordinal:04d}" for ordinal in range(1, 99)
+    f"tex_prose_sentence_{ordinal:04d}" for ordinal in range(1, 115)
 )
 EXPECTED_NEW_BOUNDED_CLAIM_IDS = (
     "introduction_algorithm_search_outperforms_direct_solution_search",
@@ -43,6 +43,12 @@ EXPECTED_REPAIRED_SENTENCE_CLAIM_IDS = (
     "introduction_erdos_minimum_overlap_result",
     "introduction_seventy_five_percent_math_best_known",
     "evolution_database_resurfacing",
+    "evaluation_every_proposal",
+    "prompt_explicit_context",
+    "section2_evolutionary_metric_improvement",
+    "section3_1_most_table2_simple_initial_program",
+    "section3_1_natural_language_near_integrality_prompt",
+    "section3_1_standard_gradient_baseline_components",
     "task_problem_specific_abstraction_choice",
 )
 
@@ -1563,6 +1569,367 @@ _PROPOSITION_SPECS.update(
     }
 )
 
+_PROPOSITION_SPECS.update(
+    {
+        "tex_prose_sentence_0099": (
+            _reviewed_context(
+                "accelerating machine learning computations",
+                "Matrix multiplication supports accelerated machine-learning computation.",
+                "This is domain motivation rather than an AlphaEvolve-specific implementation requirement.",
+            ),
+            _reviewed_context(
+                "enabling realistic computer graphics",
+                "Matrix multiplication supports realistic computer graphics.",
+                "This is domain motivation rather than an AlphaEvolve-specific implementation requirement.",
+            ),
+            _reviewed_context(
+                "matrix multiplication serves as a fundamental operation underpinning numerous critical algorithms and applications within computer science",
+                "Matrix multiplication underpins numerous important computer-science algorithms and applications.",
+                "This is general mathematical-computing context and does not define local parity behavior.",
+            ),
+        ),
+        "tex_prose_sentence_0100": (
+            _reviewed_context(
+                "Since the pioneering work of [citation] , it has been known that",
+                "The tensor-decomposition representation is attributed historically to pioneering prior work.",
+                "The attribution is literature context; the substantive representation claim is mapped separately.",
+            ),
+            _mapped(
+                "a rich space of algorithms for multiplying two matrices can be represented as decompositions of a given 3D tensor into rank-one tensors",
+                "A broad class of matrix-multiplication algorithms can be represented as rank-one decompositions of a three-dimensional tensor.",
+                _ref(
+                    "matrix",
+                    "section3_1_tensor_decomposition_algorithm_representation",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0101": (
+            _mapped(
+                "The rank (number of terms)",
+                "The decomposition rank is its number of terms.",
+                _ref(
+                    "matrix",
+                    "section3_1_tensor_rank_equals_scalar_multiplications",
+                ),
+            ),
+            _mapped(
+                "exactly specifies the number of scalar multiplications needed to compute the matrix product",
+                "The decomposition rank exactly specifies the scalar-multiplication count for the matrix product.",
+                _ref(
+                    "matrix",
+                    "section3_1_tensor_rank_equals_scalar_multiplications",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0102": (
+            _mapped(
+                "to develop faster matrix multiplication algorithms one needs to find low-rank decompositions of particular tensors",
+                "Faster matrix multiplication is sought through low-rank decompositions of the corresponding tensors.",
+                _ref(
+                    "matrix",
+                    "section3_1_low_rank_decomposition_search_objective",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0103": (
+            _reviewed_context(
+                "This problem has been tackled with many approaches",
+                "The tensor-decomposition search problem has been tackled through many prior approaches.",
+                "This is broad prior-work context; the listed approach families are dispositioned separately.",
+            ),
+            _reviewed_context(
+                "specialized alternating least squares solvers",
+                "Specialized alternating-least-squares solvers have been applied to the decomposition problem.",
+                "This is prior-work context rather than a distinct AlphaEvolve implementation requirement.",
+            ),
+            _reviewed_context(
+                "deep reinforcement learning",
+                "Deep reinforcement learning has been applied to the decomposition problem.",
+                "This is prior-work context rather than a distinct AlphaEvolve implementation requirement.",
+            ),
+            _reviewed_context(
+                "custom search algorithms",
+                "Custom search algorithms have been applied to the decomposition problem.",
+                "This is prior-work context rather than a distinct AlphaEvolve implementation requirement.",
+            ),
+            _reviewed_context(
+                "despite decades of effort",
+                "The matrix-decomposition search problem has received decades of effort.",
+                "This is historical problem context; the unresolved-rank claim is mapped separately.",
+            ),
+            _mapped(
+                "even for the simple case of multiplying two 3 times 3 matrices, the minimum achievable rank is not known",
+                "The minimum achievable rank for 3x3 matrix multiplication is reported as unknown.",
+                _ref("matrix", "section3_1_3x3_minimum_rank_unknown"),
+            ),
+            _reviewed_context(
+                "showcasing the difficulty of the problem",
+                "The unresolved 3x3 rank is interpreted as evidence that the problem is difficult.",
+                "This is the authors' interpretation of the historical evidence, not a separate system capability.",
+                disposition="author_interpretation",
+            ),
+        ),
+        "tex_prose_sentence_0104": (
+            _mapped(
+                "Starting from the problem description",
+                "The matrix experiment supplies the problem description as model context.",
+                _ref("system", "prompt_explicit_context"),
+            ),
+            _mapped(
+                "a standard gradient-based algorithm",
+                "The matrix search starts from a standard gradient-based algorithm.",
+                _ref(
+                    "matrix",
+                    "section3_1_standard_gradient_baseline_components",
+                ),
+            ),
+            _mapped(
+                "including an initializer",
+                "The gradient baseline includes an initializer.",
+                _ref(
+                    "matrix",
+                    "section3_1_standard_gradient_baseline_components",
+                ),
+            ),
+            _mapped(
+                "a reconstruction loss function",
+                "The gradient baseline includes a reconstruction loss.",
+                _ref(
+                    "matrix",
+                    "section3_1_standard_gradient_baseline_components",
+                ),
+            ),
+            _mapped(
+                "an Adam optimizer",
+                "The gradient baseline includes an Adam optimizer.",
+                _ref(
+                    "matrix",
+                    "section3_1_standard_gradient_baseline_components",
+                ),
+            ),
+            _mapped(
+                "develop sophisticated tensor decomposition algorithms that outperform existing approaches",
+                "AlphaEvolve is reported to develop sophisticated tensor-decomposition algorithms that outperform prior approaches.",
+                _ref(
+                    "matrix",
+                    "section3_1_sophisticated_algorithms_outperform_approaches",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0105": (
+            _mapped(
+                "To evaluate each evolved program",
+                "Every evolved matrix-search program is evaluated.",
+                _ref("system", "evaluation_every_proposal"),
+            ),
+            _mapped(
+                "choose a set of matrix multiplication targets",
+                "Matrix-search evaluation uses a set of matrix-multiplication targets.",
+                _ref("matrix", "section3_1_multi_seed_evaluation_cascade"),
+            ),
+            _mapped(
+                "run the algorithm, initialized with multiple random seeds",
+                "Each matrix target is run from multiple randomized initializations.",
+                _ref("matrix", "section3_1_multi_seed_evaluation_cascade"),
+            ),
+            _mapped(
+                "using the evaluation cascade described in [citation]",
+                "The multi-seed matrix runs use the Section 2.4 evaluation cascade.",
+                _ref("matrix", "section3_1_multi_seed_evaluation_cascade"),
+            ),
+        ),
+        "tex_prose_sentence_0106": (
+            _mapped(
+                "the best (lowest) rank achieved on each target",
+                "Evaluation records the lowest rank achieved for each matrix target.",
+                _ref(
+                    "matrix",
+                    "section3_1_best_rank_and_seed_hit_fraction",
+                ),
+            ),
+            _mapped(
+                "the fraction of seeds that achieved this rank",
+                "Evaluation records the fraction of seeds attaining the best rank.",
+                _ref(
+                    "matrix",
+                    "section3_1_best_rank_and_seed_hit_fraction",
+                ),
+            ),
+            _mapped(
+                "providing a signal for AlphaEvolve to hill-climb",
+                "The matrix metrics provide a signal for evolutionary hill climbing.",
+                _ref("system", "section2_evolutionary_metric_improvement"),
+            ),
+        ),
+        "tex_prose_sentence_0107": (
+            _mapped(
+                "To ensure the exactness of the decomposition and avoid any potential numerical error",
+                "Coefficient rounding is intended to ensure exact decompositions and avoid numerical error.",
+                _ref(
+                    "matrix",
+                    "section3_1_integer_half_integer_rounding_exactness",
+                ),
+            ),
+            _mapped(
+                "round each element to the nearest integer or the nearest half-integer",
+                "Evaluation rounds every decomposition element to an integer or half-integer.",
+                _ref(
+                    "matrix",
+                    "section3_1_integer_half_integer_rounding_exactness",
+                ),
+            ),
+            _mapped(
+                "encourage the algorithm to generate near-integral solutions",
+                "The matrix prompt is intended to encourage near-integral candidates.",
+                _ref(
+                    "matrix",
+                    "section3_1_natural_language_near_integrality_prompt",
+                ),
+            ),
+            _mapped(
+                "include this request in natural language in the LLM's prompt",
+                "A natural-language near-integrality request is included in the LLM prompt.",
+                _ref(
+                    "matrix",
+                    "section3_1_natural_language_near_integrality_prompt",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0108": (
+            _reviewed_context(
+                "In Table [citation] , one can see",
+                "The prose directs readers to the matrix-result table.",
+                "This is navigation to separately inventoried Table 2 evidence.",
+            ),
+            _mapped(
+                "the various algorithms developed by AlphaEvolve improve the state of the art for 14 different matrix multiplication targets",
+                "AlphaEvolve is reported to improve the state of the art on 14 matrix targets.",
+                _ref("matrix", "section3_1_fourteen_target_sota_improvements"),
+            ),
+        ),
+        "tex_prose_sentence_0109": (
+            _mapped(
+                "for multiplying two 4 times 4 matrices, applying the algorithm of [citation] recursively",
+                "Recursive application of the Strassen algorithm provides the 4x4 baseline.",
+                _ref(
+                    "matrix",
+                    "section3_1_recursive_strassen_rank49_any_field",
+                ),
+            ),
+            _mapped(
+                "rank (number of scalar multiplications) equal to 49",
+                "The recursive 4x4 baseline has rank and scalar-multiplication count 49.",
+                _ref(
+                    "matrix",
+                    "section3_1_recursive_strassen_rank49_any_field",
+                ),
+                _ref(
+                    "matrix",
+                    "section3_1_tensor_rank_equals_scalar_multiplications",
+                ),
+            ),
+            _mapped(
+                "which works over any field",
+                "The recursive rank-49 baseline works over any field.",
+                _ref(
+                    "matrix",
+                    "section3_1_recursive_strassen_rank49_any_field",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0110": (
+            _mapped(
+                "For the very specific case of multiplying in the field with 2 elements, [citation] found an algorithm with rank 47",
+                "Prior work found a rank-47 algorithm specifically over the two-element field.",
+                _ref("matrix", "section3_1_fawzi_rank47_field_two"),
+            ),
+        ),
+        "tex_prose_sentence_0111": (
+            _mapped(
+                "For 56 years, designing an algorithm with rank less than 49 over any field with characteristic 0 was an open problem",
+                "A characteristic-zero matrix algorithm below rank 49 is reported to have remained open for 56 years.",
+                _ref("matrix", "section3_1_fifty_six_year_open_problem"),
+            ),
+        ),
+        "tex_prose_sentence_0112": (
+            _mapped(
+                "the first method",
+                "AlphaEvolve is reported as the first method to achieve the stated complex 4x4 rank.",
+                _ref("matrix", "section3_1_first_rank48_complex_4x4"),
+            ),
+            _mapped(
+                "find a rank- 48 algorithm to multiply two 4 times 4 complex-valued matrices",
+                "AlphaEvolve is reported to find a rank-48 complex 4x4 matrix-multiplication algorithm.",
+                _ref("matrix", "section3_1_first_rank48_complex_4x4"),
+            ),
+        ),
+        "tex_prose_sentence_0113": (
+            _reviewed_context(
+                "As shown in Figure [citation]",
+                "The prose directs readers to the evolved-program diff figure.",
+                "This is navigation to separately inventoried Figure 4 evidence.",
+            ),
+            _mapped(
+                "makes significant changes to the initial program",
+                "AlphaEvolve is reported to make significant changes to the initial matrix program.",
+                _ref("matrix", "section3_1_significant_initial_program_changes"),
+            ),
+            _mapped(
+                "introducing several original ideas",
+                "The evolved matrix program is reported to introduce several original ideas.",
+                _ref("matrix", "section3_1_original_ideas_increasingly_better"),
+            ),
+            _mapped(
+                "design increasingly better algorithms",
+                "The original evolved ideas are reported to produce increasingly better algorithms.",
+                _ref("matrix", "section3_1_original_ideas_increasingly_better"),
+            ),
+        ),
+        "tex_prose_sentence_0114": (
+            _mapped(
+                "most results in Table [citation]",
+                "Most Table 2 matrix results were obtained from a simple initial program.",
+                _ref("matrix", "section3_1_most_table2_simple_initial_program"),
+            ),
+            _mapped(
+                "including 4, 4, 4",
+                "The 4x4x4 result is among the results obtained from a simple initial program.",
+                _ref("matrix", "section3_1_most_table2_simple_initial_program"),
+            ),
+            _mapped(
+                "were obtained from a simple initial program",
+                "The referenced Table 2 results used a simple initial program.",
+                _ref("matrix", "section3_1_most_table2_simple_initial_program"),
+            ),
+            _mapped(
+                "for some parameters, seeding the initial program with our own ideas",
+                "Some matrix parameter settings used researcher ideas in the initial program.",
+                _ref("matrix", "section3_1_researcher_ideas_boost_performance"),
+            ),
+            _mapped(
+                "adding stochasticity to the evaluation function",
+                "Researcher seeding included stochasticity in the evaluation function.",
+                _ref("matrix", "section3_1_researcher_ideas_boost_performance"),
+            ),
+            _mapped(
+                "using evolutionary approaches",
+                "Researcher seeding included evolutionary approaches.",
+                _ref("matrix", "section3_1_researcher_ideas_boost_performance"),
+            ),
+            _mapped(
+                "could further boost performance",
+                "Researcher-provided initial ideas are reported to improve performance for some parameters.",
+                _ref("matrix", "section3_1_researcher_ideas_boost_performance"),
+            ),
+            _mapped(
+                "highlighting the possibility of scientific collaboration between researchers and AlphaEvolve",
+                "The result is presented as evidence for possible researcher-AlphaEvolve scientific collaboration.",
+                _ref("matrix", "section3_1_scientific_collaboration_possibility"),
+            ),
+        ),
+    }
+)
+
 
 @dataclass(frozen=True)
 class AlphaEvolveTexPropositionInventoryBoundaryIssue:
@@ -1585,7 +1952,7 @@ class AlphaEvolveTexPropositionInventoryBoundaryValidation:
 def alphaevolve_tex_proposition_inventory_boundary_record(
     root: str | Path = ".",
 ) -> dict[str, Any]:
-    """Review atomic propositions in retained Abstract, Introduction, and Methods."""
+    """Review atomic propositions through retained Section 3.1 matrix results."""
 
     root_path = Path(root)
     prose = alphaevolve_tex_prose_inventory_boundary_record(root_path)
@@ -1707,7 +2074,12 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
             if isinstance(record.get("source_file"), str)
         }
     )
-    expected_source_files = ["introduction.tex", "main.tex", "methods.tex"]
+    expected_source_files = [
+        "introduction.tex",
+        "main.tex",
+        "methods.tex",
+        "results.tex",
+    ]
     source_prose_ready = bool(
         prose.get("schema") == ALPHAEVOLVE_TEX_PROSE_INVENTORY_BOUNDARY_SCHEMA
         and prose.get("prose_disposition_ready") is True
@@ -1784,11 +2156,12 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
                 "all 8 retained Abstract sentences in main.tex",
                 "all 29 retained Introduction sentences in introduction.tex",
                 "all 61 retained Methods sentences in methods.tex",
+                "all 16 retained Section 3.1 matrix-result sentences in results.tex",
                 "manual atomic-proposition statements and exact rendered-source quote offsets",
                 "resolved bounded-claim mappings or explicit context, outlook, and interpretation dispositions",
             ],
             "excluded": [
-                "the remaining 304 retained prose sentences",
+                "the remaining 288 retained prose sentences",
                 "separately audited captions, tables, equations, listings, footnotes, and explicit math constructs",
                 "independent second-reviewer semantic agreement",
                 "mathematical correctness, citation sufficiency, image-pixel semantics, or result reproduction",
@@ -1797,8 +2170,9 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
         },
         "claim_boundary": (
             "This boundary records a single-reviewer atomic-proposition decomposition "
-            "for every retained Abstract, Introduction, and Methods sentence. Complete "
-            "disposition inside this 98-sentence scope does not cover the remaining 304 prose "
+            "for every retained Abstract, Introduction, Methods, and Section 3.1 matrix-result "
+            "sentence. Complete disposition inside this 114-sentence scope does not cover "
+            "the remaining 288 prose "
             "sentences and does not prove independent semantic exhaustiveness, "
             "mathematical correctness, result reproduction, or AlphaEvolve parity."
         ),
@@ -1843,7 +2217,7 @@ def validate_alphaevolve_tex_proposition_inventory_boundary(
         issues.append(
             _issue(
                 "review_scope_incomplete",
-                "Abstract, Introduction, and Methods review scope is incomplete",
+                "Abstract through Section 3.1 matrix-result review scope is incomplete",
             )
         )
     for field in (

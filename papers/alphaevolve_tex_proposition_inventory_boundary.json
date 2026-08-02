@@ -1,7 +1,7 @@
 {
-  "schema": "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v2",
+  "schema": "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v3",
   "source_paper_id": "2506.13131",
-  "boundary_status": "abstract_introduction_and_methods_proposition_review_complete_without_remaining_paper_or_independent_semantic_exhaustiveness",
+  "boundary_status": "abstract_introduction_methods_and_matrix_results_proposition_review_complete_without_remaining_paper_or_independent_semantic_exhaustiveness",
   "source_prose_schema": "libreevolve.alphaevolve_tex_prose_inventory_boundary.v1",
   "source_prose_boundary_status": "retained_tex_paragraph_and_sentence_inventory_complete_without_semantic_clause_exhaustiveness",
   "source_prose_ready": true,
@@ -15,32 +15,32 @@
   "source_errors": [],
   "parse_errors": [],
   "source_sentence_count": 402,
-  "reviewed_sentence_count": 98,
-  "remaining_sentence_count": 304,
-  "reviewed_sentence_fraction": 0.24378109452736318,
+  "reviewed_sentence_count": 114,
+  "remaining_sentence_count": 288,
+  "reviewed_sentence_fraction": 0.2835820895522388,
   "reviewed_source_files": [
     "introduction.tex",
     "main.tex",
-    "methods.tex"
+    "methods.tex",
+    "results.tex"
   ],
   "remaining_source_files": [
     "ablations.tex",
     "acknowledgement.tex",
     "appendix.tex",
     "discussion.tex",
-    "related_work.tex",
-    "results.tex"
+    "related_work.tex"
   ],
-  "proposition_count": 244,
+  "proposition_count": 297,
   "disposition_counts": {
-    "author_interpretation": 2,
+    "author_interpretation": 3,
     "author_outlook": 2,
-    "existing_bounded_claim_mapping": 226,
-    "source_context_only": 14
+    "existing_bounded_claim_mapping": 267,
+    "source_context_only": 25
   },
-  "claim_reference_count": 245,
-  "unique_claim_reference_count": 104,
-  "implementation_relevant_proposition_count": 216,
+  "claim_reference_count": 287,
+  "unique_claim_reference_count": 122,
+  "implementation_relevant_proposition_count": 257,
   "unmapped_proposition_count": 0,
   "unresolved_reference_count": 0,
   "new_bounded_claim_ids": [
@@ -55,6 +55,12 @@
     "introduction_erdos_minimum_overlap_result",
     "introduction_seventy_five_percent_math_best_known",
     "evolution_database_resurfacing",
+    "evaluation_every_proposal",
+    "prompt_explicit_context",
+    "section2_evolutionary_metric_improvement",
+    "section3_1_most_table2_simple_initial_program",
+    "section3_1_natural_language_near_integrality_prompt",
+    "section3_1_standard_gradient_baseline_components",
     "task_problem_specific_abstraction_choice"
   ],
   "reviewed_sentence_records": [
@@ -1377,6 +1383,235 @@
         "tex_proposition_0242",
         "tex_proposition_0243",
         "tex_proposition_0244"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0099",
+      "source_file": "results.tex",
+      "source_line": 39,
+      "source_text_sha256": "252bd2b3388ae2d393f23e2ef51686161c1bc1ef1fb3767b45b04d1b95f3e02b",
+      "rendered_text_sha256": "252bd2b3388ae2d393f23e2ef51686161c1bc1ef1fb3767b45b04d1b95f3e02b",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0245",
+        "tex_proposition_0246",
+        "tex_proposition_0247"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0100",
+      "source_file": "results.tex",
+      "source_line": 40,
+      "source_text_sha256": "b5277c757fcb19ba6514e84f692e0d3d10fac777cbf63ff33f3d057a2c1b1bc2",
+      "rendered_text_sha256": "a3ae7e6f7510f2b0270a736454c8d9af26cb769c75020b2ef1edc9522d16e0a1",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0248",
+        "tex_proposition_0249"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0101",
+      "source_file": "results.tex",
+      "source_line": 41,
+      "source_text_sha256": "f2ba81a74962ac1ed9eb96e4666ad475db2562a3d55f280abbfd6eb68843f042",
+      "rendered_text_sha256": "f2ba81a74962ac1ed9eb96e4666ad475db2562a3d55f280abbfd6eb68843f042",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0250",
+        "tex_proposition_0251"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0102",
+      "source_file": "results.tex",
+      "source_line": 42,
+      "source_text_sha256": "620da6c0087c054b06d4f7d39c47e5ea8ac541623f14553dc17ca150bde53f17",
+      "rendered_text_sha256": "620da6c0087c054b06d4f7d39c47e5ea8ac541623f14553dc17ca150bde53f17",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0252"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0103",
+      "source_file": "results.tex",
+      "source_line": 43,
+      "source_text_sha256": "8fdd01d9fd307e9ee4a51142b0eee8c2b46156d5bfb2eac41c2c1e6e26bb2e3e",
+      "rendered_text_sha256": "0fbd149b0bff8a1d37fb6ccc03cc0a750898c34755edddfc009cffe00aeff731",
+      "proposition_count": 7,
+      "proposition_ids": [
+        "tex_proposition_0253",
+        "tex_proposition_0254",
+        "tex_proposition_0255",
+        "tex_proposition_0256",
+        "tex_proposition_0257",
+        "tex_proposition_0258",
+        "tex_proposition_0259"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0104",
+      "source_file": "results.tex",
+      "source_line": 45,
+      "source_text_sha256": "1f529e24cbd4d878485b07414ec3a0bfd6a653aefe09d1df87a92b4d74422c06",
+      "rendered_text_sha256": "6cf19146140a4604f2f58a72fac5bd0af684bfee043c5dca085b54a60c7c6659",
+      "proposition_count": 6,
+      "proposition_ids": [
+        "tex_proposition_0260",
+        "tex_proposition_0261",
+        "tex_proposition_0262",
+        "tex_proposition_0263",
+        "tex_proposition_0264",
+        "tex_proposition_0265"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0105",
+      "source_file": "results.tex",
+      "source_line": 46,
+      "source_text_sha256": "6122e6073814b544b0f4d8c1a1566135fe2cad12197b104b3a2cae005cdf0faf",
+      "rendered_text_sha256": "c8ddd618175a5a14bdaeb7d461323098feaee25dec55ca3a67b73c142768a726",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0266",
+        "tex_proposition_0267",
+        "tex_proposition_0268",
+        "tex_proposition_0269"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0106",
+      "source_file": "results.tex",
+      "source_line": 47,
+      "source_text_sha256": "4e5242a0fce43009f90280a378fbcaade6869779dcce4384cccd27649fc9b66e",
+      "rendered_text_sha256": "3cd9399a3a9ea861ebe9e9e0b10fb8c6b50fe4afa056798d22be5df604935a0e",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0270",
+        "tex_proposition_0271",
+        "tex_proposition_0272"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0107",
+      "source_file": "results.tex",
+      "source_line": 48,
+      "source_text_sha256": "6044b248ce29541f3078cc7f0f3adc08d67e52f6b26c3e86877e2d4e7b7cd28f",
+      "rendered_text_sha256": "6044b248ce29541f3078cc7f0f3adc08d67e52f6b26c3e86877e2d4e7b7cd28f",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0273",
+        "tex_proposition_0274",
+        "tex_proposition_0275",
+        "tex_proposition_0276"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0108",
+      "source_file": "results.tex",
+      "source_line": 52,
+      "source_text_sha256": "ffd2616b678b767a790bfd9326316144c602a981ece5d5935613b7d4144db337",
+      "rendered_text_sha256": "c4813a31bdb620616f088fc2352275f4b3cb908f7d9e62a7bb667cd421358a4f",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0277",
+        "tex_proposition_0278"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0109",
+      "source_file": "results.tex",
+      "source_line": 53,
+      "source_text_sha256": "25597f30d9209cde7f9cfadbcc1267a4ccaec3c2797826a83d65b7713d510399",
+      "rendered_text_sha256": "21872d2f8b461fe283cb0188dbfcb163f9d7714805b97010a53aace39ae1666a",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0279",
+        "tex_proposition_0280",
+        "tex_proposition_0281"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0110",
+      "source_file": "results.tex",
+      "source_line": 54,
+      "source_text_sha256": "2fbf554a1e64b2a60f5ad8197445d67572808ff22483ffac926c75d726622214",
+      "rendered_text_sha256": "9ae1f0b6766857597b5090c9729989e85afbb224531944579717328ea922d473",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0282"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0111",
+      "source_file": "results.tex",
+      "source_line": 55,
+      "source_text_sha256": "18cd76f7868f04d87715ae9d2674266eaab3dea3f4dbda9cf30369f4e8ecd385",
+      "rendered_text_sha256": "18cd76f7868f04d87715ae9d2674266eaab3dea3f4dbda9cf30369f4e8ecd385",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0283"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0112",
+      "source_file": "results.tex",
+      "source_line": 57,
+      "source_text_sha256": "3270a1a5027d833bb4141c1effc5c2d4b145092aca5317b679f9030ce7838944",
+      "rendered_text_sha256": "32e73231d93695419bc586c513e123d7cd9ac88d9fcd62f8bae91a07250f047a",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0284",
+        "tex_proposition_0285"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0113",
+      "source_file": "results.tex",
+      "source_line": 59,
+      "source_text_sha256": "c2b3872e0ade6277cd1ac656469f3dee30737ac4072f232e36c666506e19ff1d",
+      "rendered_text_sha256": "afd72a56e2e9172f34ae243eefe5f3a2b8a4224cd78fa355cda2278b3f436f8b",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0286",
+        "tex_proposition_0287",
+        "tex_proposition_0288",
+        "tex_proposition_0289"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0114",
+      "source_file": "results.tex",
+      "source_line": 60,
+      "source_text_sha256": "e9c2acfef089a09c7b45f1064df2e78e04b409dfeb2bac0d9861d117b08e388f",
+      "rendered_text_sha256": "02ed9175d70ffbe4310ba6680d68edaa3cd4d9b1b76080a47b9454ade4bf0907",
+      "proposition_count": 8,
+      "proposition_ids": [
+        "tex_proposition_0290",
+        "tex_proposition_0291",
+        "tex_proposition_0292",
+        "tex_proposition_0293",
+        "tex_proposition_0294",
+        "tex_proposition_0295",
+        "tex_proposition_0296",
+        "tex_proposition_0297"
       ],
       "review_status": "manual_static_semantic_decomposition_complete"
     }
@@ -7225,6 +7460,1200 @@
       ],
       "implementation_relevant": true,
       "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0245",
+      "sentence_id": "tex_prose_sentence_0099",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 39,
+      "source_end_line": 39,
+      "source_quote": "accelerating machine learning computations",
+      "source_quote_start": 5,
+      "source_quote_end": 47,
+      "source_quote_sha256": "cff83b0ae51fc019a3e6a29694a6e0e22bf4b6723bfb19490f20ecb20ddcfcfa",
+      "statement": "Matrix multiplication supports accelerated machine-learning computation.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This is domain motivation rather than an AlphaEvolve-specific implementation requirement."
+    },
+    {
+      "proposition_id": "tex_proposition_0246",
+      "sentence_id": "tex_prose_sentence_0099",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 39,
+      "source_end_line": 39,
+      "source_quote": "enabling realistic computer graphics",
+      "source_quote_start": 51,
+      "source_quote_end": 87,
+      "source_quote_sha256": "845cdf5e2a75b92308349e2ef32ef4d19b668d97bbdf5d40ba733a56b0ccb54b",
+      "statement": "Matrix multiplication supports realistic computer graphics.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This is domain motivation rather than an AlphaEvolve-specific implementation requirement."
+    },
+    {
+      "proposition_id": "tex_proposition_0247",
+      "sentence_id": "tex_prose_sentence_0099",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 39,
+      "source_end_line": 39,
+      "source_quote": "matrix multiplication serves as a fundamental operation underpinning numerous critical algorithms and applications within computer science",
+      "source_quote_start": 89,
+      "source_quote_end": 227,
+      "source_quote_sha256": "090f472f0080ec38763d8f47a18e684686016cd06d5e725b4f962b0ac0366ec8",
+      "statement": "Matrix multiplication underpins numerous important computer-science algorithms and applications.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This is general mathematical-computing context and does not define local parity behavior."
+    },
+    {
+      "proposition_id": "tex_proposition_0248",
+      "sentence_id": "tex_prose_sentence_0100",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 40,
+      "source_end_line": 40,
+      "source_quote": "Since the pioneering work of [citation] , it has been known that",
+      "source_quote_start": 0,
+      "source_quote_end": 64,
+      "source_quote_sha256": "baf309ca56fd212ad5d8fb7a9b331b3bc8eb6dfe61c09b487d914056a09ec7b8",
+      "statement": "The tensor-decomposition representation is attributed historically to pioneering prior work.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "The attribution is literature context; the substantive representation claim is mapped separately."
+    },
+    {
+      "proposition_id": "tex_proposition_0249",
+      "sentence_id": "tex_prose_sentence_0100",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 40,
+      "source_end_line": 40,
+      "source_quote": "a rich space of algorithms for multiplying two matrices can be represented as decompositions of a given 3D tensor into rank-one tensors",
+      "source_quote_start": 65,
+      "source_quote_end": 200,
+      "source_quote_sha256": "36814d028b3f30feadbcadcd3c84630317147ace8c9708f019384cb9ed95e8e1",
+      "statement": "A broad class of matrix-multiplication algorithms can be represented as rank-one decompositions of a three-dimensional tensor.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_tensor_decomposition_algorithm_representation",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0250",
+      "sentence_id": "tex_prose_sentence_0101",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 41,
+      "source_end_line": 41,
+      "source_quote": "The rank (number of terms)",
+      "source_quote_start": 0,
+      "source_quote_end": 26,
+      "source_quote_sha256": "3a03e4f5b17607dc1dd6bfab11f2b0d0fec180158ccc6afcca79e5320af15aa3",
+      "statement": "The decomposition rank is its number of terms.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_tensor_rank_equals_scalar_multiplications",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0251",
+      "sentence_id": "tex_prose_sentence_0101",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 41,
+      "source_end_line": 41,
+      "source_quote": "exactly specifies the number of scalar multiplications needed to compute the matrix product",
+      "source_quote_start": 48,
+      "source_quote_end": 139,
+      "source_quote_sha256": "a74faf61ea8ee85ff6af4043cff47bca9d15dbc77b8c169e77d3c3cfa1adb724",
+      "statement": "The decomposition rank exactly specifies the scalar-multiplication count for the matrix product.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_tensor_rank_equals_scalar_multiplications",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0252",
+      "sentence_id": "tex_prose_sentence_0102",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 42,
+      "source_end_line": 42,
+      "source_quote": "to develop faster matrix multiplication algorithms one needs to find low-rank decompositions of particular tensors",
+      "source_quote_start": 7,
+      "source_quote_end": 121,
+      "source_quote_sha256": "6e021aef94b4a1c5d5724ea9ac2db1a4cbfa7041441695e1c0547f66a0436eee",
+      "statement": "Faster matrix multiplication is sought through low-rank decompositions of the corresponding tensors.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_low_rank_decomposition_search_objective",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0253",
+      "sentence_id": "tex_prose_sentence_0103",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 43,
+      "source_end_line": 43,
+      "source_quote": "This problem has been tackled with many approaches",
+      "source_quote_start": 0,
+      "source_quote_end": 50,
+      "source_quote_sha256": "f2e0546a15e2af59de377348fd885d614a67d33111b298c1aeba3462783559d7",
+      "statement": "The tensor-decomposition search problem has been tackled through many prior approaches.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This is broad prior-work context; the listed approach families are dispositioned separately."
+    },
+    {
+      "proposition_id": "tex_proposition_0254",
+      "sentence_id": "tex_prose_sentence_0103",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 43,
+      "source_end_line": 43,
+      "source_quote": "specialized alternating least squares solvers",
+      "source_quote_start": 57,
+      "source_quote_end": 102,
+      "source_quote_sha256": "a9cf0fb38c6501e30b986929d70b47a893d7b89c734c7dbab6127e5967771045",
+      "statement": "Specialized alternating-least-squares solvers have been applied to the decomposition problem.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This is prior-work context rather than a distinct AlphaEvolve implementation requirement."
+    },
+    {
+      "proposition_id": "tex_proposition_0255",
+      "sentence_id": "tex_prose_sentence_0103",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 43,
+      "source_end_line": 43,
+      "source_quote": "deep reinforcement learning",
+      "source_quote_start": 117,
+      "source_quote_end": 144,
+      "source_quote_sha256": "9d8432b56803a36f7d420d40b1d5d3b1a920a5b6b9fb0ca07a1125741639a996",
+      "statement": "Deep reinforcement learning has been applied to the decomposition problem.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This is prior-work context rather than a distinct AlphaEvolve implementation requirement."
+    },
+    {
+      "proposition_id": "tex_proposition_0256",
+      "sentence_id": "tex_prose_sentence_0103",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 43,
+      "source_end_line": 43,
+      "source_quote": "custom search algorithms",
+      "source_quote_start": 160,
+      "source_quote_end": 184,
+      "source_quote_sha256": "6e41b25dd84e83a634053c49539e287b7b337eb34d9dfce3c59c5284d6cb2f5c",
+      "statement": "Custom search algorithms have been applied to the decomposition problem.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This is prior-work context rather than a distinct AlphaEvolve implementation requirement."
+    },
+    {
+      "proposition_id": "tex_proposition_0257",
+      "sentence_id": "tex_prose_sentence_0103",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 43,
+      "source_end_line": 43,
+      "source_quote": "despite decades of effort",
+      "source_quote_start": 203,
+      "source_quote_end": 228,
+      "source_quote_sha256": "cf8fc9b6fd60bd9ef4b172dd205672def0b2e5d069f73a9bd0869ef62fb67cb4",
+      "statement": "The matrix-decomposition search problem has received decades of effort.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This is historical problem context; the unresolved-rank claim is mapped separately."
+    },
+    {
+      "proposition_id": "tex_proposition_0258",
+      "sentence_id": "tex_prose_sentence_0103",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 43,
+      "source_end_line": 43,
+      "source_quote": "even for the simple case of multiplying two 3 times 3 matrices, the minimum achievable rank is not known",
+      "source_quote_start": 230,
+      "source_quote_end": 334,
+      "source_quote_sha256": "f77512319ccbb3d4d8aff6f59a5c96ec520aa4da00596150c0611c2b56b30ff8",
+      "statement": "The minimum achievable rank for 3x3 matrix multiplication is reported as unknown.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_3x3_minimum_rank_unknown",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0259",
+      "sentence_id": "tex_prose_sentence_0103",
+      "sentence_proposition_ordinal": 7,
+      "source_file": "results.tex",
+      "source_line": 43,
+      "source_end_line": 43,
+      "source_quote": "showcasing the difficulty of the problem",
+      "source_quote_start": 336,
+      "source_quote_end": 376,
+      "source_quote_sha256": "98b2410b9ea92cf5e25a6e695685cf3c816cc4da6f0a17d7eb9616e28b7a7be9",
+      "statement": "The unresolved 3x3 rank is interpreted as evidence that the problem is difficult.",
+      "disposition": "author_interpretation",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This is the authors' interpretation of the historical evidence, not a separate system capability."
+    },
+    {
+      "proposition_id": "tex_proposition_0260",
+      "sentence_id": "tex_prose_sentence_0104",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 45,
+      "source_end_line": 45,
+      "source_quote": "Starting from the problem description",
+      "source_quote_start": 0,
+      "source_quote_end": 37,
+      "source_quote_sha256": "93127572c74db8e1effb645c71c9b285bb6652f317739b8b334176e3d6b7b29d",
+      "statement": "The matrix experiment supplies the problem description as model context.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "prompt_explicit_context",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0261",
+      "sentence_id": "tex_prose_sentence_0104",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 45,
+      "source_end_line": 45,
+      "source_quote": "a standard gradient-based algorithm",
+      "source_quote_start": 42,
+      "source_quote_end": 77,
+      "source_quote_sha256": "ec6cde8651dbb966b4e5db0e0a8299c88a9541e51f0945eb0c41fb4d189cf6f7",
+      "statement": "The matrix search starts from a standard gradient-based algorithm.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_standard_gradient_baseline_components",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0262",
+      "sentence_id": "tex_prose_sentence_0104",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 45,
+      "source_end_line": 45,
+      "source_quote": "including an initializer",
+      "source_quote_start": 79,
+      "source_quote_end": 103,
+      "source_quote_sha256": "9ac854c4ad251a5ccba3eac4f42ca3d4fd215b78a43000fbae47ec907e305805",
+      "statement": "The gradient baseline includes an initializer.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_standard_gradient_baseline_components",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0263",
+      "sentence_id": "tex_prose_sentence_0104",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 45,
+      "source_end_line": 45,
+      "source_quote": "a reconstruction loss function",
+      "source_quote_start": 105,
+      "source_quote_end": 135,
+      "source_quote_sha256": "7f628b0550c549d1de1ffe029cd10c336dff9a961909ccc67cb440185e837112",
+      "statement": "The gradient baseline includes a reconstruction loss.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_standard_gradient_baseline_components",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0264",
+      "sentence_id": "tex_prose_sentence_0104",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 45,
+      "source_end_line": 45,
+      "source_quote": "an Adam optimizer",
+      "source_quote_start": 141,
+      "source_quote_end": 158,
+      "source_quote_sha256": "0948c16a854fa58a672e5b72699f0a2e807401fd9e8153a19ef7d6e73c553223",
+      "statement": "The gradient baseline includes an Adam optimizer.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_standard_gradient_baseline_components",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0265",
+      "sentence_id": "tex_prose_sentence_0104",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 45,
+      "source_end_line": 45,
+      "source_quote": "develop sophisticated tensor decomposition algorithms that outperform existing approaches",
+      "source_quote_start": 196,
+      "source_quote_end": 285,
+      "source_quote_sha256": "647df1b19f852b802343e47ce40fca1328380f439c95872d27c2a3fdd5b4eb5d",
+      "statement": "AlphaEvolve is reported to develop sophisticated tensor-decomposition algorithms that outperform prior approaches.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_sophisticated_algorithms_outperform_approaches",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0266",
+      "sentence_id": "tex_prose_sentence_0105",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 46,
+      "source_end_line": 46,
+      "source_quote": "To evaluate each evolved program",
+      "source_quote_start": 0,
+      "source_quote_end": 32,
+      "source_quote_sha256": "bba1e37a8df985a34d2c524bee6245b0df3e203dbc66cd75b587acf0b43265ae",
+      "statement": "Every evolved matrix-search program is evaluated.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "evaluation_every_proposal",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0267",
+      "sentence_id": "tex_prose_sentence_0105",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 46,
+      "source_end_line": 46,
+      "source_quote": "choose a set of matrix multiplication targets",
+      "source_quote_start": 37,
+      "source_quote_end": 82,
+      "source_quote_sha256": "167628d6268e69680ec4bfdb71934ec8ed8c1cd2bb07794377565d107f4b336e",
+      "statement": "Matrix-search evaluation uses a set of matrix-multiplication targets.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_multi_seed_evaluation_cascade",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0268",
+      "sentence_id": "tex_prose_sentence_0105",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 46,
+      "source_end_line": 46,
+      "source_quote": "run the algorithm, initialized with multiple random seeds",
+      "source_quote_start": 87,
+      "source_quote_end": 144,
+      "source_quote_sha256": "60b5505a6ef97428f749009e11294614f24440242fb8de005b8865b2f06bb668",
+      "statement": "Each matrix target is run from multiple randomized initializations.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_multi_seed_evaluation_cascade",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0269",
+      "sentence_id": "tex_prose_sentence_0105",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 46,
+      "source_end_line": 46,
+      "source_quote": "using the evaluation cascade described in [citation]",
+      "source_quote_start": 145,
+      "source_quote_end": 197,
+      "source_quote_sha256": "3f4c9dda75e174b6664c2517371cd6f2f16c3f7fcaf0fbfa8e7445217a3bbb8e",
+      "statement": "The multi-seed matrix runs use the Section 2.4 evaluation cascade.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_multi_seed_evaluation_cascade",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0270",
+      "sentence_id": "tex_prose_sentence_0106",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 47,
+      "source_end_line": 47,
+      "source_quote": "the best (lowest) rank achieved on each target",
+      "source_quote_start": 36,
+      "source_quote_end": 82,
+      "source_quote_sha256": "84b54b29a93e642d2de0435c2489f5624222a9d928c64b3e6e3084eb8fb246c6",
+      "statement": "Evaluation records the lowest rank achieved for each matrix target.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_best_rank_and_seed_hit_fraction",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0271",
+      "sentence_id": "tex_prose_sentence_0106",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 47,
+      "source_end_line": 47,
+      "source_quote": "the fraction of seeds that achieved this rank",
+      "source_quote_start": 94,
+      "source_quote_end": 139,
+      "source_quote_sha256": "b2d286b3327496f7e94c2d927057c07b2b906e42112c9c112a5603330d9e031c",
+      "statement": "Evaluation records the fraction of seeds attaining the best rank.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_best_rank_and_seed_hit_fraction",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0272",
+      "sentence_id": "tex_prose_sentence_0106",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 47,
+      "source_end_line": 47,
+      "source_quote": "providing a signal for AlphaEvolve to hill-climb",
+      "source_quote_start": 141,
+      "source_quote_end": 189,
+      "source_quote_sha256": "79775d8603db5a76126564b5cf72762631d6dcc59d15ae6aaf0cdf931cdd3d2a",
+      "statement": "The matrix metrics provide a signal for evolutionary hill climbing.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "section2_evolutionary_metric_improvement",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0273",
+      "sentence_id": "tex_prose_sentence_0107",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 48,
+      "source_end_line": 48,
+      "source_quote": "To ensure the exactness of the decomposition and avoid any potential numerical error",
+      "source_quote_start": 0,
+      "source_quote_end": 84,
+      "source_quote_sha256": "5e03d7c0d8dd2e2bc8071dc595ac362dcb17c852bc7b1ff9b0785a3543c270aa",
+      "statement": "Coefficient rounding is intended to ensure exact decompositions and avoid numerical error.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_integer_half_integer_rounding_exactness",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0274",
+      "sentence_id": "tex_prose_sentence_0107",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 48,
+      "source_end_line": 48,
+      "source_quote": "round each element to the nearest integer or the nearest half-integer",
+      "source_quote_start": 106,
+      "source_quote_end": 175,
+      "source_quote_sha256": "192f0955b13714e110d3561effb1c3e9072ba29c9dece2d1025363e389c804d5",
+      "statement": "Evaluation rounds every decomposition element to an integer or half-integer.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_integer_half_integer_rounding_exactness",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0275",
+      "sentence_id": "tex_prose_sentence_0107",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 48,
+      "source_end_line": 48,
+      "source_quote": "encourage the algorithm to generate near-integral solutions",
+      "source_quote_start": 185,
+      "source_quote_end": 244,
+      "source_quote_sha256": "4d9a366994b12b12315264e51dff233eca64d53671aaeb41b4aa2cbad50980f6",
+      "statement": "The matrix prompt is intended to encourage near-integral candidates.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_natural_language_near_integrality_prompt",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0276",
+      "sentence_id": "tex_prose_sentence_0107",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 48,
+      "source_end_line": 48,
+      "source_quote": "include this request in natural language in the LLM's prompt",
+      "source_quote_start": 249,
+      "source_quote_end": 309,
+      "source_quote_sha256": "142948ec3be06df2fd4bea4f669f45ac034b3ce53516ec3a5087c45439b0c89b",
+      "statement": "A natural-language near-integrality request is included in the LLM prompt.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_natural_language_near_integrality_prompt",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0277",
+      "sentence_id": "tex_prose_sentence_0108",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 52,
+      "source_end_line": 52,
+      "source_quote": "In Table [citation] , one can see",
+      "source_quote_start": 0,
+      "source_quote_end": 33,
+      "source_quote_sha256": "fa1308c5717c9eb0311a300297cbdf800f176c62d73c5e476fad911e2706825b",
+      "statement": "The prose directs readers to the matrix-result table.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This is navigation to separately inventoried Table 2 evidence."
+    },
+    {
+      "proposition_id": "tex_proposition_0278",
+      "sentence_id": "tex_prose_sentence_0108",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 52,
+      "source_end_line": 52,
+      "source_quote": "the various algorithms developed by AlphaEvolve improve the state of the art for 14 different matrix multiplication targets",
+      "source_quote_start": 39,
+      "source_quote_end": 162,
+      "source_quote_sha256": "e05460f6ef5e720d88c969297bf3b45298224c9f3ede531384d8411811db035e",
+      "statement": "AlphaEvolve is reported to improve the state of the art on 14 matrix targets.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_fourteen_target_sota_improvements",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0279",
+      "sentence_id": "tex_prose_sentence_0109",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 53,
+      "source_end_line": 53,
+      "source_quote": "for multiplying two 4 times 4 matrices, applying the algorithm of [citation] recursively",
+      "source_quote_start": 9,
+      "source_quote_end": 97,
+      "source_quote_sha256": "3c8f93377112394b75ab94dabb0b12bd18996c163bebde5c8fb0f3869237f761",
+      "statement": "Recursive application of the Strassen algorithm provides the 4x4 baseline.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_recursive_strassen_rank49_any_field",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0280",
+      "sentence_id": "tex_prose_sentence_0109",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 53,
+      "source_end_line": 53,
+      "source_quote": "rank (number of scalar multiplications) equal to 49",
+      "source_quote_start": 127,
+      "source_quote_end": 178,
+      "source_quote_sha256": "a95f6e442301b362e7fa1ceb195f87242c7a5fe841dc1fca594d3afae9fb8728",
+      "statement": "The recursive 4x4 baseline has rank and scalar-multiplication count 49.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_recursive_strassen_rank49_any_field",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_tensor_rank_equals_scalar_multiplications",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0281",
+      "sentence_id": "tex_prose_sentence_0109",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 53,
+      "source_end_line": 53,
+      "source_quote": "which works over any field",
+      "source_quote_start": 180,
+      "source_quote_end": 206,
+      "source_quote_sha256": "2bf3e7c78e4dadc7fd2e951ac53a39a2a6404a7ab4deb0625e65ee6f8d347ae3",
+      "statement": "The recursive rank-49 baseline works over any field.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_recursive_strassen_rank49_any_field",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0282",
+      "sentence_id": "tex_prose_sentence_0110",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 54,
+      "source_end_line": 54,
+      "source_quote": "For the very specific case of multiplying in the field with 2 elements, [citation] found an algorithm with rank 47",
+      "source_quote_start": 0,
+      "source_quote_end": 114,
+      "source_quote_sha256": "c9de63c6d2302462effbbb9d67caf0ba3ec3878b81c72b48fa34518425d3bd1f",
+      "statement": "Prior work found a rank-47 algorithm specifically over the two-element field.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_fawzi_rank47_field_two",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0283",
+      "sentence_id": "tex_prose_sentence_0111",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 55,
+      "source_end_line": 55,
+      "source_quote": "For 56 years, designing an algorithm with rank less than 49 over any field with characteristic 0 was an open problem",
+      "source_quote_start": 0,
+      "source_quote_end": 116,
+      "source_quote_sha256": "b018fecc50114ec78f6221b5f4234344c74d3e247b1dda90646c68efc0c1faa3",
+      "statement": "A characteristic-zero matrix algorithm below rank 49 is reported to have remained open for 56 years.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_fifty_six_year_open_problem",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0284",
+      "sentence_id": "tex_prose_sentence_0112",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 57,
+      "source_end_line": 57,
+      "source_quote": "the first method",
+      "source_quote_start": 15,
+      "source_quote_end": 31,
+      "source_quote_sha256": "b5f97c220287b8c4fe87328942657fea3ed26838976a5ecbcd182b65f85afee1",
+      "statement": "AlphaEvolve is reported as the first method to achieve the stated complex 4x4 rank.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_first_rank48_complex_4x4",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0285",
+      "sentence_id": "tex_prose_sentence_0112",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 57,
+      "source_end_line": 57,
+      "source_quote": "find a rank- 48 algorithm to multiply two 4 times 4 complex-valued matrices",
+      "source_quote_start": 35,
+      "source_quote_end": 110,
+      "source_quote_sha256": "c5492460367d127d8d5ed201cc7b67970804bc47dc66b458d5000c67b50f8abf",
+      "statement": "AlphaEvolve is reported to find a rank-48 complex 4x4 matrix-multiplication algorithm.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_first_rank48_complex_4x4",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0286",
+      "sentence_id": "tex_prose_sentence_0113",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 59,
+      "source_end_line": 59,
+      "source_quote": "As shown in Figure [citation]",
+      "source_quote_start": 0,
+      "source_quote_end": 29,
+      "source_quote_sha256": "116f6dfb3514a0d6feb102f927e26d344d0fe6f37a8f56178ce8c0b409f573f3",
+      "statement": "The prose directs readers to the evolved-program diff figure.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This is navigation to separately inventoried Figure 4 evidence."
+    },
+    {
+      "proposition_id": "tex_proposition_0287",
+      "sentence_id": "tex_prose_sentence_0113",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 59,
+      "source_end_line": 59,
+      "source_quote": "makes significant changes to the initial program",
+      "source_quote_start": 44,
+      "source_quote_end": 92,
+      "source_quote_sha256": "6ce2f58aba71681f765fc1f969a4c05cf3a33e633c384f93e08137d5a4ec794b",
+      "statement": "AlphaEvolve is reported to make significant changes to the initial matrix program.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_significant_initial_program_changes",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0288",
+      "sentence_id": "tex_prose_sentence_0113",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 59,
+      "source_end_line": 59,
+      "source_quote": "introducing several original ideas",
+      "source_quote_start": 94,
+      "source_quote_end": 128,
+      "source_quote_sha256": "471e59da5ecdeae0f055155e053d98d80b831c059e6559c97296997e71d43b98",
+      "statement": "The evolved matrix program is reported to introduce several original ideas.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_original_ideas_increasingly_better",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0289",
+      "sentence_id": "tex_prose_sentence_0113",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 59,
+      "source_end_line": 59,
+      "source_quote": "design increasingly better algorithms",
+      "source_quote_start": 132,
+      "source_quote_end": 169,
+      "source_quote_sha256": "74e0770554399d0a59e5ceac5391ea16cae810e379a6095792a0abd3b739c54c",
+      "statement": "The original evolved ideas are reported to produce increasingly better algorithms.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_original_ideas_increasingly_better",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0290",
+      "sentence_id": "tex_prose_sentence_0114",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 60,
+      "source_end_line": 60,
+      "source_quote": "most results in Table [citation]",
+      "source_quote_start": 6,
+      "source_quote_end": 38,
+      "source_quote_sha256": "1b90737c6becd14d9392a56b1050166e5c6154f5e27d754d0faafe9c8c3adb23",
+      "statement": "Most Table 2 matrix results were obtained from a simple initial program.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_most_table2_simple_initial_program",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0291",
+      "sentence_id": "tex_prose_sentence_0114",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 60,
+      "source_end_line": 60,
+      "source_quote": "including 4, 4, 4",
+      "source_quote_start": 40,
+      "source_quote_end": 57,
+      "source_quote_sha256": "7c80fda653418d9241d61c2dc4419e718960924fb9049022076397a89f993114",
+      "statement": "The 4x4x4 result is among the results obtained from a simple initial program.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_most_table2_simple_initial_program",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0292",
+      "sentence_id": "tex_prose_sentence_0114",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 60,
+      "source_end_line": 60,
+      "source_quote": "were obtained from a simple initial program",
+      "source_quote_start": 60,
+      "source_quote_end": 103,
+      "source_quote_sha256": "ea12db7d951a65711b3a93c62a8fd9ef5bace18720e53f41ea2328cc8da6a817",
+      "statement": "The referenced Table 2 results used a simple initial program.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_most_table2_simple_initial_program",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0293",
+      "sentence_id": "tex_prose_sentence_0114",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 60,
+      "source_end_line": 60,
+      "source_quote": "for some parameters, seeding the initial program with our own ideas",
+      "source_quote_start": 119,
+      "source_quote_end": 186,
+      "source_quote_sha256": "d9ea1c680956eb2578abd88a49e1a128eabca1db0918eb632a16bf679a045bf1",
+      "statement": "Some matrix parameter settings used researcher ideas in the initial program.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_researcher_ideas_boost_performance",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0294",
+      "sentence_id": "tex_prose_sentence_0114",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 60,
+      "source_end_line": 60,
+      "source_quote": "adding stochasticity to the evaluation function",
+      "source_quote_start": 196,
+      "source_quote_end": 243,
+      "source_quote_sha256": "7665cd234b89188f85fbae7b465e915094bf9363101b36972d486d11b04268ab",
+      "statement": "Researcher seeding included stochasticity in the evaluation function.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_researcher_ideas_boost_performance",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0295",
+      "sentence_id": "tex_prose_sentence_0114",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 60,
+      "source_end_line": 60,
+      "source_quote": "using evolutionary approaches",
+      "source_quote_start": 247,
+      "source_quote_end": 276,
+      "source_quote_sha256": "b56c81382ce3b5e4a70e064cf3e44448e157b83aec54f2e056a187182f0538f0",
+      "statement": "Researcher seeding included evolutionary approaches.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_researcher_ideas_boost_performance",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0296",
+      "sentence_id": "tex_prose_sentence_0114",
+      "sentence_proposition_ordinal": 7,
+      "source_file": "results.tex",
+      "source_line": 60,
+      "source_end_line": 60,
+      "source_quote": "could further boost performance",
+      "source_quote_start": 278,
+      "source_quote_end": 309,
+      "source_quote_sha256": "79482ef46aaebc00db6e9c00c321bb6d3eb4d7a408289af60ed027bdc052ad31",
+      "statement": "Researcher-provided initial ideas are reported to improve performance for some parameters.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_researcher_ideas_boost_performance",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0297",
+      "sentence_id": "tex_prose_sentence_0114",
+      "sentence_proposition_ordinal": 8,
+      "source_file": "results.tex",
+      "source_line": 60,
+      "source_end_line": 60,
+      "source_quote": "highlighting the possibility of scientific collaboration between researchers and AlphaEvolve",
+      "source_quote_start": 311,
+      "source_quote_end": 403,
+      "source_quote_sha256": "27f49f8b104b562f0703a66857f6ecb10b736af17edb3a14c927900ad5032a2a",
+      "statement": "The result is presented as evidence for possible researcher-AlphaEvolve scientific collaboration.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_scientific_collaboration_possibility",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
     }
   ],
   "inventory_scope": {
@@ -7232,16 +8661,17 @@
       "all 8 retained Abstract sentences in main.tex",
       "all 29 retained Introduction sentences in introduction.tex",
       "all 61 retained Methods sentences in methods.tex",
+      "all 16 retained Section 3.1 matrix-result sentences in results.tex",
       "manual atomic-proposition statements and exact rendered-source quote offsets",
       "resolved bounded-claim mappings or explicit context, outlook, and interpretation dispositions"
     ],
     "excluded": [
-      "the remaining 304 retained prose sentences",
+      "the remaining 288 retained prose sentences",
       "separately audited captions, tables, equations, listings, footnotes, and explicit math constructs",
       "independent second-reviewer semantic agreement",
       "mathematical correctness, citation sufficiency, image-pixel semantics, or result reproduction",
       "AlphaEvolve system parity"
     ]
   },
-  "claim_boundary": "This boundary records a single-reviewer atomic-proposition decomposition for every retained Abstract, Introduction, and Methods sentence. Complete disposition inside this 98-sentence scope does not cover the remaining 304 prose sentences and does not prove independent semantic exhaustiveness, mathematical correctness, result reproduction, or AlphaEvolve parity."
+  "claim_boundary": "This boundary records a single-reviewer atomic-proposition decomposition for every retained Abstract, Introduction, Methods, and Section 3.1 matrix-result sentence. Complete disposition inside this 114-sentence scope does not cover the remaining 288 prose sentences and does not prove independent semantic exhaustiveness, mathematical correctness, result reproduction, or AlphaEvolve parity."
 }

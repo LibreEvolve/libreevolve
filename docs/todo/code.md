@@ -145,13 +145,12 @@ sidecars, tests, and active TODOs.
     correctness, proof validity, and result reproduction remain owned by this
     TODO. The supplemental
     `papers/alphaevolve_tex_proposition_inventory_boundary.json` now reviews all
-    220 sentences from the Abstract through Section 3.3.4 compiler optimization
-    as 744 atomic propositions. It maps 690 propositions through 720 references
-    to 329 bounded claims and classifies 54 as context, outlook, or
-    interpretation. The compiler slice adds no new bounded claim or parity
-    credit, but repairs sentence mappings for JAX output postprocessing and the
-    reported 15% pre/postprocessing speedup. Existing active TODOs own all 44
-    compiler gaps.
+    244 sentences from the Abstract through Section 4 ablations as 812 atomic
+    propositions. It maps 753 propositions through 783 references to 362 bounded
+    claims and classifies 59 as context, outlook, or interpretation. The Section
+    4 slice adds no new bounded claim or parity credit, but repairs five
+    alternative-definition sentences so their variants retain the shared
+    component-efficacy purpose. Existing active TODOs own all 49 ablation gaps.
     Remaining proposition coverage and independent semantic
     review stay open.
     Meanwhile,
@@ -181,11 +180,11 @@ sidecars, tests, and active TODOs.
     constructs have dispositions, all 83 table rows and 240 cells have
     row/cell dispositions,
     all 8 code listings and 305 source lines have line-level dispositions, and
-    all 309 TeX math constructs and 402 prose sentences have dispositions; 744
-    propositions across all 220 sentences through Section 3.3.4 compiler
-    optimization are reviewed.
+    all 309 TeX math constructs and 402 prose sentences have dispositions; 812
+    propositions across all 244 sentences through Section 4 ablations are
+    reviewed.
     Citation roles/sufficiency and implementation relevance remain unclassified,
-    and 182 prose sentences lack proposition review;
+    and 158 prose sentences lack proposition review;
     mathematical-correctness, image-pixel or citation-semantic level
     across remaining source details and the other paper
     spans and all code modules, tests, runtime report

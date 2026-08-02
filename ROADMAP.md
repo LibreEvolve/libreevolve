@@ -1031,16 +1031,17 @@ AlphaEvolve reproduction.
   bounded claims but does not prove sentence-internal clause/proposition
   exhaustiveness, independent semantic review, or result reproduction. The
   supplemental `papers/alphaevolve_tex_proposition_inventory_boundary.json`
-  decomposes all 220 retained sentences from the Abstract through Section 3.3.4
-  compiler optimization into 744 atomic propositions: 690 map through 720
-  references to 329 bounded claims, 41 are source context, 2 are author outlook,
+  decomposes all 244 retained sentences from the Abstract through Section 4
+  ablations into 812 atomic propositions: 753 map through 783 references to 362
+  bounded claims, 46 are source context, 2 are author outlook,
   and 11 are qualified author interpretations. It
   cumulatively bounds
   the previously missed direct-versus-instrumental-search comparison and the
-  expensive-evaluation sample-efficiency claim. The compiler slice adds no new
-  claim or parity credit, but repairs sentence mappings for JAX output
-  postprocessing and the reported 15% pre/postprocessing speedup. All 44
-  compiler claims remain owned by active TODOs. The other 182 prose
+  expensive-evaluation sample-efficiency claim. The Section 4 slice adds no new
+  claim or parity credit, but repairs five alternative-definition sentences so
+  their no-evolution, no-context, no-meta-prompt, loss-only, and small-base
+  variants retain the shared component-efficacy purpose. All 49 ablation gaps
+  remain owned by active TODOs. The other 158 prose
   sentences and independent semantic review remain open. The twelve bounded
   claim inventories now disposition 846 claims in total: 30 locally
   implemented, 278 partial, 110 not
@@ -1068,10 +1069,10 @@ AlphaEvolve reproduction.
   for all 83 rows and 240 cells in Tables 1-3, plus line-level disposition for all 8 retained
   code listings and 305 physical source lines, plus delimiter-level disposition
   for all 309 explicit TeX math constructs, plus paragraph/sentence disposition
-  for all 128 retained prose paragraphs and 402 grammatical sentences, plus 744
-  atomic-proposition dispositions across all 220 sentences from the Abstract
-  through Section 3.3.4 compiler optimization. It is not proposition review
-  for the remaining 182 sentences,
+  for all 128 retained prose paragraphs and 402 grammatical sentences, plus 812
+  atomic-proposition dispositions across all 244 sentences from the Abstract
+  through Section 4 ablations. It is not proposition review
+  for the remaining 158 sentences,
   mathematical-correctness proof, image-pixel or citation-semantic review,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,
   implemented-benchmark bullet semantic verifier,

@@ -1687,10 +1687,10 @@ have row/cell
 dispositions; and all 8 retained code listings and 305 physical source lines
 have line-level dispositions; all 309 explicit TeX math constructs have
 delimiter-level dispositions; prose sentences also have dispositions. This is
-supplemented by 744 atomic-proposition dispositions across all 220 sentences
-from the Abstract through Section 3.3.4 compiler optimization, with 690 mapped
-to bounded claims and 54 classified as context, outlook, or interpretation.
-This is not proposition review for the remaining 182 prose
+supplemented by 812 atomic-proposition dispositions across all 244 sentences
+from the Abstract through Section 4 ablations, with 753 mapped to bounded claims
+and 59 classified as context, outlook, or interpretation.
+This is not proposition review for the remaining 158 prose
 sentences or independent semantic review,
 mathematical correctness,
 image-pixel or citation-semantic review, or per-phrase sufficiency proof,
@@ -4214,17 +4214,18 @@ independent semantic review, mathematical correctness, result reproduction, or
 AlphaEvolve parity.
 
 The scoped semantic review in
-`papers/alphaevolve_tex_proposition_inventory_boundary.json` decomposes all 220
-retained sentences from the Abstract through Section 3.3.4 compiler
-optimization into 744 atomic propositions. Six hundred ninety map through 720
-resolved references to 329 existing bounded claims; 41 are source context, 2 are
+`papers/alphaevolve_tex_proposition_inventory_boundary.json` decomposes all 244
+retained sentences from the Abstract through Section 4 ablations into 812
+atomic propositions. Seven hundred fifty-three map through 783 resolved
+references to 362 existing bounded claims; 46 are source context, 2 are
 author outlook, and 11 are qualified author
 interpretations. The cumulative
 review adds the previously unbounded direct-versus-instrumental-search and
-expensive-evaluation sample-efficiency claims. The compiler slice adds no new
-bounded claim or parity credit, but repairs sentence mappings for JAX output
-postprocessing and the reported 15% pre/postprocessing speedup. Existing active
-TODOs own all 44 compiler gaps. It is a single-reviewer scoped inventory, not
-proposition coverage for the remaining 182 prose
+expensive-evaluation sample-efficiency claims. The Section 4 slice adds no new
+bounded claim or parity credit, but repairs five alternative-definition
+sentences so their no-evolution, no-context, no-meta-prompt, loss-only, and
+small-base variants retain the shared component-efficacy purpose. Existing
+active TODOs own all 49 ablation gaps. It is a single-reviewer scoped inventory,
+not proposition coverage for the remaining 158 prose
 sentences, independent
 semantic agreement, mathematical correctness, result reproduction, or parity.

@@ -1,7 +1,7 @@
 {
-  "schema": "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v9",
+  "schema": "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v10",
   "source_paper_id": "2506.13131",
-  "boundary_status": "abstract_through_section3_3_4_compiler_proposition_review_complete_without_remaining_paper_or_independent_semantic_exhaustiveness",
+  "boundary_status": "abstract_through_section4_ablations_proposition_review_complete_without_remaining_paper_or_independent_semantic_exhaustiveness",
   "source_prose_schema": "libreevolve.alphaevolve_tex_prose_inventory_boundary.v1",
   "source_prose_boundary_status": "retained_tex_paragraph_and_sentence_inventory_complete_without_semantic_clause_exhaustiveness",
   "source_prose_ready": true,
@@ -15,32 +15,32 @@
   "source_errors": [],
   "parse_errors": [],
   "source_sentence_count": 402,
-  "reviewed_sentence_count": 220,
-  "remaining_sentence_count": 182,
-  "reviewed_sentence_fraction": 0.5472636815920398,
+  "reviewed_sentence_count": 244,
+  "remaining_sentence_count": 158,
+  "reviewed_sentence_fraction": 0.6069651741293532,
   "reviewed_source_files": [
+    "ablations.tex",
     "introduction.tex",
     "main.tex",
     "methods.tex",
     "results.tex"
   ],
   "remaining_source_files": [
-    "ablations.tex",
     "acknowledgement.tex",
     "appendix.tex",
     "discussion.tex",
     "related_work.tex"
   ],
-  "proposition_count": 744,
+  "proposition_count": 812,
   "disposition_counts": {
     "author_interpretation": 11,
     "author_outlook": 2,
-    "existing_bounded_claim_mapping": 690,
-    "source_context_only": 41
+    "existing_bounded_claim_mapping": 753,
+    "source_context_only": 46
   },
-  "claim_reference_count": 720,
-  "unique_claim_reference_count": 329,
-  "implementation_relevant_proposition_count": 680,
+  "claim_reference_count": 783,
+  "unique_claim_reference_count": 362,
+  "implementation_relevant_proposition_count": 743,
   "unmapped_proposition_count": 0,
   "unresolved_reference_count": 0,
   "new_bounded_claim_ids": [
@@ -72,6 +72,7 @@
     "section3_3_2_average_twenty_three_percent_kernel_speedup",
     "section3_3_2_one_percent_gemini_training_reduction",
     "section3_3_2_team_research_engineering_velocity",
+    "section4_component_efficacy_goal",
     "direct_verilog_fosters_trust",
     "direct_verilog_simplifies_adoption",
     "gemini_first_direct_tpu_arithmetic_contribution",
@@ -3241,6 +3242,338 @@
         "tex_proposition_0742",
         "tex_proposition_0743",
         "tex_proposition_0744"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0221",
+      "source_file": "ablations.tex",
+      "source_line": 4,
+      "source_text_sha256": "1158b31158162daa57c69e1a0ff697765bd79c19032474baa195a5cb6de50117",
+      "rendered_text_sha256": "6627023e9485ea6943cefe4da3b1516ae923dc2e67aa108a9d942b802edba276",
+      "proposition_count": 8,
+      "proposition_ids": [
+        "tex_proposition_0745",
+        "tex_proposition_0746",
+        "tex_proposition_0747",
+        "tex_proposition_0748",
+        "tex_proposition_0749",
+        "tex_proposition_0750",
+        "tex_proposition_0751",
+        "tex_proposition_0752"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0222",
+      "source_file": "ablations.tex",
+      "source_line": 7,
+      "source_text_sha256": "b137111424c3afaefa4b4d33d21bdce7c6679e65f1863d7f0b6557e768eb56a8",
+      "rendered_text_sha256": "ceeb4cd9eaa55405882423436352389e1f840c6d126659ace2b494052d775132",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0753"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0223",
+      "source_file": "ablations.tex",
+      "source_line": 7,
+      "source_text_sha256": "ae42491d45410d2df66e0a2b46101b5258a2da3fff44132ffce84ffe109d6186",
+      "rendered_text_sha256": "ead9a9f248f6258aabf3d823706d1147f0c8b6d8c5396b83bd3f99a98129c4ef",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0754",
+        "tex_proposition_0755",
+        "tex_proposition_0756",
+        "tex_proposition_0757",
+        "tex_proposition_0758"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0224",
+      "source_file": "ablations.tex",
+      "source_line": 7,
+      "source_text_sha256": "6a433034e5565bc5b25394698e70373f6c7028a6e8ebd2534891f005502512bb",
+      "rendered_text_sha256": "6a433034e5565bc5b25394698e70373f6c7028a6e8ebd2534891f005502512bb",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0759",
+        "tex_proposition_0760",
+        "tex_proposition_0761",
+        "tex_proposition_0762"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0225",
+      "source_file": "ablations.tex",
+      "source_line": 7,
+      "source_text_sha256": "f3caf6166c7f89b46b35fe78f162969ab7c48896d7fe37ebeeea83d9cdd12335",
+      "rendered_text_sha256": "f3caf6166c7f89b46b35fe78f162969ab7c48896d7fe37ebeeea83d9cdd12335",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0763"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0226",
+      "source_file": "ablations.tex",
+      "source_line": 8,
+      "source_text_sha256": "00c6197ae9eaa5d50894249390f6bdebc25a9ea142b464414b0e0e54fefb62aa",
+      "rendered_text_sha256": "285c1b6a0e169defa447e6de02bd6171baac3a2120c805651601032333370ea0",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0764"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0227",
+      "source_file": "ablations.tex",
+      "source_line": 8,
+      "source_text_sha256": "29bdb87c6eaa4f0fa36740f28fbdd9b6be7668df8d2546547bbd28a612f2d38f",
+      "rendered_text_sha256": "d8888fcc4e1b3fa4c897bede1d314537d08dfd9b0b77fd1dc76c50b150c357cd",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0765",
+        "tex_proposition_0766",
+        "tex_proposition_0767",
+        "tex_proposition_0768",
+        "tex_proposition_0769"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0228",
+      "source_file": "ablations.tex",
+      "source_line": 8,
+      "source_text_sha256": "d259e3e6f72a29041d2e415e43164387a7842f21f75208b4c32ff67304e836eb",
+      "rendered_text_sha256": "d259e3e6f72a29041d2e415e43164387a7842f21f75208b4c32ff67304e836eb",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0770",
+        "tex_proposition_0771",
+        "tex_proposition_0772"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0229",
+      "source_file": "ablations.tex",
+      "source_line": 8,
+      "source_text_sha256": "f72c8536463c3bae7b38a4740f69b192ef2fe3b315b049b13119f9b052226956",
+      "rendered_text_sha256": "f72c8536463c3bae7b38a4740f69b192ef2fe3b315b049b13119f9b052226956",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0773"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0230",
+      "source_file": "ablations.tex",
+      "source_line": 9,
+      "source_text_sha256": "8d78b52ac7b8b667c3f083339fe169191ac5ee7382c2453da7ff61921cd83476",
+      "rendered_text_sha256": "1acc427699c562ed56fbe2a6d5e2a2ae53e4aa6612384190787b903588d513ee",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0774"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0231",
+      "source_file": "ablations.tex",
+      "source_line": 9,
+      "source_text_sha256": "aad40a1c5a4b1682134a90e95d2781cbd63a5201913314825d7fbdf8b3b9f461",
+      "rendered_text_sha256": "2b3a8a8c173df404d15c7e6e4e8c19c7262ba5053b8a90000bc2dabf1d413f7f",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0775",
+        "tex_proposition_0776",
+        "tex_proposition_0777"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0232",
+      "source_file": "ablations.tex",
+      "source_line": 9,
+      "source_text_sha256": "b0c396574055c0f591baaf123070768271eb515c04ad5a9869a660c6d339f260",
+      "rendered_text_sha256": "b0c396574055c0f591baaf123070768271eb515c04ad5a9869a660c6d339f260",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0778",
+        "tex_proposition_0779"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0233",
+      "source_file": "ablations.tex",
+      "source_line": 9,
+      "source_text_sha256": "15d2aa55d79424c77200e536f13b4e35f9c6170072d88fd0473b1bb2e35a7afb",
+      "rendered_text_sha256": "15d2aa55d79424c77200e536f13b4e35f9c6170072d88fd0473b1bb2e35a7afb",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0780",
+        "tex_proposition_0781",
+        "tex_proposition_0782"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0234",
+      "source_file": "ablations.tex",
+      "source_line": 9,
+      "source_text_sha256": "770550572503d930cdfb257d797b8c668cc1cebd7c02bdf31f9a42a895f5e5f5",
+      "rendered_text_sha256": "770550572503d930cdfb257d797b8c668cc1cebd7c02bdf31f9a42a895f5e5f5",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0783"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0235",
+      "source_file": "ablations.tex",
+      "source_line": 10,
+      "source_text_sha256": "700ebdbe3dec30b4b760c71e63e72b325f5d2e87d405f280a4e2272083e5ed00",
+      "rendered_text_sha256": "0ca75fac8bf8b866fd64bbdb03400d72749c414ca4df0900ea6406fd08d7135d",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0784"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0236",
+      "source_file": "ablations.tex",
+      "source_line": 10,
+      "source_text_sha256": "f94610d9680211c450ed147b6d0a8820f724775b545b225cc259ffb96b57cbe4",
+      "rendered_text_sha256": "cb3bae4198e34e79de48dfade585f14312b3792f396030fe723f986512980e3b",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0785",
+        "tex_proposition_0786",
+        "tex_proposition_0787",
+        "tex_proposition_0788"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0237",
+      "source_file": "ablations.tex",
+      "source_line": 10,
+      "source_text_sha256": "b4a1afc0410c4e86354ee771ce0794649dac703121c151aae155e471d3ae0aea",
+      "rendered_text_sha256": "b4a1afc0410c4e86354ee771ce0794649dac703121c151aae155e471d3ae0aea",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0789",
+        "tex_proposition_0790",
+        "tex_proposition_0791",
+        "tex_proposition_0792"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0238",
+      "source_file": "ablations.tex",
+      "source_line": 10,
+      "source_text_sha256": "b4305718f54ee00eed50ed4ae05c7152ceadc2e09bab0869bbac25e7cb1c0b6f",
+      "rendered_text_sha256": "b4305718f54ee00eed50ed4ae05c7152ceadc2e09bab0869bbac25e7cb1c0b6f",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0793"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0239",
+      "source_file": "ablations.tex",
+      "source_line": 11,
+      "source_text_sha256": "f56e99aa63125682f138f3e9fce863184a7535a44a02b8e1928c5b35f4c7b33a",
+      "rendered_text_sha256": "f8e0211102107ce7b9cd9f77a0848f4ab2d6ca098eada91457c9f4a0f5047900",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0794"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0240",
+      "source_file": "ablations.tex",
+      "source_line": 11,
+      "source_text_sha256": "2ec23f4674290de5a7cb47bf27063362a8ac2e008d14dd832a8ab48bf0a2db87",
+      "rendered_text_sha256": "43bff33b8709e48571f6bcb2aa2c98d4935a310b78cc62c2c5423149272705a4",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0795",
+        "tex_proposition_0796",
+        "tex_proposition_0797",
+        "tex_proposition_0798",
+        "tex_proposition_0799"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0241",
+      "source_file": "ablations.tex",
+      "source_line": 11,
+      "source_text_sha256": "5acd6ff0576111270e2c44e821afa1e7b12c59f99b85baa6a84efc506c5059b9",
+      "rendered_text_sha256": "5acd6ff0576111270e2c44e821afa1e7b12c59f99b85baa6a84efc506c5059b9",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0800",
+        "tex_proposition_0801",
+        "tex_proposition_0802",
+        "tex_proposition_0803",
+        "tex_proposition_0804"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0242",
+      "source_file": "ablations.tex",
+      "source_line": 11,
+      "source_text_sha256": "d31ce7e49c3440ed42066355ec546b416d57725ac52627eec9914026837c194e",
+      "rendered_text_sha256": "d31ce7e49c3440ed42066355ec546b416d57725ac52627eec9914026837c194e",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0805"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0243",
+      "source_file": "ablations.tex",
+      "source_line": 29,
+      "source_text_sha256": "b687baa6e8c8031919e0c65cc5225ad727bc5256a91f30719a5928a48d85edd1",
+      "rendered_text_sha256": "5cc61e13b63d1acb08ccceed8dd8fc189f885c18adfbe830e1002d3d27098783",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0806",
+        "tex_proposition_0807",
+        "tex_proposition_0808",
+        "tex_proposition_0809"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0244",
+      "source_file": "ablations.tex",
+      "source_line": 29,
+      "source_text_sha256": "cf1b4041848c65a18349cdfaa6cbcf1b9de414c0a392d60019b0d74e289bccef",
+      "rendered_text_sha256": "cf1b4041848c65a18349cdfaa6cbcf1b9de414c0a392d60019b0d74e289bccef",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0810",
+        "tex_proposition_0811",
+        "tex_proposition_0812"
       ],
       "review_status": "manual_static_semantic_decomposition_complete"
     }
@@ -20903,6 +21236,1603 @@
       ],
       "implementation_relevant": true,
       "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0745",
+      "sentence_id": "tex_prose_sentence_0221",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 4,
+      "source_end_line": 4,
+      "source_quote": "We carried out ablations",
+      "source_quote_start": 0,
+      "source_quote_end": 24,
+      "source_quote_sha256": "813c693aa0a6be48f6b6782616bfddd430ccdbe84ce1c2815c8c701fed26f9d0",
+      "statement": "The authors report carrying out ablation experiments.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "section4_ablation_experiments_reported",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0746",
+      "sentence_id": "tex_prose_sentence_0221",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "ablations.tex",
+      "source_line": 4,
+      "source_end_line": 4,
+      "source_quote": "on two tasks",
+      "source_quote_start": 25,
+      "source_quote_end": 37,
+      "source_quote_sha256": "678eda0436a4d1984326e886e9ca5d0cfaa00e44d62218ac8d93df5de7164485",
+      "statement": "The reported ablations cover two task families.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "section4_two_task_families",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0747",
+      "sentence_id": "tex_prose_sentence_0221",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "ablations.tex",
+      "source_line": 4,
+      "source_end_line": 4,
+      "source_quote": "finding tensor decompositions",
+      "source_quote_start": 39,
+      "source_quote_end": 68,
+      "source_quote_sha256": "1b74943a4962417ce7b7f134708754f17b9637ab2f6527d13e91e41841af3db6",
+      "statement": "One ablation task searches for tensor decompositions.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "section4_matrix_tensor_decomposition_task",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0748",
+      "sentence_id": "tex_prose_sentence_0221",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "ablations.tex",
+      "source_line": 4,
+      "source_end_line": 4,
+      "source_quote": "for faster matrix multiplication",
+      "source_quote_start": 69,
+      "source_quote_end": 101,
+      "source_quote_sha256": "579f0d43cc6167b0008754ab12492d9894517952acfd6dbe0c1f67bf8e28eeb5",
+      "statement": "The tensor-decomposition task targets faster matrix multiplication.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "section4_matrix_faster_multiplication_goal",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0749",
+      "sentence_id": "tex_prose_sentence_0221",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "ablations.tex",
+      "source_line": 4,
+      "source_end_line": 4,
+      "source_quote": "computing lower bounds",
+      "source_quote_start": 121,
+      "source_quote_end": 143,
+      "source_quote_sha256": "3b9cb82c80b94967974403987037efc9e221e36549e46e502fd32123510e3fa9",
+      "statement": "The second ablation task computes lower bounds.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "section4_kissing_lower_bound_task",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0750",
+      "sentence_id": "tex_prose_sentence_0221",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "ablations.tex",
+      "source_line": 4,
+      "source_end_line": 4,
+      "source_quote": "on kissing numbers",
+      "source_quote_start": 144,
+      "source_quote_end": 162,
+      "source_quote_sha256": "e15b8caed6eea3ab088097d30986d3704be554f0679118fa65c00d11f6767cbd",
+      "statement": "The lower-bound task concerns kissing numbers.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "section4_kissing_lower_bound_task",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0751",
+      "sentence_id": "tex_prose_sentence_0221",
+      "sentence_proposition_ordinal": 7,
+      "source_file": "ablations.tex",
+      "source_line": 4,
+      "source_end_line": 4,
+      "source_quote": "aiming to understand the efficacy",
+      "source_quote_start": 179,
+      "source_quote_end": 212,
+      "source_quote_sha256": "6965ce18609c4861f384cd81fa968b5e3c4a2c60b3bc014ea4331943788cfcdb",
+      "statement": "The stated purpose is to understand component efficacy.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "section4_component_efficacy_goal",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0752",
+      "sentence_id": "tex_prose_sentence_0221",
+      "sentence_proposition_ordinal": 8,
+      "source_file": "ablations.tex",
+      "source_line": 4,
+      "source_end_line": 4,
+      "source_quote": "following components of AlphaEvolve",
+      "source_quote_start": 220,
+      "source_quote_end": 255,
+      "source_quote_sha256": "6f16b72990af360a4c07bfea39cc5e5eaad33ea1732ea4ba1f95bfc46dac4f20",
+      "statement": "The efficacy analysis concerns the subsequently listed AlphaEvolve components.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "section4_component_efficacy_goal",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0753",
+      "sentence_id": "tex_prose_sentence_0222",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 7,
+      "source_end_line": 7,
+      "source_quote": "Evolutionary approach.",
+      "source_quote_start": 0,
+      "source_quote_end": 22,
+      "source_quote_sha256": "ceeb4cd9eaa55405882423436352389e1f840c6d126659ace2b494052d775132",
+      "statement": "Evolutionary approach is an ablation-component label.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "ablation_component_label"
+    },
+    {
+      "proposition_id": "tex_proposition_0754",
+      "sentence_id": "tex_prose_sentence_0223",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 7,
+      "source_end_line": 7,
+      "source_quote": "AlphaEvolve utilizes an evolutionary approach",
+      "source_quote_start": 0,
+      "source_quote_end": 45,
+      "source_quote_sha256": "d4b83eab878217d0951353e848bf6de33ab3e31284b2c5f43cae9afbc6471835",
+      "statement": "AlphaEvolve uses an evolutionary approach.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "evolutionary_approach_used",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0755",
+      "sentence_id": "tex_prose_sentence_0223",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "ablations.tex",
+      "source_line": 7,
+      "source_end_line": 7,
+      "source_quote": "previously generated programs",
+      "source_quote_start": 53,
+      "source_quote_end": 82,
+      "source_quote_sha256": "cc8738f2d600d2c69caf7d6cad9bc6a0b5b98bcf5d475a8d377f4b64f77d38bb",
+      "statement": "The evolutionary process retains programs generated previously.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "previous_programs_stored_in_database",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0756",
+      "sentence_id": "tex_prose_sentence_0223",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "ablations.tex",
+      "source_line": 7,
+      "source_end_line": 7,
+      "source_quote": "previously generated",
+      "source_quote_start": 53,
+      "source_quote_end": 73,
+      "source_quote_sha256": "e283ad15e5cbfaf432f74c4142a7522f0597582142bd03b30273047cb4d57ad2",
+      "statement": "The retained programs originate from earlier iterations.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "previous_programs_drive_subsequent_improvement",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0757",
+      "sentence_id": "tex_prose_sentence_0223",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "ablations.tex",
+      "source_line": 7,
+      "source_end_line": 7,
+      "source_quote": "stored in a database",
+      "source_quote_start": 87,
+      "source_quote_end": 107,
+      "source_quote_sha256": "dd8c3e85855a4c48abf0d6873130b95a866c2dc4a529e4a0667e366f67dbd7ff",
+      "statement": "Previously generated programs are stored in a database.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "previous_programs_stored_in_database",
+          "resolved": true,
+          "implementation_status": "implemented_local"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0758",
+      "sentence_id": "tex_prose_sentence_0223",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "ablations.tex",
+      "source_line": 7,
+      "source_end_line": 7,
+      "source_quote": "used to obtain better programs in subsequent iterations",
+      "source_quote_start": 112,
+      "source_quote_end": 167,
+      "source_quote_sha256": "f4605461af5cae7267270eb793c449b10bc0772029c48b1888ab3222d6ab723d",
+      "statement": "Stored programs are used to seek better programs in later iterations.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "previous_programs_drive_subsequent_improvement",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0759",
+      "sentence_id": "tex_prose_sentence_0224",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 7,
+      "source_end_line": 7,
+      "source_quote": "To analyze the importance of evolution",
+      "source_quote_start": 0,
+      "source_quote_end": 38,
+      "source_quote_sha256": "ac8d6064a8522e4a673a5dbb95e1d0b0cbd51e6c8e60973b18be8742446bc394",
+      "statement": "The no-evolution alternative is intended to test evolution's importance.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "section4_component_efficacy_goal",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0760",
+      "sentence_id": "tex_prose_sentence_0224",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "ablations.tex",
+      "source_line": 7,
+      "source_end_line": 7,
+      "source_quote": "we consider an alternative approach",
+      "source_quote_start": 40,
+      "source_quote_end": 75,
+      "source_quote_sha256": "715d17dad49b38f4976df1c81abac785f7a44f75344bbf992443b494f705ffa3",
+      "statement": "The authors define an alternative to evolutionary reuse.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "no_evolution_repeats_same_initial_program",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0761",
+      "sentence_id": "tex_prose_sentence_0224",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "ablations.tex",
+      "source_line": 7,
+      "source_end_line": 7,
+      "source_quote": "repeatedly feeds the same initial program",
+      "source_quote_start": 83,
+      "source_quote_end": 124,
+      "source_quote_sha256": "0354451cd499176dbacdad4ba4d3afa9c7bc1c3db3b834ebabe877f8fd987612",
+      "statement": "The alternative repeatedly supplies the same initial program.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "no_evolution_repeats_same_initial_program",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0762",
+      "sentence_id": "tex_prose_sentence_0224",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "ablations.tex",
+      "source_line": 7,
+      "source_end_line": 7,
+      "source_quote": "to the language model",
+      "source_quote_start": 125,
+      "source_quote_end": 146,
+      "source_quote_sha256": "0b597157fa4ae22490288992eeb6604eed1587a60435f2653b9ce5749cf2ce12",
+      "statement": "The repeated initial program is supplied to the language model.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "no_evolution_repeats_same_initial_program",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0763",
+      "sentence_id": "tex_prose_sentence_0225",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 7,
+      "source_end_line": 7,
+      "source_quote": "No evolution",
+      "source_quote_start": 31,
+      "source_quote_end": 43,
+      "source_quote_sha256": "d6958c15c4c76bb8e2d8b24c1fc06bcecb54c0126e3f515b85934a69bcca061f",
+      "statement": "The repeated-initial-program variant is named No evolution.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "no_evolution_variant_name",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0764",
+      "sentence_id": "tex_prose_sentence_0226",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 8,
+      "source_end_line": 8,
+      "source_quote": "Context in prompts.",
+      "source_quote_start": 0,
+      "source_quote_end": 19,
+      "source_quote_sha256": "285c1b6a0e169defa447e6de02bd6171baac3a2120c805651601032333370ea0",
+      "statement": "Context in prompts is an ablation-component label.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "ablation_component_label"
+    },
+    {
+      "proposition_id": "tex_proposition_0765",
+      "sentence_id": "tex_prose_sentence_0227",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 8,
+      "source_end_line": 8,
+      "source_quote": "powerful language models",
+      "source_quote_start": 17,
+      "source_quote_end": 41,
+      "source_quote_sha256": "7b1bdd0593e0b189a7fcdb87e08baca7b677048df4e345a5bd9ff746eecf21be",
+      "statement": "AlphaEvolve uses powerful language models.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "powerful_models_large_context_windows",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0766",
+      "sentence_id": "tex_prose_sentence_0227",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "ablations.tex",
+      "source_line": 8,
+      "source_end_line": 8,
+      "source_quote": "large context windows",
+      "source_quote_start": 47,
+      "source_quote_end": 68,
+      "source_quote_sha256": "e636d4409c05e01205e8886ddafe471bef06ef49e343e75e6ed4ca9157ca3c7d",
+      "statement": "The language models have large context windows.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "powerful_models_large_context_windows",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0767",
+      "sentence_id": "tex_prose_sentence_0227",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "ablations.tex",
+      "source_line": 8,
+      "source_end_line": 8,
+      "source_quote": "output can be improved",
+      "source_quote_start": 76,
+      "source_quote_end": 98,
+      "source_quote_sha256": "1ead1991797d69e2d53ec221a21d56bc61be441e9579258b35e82c8c27a419fc",
+      "statement": "Providing prompt context can improve model output.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "context_significantly_improves_output",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0768",
+      "sentence_id": "tex_prose_sentence_0227",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "ablations.tex",
+      "source_line": 8,
+      "source_end_line": 8,
+      "source_quote": "significantly",
+      "source_quote_start": 99,
+      "source_quote_end": 112,
+      "source_quote_sha256": "d93a9a958f6512adbe08f60b84802dcbefd4c6c74bb6f6f0279a77eec87f8bae",
+      "statement": "The reported output improvement is significant.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "context_significantly_improves_output",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0769",
+      "sentence_id": "tex_prose_sentence_0227",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "ablations.tex",
+      "source_line": 8,
+      "source_end_line": 8,
+      "source_quote": "problem-specific context in the prompt",
+      "source_quote_start": 126,
+      "source_quote_end": 164,
+      "source_quote_sha256": "202851a9629b3325ec8148d5772699aee0c4b70f76a15acd2e51439dd05c01e5",
+      "statement": "The supplied prompt context is problem-specific.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "problem_specific_prompt_context",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0770",
+      "sentence_id": "tex_prose_sentence_0228",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 8,
+      "source_end_line": 8,
+      "source_quote": "To test the importance of context",
+      "source_quote_start": 0,
+      "source_quote_end": 33,
+      "source_quote_sha256": "8c1ebf691f3b883719077beaf79aeae52db1d42b97f3688e653ac81b021b7549",
+      "statement": "The no-context alternative is intended to test context's importance.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "section4_component_efficacy_goal",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0771",
+      "sentence_id": "tex_prose_sentence_0228",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "ablations.tex",
+      "source_line": 8,
+      "source_end_line": 8,
+      "source_quote": "we consider an alternative approach",
+      "source_quote_start": 35,
+      "source_quote_end": 70,
+      "source_quote_sha256": "715d17dad49b38f4976df1c81abac785f7a44f75344bbf992443b494f705ffa3",
+      "statement": "The authors define an alternative prompt-context approach.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "no_context_removes_explicit_context",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0772",
+      "sentence_id": "tex_prose_sentence_0228",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "ablations.tex",
+      "source_line": 8,
+      "source_end_line": 8,
+      "source_quote": "no explicit context is added to the prompt",
+      "source_quote_start": 77,
+      "source_quote_end": 119,
+      "source_quote_sha256": "0c8716bfb21c6491e1047c30603a0abbabe4970b943a8449e1b7f239584db230",
+      "statement": "The alternative adds no explicit context to the prompt.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "no_context_removes_explicit_context",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0773",
+      "sentence_id": "tex_prose_sentence_0229",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 8,
+      "source_end_line": 8,
+      "source_quote": "No context in the prompt",
+      "source_quote_start": 31,
+      "source_quote_end": 55,
+      "source_quote_sha256": "6d0d19ae19bea978e30c556a0e49270b7b58e75e29a8ba7c006e6ecd1f619246",
+      "statement": "The context-free variant is named No context in the prompt.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "no_context_variant_name",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0774",
+      "sentence_id": "tex_prose_sentence_0230",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 9,
+      "source_end_line": 9,
+      "source_quote": "Meta prompts.",
+      "source_quote_start": 0,
+      "source_quote_end": 13,
+      "source_quote_sha256": "1acc427699c562ed56fbe2a6d5e2a2ae53e4aa6612384190787b903588d513ee",
+      "statement": "Meta prompts is an ablation-component label.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "ablation_component_label"
+    },
+    {
+      "proposition_id": "tex_proposition_0775",
+      "sentence_id": "tex_prose_sentence_0231",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 9,
+      "source_end_line": 9,
+      "source_quote": "uses meta prompts",
+      "source_quote_start": 17,
+      "source_quote_end": 34,
+      "source_quote_sha256": "3067b3847f9fc613d373a000aeff29305edfa99ae02892ea68f5c95cdada57d0",
+      "statement": "AlphaEvolve uses meta prompts.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "meta_prompts_used",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0776",
+      "sentence_id": "tex_prose_sentence_0231",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "ablations.tex",
+      "source_line": 9,
+      "source_end_line": 9,
+      "source_quote": "in order to improve the prompts",
+      "source_quote_start": 35,
+      "source_quote_end": 66,
+      "source_quote_sha256": "d4647a314e4bb3c2ae175c6bc544880d2eeacf079882e360da0a38b6f7f4ef8f",
+      "statement": "Meta prompts are used to improve model prompts.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "meta_prompts_improve_llm_prompts",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0777",
+      "sentence_id": "tex_prose_sentence_0231",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "ablations.tex",
+      "source_line": 9,
+      "source_end_line": 9,
+      "source_quote": "provided to the language model",
+      "source_quote_start": 76,
+      "source_quote_end": 106,
+      "source_quote_sha256": "b98fef175bb102d911fb7afe6c2d9756042684e1aef40d68b6de41fc61d1d4f8",
+      "statement": "The improved prompts are those supplied to the language model.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "meta_prompts_improve_llm_prompts",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0778",
+      "sentence_id": "tex_prose_sentence_0232",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 9,
+      "source_end_line": 9,
+      "source_quote": "potentially surpass the performance",
+      "source_quote_start": 18,
+      "source_quote_end": 53,
+      "source_quote_sha256": "a0edb2bc234b1ad2a08258abee2581829ebb3f7e2af1109e0adac8ea0fd03464",
+      "statement": "Meta prompting is presented as potentially improving beyond a comparator.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "meta_prompts_can_surpass_human_prompter",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0779",
+      "sentence_id": "tex_prose_sentence_0232",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "ablations.tex",
+      "source_line": 9,
+      "source_end_line": 9,
+      "source_quote": "using a human prompter",
+      "source_quote_start": 69,
+      "source_quote_end": 91,
+      "source_quote_sha256": "8612966a6246ef21cfdda03005c2dafc2ae8b236c40abb4e2cfefa16a6f93f70",
+      "statement": "The comparator is performance obtained with a human prompter.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "meta_prompts_can_surpass_human_prompter",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0780",
+      "sentence_id": "tex_prose_sentence_0233",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 9,
+      "source_end_line": 9,
+      "source_quote": "To test the efficacy of meta prompting",
+      "source_quote_start": 0,
+      "source_quote_end": 38,
+      "source_quote_sha256": "78927d6efebad6a923859d0b514eacb8db72fbcf43293612fc0bbadce1024d08",
+      "statement": "The disabled-meta-prompt variant is intended to test meta prompting's efficacy.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "section4_component_efficacy_goal",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0781",
+      "sentence_id": "tex_prose_sentence_0233",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "ablations.tex",
+      "source_line": 9,
+      "source_end_line": 9,
+      "source_quote": "we disable it",
+      "source_quote_start": 40,
+      "source_quote_end": 53,
+      "source_quote_sha256": "9c58ac32c8b296ecf8fa00669e091ca266d19c6aa8dec1d9b4bb3e366fd15081",
+      "statement": "The alternative disables meta prompting.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "meta_prompt_disabled_for_tensor_task",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0782",
+      "sentence_id": "tex_prose_sentence_0233",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "ablations.tex",
+      "source_line": 9,
+      "source_end_line": 9,
+      "source_quote": "for the task of tensor decomposition",
+      "source_quote_start": 54,
+      "source_quote_end": 90,
+      "source_quote_sha256": "efc4057fcab8ac3a1ffc9ae6f6c48c461653f480f34459306313a3764edaaaae",
+      "statement": "Meta prompting is disabled for the tensor-decomposition task.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "meta_prompt_disabled_for_tensor_task",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0783",
+      "sentence_id": "tex_prose_sentence_0234",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 9,
+      "source_end_line": 9,
+      "source_quote": "No meta prompt evolution",
+      "source_quote_start": 31,
+      "source_quote_end": 55,
+      "source_quote_sha256": "9c45fa12350801b09f2df2ad4f09cebe34f75f2f45a2ff5d323781a816eab7b2",
+      "statement": "The disabled-meta-prompt variant is named No meta prompt evolution.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "no_meta_prompt_variant_name",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0784",
+      "sentence_id": "tex_prose_sentence_0235",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 10,
+      "source_end_line": 10,
+      "source_quote": "Full-file evolution.",
+      "source_quote_start": 0,
+      "source_quote_end": 20,
+      "source_quote_sha256": "0ca75fac8bf8b866fd64bbdb03400d72749c414ca4df0900ea6406fd08d7135d",
+      "statement": "Full-file evolution is an ablation-component label.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "ablation_component_label"
+    },
+    {
+      "proposition_id": "tex_proposition_0785",
+      "sentence_id": "tex_prose_sentence_0236",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 10,
+      "source_end_line": 10,
+      "source_quote": "Unlike previous approaches",
+      "source_quote_start": 0,
+      "source_quote_end": 26,
+      "source_quote_sha256": "1ce6fbcf6971b5d597b5a69b9e88df2442dcbe0587b51f9e0963de1b2b2f7d1d",
+      "statement": "AlphaEvolve's full-codebase scope is contrasted with prior approaches.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "full_file_contrast_with_funsearch",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0786",
+      "sentence_id": "tex_prose_sentence_0236",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "ablations.tex",
+      "source_line": 10,
+      "source_end_line": 10,
+      "source_quote": "such as FunSearch",
+      "source_quote_start": 27,
+      "source_quote_end": 44,
+      "source_quote_sha256": "a983e97c592468597f43ff5ff3390bb94768ea46149897a4deee492c1281e25e",
+      "statement": "FunSearch is the named prior-approach comparator.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "full_file_contrast_with_funsearch",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0787",
+      "sentence_id": "tex_prose_sentence_0236",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "ablations.tex",
+      "source_line": 10,
+      "source_end_line": 10,
+      "source_quote": "evolve an entire codebase",
+      "source_quote_start": 62,
+      "source_quote_end": 87,
+      "source_quote_sha256": "d0a32e14f990fb1944c8a0a5ca45d57453bc00c4f968a92a56083d92c1dab61f",
+      "statement": "AlphaEvolve can evolve an entire codebase.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "entire_codebase_evolution",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0788",
+      "sentence_id": "tex_prose_sentence_0236",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "ablations.tex",
+      "source_line": 10,
+      "source_end_line": 10,
+      "source_quote": "instead of focusing on a single function",
+      "source_quote_start": 88,
+      "source_quote_end": 128,
+      "source_quote_sha256": "40ada20b5a6aa3a465cbacdcd1b16f8890789334b5dd0053c3e8688aa442c028",
+      "statement": "The contrast is with evolution focused on one function.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "single_function_contrast",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0789",
+      "sentence_id": "tex_prose_sentence_0237",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 10,
+      "source_end_line": 10,
+      "source_quote": "To test the importance of full-file evolution",
+      "source_quote_start": 0,
+      "source_quote_end": 45,
+      "source_quote_sha256": "77527cd7e1e272f18ef83e63d8548a5add35a57998f73666388bbefc04192ae8",
+      "statement": "The loss-only alternative is intended to test full-file evolution's importance.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "section4_component_efficacy_goal",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0790",
+      "sentence_id": "tex_prose_sentence_0237",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "ablations.tex",
+      "source_line": 10,
+      "source_end_line": 10,
+      "source_quote": "we consider an alternative",
+      "source_quote_start": 47,
+      "source_quote_end": 73,
+      "source_quote_sha256": "36f9abfe376cce486d979cdd78c40701e41ab3b1fe143729ea6d788439c0aa61",
+      "statement": "The authors define an alternative to full-file evolution.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "no_full_file_only_loss_function_evolved",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0791",
+      "sentence_id": "tex_prose_sentence_0237",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "ablations.tex",
+      "source_line": 10,
+      "source_end_line": 10,
+      "source_quote": "in the context of tensor decomposition",
+      "source_quote_start": 74,
+      "source_quote_end": 112,
+      "source_quote_sha256": "1c57a324fd7cfbb5a5ee7b416b83e90cc4724847aa4459e8c356592fa80e9baa",
+      "statement": "The full-file ablation is scoped to tensor decomposition.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "full_file_ablation_tensor_context",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0792",
+      "sentence_id": "tex_prose_sentence_0237",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "ablations.tex",
+      "source_line": 10,
+      "source_end_line": 10,
+      "source_quote": "only the loss function is evolved",
+      "source_quote_start": 119,
+      "source_quote_end": 152,
+      "source_quote_sha256": "bf71c45e054b4babe9b5db3bddacc808801f822094db83b9f5a319941ff0992a",
+      "statement": "The alternative evolves only the loss function.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "no_full_file_only_loss_function_evolved",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0793",
+      "sentence_id": "tex_prose_sentence_0238",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 10,
+      "source_end_line": 10,
+      "source_quote": "No full-file evolution",
+      "source_quote_start": 31,
+      "source_quote_end": 53,
+      "source_quote_sha256": "34a7ee6223625e569d0f6c280b1c4087349fd993aabd33de992da2cf686befa4",
+      "statement": "The loss-only variant is named No full-file evolution.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "no_full_file_variant_name",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0794",
+      "sentence_id": "tex_prose_sentence_0239",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 11,
+      "source_end_line": 11,
+      "source_quote": "Powerful language models.",
+      "source_quote_start": 0,
+      "source_quote_end": 25,
+      "source_quote_sha256": "f8e0211102107ce7b9cd9f77a0848f4ab2d6ca098eada91457c9f4a0f5047900",
+      "statement": "Powerful language models is an ablation-component label.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "ablation_component_label"
+    },
+    {
+      "proposition_id": "tex_proposition_0795",
+      "sentence_id": "tex_prose_sentence_0240",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 11,
+      "source_end_line": 11,
+      "source_quote": "relies on a mixture",
+      "source_quote_start": 12,
+      "source_quote_end": 31,
+      "source_quote_sha256": "6e45db2e0f7bb3222232c0b1d05c9e93b2f3fc90dc81398984c7bc938c9059e2",
+      "statement": "AlphaEvolve relies on a language-model mixture.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "small_large_model_mixture",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0796",
+      "sentence_id": "tex_prose_sentence_0240",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "ablations.tex",
+      "source_line": 11,
+      "source_end_line": 11,
+      "source_quote": "small",
+      "source_quote_start": 35,
+      "source_quote_end": 40,
+      "source_quote_sha256": "81db8ebbbbc69c6c6ad4a6aa92b76e0c08af547da236b9e2c9dbe1d8285a8130",
+      "statement": "The model mixture includes small language models.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "small_large_model_mixture",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0797",
+      "sentence_id": "tex_prose_sentence_0240",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "ablations.tex",
+      "source_line": 11,
+      "source_end_line": 11,
+      "source_quote": "large language models",
+      "source_quote_start": 45,
+      "source_quote_end": 66,
+      "source_quote_sha256": "3e6d81a1a791c50d53f0bf5b76135268a7d5893133a204af88bf78cffc8d356d",
+      "statement": "The model mixture includes large language models.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "small_large_model_mixture",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0798",
+      "sentence_id": "tex_prose_sentence_0240",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "ablations.tex",
+      "source_line": 11,
+      "source_end_line": 11,
+      "source_quote": "in order to obtain highly diverse samples",
+      "source_quote_start": 67,
+      "source_quote_end": 108,
+      "source_quote_sha256": "68ac6770f21e9772bb5b789b739aa12542009c77982fd9b68ed9f3ebd7ab63c5",
+      "statement": "The model mixture is used to obtain samples.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "model_mix_high_sample_diversity",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0799",
+      "sentence_id": "tex_prose_sentence_0240",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "ablations.tex",
+      "source_line": 11,
+      "source_end_line": 11,
+      "source_quote": "highly diverse",
+      "source_quote_start": 86,
+      "source_quote_end": 100,
+      "source_quote_sha256": "0772fb6ebf0c3619756478dd7eaef2f28a585e1d63e5e69a76b4226f20ab2bad",
+      "statement": "The intended samples are highly diverse.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "model_mix_high_sample_diversity",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0800",
+      "sentence_id": "tex_prose_sentence_0241",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 11,
+      "source_end_line": 11,
+      "source_quote": "To understand the importance of this component",
+      "source_quote_start": 0,
+      "source_quote_end": 46,
+      "source_quote_sha256": "3f9a75ccdca020d632560bbcefe46395e5db638cc0b718ad321a656fb9f66e0b",
+      "statement": "The small-base alternative is intended to test the model mixture's importance.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "section4_component_efficacy_goal",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0801",
+      "sentence_id": "tex_prose_sentence_0241",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "ablations.tex",
+      "source_line": 11,
+      "source_end_line": 11,
+      "source_quote": "we consider an alternative",
+      "source_quote_start": 48,
+      "source_quote_end": 74,
+      "source_quote_sha256": "36f9abfe376cce486d979cdd78c40701e41ab3b1fe143729ea6d788439c0aa61",
+      "statement": "The authors define an alternative model configuration.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "small_base_only_alternative",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0802",
+      "sentence_id": "tex_prose_sentence_0241",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "ablations.tex",
+      "source_line": 11,
+      "source_end_line": 11,
+      "source_quote": "only a single",
+      "source_quote_start": 81,
+      "source_quote_end": 94,
+      "source_quote_sha256": "2e1c5367f3db5d1f844bc3a2ac41d31af11deb17be8ead439ace137dc2026faa",
+      "statement": "The alternative uses only one model.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "small_base_only_alternative",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0803",
+      "sentence_id": "tex_prose_sentence_0241",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "ablations.tex",
+      "source_line": 11,
+      "source_end_line": 11,
+      "source_quote": "small",
+      "source_quote_start": 95,
+      "source_quote_end": 100,
+      "source_quote_sha256": "81db8ebbbbc69c6c6ad4a6aa92b76e0c08af547da236b9e2c9dbe1d8285a8130",
+      "statement": "The alternative model is small.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "small_base_only_alternative",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0804",
+      "sentence_id": "tex_prose_sentence_0241",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "ablations.tex",
+      "source_line": 11,
+      "source_end_line": 11,
+      "source_quote": "base model is used",
+      "source_quote_start": 101,
+      "source_quote_end": 119,
+      "source_quote_sha256": "aff7ad42dbe3539f4456728b95fe8d3223b0325e64b23db61fdd122a0a738186",
+      "statement": "The alternative uses a base model.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "small_base_only_alternative",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0805",
+      "sentence_id": "tex_prose_sentence_0242",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 11,
+      "source_end_line": 11,
+      "source_quote": "Small base LLM only",
+      "source_quote_start": 31,
+      "source_quote_end": 50,
+      "source_quote_sha256": "adb1362e6efb74c6a513ee08f2b0da2f09db10b5dfc5501e45d21c29f5dce92e",
+      "statement": "The single-small-model variant is named Small base LLM only.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "small_base_only_variant_name",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0806",
+      "sentence_id": "tex_prose_sentence_0243",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 29,
+      "source_end_line": 29,
+      "source_quote": "shows the results",
+      "source_quote_start": 0,
+      "source_quote_end": 17,
+      "source_quote_sha256": "fbcb5bacec75b673476ad665e54c1d6dcd0b4c99408eff6285424a303808812e",
+      "statement": "The referenced exhibit reports ablation results.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "figure8_reports_full_and_alternative_results",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0807",
+      "sentence_id": "tex_prose_sentence_0243",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "ablations.tex",
+      "source_line": 29,
+      "source_end_line": 29,
+      "source_quote": "all-inclusive AlphaEvolve approach",
+      "source_quote_start": 25,
+      "source_quote_end": 59,
+      "source_quote_sha256": "8783b41a4a2e005e560c11c99f4c781835750166ecde705d277bac2079847630",
+      "statement": "The reported results include the all-inclusive AlphaEvolve approach.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "figure8_reports_full_and_alternative_results",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0808",
+      "sentence_id": "tex_prose_sentence_0243",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "ablations.tex",
+      "source_line": 29,
+      "source_end_line": 29,
+      "source_quote": "various alternatives",
+      "source_quote_start": 75,
+      "source_quote_end": 95,
+      "source_quote_sha256": "522916667f2a5259cc2d611eb8b165971ef4e0b42620a8446bae6e05184ba6b4",
+      "statement": "The reported results include the ablation alternatives.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "figure8_reports_full_and_alternative_results",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0809",
+      "sentence_id": "tex_prose_sentence_0243",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "ablations.tex",
+      "source_line": 29,
+      "source_end_line": 29,
+      "source_quote": "listed above",
+      "source_quote_start": 96,
+      "source_quote_end": 108,
+      "source_quote_sha256": "c3fe88e82a4290f148f2412c5ac872683750c6ab6a320aaace73ecda0c67ff4c",
+      "statement": "The alternatives are those defined in the preceding text.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "figure8_reports_full_and_alternative_results",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0810",
+      "sentence_id": "tex_prose_sentence_0244",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "ablations.tex",
+      "source_line": 29,
+      "source_end_line": 29,
+      "source_quote": "each of the components",
+      "source_quote_start": 16,
+      "source_quote_end": 38,
+      "source_quote_sha256": "ecf806dce98d14768b555eefb2d6f02b6c37f40a2ac794a6b8a6824090caa5b3",
+      "statement": "The result statement applies to every listed component.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "each_component_significant_improvement",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0811",
+      "sentence_id": "tex_prose_sentence_0244",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "ablations.tex",
+      "source_line": 29,
+      "source_end_line": 29,
+      "source_quote": "is responsible for",
+      "source_quote_start": 39,
+      "source_quote_end": 57,
+      "source_quote_sha256": "b8ab357e6a68cdff437dd28498812cac24a46d22c75c793b8ed566f4fd126b95",
+      "statement": "Each component is attributed causal responsibility for improvement.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "each_component_significant_improvement",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0812",
+      "sentence_id": "tex_prose_sentence_0244",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "ablations.tex",
+      "source_line": 29,
+      "source_end_line": 29,
+      "source_quote": "a significant improvement",
+      "source_quote_start": 58,
+      "source_quote_end": 83,
+      "source_quote_sha256": "d5ec415f73b4597803a775269840568585c606cc5705918ac458a43fc2dbca19",
+      "statement": "The attributed result improvement is significant.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "each_component_significant_improvement",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
     }
   ],
   "inventory_scope": {
@@ -20916,16 +22846,17 @@
       "all 23 retained Section 3.3.2 Gemini kernel-engineering sentences in results.tex",
       "all 11 retained Section 3.3.3 hardware-circuit-design sentences in results.tex",
       "all 14 retained Section 3.3.4 compiler-optimization sentences in results.tex",
+      "all 24 retained Section 4 ablation sentences in ablations.tex",
       "manual atomic-proposition statements and exact rendered-source quote offsets",
       "resolved bounded-claim mappings or explicit context, outlook, and interpretation dispositions"
     ],
     "excluded": [
-      "the remaining 182 retained prose sentences",
+      "the remaining 158 retained prose sentences",
       "separately audited captions, tables, equations, listings, footnotes, and explicit math constructs",
       "independent second-reviewer semantic agreement",
       "mathematical correctness, citation sufficiency, image-pixel semantics, or result reproduction",
       "AlphaEvolve system parity"
     ]
   },
-  "claim_boundary": "This boundary records a single-reviewer atomic-proposition decomposition for every retained sentence from the Abstract through Section 3.3.4 compiler optimization. Complete disposition inside this 220-sentence scope does not cover the remaining 182 prose sentences and does not prove independent semantic exhaustiveness, mathematical correctness, result reproduction, or AlphaEvolve parity."
+  "claim_boundary": "This boundary records a single-reviewer atomic-proposition decomposition for every retained sentence from the Abstract through Section 4 ablations. Complete disposition inside this 244-sentence scope does not cover the remaining 158 prose sentences and does not prove independent semantic exhaustiveness, mathematical correctness, result reproduction, or AlphaEvolve parity."
 }

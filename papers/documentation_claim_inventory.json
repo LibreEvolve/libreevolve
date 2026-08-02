@@ -38,88 +38,88 @@
     },
     {
       "path": "README.md",
-      "line_start": 382,
-      "line_end": 382,
+      "line_start": 384,
+      "line_end": 384,
       "level": 2,
       "heading_text": "Requirements",
       "heading_slug": "requirements"
     },
     {
       "path": "README.md",
-      "line_start": 394,
-      "line_end": 394,
+      "line_start": 396,
+      "line_end": 396,
       "level": 2,
       "heading_text": "Quick Start",
       "heading_slug": "quick-start"
     },
     {
       "path": "README.md",
-      "line_start": 446,
-      "line_end": 446,
+      "line_start": 448,
+      "line_end": 448,
       "level": 2,
       "heading_text": "Problem Layout",
       "heading_slug": "problem-layout"
     },
     {
       "path": "README.md",
-      "line_start": 461,
-      "line_end": 461,
+      "line_start": 463,
+      "line_end": 463,
       "level": 2,
       "heading_text": "Example Scope",
       "heading_slug": "example-scope"
     },
     {
       "path": "README.md",
-      "line_start": 526,
-      "line_end": 526,
+      "line_start": 528,
+      "line_end": 528,
       "level": 2,
       "heading_text": "Run Artifacts",
       "heading_slug": "run-artifacts"
     },
     {
       "path": "README.md",
-      "line_start": 549,
-      "line_end": 549,
+      "line_start": 551,
+      "line_end": 551,
       "level": 2,
       "heading_text": "Documentation Map",
       "heading_slug": "documentation-map"
     },
     {
       "path": "README.md",
-      "line_start": 572,
-      "line_end": 572,
+      "line_start": 574,
+      "line_end": 574,
       "level": 2,
       "heading_text": "Research Sources",
       "heading_slug": "research-sources"
     },
     {
       "path": "README.md",
-      "line_start": 596,
-      "line_end": 596,
+      "line_start": 598,
+      "line_end": 598,
       "level": 2,
       "heading_text": "Testing",
       "heading_slug": "testing"
     },
     {
       "path": "README.md",
-      "line_start": 610,
-      "line_end": 610,
+      "line_start": 612,
+      "line_end": 612,
       "level": 2,
       "heading_text": "Repository Layout",
       "heading_slug": "repository-layout"
     },
     {
       "path": "README.md",
-      "line_start": 628,
-      "line_end": 628,
+      "line_start": 630,
+      "line_end": 630,
       "level": 2,
       "heading_text": "Contributing",
       "heading_slug": "contributing"
     },
     {
       "path": "README.md",
-      "line_start": 640,
-      "line_end": 640,
+      "line_start": 642,
+      "line_end": 642,
       "level": 2,
       "heading_text": "License",
       "heading_slug": "license"
@@ -190,72 +190,72 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1272,
-      "line_end": 1272,
+      "line_start": 1273,
+      "line_end": 1273,
       "level": 2,
       "heading_text": "Mid Term",
       "heading_slug": "mid-term"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1274,
-      "line_end": 1274,
+      "line_start": 1275,
+      "line_end": 1275,
       "level": 3,
       "heading_text": "6. Async and resumable runtime",
       "heading_slug": "6-async-and-resumable-runtime"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1370,
-      "line_end": 1370,
+      "line_start": 1371,
+      "line_end": 1371,
       "level": 3,
       "heading_text": "7. Backend scheduling and critique",
       "heading_slug": "7-backend-scheduling-and-critique"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1477,
-      "line_end": 1477,
+      "line_start": 1478,
+      "line_end": 1478,
       "level": 3,
       "heading_text": "8. Plugin extensibility",
       "heading_slug": "8-plugin-extensibility"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1495,
-      "line_end": 1495,
+      "line_start": 1496,
+      "line_end": 1496,
       "level": 2,
       "heading_text": "Longer Term",
       "heading_slug": "longer-term"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1497,
-      "line_end": 1497,
+      "line_start": 1498,
+      "line_end": 1498,
       "level": 3,
       "heading_text": "9. Representative benchmarks",
       "heading_slug": "9-representative-benchmarks"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2838,
-      "line_end": 2838,
+      "line_start": 2839,
+      "line_end": 2839,
       "level": 3,
       "heading_text": "10. Operational maturity",
       "heading_slug": "10-operational-maturity"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2868,
-      "line_end": 2868,
+      "line_start": 2869,
+      "line_end": 2869,
       "level": 2,
       "heading_text": "Non-Goals For Now",
       "heading_slug": "non-goals-for-now"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2875,
-      "line_end": 2875,
+      "line_start": 2876,
+      "line_end": 2876,
       "level": 2,
       "heading_text": "Good First Follow-Ups",
       "heading_slug": "good-first-follow-ups"
@@ -323,7 +323,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 382,
+      "line_start": 384,
       "level": 2,
       "heading_text": "Requirements",
       "heading_slug": "requirements",
@@ -332,7 +332,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 394,
+      "line_start": 396,
       "level": 2,
       "heading_text": "Quick Start",
       "heading_slug": "quick-start",
@@ -341,7 +341,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 446,
+      "line_start": 448,
       "level": 2,
       "heading_text": "Problem Layout",
       "heading_slug": "problem-layout",
@@ -350,7 +350,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 461,
+      "line_start": 463,
       "level": 2,
       "heading_text": "Example Scope",
       "heading_slug": "example-scope",
@@ -359,7 +359,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 526,
+      "line_start": 528,
       "level": 2,
       "heading_text": "Run Artifacts",
       "heading_slug": "run-artifacts",
@@ -368,7 +368,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 549,
+      "line_start": 551,
       "level": 2,
       "heading_text": "Documentation Map",
       "heading_slug": "documentation-map",
@@ -377,7 +377,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 572,
+      "line_start": 574,
       "level": 2,
       "heading_text": "Research Sources",
       "heading_slug": "research-sources",
@@ -386,7 +386,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 596,
+      "line_start": 598,
       "level": 2,
       "heading_text": "Testing",
       "heading_slug": "testing",
@@ -395,7 +395,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 610,
+      "line_start": 612,
       "level": 2,
       "heading_text": "Repository Layout",
       "heading_slug": "repository-layout",
@@ -404,7 +404,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 628,
+      "line_start": 630,
       "level": 2,
       "heading_text": "Contributing",
       "heading_slug": "contributing",
@@ -413,7 +413,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 640,
+      "line_start": 642,
       "level": 2,
       "heading_text": "License",
       "heading_slug": "license",
@@ -500,7 +500,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1272,
+      "line_start": 1273,
       "level": 2,
       "heading_text": "Mid Term",
       "heading_slug": "mid-term",
@@ -509,7 +509,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1274,
+      "line_start": 1275,
       "level": 3,
       "heading_text": "6. Async and resumable runtime",
       "heading_slug": "6-async-and-resumable-runtime",
@@ -518,7 +518,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1370,
+      "line_start": 1371,
       "level": 3,
       "heading_text": "7. Backend scheduling and critique",
       "heading_slug": "7-backend-scheduling-and-critique",
@@ -527,7 +527,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1477,
+      "line_start": 1478,
       "level": 3,
       "heading_text": "8. Plugin extensibility",
       "heading_slug": "8-plugin-extensibility",
@@ -536,7 +536,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1495,
+      "line_start": 1496,
       "level": 2,
       "heading_text": "Longer Term",
       "heading_slug": "longer-term",
@@ -545,7 +545,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1497,
+      "line_start": 1498,
       "level": 3,
       "heading_text": "9. Representative benchmarks",
       "heading_slug": "9-representative-benchmarks",
@@ -554,7 +554,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2838,
+      "line_start": 2839,
       "level": 3,
       "heading_text": "10. Operational maturity",
       "heading_slug": "10-operational-maturity",
@@ -563,7 +563,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2868,
+      "line_start": 2869,
       "level": 2,
       "heading_text": "Non-Goals For Now",
       "heading_slug": "non-goals-for-now",
@@ -572,7 +572,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2875,
+      "line_start": 2876,
       "level": 2,
       "heading_text": "Good First Follow-Ups",
       "heading_slug": "good-first-follow-ups",
@@ -630,77 +630,77 @@
     },
     {
       "path": "README.md",
-      "line_start": 382,
+      "line_start": 384,
       "heading_text": "Requirements",
       "heading_slug": "requirements",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 394,
+      "line_start": 396,
       "heading_text": "Quick Start",
       "heading_slug": "quick-start",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 446,
+      "line_start": 448,
       "heading_text": "Problem Layout",
       "heading_slug": "problem-layout",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 461,
+      "line_start": 463,
       "heading_text": "Example Scope",
       "heading_slug": "example-scope",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 526,
+      "line_start": 528,
       "heading_text": "Run Artifacts",
       "heading_slug": "run-artifacts",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 549,
+      "line_start": 551,
       "heading_text": "Documentation Map",
       "heading_slug": "documentation-map",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 572,
+      "line_start": 574,
       "heading_text": "Research Sources",
       "heading_slug": "research-sources",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 596,
+      "line_start": 598,
       "heading_text": "Testing",
       "heading_slug": "testing",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 610,
+      "line_start": 612,
       "heading_text": "Repository Layout",
       "heading_slug": "repository-layout",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 628,
+      "line_start": 630,
       "heading_text": "Contributing",
       "heading_slug": "contributing",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 640,
+      "line_start": 642,
       "heading_text": "License",
       "heading_slug": "license",
       "reason": "no_claim_record_for_heading"
@@ -742,63 +742,63 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1272,
+      "line_start": 1273,
       "heading_text": "Mid Term",
       "heading_slug": "mid-term",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1274,
+      "line_start": 1275,
       "heading_text": "6. Async and resumable runtime",
       "heading_slug": "6-async-and-resumable-runtime",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1370,
+      "line_start": 1371,
       "heading_text": "7. Backend scheduling and critique",
       "heading_slug": "7-backend-scheduling-and-critique",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1477,
+      "line_start": 1478,
       "heading_text": "8. Plugin extensibility",
       "heading_slug": "8-plugin-extensibility",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1495,
+      "line_start": 1496,
       "heading_text": "Longer Term",
       "heading_slug": "longer-term",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1497,
+      "line_start": 1498,
       "heading_text": "9. Representative benchmarks",
       "heading_slug": "9-representative-benchmarks",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2838,
+      "line_start": 2839,
       "heading_text": "10. Operational maturity",
       "heading_slug": "10-operational-maturity",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2868,
+      "line_start": 2869,
       "heading_text": "Non-Goals For Now",
       "heading_slug": "non-goals-for-now",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2875,
+      "line_start": 2876,
       "heading_text": "Good First Follow-Ups",
       "heading_slug": "good-first-follow-ups",
       "reason": "no_claim_record_for_heading"
@@ -863,8 +863,8 @@
         "path": "docs/todo/papers.md",
         "anchor_text": "- [ ] Add semantic evidence mapping for every paper-index status row.",
         "found": true,
-        "file_text_char_start": 9162,
-        "file_text_char_end": 9231,
+        "file_text_char_start": 9136,
+        "file_text_char_end": 9205,
         "line_start": 135,
         "line_end": 135
       }
@@ -6704,8 +6704,8 @@
       "line_start": 1859,
       "line_end": 1868,
       "file_text_char_start": 130054,
-      "file_text_char_end": 130723,
-      "text_sha256": "61432c422ba26689675ad9d0ae4c3d0db3ff87b072edad781e0a1477c1ef6ca7",
+      "file_text_char_end": 130720,
+      "text_sha256": "de9bb330be4333ae6af28258bb8cd85a8c1f9cc8ff51d56b39ae14c4e3c8bdc2",
       "signal_terms": [],
       "signal_term_count": 0,
       "local_path_refs": [],
@@ -6716,9 +6716,9 @@
       "section": "important_limits",
       "line_start": 1869,
       "line_end": 1896,
-      "file_text_char_start": 130724,
-      "file_text_char_end": 132582,
-      "text_sha256": "d7b76d0b372eee586ca59fdfad527fe2e676837b59dab719b5f42628349e76b3",
+      "file_text_char_start": 130721,
+      "file_text_char_end": 132563,
+      "text_sha256": "96914dd67a4099a7433689913dc65f1b6d9f39ff267c9dcd1f631ca9f325c2c6",
       "signal_terms": [
         "implemented",
         "missing",
@@ -6734,8 +6734,8 @@
       "section": "important_limits",
       "line_start": 1897,
       "line_end": 1902,
-      "file_text_char_start": 132583,
-      "file_text_char_end": 133016,
+      "file_text_char_start": 132564,
+      "file_text_char_end": 132997,
       "text_sha256": "966ee3b3552a69dd9ab140ede11cccb1a58cd8f7d3f9af27fab9a94fe10fbf07",
       "signal_terms": [
         "missing",
@@ -6751,8 +6751,8 @@
       "section": "important_limits",
       "line_start": 1903,
       "line_end": 1908,
-      "file_text_char_start": 133017,
-      "file_text_char_end": 133455,
+      "file_text_char_start": 132998,
+      "file_text_char_end": 133436,
       "text_sha256": "cd512b920e43037923c912b739fdc36dcde6645e0326d2e4a019ed840b4a1d2e",
       "signal_terms": [
         "not",
@@ -6768,8 +6768,8 @@
       "section": "important_limits",
       "line_start": 1909,
       "line_end": 1916,
-      "file_text_char_start": 133456,
-      "file_text_char_end": 134053,
+      "file_text_char_start": 133437,
+      "file_text_char_end": 134034,
       "text_sha256": "5121c9cfd9dec8d84a5427c56cfc32d309e22cc451ade59f7b5721bef0a0348c",
       "signal_terms": [
         "not",
@@ -6784,8 +6784,8 @@
       "section": "important_limits",
       "line_start": 1917,
       "line_end": 1923,
-      "file_text_char_start": 134054,
-      "file_text_char_end": 134553,
+      "file_text_char_start": 134035,
+      "file_text_char_end": 134534,
       "text_sha256": "34713c2df277189c34b8a96c4986ef73c221f7ee11f0e7c2f5a347b36c111fd3",
       "signal_terms": [
         "boundary",
@@ -6801,8 +6801,8 @@
       "section": "important_limits",
       "line_start": 1924,
       "line_end": 1929,
-      "file_text_char_start": 134554,
-      "file_text_char_end": 134966,
+      "file_text_char_start": 134535,
+      "file_text_char_end": 134947,
       "text_sha256": "fa63895de1f6941b038fb4f81cc048e824fc5cc7b090be3b6366a31d8706706e",
       "signal_terms": [
         "not",
@@ -6817,8 +6817,8 @@
       "section": "important_limits",
       "line_start": 1930,
       "line_end": 1934,
-      "file_text_char_start": 134967,
-      "file_text_char_end": 135336,
+      "file_text_char_start": 134948,
+      "file_text_char_end": 135317,
       "text_sha256": "9cc01876dba58f144588d078054139a5c34a44156946c677d0a7ec40394060a6",
       "signal_terms": [
         "not"
@@ -6832,8 +6832,8 @@
       "section": "important_limits",
       "line_start": 1935,
       "line_end": 1940,
-      "file_text_char_start": 135337,
-      "file_text_char_end": 135776,
+      "file_text_char_start": 135318,
+      "file_text_char_end": 135757,
       "text_sha256": "b9267c267fc50bd620a40901126726134453d93394295d1bee65650fc0c08be9",
       "signal_terms": [
         "not",
@@ -6849,8 +6849,8 @@
       "section": "important_limits",
       "line_start": 1941,
       "line_end": 1947,
-      "file_text_char_start": 135777,
-      "file_text_char_end": 136283,
+      "file_text_char_start": 135758,
+      "file_text_char_end": 136264,
       "text_sha256": "4a1e0d805a0440a492cadee244d704e093ecafb5e1d1b17246f49eb1b4318acd",
       "signal_terms": [
         "missing",
@@ -6866,8 +6866,8 @@
       "section": "important_limits",
       "line_start": 1948,
       "line_end": 1955,
-      "file_text_char_start": 136284,
-      "file_text_char_end": 136822,
+      "file_text_char_start": 136265,
+      "file_text_char_end": 136803,
       "text_sha256": "7a02fc0c1612d989bcb674ff170ce7305c26a2f56ec543f8f1b1ddb01b6d3d91",
       "signal_terms": [
         "missing",
@@ -6884,8 +6884,8 @@
       "section": "important_limits",
       "line_start": 1956,
       "line_end": 1968,
-      "file_text_char_start": 136823,
-      "file_text_char_end": 137621,
+      "file_text_char_start": 136804,
+      "file_text_char_end": 137602,
       "text_sha256": "48abe010cd0456d701559ca01d235730288aa435d9ab64a28889913562db40b5",
       "signal_terms": [
         "not",
@@ -6937,8 +6937,8 @@
       "section": "important_limits",
       "line_start": 1969,
       "line_end": 1972,
-      "file_text_char_start": 137622,
-      "file_text_char_end": 137907,
+      "file_text_char_start": 137603,
+      "file_text_char_end": 137888,
       "text_sha256": "a20a286802f3a65e99b5df18c6ec3cfe6814160e3d88c7eab5c54861b8dc3ae0",
       "signal_terms": [
         "not",
@@ -6953,8 +6953,8 @@
       "section": "important_limits",
       "line_start": 1973,
       "line_end": 1984,
-      "file_text_char_start": 137908,
-      "file_text_char_end": 138630,
+      "file_text_char_start": 137889,
+      "file_text_char_end": 138611,
       "text_sha256": "d3a924249970c81ded568cbf4a1dd1b6cbff96b1b0cca9d9d6ebc93324d91442",
       "signal_terms": [
         "not",
@@ -6999,8 +6999,8 @@
       "section": "important_limits",
       "line_start": 1985,
       "line_end": 1989,
-      "file_text_char_start": 138631,
-      "file_text_char_end": 138944,
+      "file_text_char_start": 138612,
+      "file_text_char_end": 138925,
       "text_sha256": "94f4f1e43be6dc52705895421fd13463bbebddd0dfb442ff455250e30b32d43c",
       "signal_terms": [
         "implemented",
@@ -7016,8 +7016,8 @@
       "section": "important_limits",
       "line_start": 1990,
       "line_end": 1998,
-      "file_text_char_start": 138945,
-      "file_text_char_end": 139603,
+      "file_text_char_start": 138926,
+      "file_text_char_end": 139584,
       "text_sha256": "25f8a186561cd2b9fa6901085c01ba8ab5cf960e3c48782c57e236d41b85748a",
       "signal_terms": [
         "not",
@@ -7032,8 +7032,8 @@
       "section": "important_limits",
       "line_start": 1999,
       "line_end": 2004,
-      "file_text_char_start": 139604,
-      "file_text_char_end": 140013,
+      "file_text_char_start": 139585,
+      "file_text_char_end": 139994,
       "text_sha256": "b850903cbe542917842ed63e1292a2c4630be4e4be41777821273342edd89bdd",
       "signal_terms": [
         "implemented",
@@ -7049,8 +7049,8 @@
       "section": "important_limits",
       "line_start": 2005,
       "line_end": 2014,
-      "file_text_char_start": 140014,
-      "file_text_char_end": 140732,
+      "file_text_char_start": 139995,
+      "file_text_char_end": 140713,
       "text_sha256": "1863dcb748b54ec408d93f891381cbb4c8a93b26ae659d7102d25d911541b748",
       "signal_terms": [
         "boundary",
@@ -7066,8 +7066,8 @@
       "section": "important_limits",
       "line_start": 2015,
       "line_end": 2019,
-      "file_text_char_start": 140733,
-      "file_text_char_end": 141093,
+      "file_text_char_start": 140714,
+      "file_text_char_end": 141074,
       "text_sha256": "0288265c0169d753e18e2892ca82da3c5d93cc3a7639ec6a0473705620b45cd4",
       "signal_terms": [
         "implemented",
@@ -7083,8 +7083,8 @@
       "section": "important_limits",
       "line_start": 2020,
       "line_end": 2037,
-      "file_text_char_start": 141094,
-      "file_text_char_end": 142363,
+      "file_text_char_start": 141075,
+      "file_text_char_end": 142344,
       "text_sha256": "bf346e3809dd782ffcf5bc960d7be8f07b142275edd87f7594863103f8f70d2a",
       "signal_terms": [
         "not",
@@ -7099,8 +7099,8 @@
       "section": "important_limits",
       "line_start": 2038,
       "line_end": 2046,
-      "file_text_char_start": 142364,
-      "file_text_char_end": 143011,
+      "file_text_char_start": 142345,
+      "file_text_char_end": 142992,
       "text_sha256": "7057ab2e6d4517ae3bc660dfce4fff5355c03301d5462d46df9c8cadb8c77478",
       "signal_terms": [
         "implemented",
@@ -7116,8 +7116,8 @@
       "section": "important_limits",
       "line_start": 2047,
       "line_end": 2057,
-      "file_text_char_start": 143012,
-      "file_text_char_end": 143812,
+      "file_text_char_start": 142993,
+      "file_text_char_end": 143793,
       "text_sha256": "4f00fb2f2be14947a47b943cfcc34b6381e7e8c99bc080641b8dc054be5e5498",
       "signal_terms": [
         "missing",
@@ -7133,8 +7133,8 @@
       "section": "important_limits",
       "line_start": 2058,
       "line_end": 2063,
-      "file_text_char_start": 143813,
-      "file_text_char_end": 144244,
+      "file_text_char_start": 143794,
+      "file_text_char_end": 144225,
       "text_sha256": "60abf0d96663e50cad9726d3ff4bc89373b984d6c6aff8ab054f73dd4608185b",
       "signal_terms": [
         "implemented",
@@ -7150,8 +7150,8 @@
       "section": "important_limits",
       "line_start": 2064,
       "line_end": 2075,
-      "file_text_char_start": 144245,
-      "file_text_char_end": 145110,
+      "file_text_char_start": 144226,
+      "file_text_char_end": 145091,
       "text_sha256": "13602af33b520cae8d5bc5c263aba079c0a467591119ccb361e3705d1fcd8c3a",
       "signal_terms": [
         "missing",
@@ -7167,8 +7167,8 @@
       "section": "important_limits",
       "line_start": 2076,
       "line_end": 2082,
-      "file_text_char_start": 145111,
-      "file_text_char_end": 145625,
+      "file_text_char_start": 145092,
+      "file_text_char_end": 145606,
       "text_sha256": "025520c467320f2f53ccd1c00f9ef5911bc5b8986f13d88f12a2972814b32542",
       "signal_terms": [
         "implemented",
@@ -7184,8 +7184,8 @@
       "section": "important_limits",
       "line_start": 2083,
       "line_end": 2096,
-      "file_text_char_start": 145626,
-      "file_text_char_end": 146599,
+      "file_text_char_start": 145607,
+      "file_text_char_end": 146580,
       "text_sha256": "4263073557e8ff8a6c9237500996133340e7e53ec85c2184bb39775cbc6066ee",
       "signal_terms": [
         "missing",
@@ -7201,8 +7201,8 @@
       "section": "important_limits",
       "line_start": 2097,
       "line_end": 2103,
-      "file_text_char_start": 146600,
-      "file_text_char_end": 147077,
+      "file_text_char_start": 146581,
+      "file_text_char_end": 147058,
       "text_sha256": "f5b9f1f0e073e416e1a87be4c1a0bd687c0d8b620f871069e95ef2fd0cf4767c",
       "signal_terms": [
         "implemented",
@@ -7218,8 +7218,8 @@
       "section": "important_limits",
       "line_start": 2104,
       "line_end": 2117,
-      "file_text_char_start": 147078,
-      "file_text_char_end": 148072,
+      "file_text_char_start": 147059,
+      "file_text_char_end": 148053,
       "text_sha256": "3386e1fd8a0709871e7884929a0092f8b496a9ffb825d58525a348c9cff42705",
       "signal_terms": [
         "missing",
@@ -7236,8 +7236,8 @@
       "section": "important_limits",
       "line_start": 2118,
       "line_end": 2126,
-      "file_text_char_start": 148073,
-      "file_text_char_end": 148671,
+      "file_text_char_start": 148054,
+      "file_text_char_end": 148652,
       "text_sha256": "38d430f30443e830c9a7ccb18b49288ba777e1b132a449a1c0e965cf1fbdc818",
       "signal_terms": [
         "implemented",
@@ -7253,8 +7253,8 @@
       "section": "important_limits",
       "line_start": 2127,
       "line_end": 2138,
-      "file_text_char_start": 148672,
-      "file_text_char_end": 149527,
+      "file_text_char_start": 148653,
+      "file_text_char_end": 149508,
       "text_sha256": "49e01747becc17d99753062182cac8759402b857c8d8dd491c77780fd6896905",
       "signal_terms": [
         "missing",
@@ -7270,8 +7270,8 @@
       "section": "important_limits",
       "line_start": 2139,
       "line_end": 2145,
-      "file_text_char_start": 149528,
-      "file_text_char_end": 150007,
+      "file_text_char_start": 149509,
+      "file_text_char_end": 149988,
       "text_sha256": "a20a7f21d502cc0bf9a28f99d1c2fcdfc16ccdec5a7ee57e98b1cd21b706bc37",
       "signal_terms": [
         "implemented",
@@ -7287,8 +7287,8 @@
       "section": "important_limits",
       "line_start": 2146,
       "line_end": 2150,
-      "file_text_char_start": 150008,
-      "file_text_char_end": 150372,
+      "file_text_char_start": 149989,
+      "file_text_char_end": 150353,
       "text_sha256": "80c1c0da834050abdf7a375590f0d427dd44495fdce3ff2994c35c3515dce5f0",
       "signal_terms": [
         "not",
@@ -7303,8 +7303,8 @@
       "section": "important_limits",
       "line_start": 2151,
       "line_end": 2156,
-      "file_text_char_start": 150373,
-      "file_text_char_end": 150804,
+      "file_text_char_start": 150354,
+      "file_text_char_end": 150785,
       "text_sha256": "5294e90da089a3a47d92d4d2fab13014b33c9ec6234207461b3bc6eebfa5ceb0",
       "signal_terms": [
         "implemented",
@@ -7320,8 +7320,8 @@
       "section": "important_limits",
       "line_start": 2157,
       "line_end": 2177,
-      "file_text_char_start": 150805,
-      "file_text_char_end": 152190,
+      "file_text_char_start": 150786,
+      "file_text_char_end": 152171,
       "text_sha256": "caaa1de784d3cf4080dd3072bce2a83b998815b77caf2d30f459f8de81f6ddf0",
       "signal_terms": [
         "boundary",
@@ -7362,8 +7362,8 @@
       "section": "important_limits",
       "line_start": 2178,
       "line_end": 2190,
-      "file_text_char_start": 152191,
-      "file_text_char_end": 153095,
+      "file_text_char_start": 152172,
+      "file_text_char_end": 153076,
       "text_sha256": "02b66fa1066fe8cc93c92ea9a50ed869a3d4236fdcce045a23e8a292d7480d51",
       "signal_terms": [
         "missing",
@@ -7379,8 +7379,8 @@
       "section": "important_limits",
       "line_start": 2191,
       "line_end": 2205,
-      "file_text_char_start": 153096,
-      "file_text_char_end": 154212,
+      "file_text_char_start": 153077,
+      "file_text_char_end": 154193,
       "text_sha256": "cd0a3b1006d7d7435c2e10e7db7a0629a1b51b040fbd029a75d82c5a2a66b3c2",
       "signal_terms": [
         "not"
@@ -7394,8 +7394,8 @@
       "section": "important_limits",
       "line_start": 2206,
       "line_end": 2217,
-      "file_text_char_start": 154213,
-      "file_text_char_end": 155049,
+      "file_text_char_start": 154194,
+      "file_text_char_end": 155030,
       "text_sha256": "2592de9f85665aac7d9679f7ea2bab9ea9a2f7ae7d2e1f191cd4ea1624d9f766",
       "signal_terms": [
         "implemented",
@@ -7412,8 +7412,8 @@
       "section": "important_limits",
       "line_start": 2218,
       "line_end": 2224,
-      "file_text_char_start": 155050,
-      "file_text_char_end": 155558,
+      "file_text_char_start": 155031,
+      "file_text_char_end": 155539,
       "text_sha256": "7750eb3e760f3cac584af23020102237935d31214160885a7cb971d5ec652cae",
       "signal_terms": [
         "boundary",
@@ -7438,8 +7438,8 @@
       "section": "important_limits",
       "line_start": 2225,
       "line_end": 2229,
-      "file_text_char_start": 155559,
-      "file_text_char_end": 155873,
+      "file_text_char_start": 155540,
+      "file_text_char_end": 155854,
       "text_sha256": "77eebf7ebd3fb7f5e86d591ee87fa9458e3ff3526f750ffa157b45e89d0bd565",
       "signal_terms": [
         "boundary",
@@ -7464,8 +7464,8 @@
       "section": "important_limits",
       "line_start": 2230,
       "line_end": 2233,
-      "file_text_char_start": 155874,
-      "file_text_char_end": 156150,
+      "file_text_char_start": 155855,
+      "file_text_char_end": 156131,
       "text_sha256": "08e65f53d27397f06f6006f30b9526e6824d97b88e34aad422055a4e294adcf3",
       "signal_terms": [
         "boundary",
@@ -7490,8 +7490,8 @@
       "section": "important_limits",
       "line_start": 2234,
       "line_end": 2240,
-      "file_text_char_start": 156151,
-      "file_text_char_end": 156606,
+      "file_text_char_start": 156132,
+      "file_text_char_end": 156587,
       "text_sha256": "cef2d51655b8a9231d73ad2b491888ee8aeb06146fc7ebebb50c2e4ca88a6b02",
       "signal_terms": [
         "implemented",
@@ -7507,8 +7507,8 @@
       "section": "important_limits",
       "line_start": 2241,
       "line_end": 2246,
-      "file_text_char_start": 156607,
-      "file_text_char_end": 157060,
+      "file_text_char_start": 156588,
+      "file_text_char_end": 157041,
       "text_sha256": "74ab9a684c541fd5753ec199eff88ad4a6438682eda77fe0eec3d6234fd55444",
       "signal_terms": [
         "record"
@@ -7522,8 +7522,8 @@
       "section": "important_limits",
       "line_start": 2247,
       "line_end": 2250,
-      "file_text_char_start": 157061,
-      "file_text_char_end": 157345,
+      "file_text_char_start": 157042,
+      "file_text_char_end": 157326,
       "text_sha256": "19b485e815354e8e95b534752944a2a21eaad4a6dd39abd570d914e90b78ab70",
       "signal_terms": [
         "boundary",
@@ -7549,8 +7549,8 @@
       "section": "important_limits",
       "line_start": 2251,
       "line_end": 2256,
-      "file_text_char_start": 157346,
-      "file_text_char_end": 157774,
+      "file_text_char_start": 157327,
+      "file_text_char_end": 157755,
       "text_sha256": "dbdc50623d7ca15669d136a4831a035f8205bbc0edb9528cb10d054b7d706deb",
       "signal_terms": [
         "boundary",
@@ -7575,8 +7575,8 @@
       "section": "important_limits",
       "line_start": 2257,
       "line_end": 2260,
-      "file_text_char_start": 157775,
-      "file_text_char_end": 158075,
+      "file_text_char_start": 157756,
+      "file_text_char_end": 158056,
       "text_sha256": "8b01566d962b7001a047941df18433f2d609d12bb6b803a51f4f15c0a4d29508",
       "signal_terms": [
         "boundary",
@@ -7601,8 +7601,8 @@
       "section": "important_limits",
       "line_start": 2261,
       "line_end": 2267,
-      "file_text_char_start": 158076,
-      "file_text_char_end": 158558,
+      "file_text_char_start": 158057,
+      "file_text_char_end": 158539,
       "text_sha256": "9bfc515665d847474602b0b3cf44357496788e4550ef897c5c74bf9dd8b02b15",
       "signal_terms": [
         "boundary",
@@ -7627,8 +7627,8 @@
       "section": "important_limits",
       "line_start": 2268,
       "line_end": 2274,
-      "file_text_char_start": 158559,
-      "file_text_char_end": 159018,
+      "file_text_char_start": 158540,
+      "file_text_char_end": 158999,
       "text_sha256": "d781ff70e0d9740d64b2e1d5ddc424b41133a79206981c739d9fc819575c82e9",
       "signal_terms": [
         "boundary",
@@ -7654,8 +7654,8 @@
       "section": "important_limits",
       "line_start": 2275,
       "line_end": 2279,
-      "file_text_char_start": 159019,
-      "file_text_char_end": 159395,
+      "file_text_char_start": 159000,
+      "file_text_char_end": 159376,
       "text_sha256": "732a8cc88b44f6d2c42634a3ba77b0755f29ba9b822e4f2fdae05b216a3b849f",
       "signal_terms": [
         "boundary",
@@ -7680,8 +7680,8 @@
       "section": "important_limits",
       "line_start": 2280,
       "line_end": 2286,
-      "file_text_char_start": 159396,
-      "file_text_char_end": 159925,
+      "file_text_char_start": 159377,
+      "file_text_char_end": 159906,
       "text_sha256": "35b89459b10fe09980a96f749a7c6c9d6978b31fc2017286a112c582b5013b6f",
       "signal_terms": [
         "boundary",
@@ -7706,8 +7706,8 @@
       "section": "important_limits",
       "line_start": 2287,
       "line_end": 2297,
-      "file_text_char_start": 159926,
-      "file_text_char_end": 160673,
+      "file_text_char_start": 159907,
+      "file_text_char_end": 160654,
       "text_sha256": "458cce26b7350e9990cfb1f3ef5f739ea6056c2b62085157d0d0088a5bc7c944",
       "signal_terms": [
         "boundary",
@@ -7734,8 +7734,8 @@
       "section": "important_limits",
       "line_start": 2298,
       "line_end": 2304,
-      "file_text_char_start": 160674,
-      "file_text_char_end": 161126,
+      "file_text_char_start": 160655,
+      "file_text_char_end": 161107,
       "text_sha256": "d991add0894d4a806bbc309b6ff8ce51420dc8bcf7e3a1f22ee8373079779871",
       "signal_terms": [
         "boundary",
@@ -7760,8 +7760,8 @@
       "section": "important_limits",
       "line_start": 2305,
       "line_end": 2306,
-      "file_text_char_start": 161127,
-      "file_text_char_end": 161254,
+      "file_text_char_start": 161108,
+      "file_text_char_end": 161235,
       "text_sha256": "6c6df0c7298db4264ed1ed09ce3728673c58b7ad7176c846b6dc40342880c40d",
       "signal_terms": [],
       "signal_term_count": 0,
@@ -7773,8 +7773,8 @@
       "section": "important_limits",
       "line_start": 2307,
       "line_end": 2309,
-      "file_text_char_start": 161255,
-      "file_text_char_end": 161474,
+      "file_text_char_start": 161236,
+      "file_text_char_end": 161455,
       "text_sha256": "71b7d9a10a17cee7c798268e21acb724702072e0b99b5bf9299ba9ad4670786b",
       "signal_terms": [
         "not",

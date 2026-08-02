@@ -249,13 +249,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     inherits 34 source-detail and 75 table-cell dispositions and maps the
     remaining 200 constructs directly to existing bounded claim ids, with no
     unmapped or unresolved references and no new claims or parity credit. The
-    proposition inventory now reviews all 220 sentences from the Abstract
-    through Section 3.3.4 compiler optimization as 744 atomic propositions,
-    maps 690 through 720 references to 329 bounded claims, and classifies 54 as
-    context, outlook, or interpretation. The compiler slice adds no new bounded
-    claim or parity credit, but repairs sentence mappings for JAX output
-    postprocessing and the reported 15% pre/postprocessing speedup. Existing
-    active TODOs own all 44 compiler gaps.
+    proposition inventory now reviews all 244 sentences from the Abstract
+    through Section 4 ablations as 812 atomic propositions, maps 753 through 783
+    references to 362 bounded claims, and classifies 59 as context, outlook, or
+    interpretation. The Section 4 slice adds no new bounded claim or parity
+    credit, but repairs five alternative-definition sentences so their variants
+    retain the shared component-efficacy purpose. Existing active TODOs own all
+    49 ablation gaps.
     `papers/roadmap_source_span_disposition_boundary.json` now maps all 55
     named spans to ROADMAP section ids, phase buckets, local status, sidecars,
     and audit TODO links, and records that only the AlphaEvolve
@@ -285,9 +285,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     footnote constructs have dispositions, all 83 table rows and 240 cells have
     row/cell dispositions, all 8 code listings and 305 source lines have
     line-level dispositions; all 309 math constructs and 402 prose sentences
-    have dispositions; 744 propositions across all 220 sentences through Section
-    3.3.4 compiler optimization are reviewed. The matrix remains incomplete
-    across the rest of the paper: 182 sentences
+    have dispositions; 812 propositions across all 244 sentences through Section
+    4 ablations are reviewed. The matrix remains incomplete
+    across the rest of the paper: 158 sentences
     still lack proposition review; it cannot prove
     local math/image/citation correctness and result reproduction;
     show TODO ownership for every gap and add an application matrix;

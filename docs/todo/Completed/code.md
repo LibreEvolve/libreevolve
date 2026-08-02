@@ -19908,3 +19908,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused prose, proposition, compiler-claim, aggregate, TODO,
     and manifest checks validate source quotes, references, counts, ownership,
     drift rejection, and non-parity boundaries.
+
+- [x] Extend retained-TeX proposition evidence through Section 4 ablations.
+  - Status: the boundary reviews 24 ablation sentences as 68 propositions,
+    bringing cumulative scope to 244 sentences and 812 propositions. Of those,
+    753 map through 783 references to 362 bounded claims and 59 are context,
+    outlook, or interpretation.
+  - Mapping correction: five alternative-definition sentences now retain the
+    shared component-efficacy purpose. Existing ablation claims and active TODOs
+    own all 49 gaps; no new claim, TODO, or parity credit is added.
+  - Remaining code gap: proposition review for 158 prose sentences, independent
+    semantic review, executable source-faithful ablation runs, Figure 8
+    reproduction, and AlphaEvolve-scale execution remain open.
+  - Verification: focused prose, proposition, ablation-claim, aggregate, TODO,
+    and manifest checks validate source quotes, references, counts, ownership,
+    drift rejection, and non-parity boundaries.

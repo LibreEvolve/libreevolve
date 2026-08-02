@@ -12,14 +12,14 @@ from libreevolve.problems.benchmarks.alphaevolve_source_inventory_boundary impor
 
 
 IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_SCHEMA = (
-    "libreevolve.alphaevolve_implementation_evidence_map_boundary.v29"
+    "libreevolve.alphaevolve_implementation_evidence_map_boundary.v30"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_BOUNDARY_STATUS = (
     "verified_core_anchors_plus_846_bounded_claims_195_citation_uses_"
     "30_tex_source_details_240_table_cells_305_listing_lines_309_tex_math_"
-    "constructs_402_tex_prose_sentences_and_744_propositions_across_220_"
-    "abstract_through_section3_3_4_compiler_sentences_"
+    "constructs_402_tex_prose_sentences_and_812_propositions_across_244_"
+    "abstract_through_section4_ablation_sentences_"
     "without_whole_paper_semantic_exhaustiveness"
 )
 EXPECTED_SOURCE_INVENTORY_REF = "papers/alphaevolve_source_inventory_boundary.json"
@@ -136,9 +136,9 @@ EXPECTED_RECORDED_EVIDENCE = {
         "30_reviewed_nonclaims_zero_unmapped"
     ),
     "tex_proposition_disposition_inventory": (
-        "220_abstract_through_section3_3_4_compiler_sentences_"
-        "744_atomic_propositions_690_existing_claim_mappings_"
-        "54_context_outlook_or_interpretation_"
+        "244_abstract_through_section4_ablation_sentences_"
+        "812_atomic_propositions_753_existing_claim_mappings_"
+        "59_context_outlook_or_interpretation_"
         "zero_unmapped"
     ),
     "reference_existence_checks": (
@@ -146,8 +146,8 @@ EXPECTED_RECORDED_EVIDENCE = {
     ),
 }
 EXPECTED_MISSING_EVIDENCE = {
-    "exhaustive_requirement_inventory": "846_bounded_claims_plus_195_lexical_citation_uses_30_dispositioned_tex_source_details_240_dispositioned_table_cells_305_dispositioned_listing_lines_309_dispositioned_explicit_math_constructs_402_dispositioned_tex_prose_sentences_and_744_dispositioned_propositions_across_220_abstract_through_section3_3_4_compiler_sentences_without_remaining_182_sentence_proposition_image_pixel_citation_semantic_implementation_semantic_mathematical_correctness_independent_review_or_reproduction_exhaustiveness",
-    "claim_level_source_span_coverage_matrix": "846_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_305_listing_lines_have_line_dispositions_309_explicit_math_constructs_have_delimiter_dispositions_128_paragraphs_402_sentences_have_prose_dispositions_and_220_abstract_through_section3_3_4_compiler_sentences_have_744_proposition_dispositions_without_remaining_182_sentence_proposition_image_pixel_citation_semantic_implementation_semantic_mathematical_correctness_independent_review_or_reproduction_exhaustiveness",
+    "exhaustive_requirement_inventory": "846_bounded_claims_plus_195_lexical_citation_uses_30_dispositioned_tex_source_details_240_dispositioned_table_cells_305_dispositioned_listing_lines_309_dispositioned_explicit_math_constructs_402_dispositioned_tex_prose_sentences_and_812_dispositioned_propositions_across_244_abstract_through_section4_ablation_sentences_without_remaining_158_sentence_proposition_image_pixel_citation_semantic_implementation_semantic_mathematical_correctness_independent_review_or_reproduction_exhaustiveness",
+    "claim_level_source_span_coverage_matrix": "846_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_305_listing_lines_have_line_dispositions_309_explicit_math_constructs_have_delimiter_dispositions_128_paragraphs_402_sentences_have_prose_dispositions_and_244_abstract_through_section4_ablation_sentences_have_812_proposition_dispositions_without_remaining_158_sentence_proposition_image_pixel_citation_semantic_implementation_semantic_mathematical_correctness_independent_review_or_reproduction_exhaustiveness",
     "citation_semantic_mapping": "195_citation_uses_lexically_linked_without_supported_proposition_source_sufficiency_or_implementation_relevance_classification",
     "status_cell_semantic_verifier": "not_recorded_locally",
     "implemented_benchmark_bullet_semantic_verifier": "not_recorded_locally",
@@ -486,11 +486,11 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
             "128 retained TeX prose paragraphs and all 402 grammatical sentences, "
             "with 372 sentences mapped to existing bounded claims, 30 reviewed "
             "as nonclaims, and zero unmapped or unresolved sentences, plus a "
-            "single-reviewer decomposition of all 220 sentences from the Abstract "
-            "through Section 3.3.4 compiler optimization into 744 atomic "
-            "propositions, with 690 mapped to bounded claims and 54 dispositioned "
+            "single-reviewer decomposition of all 244 sentences from the Abstract "
+            "through Section 4 ablations into 812 atomic "
+            "propositions, with 753 mapped to bounded claims and 59 dispositioned "
             "as context, outlook, or interpretation. It does not establish "
-            "proposition coverage for the remaining 182 "
+            "proposition coverage for the remaining 158 "
             "sentences or independent semantic exhaustiveness and does not classify "
             "citation semantics, source sufficiency, or implementation "
             "relevance. It "
@@ -628,7 +628,7 @@ def validate_implementation_evidence_map_boundary(
         or "all 8 retained TeX code listing environments and all 305 physical source lines" not in boundary_text
         or "all 309 explicit TeX math constructs" not in boundary_text
         or "all 128 retained TeX prose paragraphs and all 402 grammatical sentences" not in boundary_text
-        or "proposition coverage for the remaining 182 sentences" not in boundary_text
+        or "proposition coverage for the remaining 158 sentences" not in boundary_text
         or "paper-index phrase evidence-link sufficiency" not in boundary_text
         or "implemented benchmark bullet semantic verifier" not in boundary_text
         or "absence-sentence freshness matrix" not in boundary_text

@@ -8,7 +8,7 @@ from libreevolve.problems.benchmarks.alphaevolve_tex_proposition_inventory_bound
 )
 
 
-def test_tex_proposition_inventory_accepts_section3_3_4_compiler_scope():
+def test_tex_proposition_inventory_accepts_section4_ablation_scope():
     boundary = alphaevolve_tex_proposition_inventory_boundary_record()
 
     validation = validate_alphaevolve_tex_proposition_inventory_boundary(boundary)
@@ -23,13 +23,14 @@ def test_tex_proposition_inventory_accepts_section3_3_4_compiler_scope():
     assert boundary["review_scope_complete"] is True
     assert boundary["whole_paper_semantic_exhaustiveness_claim_ready"] is False
     assert boundary["independent_semantic_review_ready"] is False
-    assert validation.reviewed_sentence_count == 220
-    assert validation.proposition_count == 744
-    assert validation.remaining_sentence_count == 182
+    assert validation.reviewed_sentence_count == 244
+    assert validation.proposition_count == 812
+    assert validation.remaining_sentence_count == 158
     assert validation.unmapped_proposition_count == 0
     assert validation.unresolved_reference_count == 0
-    assert boundary["reviewed_sentence_fraction"] == 220 / 402
+    assert boundary["reviewed_sentence_fraction"] == 244 / 402
     assert boundary["reviewed_source_files"] == [
+        "ablations.tex",
         "introduction.tex",
         "main.tex",
         "methods.tex",
@@ -38,19 +39,19 @@ def test_tex_proposition_inventory_accepts_section3_3_4_compiler_scope():
     assert boundary["disposition_counts"] == {
         "author_interpretation": 11,
         "author_outlook": 2,
-        "existing_bounded_claim_mapping": 690,
-        "source_context_only": 41,
+        "existing_bounded_claim_mapping": 753,
+        "source_context_only": 46,
     }
-    assert boundary["claim_reference_count"] == 720
-    assert boundary["unique_claim_reference_count"] == 329
-    assert boundary["implementation_relevant_proposition_count"] == 680
+    assert boundary["claim_reference_count"] == 783
+    assert boundary["unique_claim_reference_count"] == 362
+    assert boundary["implementation_relevant_proposition_count"] == 743
 
 
 def test_tex_proposition_inventory_resolves_every_reviewed_record():
     boundary = alphaevolve_tex_proposition_inventory_boundary_record()
 
-    assert len(boundary["reviewed_sentence_records"]) == 220
-    assert len(boundary["proposition_records"]) == 744
+    assert len(boundary["reviewed_sentence_records"]) == 244
+    assert len(boundary["proposition_records"]) == 812
     assert all(
         record["review_status"]
         == "manual_static_semantic_decomposition_complete"
@@ -105,6 +106,7 @@ def test_tex_proposition_inventory_records_new_and_repaired_claims():
         "section3_3_2_average_twenty_three_percent_kernel_speedup",
         "section3_3_2_one_percent_gemini_training_reduction",
         "section3_3_2_team_research_engineering_velocity",
+        "section4_component_efficacy_goal",
         "direct_verilog_fosters_trust",
         "direct_verilog_simplifies_adoption",
         "gemini_first_direct_tpu_arithmetic_contribution",
@@ -300,6 +302,41 @@ def test_tex_proposition_inventory_records_new_and_repaired_claims():
         "existing_compiler_specific_use_cases",
         "alphaevolve_in_compiler_workflow_longer_term",
     } <= mapped_ids
+    assert {
+        "context_significantly_improves_output",
+        "each_component_significant_improvement",
+        "entire_codebase_evolution",
+        "evolutionary_approach_used",
+        "figure8_reports_full_and_alternative_results",
+        "full_file_ablation_tensor_context",
+        "full_file_contrast_with_funsearch",
+        "meta_prompt_disabled_for_tensor_task",
+        "meta_prompts_can_surpass_human_prompter",
+        "meta_prompts_improve_llm_prompts",
+        "meta_prompts_used",
+        "model_mix_high_sample_diversity",
+        "no_context_removes_explicit_context",
+        "no_context_variant_name",
+        "no_evolution_repeats_same_initial_program",
+        "no_evolution_variant_name",
+        "no_full_file_only_loss_function_evolved",
+        "no_full_file_variant_name",
+        "no_meta_prompt_variant_name",
+        "powerful_models_large_context_windows",
+        "previous_programs_drive_subsequent_improvement",
+        "previous_programs_stored_in_database",
+        "problem_specific_prompt_context",
+        "section4_ablation_experiments_reported",
+        "section4_component_efficacy_goal",
+        "section4_kissing_lower_bound_task",
+        "section4_matrix_faster_multiplication_goal",
+        "section4_matrix_tensor_decomposition_task",
+        "section4_two_task_families",
+        "single_function_contrast",
+        "small_base_only_alternative",
+        "small_base_only_variant_name",
+        "small_large_model_mixture",
+    } <= mapped_ids
 
 
 def test_tex_proposition_inventory_rejects_record_and_overclaim_drift():
@@ -348,7 +385,7 @@ def test_render_tex_proposition_inventory_summary_reports_shape():
 
     assert "AlphaEvolve TeX proposition inventory boundary" in summary
     assert "| schema_status | ok |" in summary
-    assert "| reviewed_sentence_count | 220 |" in summary
-    assert "| proposition_count | 744 |" in summary
-    assert "| remaining_sentence_count | 182 |" in summary
+    assert "| reviewed_sentence_count | 244 |" in summary
+    assert "| proposition_count | 812 |" in summary
+    assert "| remaining_sentence_count | 158 |" in summary
     assert "| validation_status | ok |" in summary

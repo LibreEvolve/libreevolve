@@ -16215,3 +16215,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Boundary: README keeps proposition review for 182 sentences, independent
     semantic review, mathematical and citation correctness, result reproduction,
     and AlphaEvolve-scale execution explicitly open.
+
+- [x] Document AlphaEvolve Section 4 ablation proposition coverage.
+  - Status: README now reports 244 reviewed sentences, 812 propositions, 753
+    bounded-claim mappings through 783 references to 362 claims, and 59 context,
+    outlook, or interpretation dispositions.
+  - Accounting: the ablation slice adds no bounded claim, TODO, or parity
+    credit; it repairs five purpose mappings while the aggregate remains 846
+    bounded and 787 implementation-relevant claims, with 3.8% strict and 21.5%
+    half-credit parity.
+  - Boundary: README keeps proposition review for 158 sentences, independent
+    semantic review, source-faithful ablation execution, Figure 8 reproduction,
+    and AlphaEvolve-scale execution explicitly open.

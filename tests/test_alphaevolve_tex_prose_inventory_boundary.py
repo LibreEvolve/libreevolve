@@ -279,9 +279,40 @@ def test_tex_prose_inventory_maps_new_claims_and_disambiguates_repeated_anchors(
         "pre_postprocessing_improvements_found",
         "pre_postprocessing_speedup_15_percent",
     }
+    assert {
+        ref["claim_id"] for ref in records[("ablations.tex", 7, 2)]["claim_refs"]
+    } == {
+        "no_evolution_repeats_same_initial_program",
+        "section4_component_efficacy_goal",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("ablations.tex", 8, 2)]["claim_refs"]
+    } == {
+        "no_context_removes_explicit_context",
+        "section4_component_efficacy_goal",
+    }
     assert [
         ref["claim_id"] for ref in records[("ablations.tex", 8, 3)]["claim_refs"]
     ] == ["no_context_variant_name"]
+    assert {
+        ref["claim_id"] for ref in records[("ablations.tex", 9, 3)]["claim_refs"]
+    } == {
+        "meta_prompt_disabled_for_tensor_task",
+        "section4_component_efficacy_goal",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("ablations.tex", 10, 2)]["claim_refs"]
+    } == {
+        "full_file_ablation_tensor_context",
+        "no_full_file_only_loss_function_evolved",
+        "section4_component_efficacy_goal",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("ablations.tex", 11, 2)]["claim_refs"]
+    } == {
+        "section4_component_efficacy_goal",
+        "small_base_only_alternative",
+    }
     assert "already_highly_optimized_baseline" not in {
         ref["claim_id"] for ref in records[("results.tex", 168, 0)]["claim_refs"]
     }

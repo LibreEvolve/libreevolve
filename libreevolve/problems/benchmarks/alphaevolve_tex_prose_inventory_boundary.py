@@ -431,14 +431,40 @@ _DIRECT_CLAIM_MAP: dict[
         "pre_postprocessing_improvements_found",
         "pre_postprocessing_speedup_15_percent",
     ),
+    ("ablations.tex", 7, 2): _claim_refs(
+        "ablation",
+        "section4_component_efficacy_goal",
+        "no_evolution_repeats_same_initial_program",
+    ),
+    ("ablations.tex", 8, 2): _claim_refs(
+        "ablation",
+        "section4_component_efficacy_goal",
+        "no_context_removes_explicit_context",
+    ),
     ("ablations.tex", 8, 3): _claim_refs(
         "ablation", "no_context_variant_name"
+    ),
+    ("ablations.tex", 9, 3): _claim_refs(
+        "ablation",
+        "section4_component_efficacy_goal",
+        "meta_prompt_disabled_for_tensor_task",
     ),
     ("ablations.tex", 9, 4): _claim_refs(
         "ablation", "no_meta_prompt_variant_name"
     ),
+    ("ablations.tex", 10, 2): _claim_refs(
+        "ablation",
+        "section4_component_efficacy_goal",
+        "full_file_ablation_tensor_context",
+        "no_full_file_only_loss_function_evolved",
+    ),
     ("ablations.tex", 10, 3): _claim_refs(
         "ablation", "no_full_file_variant_name"
+    ),
+    ("ablations.tex", 11, 2): _claim_refs(
+        "ablation",
+        "section4_component_efficacy_goal",
+        "small_base_only_alternative",
     ),
     ("ablations.tex", 11, 3): _claim_refs(
         "ablation", "small_base_only_variant_name"

@@ -14857,3 +14857,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Remaining paper gap: 182 sentence propositions, independent semantic
     agreement, mathematical/image/citation correctness, result reproduction,
     and AlphaEvolve parity remain unproven.
+
+- [x] Review AlphaEvolve Section 4 ablation propositions.
+  - Paper evidence: 24 retained sentences define the two ablation task families,
+    evolutionary reuse, prompt context, meta prompts, full-file evolution,
+    small/large model mixing, five named alternatives, and the Figure 8 result
+    interpretation.
+  - Status: the slice adds 68 propositions, bringing cumulative coverage to 244
+    sentences and 812 propositions; 753 map through 783 references to 362
+    bounded claims and 59 are context, outlook, or interpretation.
+  - Mapping correction: five existing alternative-definition sentences now map
+    to the shared component-efficacy goal. No new claim, active TODO, or parity
+    credit is added; all 49 ablation gaps remain TODO-owned.
+  - Remaining paper gap: 158 sentence propositions, independent semantic
+    agreement, executable ablation and Figure 8 reproduction evidence,
+    mathematical/image/citation correctness, and AlphaEvolve parity remain
+    unproven.

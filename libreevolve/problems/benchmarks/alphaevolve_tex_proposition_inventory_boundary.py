@@ -20,16 +20,16 @@ from libreevolve.problems.benchmarks.paper_bibliography import (
 
 
 ALPHAEVOLVE_TEX_PROPOSITION_INVENTORY_BOUNDARY_SCHEMA = (
-    "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v9"
+    "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v10"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "abstract_through_section3_3_4_compiler_proposition_review_complete_without_"
+    "abstract_through_section4_ablations_proposition_review_complete_without_"
     "remaining_paper_or_independent_semantic_exhaustiveness"
 )
-EXPECTED_REVIEWED_SENTENCE_COUNT = 220
-EXPECTED_PROPOSITION_COUNT = 744
+EXPECTED_REVIEWED_SENTENCE_COUNT = 244
+EXPECTED_PROPOSITION_COUNT = 812
 EXPECTED_REVIEWED_SENTENCE_IDS = tuple(
-    f"tex_prose_sentence_{ordinal:04d}" for ordinal in range(1, 221)
+    f"tex_prose_sentence_{ordinal:04d}" for ordinal in range(1, 245)
 )
 EXPECTED_NEW_BOUNDED_CLAIM_IDS = (
     "introduction_algorithm_search_outperforms_direct_solution_search",
@@ -60,6 +60,7 @@ EXPECTED_REPAIRED_SENTENCE_CLAIM_IDS = (
     "section3_3_2_average_twenty_three_percent_kernel_speedup",
     "section3_3_2_one_percent_gemini_training_reduction",
     "section3_3_2_team_research_engineering_velocity",
+    "section4_component_efficacy_goal",
     "direct_verilog_fosters_trust",
     "direct_verilog_simplifies_adoption",
     "gemini_first_direct_tpu_arithmetic_contribution",
@@ -4769,6 +4770,400 @@ _PROPOSITION_SPECS.update(
 )
 
 
+_PROPOSITION_SPECS.update(
+    {
+        "tex_prose_sentence_0221": (
+            _mapped(
+                "We carried out ablations",
+                "The authors report carrying out ablation experiments.",
+                _ref("ablation", "section4_ablation_experiments_reported"),
+            ),
+            _mapped(
+                "on two tasks",
+                "The reported ablations cover two task families.",
+                _ref("ablation", "section4_two_task_families"),
+            ),
+            _mapped(
+                "finding tensor decompositions",
+                "One ablation task searches for tensor decompositions.",
+                _ref("ablation", "section4_matrix_tensor_decomposition_task"),
+            ),
+            _mapped(
+                "for faster matrix multiplication",
+                "The tensor-decomposition task targets faster matrix multiplication.",
+                _ref("ablation", "section4_matrix_faster_multiplication_goal"),
+            ),
+            _mapped(
+                "computing lower bounds",
+                "The second ablation task computes lower bounds.",
+                _ref("ablation", "section4_kissing_lower_bound_task"),
+            ),
+            _mapped(
+                "on kissing numbers",
+                "The lower-bound task concerns kissing numbers.",
+                _ref("ablation", "section4_kissing_lower_bound_task"),
+            ),
+            _mapped(
+                "aiming to understand the efficacy",
+                "The stated purpose is to understand component efficacy.",
+                _ref("ablation", "section4_component_efficacy_goal"),
+            ),
+            _mapped(
+                "following components of AlphaEvolve",
+                "The efficacy analysis concerns the subsequently listed AlphaEvolve components.",
+                _ref("ablation", "section4_component_efficacy_goal"),
+            ),
+        ),
+        "tex_prose_sentence_0222": (
+            _reviewed_context(
+                "Evolutionary approach.",
+                "Evolutionary approach is an ablation-component label.",
+                "ablation_component_label",
+            ),
+        ),
+        "tex_prose_sentence_0223": (
+            _mapped(
+                "AlphaEvolve utilizes an evolutionary approach",
+                "AlphaEvolve uses an evolutionary approach.",
+                _ref("ablation", "evolutionary_approach_used"),
+            ),
+            _mapped(
+                "previously generated programs",
+                "The evolutionary process retains programs generated previously.",
+                _ref("ablation", "previous_programs_stored_in_database"),
+            ),
+            _mapped(
+                "previously generated",
+                "The retained programs originate from earlier iterations.",
+                _ref("ablation", "previous_programs_drive_subsequent_improvement"),
+            ),
+            _mapped(
+                "stored in a database",
+                "Previously generated programs are stored in a database.",
+                _ref("ablation", "previous_programs_stored_in_database"),
+            ),
+            _mapped(
+                "used to obtain better programs in subsequent iterations",
+                "Stored programs are used to seek better programs in later iterations.",
+                _ref("ablation", "previous_programs_drive_subsequent_improvement"),
+            ),
+        ),
+        "tex_prose_sentence_0224": (
+            _mapped(
+                "To analyze the importance of evolution",
+                "The no-evolution alternative is intended to test evolution's importance.",
+                _ref("ablation", "section4_component_efficacy_goal"),
+            ),
+            _mapped(
+                "we consider an alternative approach",
+                "The authors define an alternative to evolutionary reuse.",
+                _ref("ablation", "no_evolution_repeats_same_initial_program"),
+            ),
+            _mapped(
+                "repeatedly feeds the same initial program",
+                "The alternative repeatedly supplies the same initial program.",
+                _ref("ablation", "no_evolution_repeats_same_initial_program"),
+            ),
+            _mapped(
+                "to the language model",
+                "The repeated initial program is supplied to the language model.",
+                _ref("ablation", "no_evolution_repeats_same_initial_program"),
+            ),
+        ),
+        "tex_prose_sentence_0225": (
+            _mapped(
+                "No evolution",
+                "The repeated-initial-program variant is named No evolution.",
+                _ref("ablation", "no_evolution_variant_name"),
+            ),
+        ),
+        "tex_prose_sentence_0226": (
+            _reviewed_context(
+                "Context in prompts.",
+                "Context in prompts is an ablation-component label.",
+                "ablation_component_label",
+            ),
+        ),
+        "tex_prose_sentence_0227": (
+            _mapped(
+                "powerful language models",
+                "AlphaEvolve uses powerful language models.",
+                _ref("ablation", "powerful_models_large_context_windows"),
+            ),
+            _mapped(
+                "large context windows",
+                "The language models have large context windows.",
+                _ref("ablation", "powerful_models_large_context_windows"),
+            ),
+            _mapped(
+                "output can be improved",
+                "Providing prompt context can improve model output.",
+                _ref("ablation", "context_significantly_improves_output"),
+            ),
+            _mapped(
+                "significantly",
+                "The reported output improvement is significant.",
+                _ref("ablation", "context_significantly_improves_output"),
+            ),
+            _mapped(
+                "problem-specific context in the prompt",
+                "The supplied prompt context is problem-specific.",
+                _ref("ablation", "problem_specific_prompt_context"),
+            ),
+        ),
+        "tex_prose_sentence_0228": (
+            _mapped(
+                "To test the importance of context",
+                "The no-context alternative is intended to test context's importance.",
+                _ref("ablation", "section4_component_efficacy_goal"),
+            ),
+            _mapped(
+                "we consider an alternative approach",
+                "The authors define an alternative prompt-context approach.",
+                _ref("ablation", "no_context_removes_explicit_context"),
+            ),
+            _mapped(
+                "no explicit context is added to the prompt",
+                "The alternative adds no explicit context to the prompt.",
+                _ref("ablation", "no_context_removes_explicit_context"),
+            ),
+        ),
+        "tex_prose_sentence_0229": (
+            _mapped(
+                "No context in the prompt",
+                "The context-free variant is named No context in the prompt.",
+                _ref("ablation", "no_context_variant_name"),
+            ),
+        ),
+        "tex_prose_sentence_0230": (
+            _reviewed_context(
+                "Meta prompts.",
+                "Meta prompts is an ablation-component label.",
+                "ablation_component_label",
+            ),
+        ),
+        "tex_prose_sentence_0231": (
+            _mapped(
+                "uses meta prompts",
+                "AlphaEvolve uses meta prompts.",
+                _ref("ablation", "meta_prompts_used"),
+            ),
+            _mapped(
+                "in order to improve the prompts",
+                "Meta prompts are used to improve model prompts.",
+                _ref("ablation", "meta_prompts_improve_llm_prompts"),
+            ),
+            _mapped(
+                "provided to the language model",
+                "The improved prompts are those supplied to the language model.",
+                _ref("ablation", "meta_prompts_improve_llm_prompts"),
+            ),
+        ),
+        "tex_prose_sentence_0232": (
+            _mapped(
+                "potentially surpass the performance",
+                "Meta prompting is presented as potentially improving beyond a comparator.",
+                _ref("ablation", "meta_prompts_can_surpass_human_prompter"),
+            ),
+            _mapped(
+                "using a human prompter",
+                "The comparator is performance obtained with a human prompter.",
+                _ref("ablation", "meta_prompts_can_surpass_human_prompter"),
+            ),
+        ),
+        "tex_prose_sentence_0233": (
+            _mapped(
+                "To test the efficacy of meta prompting",
+                "The disabled-meta-prompt variant is intended to test meta prompting's efficacy.",
+                _ref("ablation", "section4_component_efficacy_goal"),
+            ),
+            _mapped(
+                "we disable it",
+                "The alternative disables meta prompting.",
+                _ref("ablation", "meta_prompt_disabled_for_tensor_task"),
+            ),
+            _mapped(
+                "for the task of tensor decomposition",
+                "Meta prompting is disabled for the tensor-decomposition task.",
+                _ref("ablation", "meta_prompt_disabled_for_tensor_task"),
+            ),
+        ),
+        "tex_prose_sentence_0234": (
+            _mapped(
+                "No meta prompt evolution",
+                "The disabled-meta-prompt variant is named No meta prompt evolution.",
+                _ref("ablation", "no_meta_prompt_variant_name"),
+            ),
+        ),
+        "tex_prose_sentence_0235": (
+            _reviewed_context(
+                "Full-file evolution.",
+                "Full-file evolution is an ablation-component label.",
+                "ablation_component_label",
+            ),
+        ),
+        "tex_prose_sentence_0236": (
+            _mapped(
+                "Unlike previous approaches",
+                "AlphaEvolve's full-codebase scope is contrasted with prior approaches.",
+                _ref("ablation", "full_file_contrast_with_funsearch"),
+            ),
+            _mapped(
+                "such as FunSearch",
+                "FunSearch is the named prior-approach comparator.",
+                _ref("ablation", "full_file_contrast_with_funsearch"),
+            ),
+            _mapped(
+                "evolve an entire codebase",
+                "AlphaEvolve can evolve an entire codebase.",
+                _ref("ablation", "entire_codebase_evolution"),
+            ),
+            _mapped(
+                "instead of focusing on a single function",
+                "The contrast is with evolution focused on one function.",
+                _ref("ablation", "single_function_contrast"),
+            ),
+        ),
+        "tex_prose_sentence_0237": (
+            _mapped(
+                "To test the importance of full-file evolution",
+                "The loss-only alternative is intended to test full-file evolution's importance.",
+                _ref("ablation", "section4_component_efficacy_goal"),
+            ),
+            _mapped(
+                "we consider an alternative",
+                "The authors define an alternative to full-file evolution.",
+                _ref("ablation", "no_full_file_only_loss_function_evolved"),
+            ),
+            _mapped(
+                "in the context of tensor decomposition",
+                "The full-file ablation is scoped to tensor decomposition.",
+                _ref("ablation", "full_file_ablation_tensor_context"),
+            ),
+            _mapped(
+                "only the loss function is evolved",
+                "The alternative evolves only the loss function.",
+                _ref("ablation", "no_full_file_only_loss_function_evolved"),
+            ),
+        ),
+        "tex_prose_sentence_0238": (
+            _mapped(
+                "No full-file evolution",
+                "The loss-only variant is named No full-file evolution.",
+                _ref("ablation", "no_full_file_variant_name"),
+            ),
+        ),
+        "tex_prose_sentence_0239": (
+            _reviewed_context(
+                "Powerful language models.",
+                "Powerful language models is an ablation-component label.",
+                "ablation_component_label",
+            ),
+        ),
+        "tex_prose_sentence_0240": (
+            _mapped(
+                "relies on a mixture",
+                "AlphaEvolve relies on a language-model mixture.",
+                _ref("ablation", "small_large_model_mixture"),
+            ),
+            _mapped(
+                "small",
+                "The model mixture includes small language models.",
+                _ref("ablation", "small_large_model_mixture"),
+            ),
+            _mapped(
+                "large language models",
+                "The model mixture includes large language models.",
+                _ref("ablation", "small_large_model_mixture"),
+            ),
+            _mapped(
+                "in order to obtain highly diverse samples",
+                "The model mixture is used to obtain samples.",
+                _ref("ablation", "model_mix_high_sample_diversity"),
+            ),
+            _mapped(
+                "highly diverse",
+                "The intended samples are highly diverse.",
+                _ref("ablation", "model_mix_high_sample_diversity"),
+            ),
+        ),
+        "tex_prose_sentence_0241": (
+            _mapped(
+                "To understand the importance of this component",
+                "The small-base alternative is intended to test the model mixture's importance.",
+                _ref("ablation", "section4_component_efficacy_goal"),
+            ),
+            _mapped(
+                "we consider an alternative",
+                "The authors define an alternative model configuration.",
+                _ref("ablation", "small_base_only_alternative"),
+            ),
+            _mapped(
+                "only a single",
+                "The alternative uses only one model.",
+                _ref("ablation", "small_base_only_alternative"),
+            ),
+            _mapped(
+                "small",
+                "The alternative model is small.",
+                _ref("ablation", "small_base_only_alternative"),
+            ),
+            _mapped(
+                "base model is used",
+                "The alternative uses a base model.",
+                _ref("ablation", "small_base_only_alternative"),
+            ),
+        ),
+        "tex_prose_sentence_0242": (
+            _mapped(
+                "Small base LLM only",
+                "The single-small-model variant is named Small base LLM only.",
+                _ref("ablation", "small_base_only_variant_name"),
+            ),
+        ),
+        "tex_prose_sentence_0243": (
+            _mapped(
+                "shows the results",
+                "The referenced exhibit reports ablation results.",
+                _ref("ablation", "figure8_reports_full_and_alternative_results"),
+            ),
+            _mapped(
+                "all-inclusive AlphaEvolve approach",
+                "The reported results include the all-inclusive AlphaEvolve approach.",
+                _ref("ablation", "figure8_reports_full_and_alternative_results"),
+            ),
+            _mapped(
+                "various alternatives",
+                "The reported results include the ablation alternatives.",
+                _ref("ablation", "figure8_reports_full_and_alternative_results"),
+            ),
+            _mapped(
+                "listed above",
+                "The alternatives are those defined in the preceding text.",
+                _ref("ablation", "figure8_reports_full_and_alternative_results"),
+            ),
+        ),
+        "tex_prose_sentence_0244": (
+            _mapped(
+                "each of the components",
+                "The result statement applies to every listed component.",
+                _ref("ablation", "each_component_significant_improvement"),
+            ),
+            _mapped(
+                "is responsible for",
+                "Each component is attributed causal responsibility for improvement.",
+                _ref("ablation", "each_component_significant_improvement"),
+            ),
+            _mapped(
+                "a significant improvement",
+                "The attributed result improvement is significant.",
+                _ref("ablation", "each_component_significant_improvement"),
+            ),
+        ),
+    }
+)
+
+
 @dataclass(frozen=True)
 class AlphaEvolveTexPropositionInventoryBoundaryIssue:
     code: str
@@ -4790,7 +5185,7 @@ class AlphaEvolveTexPropositionInventoryBoundaryValidation:
 def alphaevolve_tex_proposition_inventory_boundary_record(
     root: str | Path = ".",
 ) -> dict[str, Any]:
-    """Review atomic propositions through retained Section 3.3.4 compiler work."""
+    """Review atomic propositions through retained Section 4 ablation work."""
 
     root_path = Path(root)
     prose = alphaevolve_tex_prose_inventory_boundary_record(root_path)
@@ -4913,6 +5308,7 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
         }
     )
     expected_source_files = [
+        "ablations.tex",
         "introduction.tex",
         "main.tex",
         "methods.tex",
@@ -5000,11 +5396,12 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
                 "all 23 retained Section 3.3.2 Gemini kernel-engineering sentences in results.tex",
                 "all 11 retained Section 3.3.3 hardware-circuit-design sentences in results.tex",
                 "all 14 retained Section 3.3.4 compiler-optimization sentences in results.tex",
+                "all 24 retained Section 4 ablation sentences in ablations.tex",
                 "manual atomic-proposition statements and exact rendered-source quote offsets",
                 "resolved bounded-claim mappings or explicit context, outlook, and interpretation dispositions",
             ],
             "excluded": [
-                "the remaining 182 retained prose sentences",
+                "the remaining 158 retained prose sentences",
                 "separately audited captions, tables, equations, listings, footnotes, and explicit math constructs",
                 "independent second-reviewer semantic agreement",
                 "mathematical correctness, citation sufficiency, image-pixel semantics, or result reproduction",
@@ -5013,9 +5410,9 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
         },
         "claim_boundary": (
             "This boundary records a single-reviewer atomic-proposition decomposition "
-            "for every retained sentence from the Abstract through Section 3.3.4 "
-            "compiler optimization. Complete disposition inside this 220-sentence "
-            "scope does not cover the remaining 182 prose "
+            "for every retained sentence from the Abstract through Section 4 "
+            "ablations. Complete disposition inside this 244-sentence "
+            "scope does not cover the remaining 158 prose "
             "sentences and does not prove independent semantic exhaustiveness, "
             "mathematical correctness, result reproduction, or AlphaEvolve parity."
         ),
@@ -5060,7 +5457,7 @@ def validate_alphaevolve_tex_proposition_inventory_boundary(
         issues.append(
             _issue(
                 "review_scope_incomplete",
-                "Abstract through Section 3.3.4 compiler review scope is incomplete",
+                "Abstract through Section 4 ablation review scope is incomplete",
             )
         )
     for field in (

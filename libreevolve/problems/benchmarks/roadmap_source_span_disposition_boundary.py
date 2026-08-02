@@ -11,14 +11,14 @@ from libreevolve.problems.benchmarks.alphaevolve_source_inventory_boundary impor
 
 
 ROADMAP_SOURCE_SPAN_DISPOSITION_BOUNDARY_SCHEMA = (
-    "libreevolve.roadmap_source_span_disposition_boundary.v26"
+    "libreevolve.roadmap_source_span_disposition_boundary.v27"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_BOUNDARY_STATUS = (
     "named_span_dispositions_plus_846_bounded_claims_195_citation_uses_"
     "30_tex_source_details_240_table_cells_305_listing_lines_309_tex_math_"
-    "constructs_402_tex_prose_sentences_and_744_propositions_across_220_"
-    "abstract_through_section3_3_4_compiler_sentences_"
+    "constructs_402_tex_prose_sentences_and_812_propositions_across_244_"
+    "abstract_through_section4_ablation_sentences_"
     "without_whole_paper_semantic_exhaustiveness"
 )
 STATUS_CLAIM_INVENTORY_PATH = "papers/status_claim_inventory.json"
@@ -92,7 +92,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "ci_source_span_exhaustiveness_gate",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "claim_level_requirement_inventory": "846_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_305_listing_lines_have_line_dispositions_309_explicit_math_constructs_have_delimiter_dispositions_128_paragraphs_402_sentences_have_prose_dispositions_and_220_abstract_through_section3_3_4_compiler_sentences_have_744_proposition_dispositions_without_remaining_182_sentence_proposition_image_pixel_citation_semantic_implementation_semantic_mathematical_correctness_independent_review_or_reproduction_exhaustiveness",
+    "claim_level_requirement_inventory": "846_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_305_listing_lines_have_line_dispositions_309_explicit_math_constructs_have_delimiter_dispositions_128_paragraphs_402_sentences_have_prose_dispositions_and_244_abstract_through_section4_ablation_sentences_have_812_proposition_dispositions_without_remaining_158_sentence_proposition_image_pixel_citation_semantic_implementation_semantic_mathematical_correctness_independent_review_or_reproduction_exhaustiveness",
     "application_result_claim_matrix": "not_recorded_locally",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
     "missing_partial_todo_proof": "not_recorded_locally",
@@ -187,7 +187,7 @@ def roadmap_source_span_disposition_boundary_record(
             "tex_code_listing_lines": "8_environments_305_lines_60_existing_claims_and_zero_unmapped_lines",
             "tex_math_constructs": "309_explicit_math_constructs_291_inline_18_display_and_zero_unmapped_constructs",
             "tex_prose_sentences": "128_paragraphs_402_sentences_372_existing_claim_mappings_30_reviewed_nonclaims_and_zero_unmapped_or_unresolved_sentences",
-            "tex_propositions": "220_abstract_through_section3_3_4_compiler_sentences_744_atomic_propositions_690_existing_claim_mappings_54_context_outlook_or_interpretation_and_zero_unmapped_or_unresolved_propositions",
+            "tex_propositions": "244_abstract_through_section4_ablation_sentences_812_atomic_propositions_753_existing_claim_mappings_59_context_outlook_or_interpretation_and_zero_unmapped_or_unresolved_propositions",
         },
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
@@ -221,12 +221,12 @@ def roadmap_source_span_disposition_boundary_record(
             "18 display constructs, plus paragraph- and sentence-level "
             "dispositions for all 128 retained TeX prose paragraphs and all 402 "
             "grammatical sentences: 372 mapped to existing bounded claims, 30 "
-            "reviewed as nonclaims, and zero unmapped or unresolved, plus 744 "
-            "atomic propositions across all 220 sentences from the Abstract through "
-            "Section 3.3.4 compiler optimization: 690 mapped to bounded claims and "
-            "54 dispositioned as "
+            "reviewed as nonclaims, and zero unmapped or unresolved, plus 812 "
+            "atomic propositions across all 244 sentences from the Abstract through "
+            "Section 4 ablations: 753 mapped to bounded claims and "
+            "59 dispositioned as "
             "context, outlook, or interpretation. It does not cover propositions "
-            "in the remaining 182 prose sentences or provide independent semantic "
+            "in the remaining 158 prose sentences or provide independent semantic "
             "review. It does not "
             "classify citation semantics, source "
             "sufficiency, or implementation relevance, and does not "
@@ -311,7 +311,7 @@ def validate_roadmap_source_span_disposition_boundary(
         or "all 8 retained TeX code listing environments" not in boundary_text
         or "all 309 explicit TeX math constructs" not in boundary_text
         or "all 128 retained TeX prose paragraphs and all 402" not in boundary_text
-        or "remaining 182 prose sentences" not in boundary_text
+        or "remaining 158 prose sentences" not in boundary_text
         or "complete paper-index row to ROADMAP disposition map" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate core anchor dispositions from exhaustive source-span coverage"))

@@ -10111,9 +10111,15 @@
       "claim_refs": [
         {
           "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "section4_component_efficacy_goal",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
           "claim_id": "no_evolution_repeats_same_initial_program",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null
@@ -10223,9 +10229,15 @@
       "claim_refs": [
         {
           "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "section4_component_efficacy_goal",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
           "claim_id": "no_context_removes_explicit_context",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null
@@ -10355,9 +10367,15 @@
       "claim_refs": [
         {
           "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "section4_component_efficacy_goal",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
           "claim_id": "meta_prompt_disabled_for_tensor_task",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null
@@ -10467,15 +10485,21 @@
       "claim_refs": [
         {
           "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "section4_component_efficacy_goal",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
           "claim_id": "full_file_ablation_tensor_context",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         },
         {
           "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
           "claim_id": "no_full_file_only_loss_function_evolved",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null
@@ -10579,9 +10603,15 @@
       "claim_refs": [
         {
           "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "section4_component_efficacy_goal",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
           "claim_id": "small_base_only_alternative",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null

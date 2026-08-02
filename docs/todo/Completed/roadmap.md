@@ -2,6 +2,18 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Add retained-TeX source-detail dispositions to the AlphaEvolve ROADMAP audit.
+  - Status: ROADMAP and its implementation-evidence, disposition, coverage, and
+    exhaustiveness boundaries now include all 30 retained-source captions,
+    displayed equations, and semantic footnotes, plus the excluded preamble
+    macro template record.
+  - Accounting: 24 constructs map through 80 references to existing bounded
+    claim ids, one maps to publication metadata, two are named-span locators,
+    and three are decorative markers. No claim count or parity estimate changes.
+  - Remaining boundary: whole-paper proposition semantics, citation
+    sufficiency, result reproduction, status/application joins, independent
+    review, and owner/CI signoff remain open.
+
 - [x] Add retained-TeX citation linkage to the AlphaEvolve ROADMAP audit.
   - Status: ROADMAP now reports 195 logical citation uses, 240 key links, all
     120 compiled references, and 52 unused BibTeX entries under a
@@ -10,8 +22,9 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     inventory; the 833-claim aggregate and 3.7% strict/21.5% weighted parity
     estimates do not change.
   - Remaining boundary: citation semantics and implementation relevance,
-    equation/footnote/caption semantics, result reproduction, independent
-    review, and whole-paper CI exhaustiveness remain open.
+    proposition-level semantics, result reproduction, independent review, and
+    whole-paper CI exhaustiveness remain open; source-detail constructs now
+    have separate dispositions.
 
 - [x] Advance bounded AlphaEvolve ROADMAP coverage through Appendix B.
   - Status: ROADMAP disposition, coverage, exhaustiveness, and implementation-

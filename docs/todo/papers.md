@@ -73,17 +73,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     key resolves through `literature.bib`, `main.bbl`, and
     `papers/references.json`; the 52 unused BibTeX entries are explicit. All 195
     citation uses remain semantically unclassified and retain this code/paper
-    TODO ownership. The
+    TODO ownership. The separate
+    `papers/alphaevolve_tex_source_detail_inventory_boundary.json` inventories
+    all 22 captions, 5 displayed equations, and 3 semantic footnotes, excludes
+    one preamble macro template, and assigns all 30 constructs a stable
+    disposition. Twenty-four constructs map through 80 resolved references to
+    existing bounded claim ids, one maps to reviewed publication metadata, two
+    are named-span locators, and three are decorative markers. It adds no new
+    claim rows or parity credit. The
     paper manifest rejects any inventory sidecar's absence, source/reference
     drift, status drift, stale TODO ownership, result-reproduction overclaims,
     and parity overclaims.
   - Current gap: the combined 833-claim inventory covers every named source
-    span, and the supplemental TeX inventory now covers citation syntax plus
-    bibliography-key linkage, but every citation's supported proposition,
-    source-sufficiency role, and implementation relevance remain unclassified.
-    Whole-paper sentence/paragraph/equation/footnote/caption semantics, semantic
-    evidence sufficiency, result reproduction, and independent reviewer proof
-    that any bounded inventory is semantically exhaustive also remain open.
+    span, the supplemental citation inventory covers citation syntax plus
+    bibliography-key linkage, and the source-detail inventory dispositions all
+    caption/equation/footnote constructs. Every citation's supported
+    proposition, source-sufficiency role, and implementation relevance remain
+    unclassified. Whole-paper sentence/paragraph/inline-math/table-cell/listing/
+    image-pixel/citation semantics, semantic evidence sufficiency, result
+    reproduction, and independent reviewer proof that any bounded inventory is
+    semantically exhaustive also remain open.
   - Required result: extract every remaining implementation-bearing claim,
     assign stable ids and exact source spans, semantically classify every
     citation use, classify implementation and reproduction status, link

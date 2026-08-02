@@ -4,6 +4,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## Papers Todo: Reference and Specification Gaps
 
+- [x] Inventory retained AlphaEvolve captions, displayed equations, and footnotes.
+  - Paper evidence: the pinned `2506.13131v1` recursive TeX closure contains 22
+    caption commands, 5 displayed equation environments, 3 semantic footnote
+    uses, and one non-semantic preamble footnote macro template.
+  - Status: `papers/alphaevolve_tex_source_detail_inventory_boundary.json`
+    dispositions all 30 relevant constructs. Twenty-four map through 80
+    resolved references to existing bounded claim ids, one maps to reviewed
+    publication metadata, two are named-span locators, and three are decorative
+    markers, with no unmapped construct or new claim.
+  - Remaining gap: proposition-level sentence/paragraph/inline-math/table-cell/
+    listing/image-pixel/citation semantics, source sufficiency, independent
+    result reproduction, reviewer proof, and AlphaEvolve parity remain open.
+
 - [x] Inventory retained AlphaEvolve TeX citation uses and bibliography keys.
   - Paper evidence: the retained `2506.13131v1` TeX archive includes the
     recursive `main.tex` source closure, `literature.bib`, and compiled
@@ -13,7 +26,7 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     references, and 52 unused BibTeX entries with zero unresolved keys.
   - Remaining gap: lexical linkage does not identify the proposition each
     citation supports, prove source sufficiency, classify implementation
-    relevance, verify cited work, or complete equation/footnote/claim semantics.
+    relevance, verify cited work, or complete proposition-level semantics.
 
 - [x] Inventory AlphaEvolve Appendix B and Figures 10-14 claims.
   - Paper evidence: source pages 38-44 contain all 13 constructive-math

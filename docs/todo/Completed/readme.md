@@ -4,6 +4,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document the retained-TeX source-detail construct audit in README.
+  - Status: README now reports all 22 captions, 5 displayed equations, 3
+    semantic footnotes, the excluded preamble macro template, 30 stable
+    dispositions, 80 resolved claim-id references, and zero new claims.
+  - Boundary: README distinguishes construct-level disposition from
+    proposition-level semantic exhaustiveness, source sufficiency, independent
+    result reproduction, and AlphaEvolve parity; parity percentages remain
+    unchanged.
+
 - [x] Document the retained-TeX citation-use audit in README.
   - Status: README now reports 195 logical citation uses, 240 key links, all
     120 compiled references, 52 unused BibTeX entries, and zero unresolved

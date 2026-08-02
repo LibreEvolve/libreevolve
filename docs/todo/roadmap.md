@@ -223,6 +223,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     compiled references, and 52 unused BibTeX entries. It does not add claims
     to the 833-row implementation aggregate because citation semantics and
     implementation relevance remain unclassified under active TODO ownership.
+    `papers/alphaevolve_tex_source_detail_inventory_boundary.json` separately
+    dispositions all 30 retained-source constructs: 22 captions, 5 displayed
+    equations, and 3 semantic footnotes. Twenty-four map through 80 resolved
+    references to existing bounded claim ids, one maps to publication metadata,
+    two are named-span locators, and three are decorative markers; this adds no
+    claims or parity credit.
     `papers/roadmap_source_span_disposition_boundary.json` now maps all 55
     named spans to ROADMAP section ids, phase buckets, local status, sidecars,
     and audit TODO links, and records that only the AlphaEvolve
@@ -247,13 +253,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     sections, and phases, and 833 bounded system/context/matrix-result/
     constructive-math/scheduling/kernel-engineering/hardware/compiler/ablation/
     related-work/Appendix-A/Table-3/Figure-9/Appendix-B/Figures-10-14 claims have
-    claim-level mappings, and citation syntax plus bibliography-key linkage is
-    exhaustive for the retained TeX. The matrix is not
+    claim-level mappings, citation syntax plus bibliography-key linkage is
+    exhaustive for the retained TeX, and all caption/equation/footnote
+    constructs have dispositions. The matrix is not
     exhaustive across the rest of
     the paper: it
     does not extract every remaining
-    sentence-, paragraph-, equation-, footnote-, caption-semantic, citation-
-    semantic, capability-, or result-claim span; prove domain-specific TODO
+    sentence-, paragraph-, inline-math-, table-cell-, listing-, image-pixel-,
+    citation-semantic, capability-, or result-claim proposition; prove domain-specific TODO
     ownership for every missing or partial claim; provide a complete
     application-result claim matrix; or disposition all paper/status sidecar
     rows.

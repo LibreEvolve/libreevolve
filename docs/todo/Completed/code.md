@@ -4,6 +4,23 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add the retained-TeX caption, equation, and footnote construct inventory.
+  - Status: the public boundary parses the recursive 14-file `main.tex` closure
+    and records source file, line, column, section path, command text, hashes,
+    page, span, semantic role, and disposition for all 30 relevant constructs.
+  - Accounting: the inventory contains 22 captions, 5 displayed equations, and
+    3 semantic footnotes, excludes one preamble macro template, maps 24
+    constructs through 80 resolved references to existing claim ids, maps one
+    to publication metadata, classifies two as named-span locators and three as
+    decorative markers, and adds zero claims or parity credit.
+  - Remaining code gap: sentence/paragraph/inline-math/table-cell/listing/image-
+    pixel/citation proposition semantics, source sufficiency, result
+    reproduction, independent review, and whole-paper CI exhaustiveness remain
+    owned by active TODOs.
+  - Verification: focused boundary and paper-manifest tests reject source,
+    count, construct, reference, sidecar, TODO, semantic-overclaim, and parity
+    drift.
+
 - [x] Add the retained-TeX citation-use and bibliography-linkage inventory.
   - Status: the public boundary recursively scans the 14-file `main.tex` input
     closure and records source file, line, column, section path, command text,
@@ -12,9 +29,9 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     references. Every key resolves through `literature.bib`, `main.bbl`, and
     `papers/references.json`; all 52 unused BibTeX entries are explicit.
   - Remaining code gap: supported-proposition semantics, citation role/source
-    sufficiency, implementation relevance, external-source verification,
-    equation/footnote/caption semantics, and claim-level exhaustiveness remain
-    owned by the active code and paper TODOs.
+    sufficiency, implementation relevance, external-source verification, and
+    proposition-level exhaustiveness remain owned by the active code and paper
+    TODOs; caption/equation/footnote constructs now have separate dispositions.
   - Verification: focused scanner and paper-manifest tests reject archive,
     count, command, source-anchor, key-link, sidecar, semantic-overclaim, and
     parity drift.

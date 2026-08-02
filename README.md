@@ -159,16 +159,26 @@ Important limits:
   links. All 120 compiled references resolve through `literature.bib`,
   `main.bbl`, and `papers/references.json`; 52 unused BibTeX entries are listed.
   Citation semantics and implementation relevance remain unclassified.
+- `papers/alphaevolve_tex_source_detail_inventory_boundary.json` inventories
+  all 30 retained-source caption, displayed-equation, and semantic-footnote
+  constructs: 22 captions, 5 equations, and 3 real footnotes, plus one excluded
+  preamble macro template. Twenty-four constructs map to 80 references into the
+  existing bounded claim inventories, one maps to reviewed publication
+  metadata, two are named-span locators, and three are decorative markers.
+  Nothing is unmapped, no reference is unresolved, and the inventory adds no
+  claims or implementation-parity credit.
 - Together the twelve bounded inventories cover 833 claims: 29 locally
   implemented, 275 partial, 108 not implemented, 362 not demonstrated, and 59
   source-context-only, leaving 745 implementation gaps. Across the 774
   implementation-relevant claims, strict implemented parity is 3.7%; counting
   partial claims at half credit gives 21.5%. The weighted value rises because
   Appendix B registry metadata is partial, not because its results were
-  reproduced. Citation linkage is lexically complete for the retained TeX, but
-  coverage still excludes whole-paper equation/footnote/caption and semantic
-  exhaustiveness, independent result reproduction, and AlphaEvolve-scale
-  execution.
+  reproduced. Citation linkage is lexically complete and every retained-source
+  caption, displayed equation, and semantic footnote has a construct-level
+  disposition. Coverage still excludes whole-paper sentence/paragraph,
+  inline-math, table-cell, listing, image-pixel, citation-semantic, and
+  proposition-level exhaustiveness, independent result reproduction, and
+  AlphaEvolve-scale execution.
 - The local paper cache is source inventory. A cached paper or `papers/README.md`
   row does not mean the paper's method or results are implemented.
 - `papers/related_work_taxonomy_boundary.json` records a bounded AlphaEvolve

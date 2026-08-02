@@ -1818,19 +1818,31 @@ Important limits:
   This is complete lexical linkage for the retained source, not citation-
   semantic classification, source-sufficiency proof, implementation relevance,
   external-reference verification, or additional functional parity credit.
+- Retained-TeX source-detail evidence inventories all 30 caption, displayed-
+  equation, and semantic-footnote constructs in the same closure: 22 captions,
+  5 equations, and 3 real footnotes, with one preamble macro template excluded.
+  Twenty-four constructs map through 80 references to existing bounded claim
+  ids, one maps to reviewed publication metadata, two are named-span locators,
+  and three are decorative markers. There are no unmapped constructs or
+  unresolved references. This closes construct-level disposition only; it
+  adds no claims or functional parity credit and does not prove proposition-
+  level semantic exhaustiveness or result reproduction.
 - ROADMAP source-span coverage evidence now records eight coverage surfaces
   for main-text section walk, figure exhibits, table/capability rows, Appendix
   A matrix targets, Appendix B constructive math, application-result claims,
   paper-status row dispositions, and TODO/non-goal/phase proof. It links the
   existing core source-span disposition input, paper-status row counts, sidecar
-  refs, active TODO refs, validation-gate labels, readiness labels, and 833
-  bounded claims through Appendix B and Figures 10-14. The 774
+  refs, active TODO refs, validation-gate labels, readiness labels, 833 bounded
+  claims through Appendix B and Figures 10-14, and the 30 construct-level TeX
+  source-detail dispositions. The 774
   implementation-relevant claims currently yield 3.7% strict implemented
   parity or 21.5% with partial claims counted at half credit. The weighted
   value rises because Appendix B registry metadata is partial, not because its
   results were reproduced. Citation syntax and key linkage are exhaustive for
-  the retained TeX, but this is not a whole-paper source-detail or semantic
-  audit, joined figure/table/appendix reproduction matrix, complete
+  the retained TeX, and caption/equation/footnote construct dispositions are
+  complete, but this is not a whole-paper sentence/paragraph/inline-math/
+  table-cell/listing/image-pixel/citation-semantic proposition audit, joined
+  figure/table/appendix reproduction matrix, complete
   application-result claim matrix, status-row to ROADMAP
   disposition map, missing/partial TODO proof, non-goal decision map,
   phase-priority map, CI source-span exhaustiveness gate, or owner review
@@ -1839,7 +1851,7 @@ Important limits:
   PDF section walk, figure/table/appendix matrix, application-result claim
   matrix, status-row disposition map, span status classification,
   missing/partial TODO proof, phase-priority map, and CI/owner signoff. This
-  is not evidence of whole-paper source-detail or semantic exhaustiveness,
+  is not evidence of whole-paper proposition-level semantic exhaustiveness,
   result reproduction, or AlphaEvolve production-scale parity.
 - ROADMAP non-goal contradiction evidence now assigns stable ids to the three
   current ROADMAP non-goals, maps nine constrained documentation surfaces,

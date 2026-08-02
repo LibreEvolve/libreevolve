@@ -111,7 +111,14 @@ sidecars, tests, and active TODOs.
     through `literature.bib`, `main.bbl`, and `papers/references.json`, and all
     52 unused BibTeX entries are listed. It deliberately leaves all 195
     citation semantics and implementation-relevance decisions unclassified
-    under this code/paper TODO. This is not
+    under this code/paper TODO. The supplemental
+    `papers/alphaevolve_tex_source_detail_inventory_boundary.json` now parses
+    all 22 captions, 5 displayed equations, and 3 real footnotes in the same
+    closure, excludes one preamble macro template, and assigns all 30
+    constructs a stable disposition. Twenty-four constructs map through 80
+    resolved references to existing bounded claim ids, one maps to reviewed
+    publication metadata, two are named-span locators, and three are decorative
+    markers. It adds no claims or implementation-parity credit. This is not
     whole-paper completeness. Meanwhile,
     `papers/status_claim_inventory.json` now records checked row-level paper
     status inventory plus status-cell phrase hashes, source offsets, local
@@ -135,11 +142,12 @@ sidecars, tests, and active TODOs.
     ablation, Section 5 Related Work, Appendix A, Table 3, Figure 9, Appendix B,
     and Figures 10-14 claims are now machine-readable and PDF-verified, and
     citation commands plus bibliography-key linkage are lexically exhaustive
-    for the retained TeX. However, citation proposition/role/sufficiency and
+    for the retained TeX, and all caption/equation/footnote constructs have
+    dispositions. However, citation proposition/role/sufficiency and
     implementation relevance remain unclassified, and there is no AlphaEvolve
-    requirement inventory exhaustive at sentence, paragraph, equation,
-    footnote, caption-semantic, citation-semantic, or claim level across
-    remaining source details and the other paper
+    requirement inventory exhaustive at sentence, paragraph, inline-math,
+    table-cell, listing, image-pixel, citation-semantic, or proposition level
+    across remaining source details and the other paper
     spans and all code modules, tests, runtime report
     schemas, sidecar JSON records, TODO entries, and completion evidence; no
     detector flags source modules or paper claims that lack mapped audit

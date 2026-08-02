@@ -14,7 +14,7 @@ def test_roadmap_source_span_coverage_accepts_bounded_matrix():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "named_structure_plus_833_bounded_claims_and_195_citation_uses_without_whole_paper_claim_walk"
+        == "named_structure_plus_833_bounded_claims_195_citation_uses_and_30_tex_source_details_without_whole_paper_claim_walk"
     )
     assert boundary["schema"] == ROADMAP_SOURCE_SPAN_COVERAGE_BOUNDARY_SCHEMA
     assert boundary["source_paper_id"] == "2506.13131"
@@ -24,7 +24,7 @@ def test_roadmap_source_span_coverage_accepts_bounded_matrix():
     assert boundary["paper_status_row_dispositioned_count"] == 1
     assert boundary["coverage_surface_count"] == 8
     assert boundary["active_todo_ref_count"] == 15
-    assert boundary["sidecar_ref_count"] == 62
+    assert boundary["sidecar_ref_count"] == 63
     assert [record["surface_id"] for record in boundary["coverage_surface_records"]] == [
         "main_text_section_walk",
         "figure_exhibit_matrix",
@@ -46,7 +46,7 @@ def test_roadmap_source_span_coverage_accepts_bounded_matrix():
         for todo_ref in record["active_todo_refs"]
     )
     assert boundary["missing_evidence"] == {
-        "claim_level_requirement_inventory": "833_bounded_claims_cover_all_named_spans_and_195_citation_uses_have_lexical_linkage_without_whole_paper_semantic_or_reproduction_exhaustiveness",
+        "claim_level_requirement_inventory": "833_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_and_30_tex_source_details_have_construct_dispositions_without_whole_paper_proposition_semantic_or_reproduction_exhaustiveness",
         "application_result_claim_matrix": "section_3_3_claim_dispositions_recorded_without_reproduction_phase_priority_or_non_goal_proof",
         "status_row_to_roadmap_disposition_map": "not_recorded_locally",
         "missing_partial_todo_proof": "not_recorded_locally",
@@ -61,6 +61,8 @@ def test_roadmap_source_span_coverage_accepts_bounded_matrix():
     assert boundary["completed_evidence"]["citation_key_link_count"] == 240
     assert boundary["completed_evidence"]["unique_compiled_reference_count"] == 120
     assert boundary["completed_evidence"]["unused_bibtex_entry_count"] == 52
+    assert boundary["completed_evidence"]["tex_source_detail_count"] == 30
+    assert boundary["completed_evidence"]["tex_source_detail_mapped_claim_ref_count"] == 80
 
 
 def test_roadmap_source_span_coverage_rejects_overclaim_and_drift():
@@ -92,7 +94,7 @@ def test_render_roadmap_source_span_coverage_summary_reports_shape():
     assert "ROADMAP source-span coverage boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | named_structure_plus_833_bounded_claims_and_195_citation_uses_without_whole_paper_claim_walk |"
+        "| boundary_status | named_structure_plus_833_bounded_claims_195_citation_uses_and_30_tex_source_details_without_whole_paper_claim_walk |"
         in summary
     )
     assert "| coverage_surface_count | 8 |" in summary

@@ -1,0 +1,1296 @@
+{
+  "schema": "libreevolve.alphaevolve_tex_source_detail_inventory_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "boundary_status": "tex_equation_footnote_caption_constructs_dispositioned_without_proposition_level_exhaustiveness",
+  "construct_inventory_ready": true,
+  "construct_disposition_ready": true,
+  "proposition_level_semantic_exhaustiveness_ready": false,
+  "alphaevolve_parity_claim_ready": false,
+  "source_artifact": {
+    "path": "papers/alphaevolve_tex_source_archive.tar.gz",
+    "exists": true,
+    "expected_bytes": 2635462,
+    "actual_bytes": 2635462,
+    "expected_sha256": "a3ea37c5b6fe967fba459f0daca8548a78e2a1eac45e5c2aac83051ef113f21d",
+    "actual_sha256": "a3ea37c5b6fe967fba459f0daca8548a78e2a1eac45e5c2aac83051ef113f21d",
+    "identity_ok": true
+  },
+  "source_errors": [],
+  "parse_errors": [],
+  "source_closure": {
+    "entrypoint": "main.tex",
+    "file_count": 14,
+    "files": [
+      {
+        "path": "main.tex",
+        "sha256": "142dac12b7f260b88c678abc448f1be2ba4e821365bd87b0433fd0f1d92e0be2"
+      },
+      {
+        "path": "preamble.tex",
+        "sha256": "d9c5278f34cf327b10c6021ff8cd700b6cd121636701ad48cadd707ec5acf45f"
+      },
+      {
+        "path": "introduction.tex",
+        "sha256": "16460321076caf912e02d75c37f6754d7ba95f9bca575744608b7f5cb945124f"
+      },
+      {
+        "path": "methods.tex",
+        "sha256": "76dcaf3aece6849bddc79368ae6db543a824f15a82f99eac31eaf730367d6904"
+      },
+      {
+        "path": "grounding_example.tex",
+        "sha256": "92a61e4b9c3db77885eabbcd91be9853088d80772034d50dc0fba5aa82d4c459"
+      },
+      {
+        "path": "results.tex",
+        "sha256": "e3ef2511dcf71ee9f368e08065b168218a60854bd9caaf91a2201a345201f394"
+      },
+      {
+        "path": "discovered_program.tex",
+        "sha256": "07fa2dd02ec7543b0a4a9c43ccfa9e508f2f86ebc8c905569a599942b469c1ea"
+      },
+      {
+        "path": "ablations.tex",
+        "sha256": "5eba1162b05f48537c57d0bbdd6000fe294b7442ac78cbaa10246034e1598e3a"
+      },
+      {
+        "path": "related_work.tex",
+        "sha256": "c6ed2e96bc7c58c6d007659e96712916e1ad41272f65df467626d44cb1e79185"
+      },
+      {
+        "path": "discussion.tex",
+        "sha256": "ae4ffebb280d7182de714bdc9be6ba28313865a38a5c4d1c487f573a34cd37b8"
+      },
+      {
+        "path": "acknowledgement.tex",
+        "sha256": "e73ceab3bb50dfaa00e416e3f0c3aca52f4c1f1b001d0466b709d9e8908224ef"
+      },
+      {
+        "path": "authors.tex",
+        "sha256": "550898e9f26a7f7637275831f0f48ec56d92353575025a99857970b996c67626"
+      },
+      {
+        "path": "appendix.tex",
+        "sha256": "a5c95c1757ba7628cf2e4eb3f3bc700f48ff68155ffe967850f32bfc1fb2006c"
+      },
+      {
+        "path": "discovered_program_appendix.tex",
+        "sha256": "f7faf8c1544f3a0975c0a35f3fe8b8c4f311c9423200e96658f87e9b459afa17"
+      }
+    ]
+  },
+  "caption_count": 22,
+  "equation_count": 5,
+  "footnote_count": 3,
+  "excluded_footnote_macro_template_count": 1,
+  "excluded_footnote_macro_templates": [
+    {
+      "source_file": "preamble.tex",
+      "source_line": 129,
+      "source_column": 30,
+      "command_text": "\\footnote{#1}",
+      "reason": "blfootnote_macro_template_not_semantic_use"
+    }
+  ],
+  "source_detail_count": 30,
+  "source_kind_counts": {
+    "caption": 22,
+    "equation": 5,
+    "footnote": 3
+  },
+  "disposition_counts": {
+    "bounded_claim_mapping": 24,
+    "decorative_marker": 3,
+    "named_span_locator": 2,
+    "publication_metadata_boundary": 1
+  },
+  "mapped_bounded_claim_construct_count": 24,
+  "metadata_boundary_construct_count": 1,
+  "named_span_locator_count": 2,
+  "decorative_marker_count": 3,
+  "unmapped_construct_count": 0,
+  "mapped_claim_ref_count": 80,
+  "unresolved_reference_count": 0,
+  "new_claim_count": 0,
+  "source_detail_records": [
+    {
+      "source_kind": "footnote",
+      "source_file": "main.tex",
+      "source_line": 26,
+      "source_column": 41,
+      "section_path": [
+        "Title page"
+      ],
+      "source_label": null,
+      "tex_environment": null,
+      "command_text": "\\footnote{See Acknowledgments and Author information section. $^*$Equal contributions.}",
+      "normalized_text": "See Acknowledgments and Author information section. $^*$Equal contributions.",
+      "command_sha256": "bd65963167d3356a47a796b22e39d79b77aa528d3179d70b24eb4696b3765465",
+      "source_line_sha256": "47559793d22be9a3c048d6934fe0f06cb6e26c96c4b53a7bafca56c29aa5f2e3",
+      "construct_id": "footnote_title_equal_contribution",
+      "source_page": 1,
+      "source_span_id": "title_page",
+      "semantic_role": "publication_metadata_footnote",
+      "disposition": "publication_metadata_boundary",
+      "claim_refs": [],
+      "named_span_refs": [],
+      "supporting_boundary_refs": [
+        {
+          "path": "papers/title_page_affiliation_boundary.json",
+          "resolved": true
+        },
+        {
+          "path": "papers/paper_author_metadata_boundary.json",
+          "resolved": true
+        }
+      ]
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "introduction.tex",
+      "source_line": 38,
+      "source_column": 1,
+      "section_path": [
+        "Introduction"
+      ],
+      "source_label": "tab:funsearch-vs-alphaevolve",
+      "tex_environment": null,
+      "command_text": "\\caption{Capabilities and typical behaviours of \\method and our previous agent.}",
+      "normalized_text": "Capabilities and typical behaviours of \\method and our previous agent.",
+      "command_sha256": "4f5e8ca9957ec4ca5c77ae212f55bf689825ad3bc66d71aa1fa8118d8a7fef23",
+      "source_line_sha256": "4f5e8ca9957ec4ca5c77ae212f55bf689825ad3bc66d71aa1fa8118d8a7fef23",
+      "construct_id": "caption_table_1",
+      "source_page": 2,
+      "source_span_id": "table_1",
+      "semantic_role": "exhibit_locator_caption",
+      "disposition": "named_span_locator",
+      "claim_refs": [],
+      "named_span_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_source_inventory_boundary.json",
+          "span_id": "table_1",
+          "resolved": true
+        }
+      ],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "footnote",
+      "source_file": "introduction.tex",
+      "source_line": 49,
+      "source_column": 1,
+      "section_path": [
+        "Introduction"
+      ],
+      "source_label": null,
+      "tex_environment": null,
+      "command_text": "\\footnote{These discovered algorithms as well as our other new mathematical results can be found at \\url{\\ResultsColabURL}.}",
+      "normalized_text": "These discovered algorithms as well as our other new mathematical results can be found at \\url{\\ResultsColabURL}.",
+      "command_sha256": "7a832b763aaf02fbdeba61da9bc89113a9b9923cda9fa40ef349eca447ce5f8f",
+      "source_line_sha256": "7a832b763aaf02fbdeba61da9bc89113a9b9923cda9fa40ef349eca447ce5f8f",
+      "construct_id": "footnote_companion_colab_artifacts",
+      "source_page": 2,
+      "source_span_id": "introduction",
+      "semantic_role": "artifact_availability_footnote",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "table2_decompositions_in_companion_colab",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "section3_2_new_constructions_in_companion_colab",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_a_claim_inventory_boundary.json",
+          "claim_id": "table3_decompositions_in_colab",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "appendix_b_colab_data_and_verification_code",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "methods.tex",
+      "source_line": 7,
+      "source_column": 1,
+      "section_path": [
+        "\\method"
+      ],
+      "source_label": "fig:high-level",
+      "tex_environment": null,
+      "command_text": "\\caption{\\method high-level overview.}",
+      "normalized_text": "\\method high-level overview.",
+      "command_sha256": "d4d5e01820618f7ec422b2c332f1ed7e8592637435cfaa7b8643db70d1d02cf5",
+      "source_line_sha256": "d4d5e01820618f7ec422b2c332f1ed7e8592637435cfaa7b8643db70d1d02cf5",
+      "construct_id": "caption_figure_1",
+      "source_page": 3,
+      "source_span_id": "figure_1",
+      "semantic_role": "exhibit_locator_caption",
+      "disposition": "named_span_locator",
+      "claim_refs": [],
+      "named_span_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_source_inventory_boundary.json",
+          "span_id": "figure_1",
+          "resolved": true
+        }
+      ],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "methods.tex",
+      "source_line": 18,
+      "source_column": 5,
+      "section_path": [
+        "\\method"
+      ],
+      "source_label": "fig:method",
+      "tex_environment": null,
+      "command_text": "\\caption{ \n    Expanded view of the \\method discovery process. The user provides an initial program (with components to evolve marked), evaluation code, and optional configurations (\\Cref{subsec:specification}).\n    \\method then initiates an evolutionary loop.\n    The \\emph{Prompt sampler} uses programs from the \\emph{Program database} to construct rich prompts (\\Cref{subsec:prompting}).\n    Given these prompts, the \\emph{LLMs} generate code modifications (diffs), which are applied to create new programs (\\Cref{subsec:generation}).\n    These are then scored by \\emph{Evaluators} (\\Cref{subsec:evaluation}), and promising solutions are registered back into the \\emph{Program database} (\\Cref{subsec:evolution}), driving the iterative discovery of better and better programs.\n    }",
+      "normalized_text": "Expanded view of the \\method discovery process. The user provides an initial program (with components to evolve marked), evaluation code, and optional configurations (\\Cref{subsec:specification}). \\method then initiates an evolutionary loop. The \\emph{Prompt sampler} uses programs from the \\emph{Program database} to construct rich prompts (\\Cref{subsec:prompting}). Given these prompts, the \\emph{LLMs} generate code modifications (diffs), which are applied to create new programs (\\Cref{subsec:generation}). These are then scored by \\emph{Evaluators} (\\Cref{subsec:evaluation}), and promising solutions are registered back into the \\emph{Program database} (\\Cref{subsec:evolution}), driving the iterative discovery of better and better programs.",
+      "command_sha256": "20b01ce541a33e6d68362c9eeae57baf8009fe3252fad99eada9f6bb09a2a2e8",
+      "source_line_sha256": "036d2ed40e5f2869a50d3af0a8d07376f06b44a86c8a45000264e830fcf6b58f",
+      "construct_id": "caption_figure_2",
+      "source_page": 4,
+      "source_span_id": "figure_2",
+      "semantic_role": "claim_bearing_caption",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "figure2_expanded_loop",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "grounding_example.tex",
+      "source_line": 34,
+      "source_column": 13,
+      "section_path": [],
+      "source_label": "fig:grounding-api",
+      "tex_environment": null,
+      "command_text": "\\caption{\\raisebox{-0.3\\baselineskip}{\\includegraphics[height=1.8em]{assets/human-icon.png}}}",
+      "normalized_text": "\\raisebox{-0.3\\baselineskip}{\\includegraphics[height=1.8em]{assets/human-icon.png}}",
+      "command_sha256": "25832ff2c1682b243975f96c283061783f2cdaf47d5918d01131dbbdf7c99074",
+      "source_line_sha256": "6564a6693a42f66588d686741dafa63eae332d948877cdf5de29aca497113c48",
+      "construct_id": "caption_figure_3_human_icon",
+      "source_page": 6,
+      "source_span_id": "figure_3",
+      "semantic_role": "decorative_icon_subcaption",
+      "disposition": "decorative_marker",
+      "claim_refs": [],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "grounding_example.tex",
+      "source_line": 67,
+      "source_column": 13,
+      "section_path": [],
+      "source_label": "fig:grounding-llm",
+      "tex_environment": null,
+      "command_text": "\\caption{\\raisebox{-0.5\\baselineskip}{\\includegraphics[height=2.0em]{assets/llm-icon.png}}}",
+      "normalized_text": "\\raisebox{-0.5\\baselineskip}{\\includegraphics[height=2.0em]{assets/llm-icon.png}}",
+      "command_sha256": "2d135abf92421783b3163ada47619fe0ea6a8fbbabd12ca4c55734595ceecf28",
+      "source_line_sha256": "577c2e3617950c7c16361935ed27ff1092286e5e5dc1a259fbfc9df6e71bf09e",
+      "construct_id": "caption_figure_3_llm_icon",
+      "source_page": 6,
+      "source_span_id": "figure_3",
+      "semantic_role": "decorative_icon_subcaption",
+      "disposition": "decorative_marker",
+      "claim_refs": [],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "grounding_example.tex",
+      "source_line": 135,
+      "source_column": 13,
+      "section_path": [],
+      "source_label": "fig:grounding-prompt",
+      "tex_environment": null,
+      "command_text": "\\caption{\\raisebox{-0.5\\baselineskip}{\\includegraphics[height=2.0em]{assets/prompt-icon.png}}}",
+      "normalized_text": "\\raisebox{-0.5\\baselineskip}{\\includegraphics[height=2.0em]{assets/prompt-icon.png}}",
+      "command_sha256": "8dcc437e9b216f01e44b5de893a43c8c9f42668de34e33dbe8c754e2b4b944bb",
+      "source_line_sha256": "0dbb5965ddc252a6d6087e82ad4a211f7f1df22979c12494049fbe59fba199df",
+      "construct_id": "caption_figure_3_prompt_icon",
+      "source_page": 6,
+      "source_span_id": "figure_3",
+      "semantic_role": "decorative_icon_subcaption",
+      "disposition": "decorative_marker",
+      "claim_refs": [],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "grounding_example.tex",
+      "source_line": 139,
+      "source_column": 5,
+      "section_path": [],
+      "source_label": "fig:grounding",
+      "tex_environment": null,
+      "command_text": "\\caption{Illustrative example of applying \\method to evolving a supervised learning pipeline. All snippets are abbreviated, with ellipsis (...) indicating skipped lines. (a) The user-provided file with blocks marked for evolution, and the special \\texttt{evaluate} function that can be invoked to score the current version of the code. (b) Example of an assembled prompt to be provided to the LLMs. (c) Example output generated by the LLM. The proposed diffs in (c) will be applied to the \"current program\" shown in the prompt (b), and the resulting modified program will then be sent to the evaluators. The evaluators will invoke the \\texttt{evaluate} function from (a) in order to obtain the scores of the newly proposed program.}",
+      "normalized_text": "Illustrative example of applying \\method to evolving a supervised learning pipeline. All snippets are abbreviated, with ellipsis (...) indicating skipped lines. (a) The user-provided file with blocks marked for evolution, and the special \\texttt{evaluate} function that can be invoked to score the current version of the code. (b) Example of an assembled prompt to be provided to the LLMs. (c) Example output generated by the LLM. The proposed diffs in (c) will be applied to the \"current program\" shown in the prompt (b), and the resulting modified program will then be sent to the evaluators. The evaluators will invoke the \\texttt{evaluate} function from (a) in order to obtain the scores of the newly proposed program.",
+      "command_sha256": "da5e517f8dfe6aba1850ade1083a440bc12081bb78b39717fe3574fa1fc16ba1",
+      "source_line_sha256": "aea3c7efabab6333775a459f1091076d285e0f27ba50f376a855a359f42e9341",
+      "construct_id": "caption_figure_3",
+      "source_page": 6,
+      "source_span_id": "figure_3",
+      "semantic_role": "claim_bearing_caption",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "claim_id": "figure3_supervised_pipeline_exhibit",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "results.tex",
+      "source_line": 29,
+      "source_column": 1,
+      "section_path": [
+        "Results",
+        "Faster matrix multiplication via finding novel algorithms for tensor decomposition"
+      ],
+      "source_label": "tab:relaxed-opt-results",
+      "tex_environment": null,
+      "command_text": "\\caption{ \nUpper bounds on the rank of the tensor $\\langle m,n,p \\rangle$ representing the product of an $m\\times n$ matrix and an $n\\times p$ matrix, i.e.~the number of scalar multiplications required to compute this matrix product.\nBeyond the examples shown here, for all parameters $m,n,p\\leq 5$, \\method either matched or surpassed the best known solutions, and provided exact algorithms (see \\Cref{tab:relaxed-opt-results-appendix} in appendix for full results).\nFor $\\langle 3, 4, 7\\rangle$, $\\langle 4, 4, 4\\rangle$, and $\\langle 4, 4, 8\\rangle$, the algorithms discovered by \\method use complex-valued multiplications which can be used for exact multiplication of complex or real-valued matrices.\nThe decompositions shown in this table can be found in \\ResultsColab. \n}",
+      "normalized_text": "Upper bounds on the rank of the tensor $\\langle m,n,p \\rangle$ representing the product of an $m\\times n$ matrix and an $n\\times p$ matrix, i.e.~the number of scalar multiplications required to compute this matrix product. Beyond the examples shown here, for all parameters $m,n,p\\leq 5$, \\method either matched or surpassed the best known solutions, and provided exact algorithms (see \\Cref{tab:relaxed-opt-results-appendix} in appendix for full results). For $\\langle 3, 4, 7\\rangle$, $\\langle 4, 4, 4\\rangle$, and $\\langle 4, 4, 8\\rangle$, the algorithms discovered by \\method use complex-valued multiplications which can be used for exact multiplication of complex or real-valued matrices. The decompositions shown in this table can be found in \\ResultsColab.",
+      "command_sha256": "0831dde91025d07172a1adc33c260f923889a26732f738f5fa62b0a338f555c4",
+      "source_line_sha256": "307e74f5178a7b81ee3831167610ca3601a3d2c93b20465950c7a8905b554d4a",
+      "construct_id": "caption_table_2",
+      "source_page": 9,
+      "source_span_id": "table_2",
+      "semantic_role": "claim_bearing_caption",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "table2_best_known_reference_comparison",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "table2_mnp_le_5_match_or_surpass_exact",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "table2_complex_rows_exact_real_and_complex",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "table2_decompositions_in_companion_colab",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "footnote",
+      "source_file": "results.tex",
+      "source_line": 56,
+      "source_column": 1,
+      "section_path": [
+        "Results",
+        "Faster matrix multiplication via finding novel algorithms for tensor decomposition"
+      ],
+      "source_label": null,
+      "tex_environment": null,
+      "command_text": "\\footnote{There exist algorithms using fewer than 49 multiplications, but they do not correspond to decompositions of the matrix multiplication tensor, and they cannot be applied recursively to multiplying larger matrices.\\vspace{-1em}}",
+      "normalized_text": "There exist algorithms using fewer than 49 multiplications, but they do not correspond to decompositions of the matrix multiplication tensor, and they cannot be applied recursively to multiplying larger matrices.\\vspace{-1em}",
+      "command_sha256": "0add8eb749e74228d81f316b71df20fb9312a4ec4f1b730cb28b934c6f7e2408",
+      "source_line_sha256": "0add8eb749e74228d81f316b71df20fb9312a4ec4f1b730cb28b934c6f7e2408",
+      "construct_id": "footnote_matrix_non_tensor_nonrecursive_caveat",
+      "source_page": 10,
+      "source_span_id": "section_3_1",
+      "semantic_role": "technical_caveat_footnote",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "section3_1_footnote_non_tensor_nonrecursive_caveat",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "results.tex",
+      "source_line": 73,
+      "source_column": 5,
+      "section_path": [
+        "Results",
+        "Finding tailored search algorithms for a wide range of open mathematical problems"
+      ],
+      "source_label": "fig:math_sota_examples",
+      "tex_environment": null,
+      "command_text": "\\caption{Examples of SOTA-breaking mathematical constructions discovered with \\method. The versatility of \\method allows us to tackle problems in analysis (autocorrelation and uncertainty inequalities), geometry (packing and minimum/maximum distance problems) and combinatorics (Erd\\H{o}s's minimum overlap problem and sums and differences of finite sets).}",
+      "normalized_text": "Examples of SOTA-breaking mathematical constructions discovered with \\method. The versatility of \\method allows us to tackle problems in analysis (autocorrelation and uncertainty inequalities), geometry (packing and minimum/maximum distance problems) and combinatorics (Erd\\H{o}s's minimum overlap problem and sums and differences of finite sets).",
+      "command_sha256": "2e3846590d383381163dd99f73de7ae78e6e8ca224e40727927e7b6ce02db8a1",
+      "source_line_sha256": "449cb345fa0b0f55aafdbb32405bb0724f017ac9dd0eb54ebb8859a38489a171",
+      "construct_id": "caption_figure_5",
+      "source_page": 12,
+      "source_span_id": "figure_5",
+      "semantic_role": "claim_bearing_caption",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "figure5_sota_breaking_constructions",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "figure5_analysis_problem_scope",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "figure5_geometry_problem_scope",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "claim_id": "figure5_combinatorics_problem_scope",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "results.tex",
+      "source_line": 143,
+      "source_column": 1,
+      "section_path": [
+        "Results",
+        "Optimizing Google's computing ecosystem",
+        "Improving data center scheduling"
+      ],
+      "source_label": "fig:alphaevolve_heuristic",
+      "tex_environment": null,
+      "command_text": "\\caption{Left: The heuristic function discovered by \\method, tailored to Google\u2019s workloads and capacity. Right: Visualization of the heuristic scoring function. Yellow regions represent high scores, while purple regions represent low scores.}",
+      "normalized_text": "Left: The heuristic function discovered by \\method, tailored to Google\u2019s workloads and capacity. Right: Visualization of the heuristic scoring function. Yellow regions represent high scores, while purple regions represent low scores.",
+      "command_sha256": "129978747ee9d2cffefb571774aaf3380973a5388e60b0aaa4e38ee17cc3024e",
+      "source_line_sha256": "129978747ee9d2cffefb571774aaf3380973a5388e60b0aaa4e38ee17cc3024e",
+      "construct_id": "caption_figure_6",
+      "source_page": 14,
+      "source_span_id": "figure_6",
+      "semantic_role": "claim_bearing_caption",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "figure6_tailored_google_workloads_and_capacity",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "figure6_scoring_function_visualization",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "figure6_yellow_regions_high_scores",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "claim_id": "figure6_purple_regions_low_scores",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "results.tex",
+      "source_line": 155,
+      "source_column": 5,
+      "section_path": [
+        "Results",
+        "Optimizing Google's computing ecosystem",
+        "Enhancing Gemini kernel engineering"
+      ],
+      "source_label": "fig:tiling_heuristic",
+      "tex_environment": null,
+      "command_text": "\\caption{Visualization of the tiling heuristic problem for a matrix  product $AB = C$. Creating a heuristic that automatically chooses the right tile size ($M$, $N$, $P$) for all input shapes is difficult because one has to know the matrix multiplication unit\u2019s optimal shapes and memory capacity, the memory requirements of surrounding operations, extra operations that are fused into the kernel, and low-level compiler intricacies, among other details.}",
+      "normalized_text": "Visualization of the tiling heuristic problem for a matrix product $AB = C$. Creating a heuristic that automatically chooses the right tile size ($M$, $N$, $P$) for all input shapes is difficult because one has to know the matrix multiplication unit\u2019s optimal shapes and memory capacity, the memory requirements of surrounding operations, extra operations that are fused into the kernel, and low-level compiler intricacies, among other details.",
+      "command_sha256": "672fe7d2394a13a702f649d403cee7a89d9b7d8ed28d18a6f31f1ed061750d25",
+      "source_line_sha256": "2020000d020ded97b68944c763fab5eb288408921f96213e23a2fbce1ce33c77",
+      "construct_id": "caption_figure_7",
+      "source_page": 15,
+      "source_span_id": "figure_7",
+      "semantic_role": "claim_bearing_caption",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "figure7_matrix_product_tiling_problem",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "figure7_choose_m_n_p_tile_size",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "figure7_tile_selection_for_all_input_shapes",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "figure7_matrix_unit_optimal_shape_context",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "figure7_accelerator_memory_capacity_context",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "figure7_surrounding_operation_memory_context",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "figure7_fused_operation_context",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "figure7_compiler_intricacy_context",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "discovered_program.tex",
+      "source_line": 18,
+      "source_column": 1,
+      "section_path": [],
+      "source_label": "fig:relaxed-opt-diff",
+      "tex_environment": null,
+      "command_text": "\\caption{Changes proposed by \\method to discover faster matrix multiplication algorithms. The full diff is outlined on the left (see magnified version in~\\Cref{fig:relaxed-opt-diff-appendix-1,fig:relaxed-opt-diff-appendix-2,fig:relaxed-opt-diff-appendix-3}) and some excerpts are highlighted on the right. In this example, \\method proposes extensive changes across several components, including the optimizer and weight initialization (top right), the loss function (middle right), and hyperparameter sweep (bottom right). These changes are highly non-trivial, requiring 15 mutations during the evolutionary process.}",
+      "normalized_text": "Changes proposed by \\method to discover faster matrix multiplication algorithms. The full diff is outlined on the left (see magnified version in~\\Cref{fig:relaxed-opt-diff-appendix-1,fig:relaxed-opt-diff-appendix-2,fig:relaxed-opt-diff-appendix-3}) and some excerpts are highlighted on the right. In this example, \\method proposes extensive changes across several components, including the optimizer and weight initialization (top right), the loss function (middle right), and hyperparameter sweep (bottom right). These changes are highly non-trivial, requiring 15 mutations during the evolutionary process.",
+      "command_sha256": "f6af5591a1493a555cd4016879e478563d7e553eed07fe0bc0a279b18dc8af50",
+      "source_line_sha256": "4bfcb96c756c4d73087bd44f31b76856a608f97387a722f1acdccecacf1fe4dc",
+      "construct_id": "caption_figure_4",
+      "source_page": 11,
+      "source_span_id": "figure_4",
+      "semantic_role": "claim_bearing_caption",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "figure4_full_diff_and_figure9_linkage",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "figure4_optimizer_init_loss_sweep_changes",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "claim_id": "figure4_fifteen_mutation_lineage",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "ablations.tex",
+      "source_line": 25,
+      "source_column": 1,
+      "section_path": [
+        "Ablations"
+      ],
+      "source_label": "fig:ablations_rewrite",
+      "tex_environment": null,
+      "command_text": "\\caption{Left: Ablations of \\method on the problem of finding low-rank tensor decomposition for faster matrix multiplication. Right: Ablations of \\method on the problem of finding sphere packings for improving kissing numbers. Each curve shows the performance of an individual setting with increasing compute budget, averaged over all considered targets (higher values on the target metric are better). The shades indicate intra-target standard deviation, averaged over three independent runs of \\method, initialized with different random seeds. \n\\label{fig:ablations_rewrite}}",
+      "normalized_text": "Left: Ablations of \\method on the problem of finding low-rank tensor decomposition for faster matrix multiplication. Right: Ablations of \\method on the problem of finding sphere packings for improving kissing numbers. Each curve shows the performance of an individual setting with increasing compute budget, averaged over all considered targets (higher values on the target metric are better). The shades indicate intra-target standard deviation, averaged over three independent runs of \\method, initialized with different random seeds. \\label{fig:ablations_rewrite}",
+      "command_sha256": "b0380704843478cdee333e586b4b607ed0b554a8df0d1d237b75e620cfd64577",
+      "source_line_sha256": "805e32771f043fcf368588cfa878575f96ae5bce792996dfe4511cd2f1931200",
+      "construct_id": "caption_figure_8",
+      "source_page": 18,
+      "source_span_id": "figure_8",
+      "semantic_role": "claim_bearing_caption",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "figure8_left_matrix_panel",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "figure8_right_kissing_panel",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "figure8_curve_per_setting",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "figure8_increasing_compute_budget",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "figure8_average_over_targets",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "figure8_higher_metric_is_better",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "figure8_intra_target_standard_deviation",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "figure8_three_independent_runs",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+          "claim_id": "figure8_different_random_seeds",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "appendix.tex",
+      "source_line": 79,
+      "source_column": 1,
+      "section_path": [
+        "Faster matrix multiplication: Full results"
+      ],
+      "source_label": "tab:relaxed-opt-results-appendix",
+      "tex_environment": null,
+      "command_text": "\\caption{Full version of \\Cref{tab:relaxed-opt-results}, showing the best ranks obtained by \\method for tensor decomposition for all considered parameters. Of the 54 targets, \\method matches the state of the art in 38 cases, surpasses it in 14 cases (green), and falls behind in 2 cases (red). In all cases, \\method provides exact algorithms, using integer or half-integer entries in the decomposition. For $\\langle 3, 4, 7\\rangle$, $\\langle 4, 4, 4\\rangle$, and $\\langle 4, 4, 8\\rangle$, the algorithms discovered by \\method use complex-valued multiplications which can be used for exact multiplication of complex or real-valued matrices. The decompositions shown in this table can be found in \\ResultsColab.}",
+      "normalized_text": "Full version of \\Cref{tab:relaxed-opt-results}, showing the best ranks obtained by \\method for tensor decomposition for all considered parameters. Of the 54 targets, \\method matches the state of the art in 38 cases, surpasses it in 14 cases (green), and falls behind in 2 cases (red). In all cases, \\method provides exact algorithms, using integer or half-integer entries in the decomposition. For $\\langle 3, 4, 7\\rangle$, $\\langle 4, 4, 4\\rangle$, and $\\langle 4, 4, 8\\rangle$, the algorithms discovered by \\method use complex-valued multiplications which can be used for exact multiplication of complex or real-valued matrices. The decompositions shown in this table can be found in \\ResultsColab.",
+      "command_sha256": "41b6bca6e06fcd034f9e76db1f7250956dcbcc50f8b50ee6c9a74a204d94fd4d",
+      "source_line_sha256": "41b6bca6e06fcd034f9e76db1f7250956dcbcc50f8b50ee6c9a74a204d94fd4d",
+      "construct_id": "caption_table_3",
+      "source_page": 34,
+      "source_span_id": "table_3",
+      "semantic_role": "claim_bearing_caption",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_appendix_a_claim_inventory_boundary.json",
+          "claim_id": "table3_full_table2_all_parameters",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_a_claim_inventory_boundary.json",
+          "claim_id": "table3_38_matches",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_a_claim_inventory_boundary.json",
+          "claim_id": "table3_14_surpasses",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_a_claim_inventory_boundary.json",
+          "claim_id": "table3_surpass_green_encoding",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_a_claim_inventory_boundary.json",
+          "claim_id": "table3_two_fall_behind",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_a_claim_inventory_boundary.json",
+          "claim_id": "table3_fall_behind_red_encoding",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_a_claim_inventory_boundary.json",
+          "claim_id": "table3_all_exact_algorithms",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_a_claim_inventory_boundary.json",
+          "claim_id": "table3_integer_or_half_integer_entries",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_a_claim_inventory_boundary.json",
+          "claim_id": "table3_three_complex_targets",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_a_claim_inventory_boundary.json",
+          "claim_id": "table3_complex_matrix_applicability",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_a_claim_inventory_boundary.json",
+          "claim_id": "table3_real_matrix_applicability",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_a_claim_inventory_boundary.json",
+          "claim_id": "table3_decompositions_in_colab",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "equation",
+      "source_file": "appendix.tex",
+      "source_line": 98,
+      "source_column": 1,
+      "section_path": [
+        "Details of mathematical discoveries of \\method",
+        "First autocorrelation inequality"
+      ],
+      "source_label": "maxf",
+      "tex_environment": "equation",
+      "command_text": "\\begin{equation}\\label{maxf}\n \\max_{-1/2 \\leq t \\leq 1/2} f*f(t) \\geq C_1 \\left(\\int_{-1/4}^{1/4} f(x)\\ dx\\right)^2\n\\end{equation}",
+      "normalized_text": "\\label{maxf} \\max_{-1/2 \\leq t \\leq 1/2} f*f(t) \\geq C_1 \\left(\\int_{-1/4}^{1/4} f(x)\\ dx\\right)^2",
+      "command_sha256": "e063d9b3815af3845822e58e8984a5e70159a481cd079ab8f0bcbaeee0f4e6e7",
+      "source_line_sha256": "0c8478f4fcf5bf207b9fb09605b22cef4783446261cfbf79ff5eebf425177080",
+      "construct_id": "equation_b1_max_autoconvolution",
+      "source_page": 38,
+      "source_span_id": "appendix_b_1",
+      "semantic_role": "displayed_equation",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "b1_equation_1_max_autoconvolution",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "appendix.tex",
+      "source_line": 165,
+      "source_column": 5,
+      "section_path": [
+        "Details of mathematical discoveries of \\method",
+        "Erd\\H{o}s' minimum overlap problem"
+      ],
+      "source_label": "fig:erdos",
+      "tex_environment": null,
+      "command_text": "\\caption{Construction found by \\method for the minimum overlap problem of Erd\\H{o}s.}",
+      "normalized_text": "Construction found by \\method for the minimum overlap problem of Erd\\H{o}s.",
+      "command_sha256": "0e73849487550e2bb56e938ac7d5f3acbfc0f4a21dd48ee9c201633f1d8c46e6",
+      "source_line_sha256": "fca0c87e62c3f894b5d2eed1a35d2dd9c0d0387f8a321bbc07e642e74b9aea21",
+      "construct_id": "caption_figure_10",
+      "source_page": 40,
+      "source_span_id": "figure_10",
+      "semantic_role": "claim_bearing_caption",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "figure10_alphaevolve_minimum_overlap_construction",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "equation",
+      "source_file": "appendix.tex",
+      "source_line": 175,
+      "source_column": 1,
+      "section_path": [
+        "Details of mathematical discoveries of \\method",
+        "Sums and differences of finite sets"
+      ],
+      "source_label": "cds",
+      "tex_environment": "equation",
+      "command_text": "\\begin{equation}\\label{cds}\n 1.14465 \\leq C_6 \\leq \\frac{4}{3};\n\\end{equation}",
+      "normalized_text": "\\label{cds} 1.14465 \\leq C_6 \\leq \\frac{4}{3};",
+      "command_sha256": "61810d4785af585257bf859b460c346a47dd8838111492714db6f4d0baff5c84",
+      "source_line_sha256": "69dc86ff07ac2aad407d89aafe6413d111e90248f00181b4eecb6e9e204b8358",
+      "construct_id": "equation_b6_known_bounds",
+      "source_page": 40,
+      "source_span_id": "appendix_b_6",
+      "semantic_role": "displayed_equation",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "b6_known_bounds_equation_2",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "equation",
+      "source_file": "appendix.tex",
+      "source_line": 180,
+      "source_column": 1,
+      "section_path": [
+        "Details of mathematical discoveries of \\method",
+        "Sums and differences of finite sets"
+      ],
+      "source_label": "cds-lower",
+      "tex_environment": "equation",
+      "command_text": "\\begin{equation}\\label{cds-lower}\n C_6 \\geq 1 + \\frac{\\log \\frac{|U-U|}{|U+U|}}{\\log (2 \\max (U) + 1)}\n\\end{equation}",
+      "normalized_text": "\\label{cds-lower} C_6 \\geq 1 + \\frac{\\log \\frac{|U-U|}{|U+U|}}{\\log (2 \\max (U) + 1)}",
+      "command_sha256": "dbb2413f97d8c853ef71b3eb055a2130d546251eefcb3462ac6d09345d1a7d17",
+      "source_line_sha256": "9ba44c7bcb97b27895274c8c053a6ac1ee962372d37aef7306f60dff4d46c6cb",
+      "construct_id": "equation_b6_lower_bound",
+      "source_page": 41,
+      "source_span_id": "appendix_b_6",
+      "semantic_role": "displayed_equation",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "b6_equation_3_formula",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "appendix.tex",
+      "source_line": 200,
+      "source_column": 5,
+      "section_path": [
+        "Details of mathematical discoveries of \\method",
+        "Packing unit regular hexagons inside a regular hexagon"
+      ],
+      "source_label": "fig:hexagons",
+      "tex_environment": null,
+      "command_text": "\\caption{Constructions of the packing problems found by \\method. Left: Packing 11 unit hexagons into a regular hexagon of side length 3.931. Right: Packing 12 unit hexagons into a regular hexagon of side length 3.942.\n    \\label{fig:hexagons}}",
+      "normalized_text": "Constructions of the packing problems found by \\method. Left: Packing 11 unit hexagons into a regular hexagon of side length 3.931. Right: Packing 12 unit hexagons into a regular hexagon of side length 3.942. \\label{fig:hexagons}",
+      "command_sha256": "9dae1003bcdcd458ae620a6f6182a7d8ed606f629d846be736652f11b7cb5dff",
+      "source_line_sha256": "d5888e9a11b8ee336ede7114b6cc05dc1425db72e902ac895cabeff29194d3d3",
+      "construct_id": "caption_figure_11",
+      "source_page": 41,
+      "source_span_id": "figure_11",
+      "semantic_role": "claim_bearing_caption",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "figure11_two_packing_panels",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "figure11_left_11_hexagons",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "figure11_left_outer_side_3_931",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "figure11_right_12_hexagons",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "figure11_right_outer_side_3_942",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "appendix.tex",
+      "source_line": 218,
+      "source_column": 5,
+      "section_path": [
+        "Details of mathematical discoveries of \\method",
+        "Minimizing the ratio of maximum to minimum distance"
+      ],
+      "source_label": "fig:distance_ratios",
+      "tex_environment": null,
+      "command_text": "\\caption{Left: 16 points in 2 dimensions achieving a ratio of maximum distance to minimum distance of\n    $\\approx \\sqrt{12.889266112}$.     \n    Right: 14 points in 3 dimensions achieving a ratio of $\\approx \\sqrt{4.165849767}$. Both constructions improve the best known bounds.}",
+      "normalized_text": "Left: 16 points in 2 dimensions achieving a ratio of maximum distance to minimum distance of $\\approx \\sqrt{12.889266112}$. Right: 14 points in 3 dimensions achieving a ratio of $\\approx \\sqrt{4.165849767}$. Both constructions improve the best known bounds.",
+      "command_sha256": "cc8dd98c9764686195337d098a8688a3bed6b8ba009310a7a9af7a9bbb7ad5ae",
+      "source_line_sha256": "f2ebf8a578cf34c02df32db507a146ab8afd06586310682cd027a3d73f9338d7",
+      "construct_id": "caption_figure_12",
+      "source_page": 42,
+      "source_span_id": "figure_12",
+      "semantic_role": "claim_bearing_caption",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "figure12_two_distance_panels",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "figure12_left_16_points_2d",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "figure12_left_ratio_12_889266112",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "figure12_right_14_points_3d",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "figure12_right_ratio_4_165849767",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "b8_both_improve_best_known",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "appendix.tex",
+      "source_line": 239,
+      "source_column": 5,
+      "section_path": [
+        "Details of mathematical discoveries of \\method",
+        "The Heilbronn problem for convex regions"
+      ],
+      "source_label": "fig:heilbronn",
+      "tex_environment": null,
+      "command_text": "\\caption{New constructions found by \\method improving the best known bounds on two variants of the Heilbronn problem. Left: 11 points in a unit-area triangle with all formed triangles having area $\\geq 0.0365$. Middle: 13 points inside a convex region with unit area with all formed triangles having area $\\geq 0.0309$. Right: 14 points inside a unit convex region with minimum area  $\\ge 0.0278$.}",
+      "normalized_text": "New constructions found by \\method improving the best known bounds on two variants of the Heilbronn problem. Left: 11 points in a unit-area triangle with all formed triangles having area $\\geq 0.0365$. Middle: 13 points inside a convex region with unit area with all formed triangles having area $\\geq 0.0309$. Right: 14 points inside a unit convex region with minimum area $\\ge 0.0278$.",
+      "command_sha256": "534eb34f8fb04d82153b6959f37d6fde2d60b8a62a2ed266e77f1556cde097d3",
+      "source_line_sha256": "dc64b00ca306bd75c5b3d54101627794035a5ed10c6a9284c7ae49949c49cee3",
+      "construct_id": "caption_figure_13",
+      "source_page": 43,
+      "source_span_id": "figure_13",
+      "semantic_role": "claim_bearing_caption",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "figure13_three_heilbronn_panels",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "figure13_left_11_points_area_0_0365",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "figure13_middle_13_points_area_0_0309",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "figure13_right_14_points_area_0_0278",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "equation",
+      "source_file": "appendix.tex",
+      "source_line": 253,
+      "source_column": 1,
+      "section_path": [
+        "Details of mathematical discoveries of \\method",
+        "Kissing number in dimension 11"
+      ],
+      "source_label": null,
+      "tex_environment": "equation*",
+      "command_text": "\\begin{equation*}\n    \\min \\left\\{ \\|x-y\\| : x \\neq y \\in C \\right\\} \\ge \\max \\left\\{ \\|x\\|: x \\in C \\right\\}.\n\\end{equation*}",
+      "normalized_text": "\\min \\left\\{ \\|x-y\\| : x \\neq y \\in C \\right\\} \\ge \\max \\left\\{ \\|x\\|: x \\in C \\right\\}.",
+      "command_sha256": "85083219e235844bcaee085eabef853fa77fea6b31dd43c0b0b76586ce6ae20e",
+      "source_line_sha256": "4c55e47554c7058229c2f64bdece4a93cb9a02985f8776ece55ee2cfaa517827",
+      "construct_id": "equation_b11_distance_norm_condition",
+      "source_page": 43,
+      "source_span_id": "appendix_b_11",
+      "semantic_role": "displayed_equation",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "b11_lemma_distance_norm_condition",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "equation",
+      "source_file": "appendix.tex",
+      "source_line": 261,
+      "source_column": 1,
+      "section_path": [
+        "Details of mathematical discoveries of \\method",
+        "Kissing number in dimension 11"
+      ],
+      "source_label": "eq:abi",
+      "tex_environment": "equation",
+      "command_text": "\\begin{equation}\n2 \\langle x, y \\rangle \\leq \\|x\\|^2 + \\|y\\|^2 - \\max \\{\\|x\\|^2, \\|y\\|^2\\} = \\min \\{\\|x\\|^2, \\|y\\|^2\\} \\leq \\|x\\|\\cdot\\|y\\|,\n\\label{eq:abi}\n\\end{equation}",
+      "normalized_text": "2 \\langle x, y \\rangle \\leq \\|x\\|^2 + \\|y\\|^2 - \\max \\{\\|x\\|^2, \\|y\\|^2\\} = \\min \\{\\|x\\|^2, \\|y\\|^2\\} \\leq \\|x\\|\\cdot\\|y\\|, \\label{eq:abi}",
+      "command_sha256": "009ad8fbb8de944a5c826baabb0494041f78c604c5c1ce32cac35427e3b9b64d",
+      "source_line_sha256": "bb66fb83595ecb94b263c13fa39189d04218b6fd95ed26ddcf7c54b224e28bc6",
+      "construct_id": "equation_b11_inner_product",
+      "source_page": 43,
+      "source_span_id": "appendix_b_11",
+      "semantic_role": "displayed_equation",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "b11_proof_inner_product_equation_4",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "appendix.tex",
+      "source_line": 295,
+      "source_column": 5,
+      "section_path": [
+        "Details of mathematical discoveries of \\method",
+        "Packing circles inside a rectangle of perimeter 4 to maximize sum of radii"
+      ],
+      "source_label": "fig:circle_packing",
+      "tex_environment": null,
+      "command_text": "\\caption{New constructions found by \\method improving the best known bounds on packing circles to maximize their sum of radii. Left: $26$ circles in a unit square with sum of radii $\\geq 2.635$. Middle: $32$ circles in a unit square with sum of radii $\\geq 2.937$. Right: 21 circles in a rectangle with perimeter $4$, with sum of radii $\\geq 2.365$.}",
+      "normalized_text": "New constructions found by \\method improving the best known bounds on packing circles to maximize their sum of radii. Left: $26$ circles in a unit square with sum of radii $\\geq 2.635$. Middle: $32$ circles in a unit square with sum of radii $\\geq 2.937$. Right: 21 circles in a rectangle with perimeter $4$, with sum of radii $\\geq 2.365$.",
+      "command_sha256": "5d4dbc2b1453b603ae9b3a371ccee15ab5a6f1167e17dcd27d976c67abfb5b7d",
+      "source_line_sha256": "fa4b5bae92b9cb9ffd81375ad92754f1522d291163f69103579e1ed822bba529",
+      "construct_id": "caption_figure_14",
+      "source_page": 44,
+      "source_span_id": "figure_14",
+      "semantic_role": "claim_bearing_caption",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "figure14_three_circle_packing_panels",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "figure14_left_26_circles_2_635",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "figure14_middle_32_circles_2_937",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
+          "claim_id": "figure14_right_21_circles_2_365",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "discovered_program_appendix.tex",
+      "source_line": 74,
+      "source_column": 1,
+      "section_path": [],
+      "source_label": "fig:relaxed-opt-diff-appendix-1",
+      "tex_environment": null,
+      "command_text": "\\caption{\nMagnified version of~\\Cref{fig:relaxed-opt-diff}(left), giving the program that discovers a faster algorithm to multiply $4\\times4$ matrices (\\emph{1/3}).}",
+      "normalized_text": "Magnified version of~\\Cref{fig:relaxed-opt-diff}(left), giving the program that discovers a faster algorithm to multiply $4\\times4$ matrices (\\emph{1/3}).",
+      "command_sha256": "db29b3d84b15f8e80da0afca45962288f9e5ad8c65aca0ca4852e572cee37998",
+      "source_line_sha256": "9179ca0809978137ebf2dcceba65c2112ddbf0151dc35b49b0cc2e42149a644d",
+      "construct_id": "caption_figure_9a",
+      "source_page": 35,
+      "source_span_id": "figure_9",
+      "semantic_role": "claim_bearing_caption",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_appendix_a_claim_inventory_boundary.json",
+          "claim_id": "figure9a_caption_part_1_of_3",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "discovered_program_appendix.tex",
+      "source_line": 154,
+      "source_column": 1,
+      "section_path": [],
+      "source_label": "fig:relaxed-opt-diff-appendix-2",
+      "tex_environment": null,
+      "command_text": "\\caption{Magnified version of~\\Cref{fig:relaxed-opt-diff}(left), giving the program that discovers a faster algorithm to multiply $4\\times4$ matrices  (\\emph{2/3}).}",
+      "normalized_text": "Magnified version of~\\Cref{fig:relaxed-opt-diff}(left), giving the program that discovers a faster algorithm to multiply $4\\times4$ matrices (\\emph{2/3}).",
+      "command_sha256": "d365d6e5eba9e7ce517140ea1a78bae2f9f9f2d5af76a84390d10e7c626d8e37",
+      "source_line_sha256": "3fb6f5b594e3d080ed09bb6b52fcfc601dae29eddaa5337ed188475dba3ecbde",
+      "construct_id": "caption_figure_9b",
+      "source_page": 36,
+      "source_span_id": "figure_9",
+      "semantic_role": "claim_bearing_caption",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_appendix_a_claim_inventory_boundary.json",
+          "claim_id": "figure9b_caption_part_2_of_3",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    },
+    {
+      "source_kind": "caption",
+      "source_file": "discovered_program_appendix.tex",
+      "source_line": 231,
+      "source_column": 1,
+      "section_path": [],
+      "source_label": "fig:relaxed-opt-diff-appendix-3",
+      "tex_environment": null,
+      "command_text": "\\caption{Magnified version of~\\Cref{fig:relaxed-opt-diff}(left), giving the program that discovers a faster algorithm to multiply $4\\times4$ matrices  (\\emph{3/3}). Here \\texttt{hyper} is a user-provided library for generating hyperparameter sweeps.}",
+      "normalized_text": "Magnified version of~\\Cref{fig:relaxed-opt-diff}(left), giving the program that discovers a faster algorithm to multiply $4\\times4$ matrices (\\emph{3/3}). Here \\texttt{hyper} is a user-provided library for generating hyperparameter sweeps.",
+      "command_sha256": "c935eb419a2228dffee1c6fbeabbc326745057da3bf9e449bf538357a72be061",
+      "source_line_sha256": "045f16a037311fa217517323bb7e0238f964f246944be95f7e0efecd2e1ae37d",
+      "construct_id": "caption_figure_9c",
+      "source_page": 37,
+      "source_span_id": "figure_9",
+      "semantic_role": "claim_bearing_caption",
+      "disposition": "bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_appendix_a_claim_inventory_boundary.json",
+          "claim_id": "figure9c_caption_part_3_of_3",
+          "resolved": true
+        },
+        {
+          "inventory_path": "papers/alphaevolve_appendix_a_claim_inventory_boundary.json",
+          "claim_id": "figure9_hyper_user_provided_library",
+          "resolved": true
+        }
+      ],
+      "named_span_refs": [],
+      "supporting_boundary_refs": []
+    }
+  ],
+  "active_todo_refs": [
+    {
+      "todo_id": "whole_paper_semantics_code",
+      "path": "docs/todo/code.md",
+      "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve",
+      "exists": true,
+      "required_phrase_present": true
+    },
+    {
+      "todo_id": "whole_paper_semantics_paper",
+      "path": "docs/todo/papers.md",
+      "required_phrase": "Extend the bounded AlphaEvolve claim inventories to the whole paper.",
+      "exists": true,
+      "required_phrase_present": true
+    },
+    {
+      "todo_id": "whole_paper_semantics_roadmap",
+      "path": "docs/todo/roadmap.md",
+      "required_phrase": "whole-paper requirement",
+      "exists": true,
+      "required_phrase_present": true
+    }
+  ],
+  "todo_ownership_ready": true,
+  "inventory_scope": {
+    "included": [
+      "all 22 caption commands in the recursive main.tex closure",
+      "all five displayed equation and equation-star environments in the closure",
+      "all three semantic footnote uses in the closure",
+      "the excluded preamble footnote macro template as a non-use audit record",
+      "construct-level mapping to existing bounded claim IDs, publication metadata boundaries, named spans, or decorative-marker disposition"
+    ],
+    "excluded": [
+      "sentence- and paragraph-level proposition exhaustiveness",
+      "inline-math proposition semantics",
+      "table-cell text and code-listing semantics",
+      "image-pixel and visual-encoding semantics",
+      "citation proposition, sufficiency, relevance, or implementation semantics",
+      "independent reviewer proof or published-result reproduction",
+      "AlphaEvolve system parity"
+    ]
+  },
+  "claim_boundary": "This sidecar certifies construct-level disposition for all 30 retained-source captions, displayed equations, and semantic footnotes: 24 map to existing bounded claim IDs, one maps to reviewed publication metadata, two are non-additive named-span locators, and three are decorative markers. It adds zero bounded claims and does not establish proposition-level semantic exhaustiveness, citation sufficiency, independent result reproduction, or AlphaEvolve system parity."
+}

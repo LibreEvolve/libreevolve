@@ -1637,7 +1637,15 @@ citing files. Every cited key resolves through `literature.bib`, `main.bbl`,
 and `papers/references.json`; the 52 BibTeX entries omitted from the compiled
 bibliography are listed. This is lexical source linkage, while every citation's
 supported proposition and implementation relevance remain unclassified with
-active code/paper TODO ownership. Together the twelve bounded claim inventories
+active code/paper TODO ownership. The separate
+`papers/alphaevolve_tex_source_detail_inventory_boundary.json` inventories all
+30 retained-source caption, displayed-equation, and semantic-footnote
+constructs: 22 captions, 5 equations, and 3 real footnotes, with the preamble
+macro template excluded. Twenty-four constructs map through 80 references to
+existing bounded claim ids, one maps to reviewed publication metadata, two are
+non-additive named-span locators, and three are decorative Figure 3 markers.
+All constructs and references resolve, and this inventory adds zero claims or
+implementation-parity credit. Together the twelve bounded claim inventories
 still disposition 833 claims: 29 locally
 implemented, 275 partial, 108 not implemented, 362 not demonstrated, and 59
 source-context-only. Across 774 implementation-relevant claims this is 3.7%
@@ -1649,9 +1657,11 @@ The corrected
 anchors for markers, prompt sampling/creative generation, evaluation,
 evolution, distributed execution, and published benchmark coverage with 81
 existence-checked source-span/module/test/sidecar/TODO references. Citation
-syntax and key linkage are exhaustive for the retained TeX source, but this is
-not a whole-paper sentence-, paragraph-, equation-, footnote-, caption-semantic,
-citation-semantic, or source-detail exhaustive inventory, per-phrase evidence-link sufficiency proof,
+syntax and key linkage are exhaustive for the retained TeX source, and all
+retained-source captions, displayed equations, and semantic footnotes have
+construct-level dispositions. This is not a whole-paper sentence-, paragraph-,
+inline-math-, table-cell-, listing-, image-pixel-, citation-semantic, or
+proposition-level exhaustive inventory, per-phrase evidence-link sufficiency proof,
 coverage detector,
 generated code-audit report, or CI exhaustiveness gate. The checked
 `papers/status_claim_inventory.json` sidecar records row-level paper-index
@@ -4016,6 +4026,15 @@ Implemented:
   not classify citation semantics or implementation relevance, independently
   verify cited sources, inventory equations or footnotes, reproduce results,
   or establish AlphaEvolve parity.
+- `papers/alphaevolve_tex_source_detail_inventory_boundary.json`: retained-TeX
+  source-detail sidecar for all 22 captions, 5 displayed equations, and 3
+  semantic footnotes in the recursive 14-file `main.tex` closure. It records
+  source anchors and hashes, excludes one preamble macro template, and maps 24
+  constructs through 80 references to existing bounded claim ids, one to
+  publication metadata boundaries, two to named-span locators, and three to
+  decorative-marker dispositions. It adds no bounded claims and does not prove
+  sentence/paragraph/inline-math/table-cell/listing/image-pixel/citation
+  semantics, result reproduction, independent review, or AlphaEvolve parity.
 - `papers/alphaevolve_current_version_boundary.json`: AlphaEvolve
   current-version/floating-PDF sidecar with pinned current abstract URL,
   retrieval date, status, content type, byte count, SHA-256 digest, title,

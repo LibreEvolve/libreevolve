@@ -980,7 +980,17 @@ AlphaEvolve reproduction.
   present in the compiled bibliography are listed explicitly. This is lexical
   source linkage, not a thirteenth implementation-claim inventory: all 195
   citation uses still have unclassified semantics and active code/paper TODO
-  ownership. The twelve bounded claim inventories still disposition 833 claims
+  ownership. The supplemental
+  `papers/alphaevolve_tex_source_detail_inventory_boundary.json` separately
+  inventories all 30 retained-source caption, displayed-equation, and semantic-
+  footnote constructs: 22 captions, 5 equations, and 3 real footnotes, while
+  excluding the preamble's `\footnote{#1}` macro template. Twenty-four
+  constructs map to 80 references into existing bounded claim inventories, one
+  maps to reviewed publication metadata, two are non-additive named-span
+  locators, and three are decorative Figure 3 icon markers. There are no
+  unmapped constructs, unresolved references, or new bounded claims, so this
+  construct-level audit does not change the implementation-parity numerator or
+  denominator. The twelve bounded claim inventories still disposition 833 claims
   in total: 29 locally implemented,
   275 partial, 108 not implemented, 362 not demonstrated, and 59
   source-context-only,
@@ -999,9 +1009,11 @@ AlphaEvolve reproduction.
   3.7%, while a half-credit weighting for partial claims is 21.5%. The weighted
   value rises only because Appendix B registry metadata receives partial
   credit; no Appendix B result was reproduced. This is complete named-structure
-  coverage, bounded 833-claim coverage, and complete lexical citation linkage,
-  not a whole-paper sentence-, paragraph-, equation-, footnote-, caption-
-  semantic, citation-semantic, or claim-level requirement inventory,
+  coverage, bounded 833-claim coverage, complete lexical citation linkage, and
+  construct-level disposition of all retained-source captions, displayed
+  equations, and semantic footnotes, not a whole-paper sentence-, paragraph-,
+  inline-math-, table-cell-, listing-, image-pixel-, citation-semantic, or
+  claim-level proposition inventory,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,
   implemented-benchmark bullet semantic verifier,
   absence-sentence freshness matrix, coverage detector, generated code-audit

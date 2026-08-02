@@ -86,7 +86,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     tabular blocks. All 78 data rows map to 78 existing bounded claim ids; 218
     cells are bounded-claim components, 8 are FunSearch baseline context, and
     14 are structural headers. Nothing is unmapped or unresolved, and no claim
-    or parity credit is added. The
+    or parity credit is added. The separate
+    `papers/alphaevolve_tex_code_listing_inventory_boundary.json` inventories
+    all 8 retained listing environments and 305 physical source lines. It maps
+    214 bounded-claim-component lines through 344 line-level references to 60
+    existing claims and dispositions the remaining baseline, abbreviation,
+    diff-marker, and structural lines. Nothing is unmapped or unresolved, and
+    no claim or parity credit is added. The
     paper manifest rejects any inventory sidecar's absence, source/reference
     drift, status drift, stale TODO ownership, result-reproduction overclaims,
     and parity overclaims.
@@ -94,10 +100,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     span, the supplemental citation inventory covers citation syntax plus
     bibliography-key linkage, and the source-detail inventory dispositions all
     caption/equation/footnote constructs, while the table-cell inventory
-    dispositions all retained rows and cells. Every citation's supported
-    proposition, source-sufficiency role, and implementation relevance remain
-    unclassified. Whole-paper sentence/paragraph/inline-math/listing/
-    image-pixel/citation semantics, semantic evidence sufficiency, result
+    dispositions all retained rows and cells and the code-listing inventory
+    dispositions all 8 environments and 305 source lines. Every citation's
+    supported proposition, source-sufficiency role, and implementation
+    relevance remain unclassified. Whole-paper sentence/paragraph/inline-math/image-pixel/
+    citation semantics, semantic evidence sufficiency, result
     reproduction, and independent reviewer proof that any bounded inventory is
     semantically exhaustive also remain open.
   - Required result: extract every remaining implementation-bearing claim,

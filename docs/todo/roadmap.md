@@ -234,7 +234,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     to 78 existing bounded claim ids; 218 cells are bounded-claim components,
     8 are FunSearch baseline context, and 14 are structural headers. There are
     no unmapped units or unresolved references, and no claims or parity credit
-    are added.
+    are added. The supplemental
+    `papers/alphaevolve_tex_code_listing_inventory_boundary.json` dispositions
+    all 8 retained listing environments and 305 physical source lines. It maps
+    214 bounded-claim-component lines through 344 line-level references to 60
+    existing claims and dispositions the remaining baseline, abbreviation,
+    diff-marker, and structural lines, with no unmapped or unresolved units and
+    no new claims or parity credit.
     `papers/roadmap_source_span_disposition_boundary.json` now maps all 55
     named spans to ROADMAP section ids, phase buckets, local status, sidecars,
     and audit TODO links, and records that only the AlphaEvolve
@@ -261,12 +267,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     related-work/Appendix-A/Table-3/Figure-9/Appendix-B/Figures-10-14 claims have
     claim-level mappings, citation syntax plus bibliography-key linkage is
     exhaustive for the retained TeX, and all caption/equation/footnote
-    constructs have dispositions, while all 83 table rows and 240 cells have
-    row/cell dispositions. The matrix is not
+    constructs have dispositions, all 83 table rows and 240 cells have
+    row/cell dispositions, and all 8 code listings and 305 source lines have
+    line-level dispositions. The matrix is not
     exhaustive across the rest of
     the paper: it
     does not extract every remaining
-    sentence-, paragraph-, inline-math-, listing-, image-pixel-,
+    sentence-, paragraph-, inline-math-, image-pixel-,
     citation-semantic, capability-, or result-claim proposition; prove domain-specific TODO
     ownership for every missing or partial claim; provide a complete
     application-result claim matrix; or disposition all paper/status sidecar

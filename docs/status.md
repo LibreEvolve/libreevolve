@@ -1834,6 +1834,14 @@ Important limits:
   unmapped units or unresolved references, and no claims or functional parity
   credit are added. This closes table row/cell disposition only, not citation
   semantics, baseline verification, or Table 2/3 result reproduction.
+- Retained-TeX code-listing evidence inventories all 8 listing environments (4
+  `minted`, 3 `lstlisting`, and 1 `verbatim`) and all 305 physical source lines.
+  It maps 214 bounded-claim-component lines through 344 line-level references
+  to 60 existing claims and dispositions all baseline, abbreviation,
+  diff-marker, and structural lines. There are no unmapped lines, unresolved
+  references, new claims, or functional parity credit. This closes listing-line
+  disposition only, not snippet execution/compilation, omitted-code recovery,
+  or result reproduction.
 - ROADMAP source-span coverage evidence now records eight coverage surfaces
   for main-text section walk, figure exhibits, table/capability rows, Appendix
   A matrix targets, Appendix B constructive math, application-result claims,
@@ -1841,14 +1849,15 @@ Important limits:
   existing core source-span disposition input, paper-status row counts, sidecar
   refs, active TODO refs, validation-gate labels, readiness labels, 833 bounded
   claims through Appendix B and Figures 10-14, and the 30 construct-level TeX
-  source-detail dispositions, plus all 83 table rows and 240 table cells. The 774
+  source-detail dispositions, plus all 83 table rows, 240 table cells, 8 code
+  listings, and 305 listing source lines. The 774
   implementation-relevant claims currently yield 3.7% strict implemented
   parity or 21.5% with partial claims counted at half credit. The weighted
   value rises because Appendix B registry metadata is partial, not because its
   results were reproduced. Citation syntax and key linkage are exhaustive for
   the retained TeX, and caption/equation/footnote construct dispositions are
-  complete, and all table rows/cells have dispositions, but this is not a
-  whole-paper sentence/paragraph/inline-math/listing/image-pixel/
+  complete, and all table rows/cells and listing lines have dispositions, but
+  this is not a whole-paper sentence/paragraph/inline-math/image-pixel/
   citation-semantic proposition audit, joined
   figure/table/appendix reproduction matrix, complete
   application-result claim matrix, status-row to ROADMAP

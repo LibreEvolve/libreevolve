@@ -11,10 +11,10 @@ from libreevolve.problems.benchmarks.roadmap_source_span_disposition_boundary im
 
 
 ROADMAP_SOURCE_SPAN_COVERAGE_BOUNDARY_SCHEMA = (
-    "libreevolve.roadmap_source_span_coverage_boundary.v14"
+    "libreevolve.roadmap_source_span_coverage_boundary.v15"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "named_structure_plus_833_bounded_claims_195_citation_uses_30_tex_source_details_and_240_table_cells_without_whole_paper_claim_walk"
+    "named_structure_plus_833_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_and_305_listing_lines_without_whole_paper_claim_walk"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
@@ -31,7 +31,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "ci_source_span_exhaustiveness_gate",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "claim_level_requirement_inventory": "833_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_and_240_table_cells_have_row_cell_dispositions_without_whole_paper_sentence_paragraph_inline_math_listing_image_pixel_citation_semantic_or_reproduction_exhaustiveness",
+    "claim_level_requirement_inventory": "833_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_and_305_listing_lines_have_line_dispositions_without_whole_paper_sentence_paragraph_inline_math_image_pixel_citation_semantic_or_reproduction_exhaustiveness",
     "application_result_claim_matrix": "section_3_3_claim_dispositions_recorded_without_reproduction_phase_priority_or_non_goal_proof",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
     "missing_partial_todo_proof": "not_recorded_locally",
@@ -46,8 +46,8 @@ COVERAGE_SURFACE_SPECS = (
     {
         "surface_id": "main_text_section_walk",
         "source_surface": "AlphaEvolve main-text sections and requirement claims",
-        "current_scope": "PDF-verified named main-text sections plus 50 Table 1/Section 2 system requirements, 41 Abstract/Introduction/Discussion/collaborator claims, 41 Section 3.1/Table 2/Figure 4 matrix-result claims, 63 Section 3.2/Figure 5 constructive-math claims, 45 Section 3.3 opening/Section 3.3.1/Figure 6 scheduling claims, 59 Section 3.3.2/Figure 7 kernel-engineering claims, 35 Section 3.3.3 hardware-circuit-design claims, 44 Section 3.3.4 compiler-generated-code claims, 51 Section 4/Figure 8 ablation claims, 85 Section 5 Related Work claims, 131 Appendix A/Table 3/Figure 9 claims, and 188 Appendix B/Figures 10-14 claims with implementation, context-only, or TODO disposition; all 195 retained-TeX citation uses have lexical key linkage; all 30 retained-source captions, displayed equations, and semantic footnotes have construct-level dispositions; and all 83 table rows and 240 cells have row/cell dispositions",
-        "missing_readiness": "remaining whole-paper sentence, paragraph, inline-math, listing, image-pixel, citation-semantic, implementation-semantic, and result-reproduction evidence",
+        "current_scope": "PDF-verified named main-text sections plus 50 Table 1/Section 2 system requirements, 41 Abstract/Introduction/Discussion/collaborator claims, 41 Section 3.1/Table 2/Figure 4 matrix-result claims, 63 Section 3.2/Figure 5 constructive-math claims, 45 Section 3.3 opening/Section 3.3.1/Figure 6 scheduling claims, 59 Section 3.3.2/Figure 7 kernel-engineering claims, 35 Section 3.3.3 hardware-circuit-design claims, 44 Section 3.3.4 compiler-generated-code claims, 51 Section 4/Figure 8 ablation claims, 85 Section 5 Related Work claims, 131 Appendix A/Table 3/Figure 9 claims, and 188 Appendix B/Figures 10-14 claims with implementation, context-only, or TODO disposition; all 195 retained-TeX citation uses have lexical key linkage; all 30 retained-source captions, displayed equations, and semantic footnotes have construct-level dispositions; all 83 table rows and 240 cells have row/cell dispositions; and all 8 retained TeX code listing environments and 305 physical source lines have environment/line dispositions",
+        "missing_readiness": "remaining whole-paper sentence, paragraph, inline-math, image-pixel, citation-semantic, implementation-semantic, and result-reproduction evidence",
         "sidecars": (
             "papers/roadmap_source_span_disposition_boundary.json",
             "papers/implementation_evidence_map_boundary.json",
@@ -65,6 +65,7 @@ COVERAGE_SURFACE_SPECS = (
             "papers/alphaevolve_appendix_b_claim_inventory_boundary.json",
             "papers/alphaevolve_citation_use_inventory_boundary.json",
             "papers/alphaevolve_tex_source_detail_inventory_boundary.json",
+            "papers/alphaevolve_tex_code_listing_inventory_boundary.json",
         ),
         "active_todos": (
             {
@@ -73,7 +74,7 @@ COVERAGE_SURFACE_SPECS = (
             },
         ),
         "validation_gate": "section-level source-span disposition matrix",
-        "readiness_status": "833_bounded_claims_plus_195_lexical_citation_uses_30_dispositioned_tex_source_details_and_240_dispositioned_table_cells_without_whole_paper_proposition_semantic_exhaustiveness",
+        "readiness_status": "833_bounded_claims_plus_195_lexical_citation_uses_30_dispositioned_tex_source_details_240_dispositioned_table_cells_and_305_dispositioned_listing_lines_without_whole_paper_proposition_semantic_exhaustiveness",
     },
     {
         "surface_id": "figure_exhibit_matrix",
@@ -355,6 +356,11 @@ def roadmap_source_span_coverage_boundary_record(root: str | Path = ".") -> dict
             "tex_table_data_row_claim_count": 78,
             "tex_table_bounded_claim_component_cell_count": 218,
             "tex_table_cell_inventory": "row_cell_disposition_verified_without_citation_semantics_or_result_reproduction",
+            "tex_code_listing_environment_count": 8,
+            "tex_code_listing_line_count": 305,
+            "tex_code_listing_bounded_claim_component_line_count": 214,
+            "tex_code_listing_existing_claim_count": 60,
+            "tex_code_listing_inventory": "environment_line_disposition_verified_without_listing_execution_or_result_reproduction",
         },
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
@@ -379,8 +385,10 @@ def roadmap_source_span_coverage_boundary_record(root: str | Path = ".") -> dict
             "implementation relevance. It also records construct-level "
             "dispositions for all 30 retained-source captions, displayed "
             "equations, and semantic footnotes, plus row- and cell-level "
-            "dispositions for all 83 rows and 240 cells in Tables 1-3, without "
-            "claiming sentence-, paragraph-, inline-math-, listing-, image-pixel-, "
+            "dispositions for all 83 rows and 240 cells in Tables 1-3, plus "
+            "environment- and line-level dispositions for all 8 retained TeX "
+            "code listing environments and all 305 physical source lines, without "
+            "claiming sentence-, paragraph-, inline-math-, image-pixel-, "
             "or citation-level proposition exhaustiveness. It also records "
             "paper-status rows, and TODO/non-goal/phase proof. It does not "
             "claim whole-paper claim-level requirement exhaustiveness, a complete application-result claim matrix, "
@@ -436,6 +444,7 @@ def validate_roadmap_source_span_coverage_boundary(
         or "all 55 PDF-verified named" not in boundary_text
         or "all 30 retained-source captions" not in boundary_text
         or "all 83 rows and 240 cells" not in boundary_text
+        or "all 8 retained TeX code listing environments and all 305 physical source lines" not in boundary_text
         or "citation-level proposition exhaustiveness" not in boundary_text
         or "claim-level requirement exhaustiveness" not in boundary_text
         or "complete application-result claim matrix" not in boundary_text

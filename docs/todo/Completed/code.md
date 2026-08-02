@@ -4,6 +4,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add the retained-TeX code-listing environment and line disposition inventory.
+  - Status: the public boundary parses all 8 retained listing environments (4
+    `minted`, 3 `lstlisting`, and 1 `verbatim`) and all 305 physical source
+    lines with source anchors, hashes, semantic roles, and resolved claim refs.
+  - Accounting: 214 bounded-claim-component lines map through 344 line-level
+    references to 60 existing claims; baseline, abbreviation, diff-marker, and
+    structural lines are also dispositioned. Nothing is unmapped or unresolved,
+    and the inventory adds zero claims or parity credit.
+  - Remaining code gap: snippet execution/compilation, omitted-code recovery,
+    result reproduction, whole-paper proposition semantics, independent review,
+    and CI exhaustiveness remain active.
+  - Verification: focused boundary and paper-manifest tests reject source,
+    environment/line count, mapping, reference, overclaim, and sidecar drift.
+
 - [x] Add the retained-TeX table row and cell disposition inventory.
   - Status: the public boundary parses all 3 retained table environments, 5
     tabular blocks, 83 rows, and 240 top-level cells with source anchors,
@@ -12,7 +26,7 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     cells are bounded-claim components, 8 are FunSearch baseline context, and
     14 are structural headers. Nothing is unmapped or unresolved, and the
     inventory adds zero claims or parity credit.
-  - Remaining code gap: sentence/paragraph/inline-math/listing/image-pixel and
+  - Remaining code gap: sentence/paragraph/inline-math/image-pixel and
     citation semantics, source sufficiency, table-result reproduction,
     independent review, and whole-paper CI exhaustiveness remain active.
   - Verification: focused boundary and paper-manifest tests reject source,
@@ -28,7 +42,7 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     constructs through 80 resolved references to existing claim ids, maps one
     to publication metadata, classifies two as named-span locators and three as
     decorative markers, and adds zero claims or parity credit.
-  - Remaining code gap: sentence/paragraph/inline-math/table-cell/listing/image-
+  - Remaining code gap: sentence/paragraph/inline-math/image-
     pixel/citation proposition semantics, source sufficiency, result
     reproduction, independent review, and whole-paper CI exhaustiveness remain
     owned by active TODOs.

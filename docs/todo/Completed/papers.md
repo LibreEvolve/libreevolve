@@ -4,6 +4,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## Papers Todo: Reference and Specification Gaps
 
+- [x] Inventory retained AlphaEvolve code-listing environments and lines.
+  - Paper evidence: the pinned `2506.13131v1` TeX closure contains 4 `minted`,
+    3 `lstlisting`, and 1 `verbatim` environment with 305 physical source lines.
+  - Status: `papers/alphaevolve_tex_code_listing_inventory_boundary.json`
+    maps 214 bounded-claim-component lines through 344 line-level references to
+    60 existing claims and dispositions every baseline, abbreviation,
+    diff-marker, and structural line, with no unmapped or unresolved unit.
+  - Remaining gap: snippet execution/compilation, omitted-code recovery, result
+    reproduction, whole-paper proposition semantics, independent review, and
+    AlphaEvolve parity remain open.
+
 - [x] Inventory retained AlphaEvolve table rows and cells.
   - Paper evidence: the pinned `2506.13131v1` TeX closure contains 3 table
     environments, 5 tabular blocks, 83 rows, and 240 top-level cells across
@@ -13,7 +24,7 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     bounded-claim component cells, 8 FunSearch baseline-context cells, and 14
     structural-header cells, with no unmapped unit or unresolved reference.
   - Remaining gap: citation semantics, baseline correctness, Table 2/3 result
-    reproduction, sentence/paragraph/inline-math/listing/image-pixel semantic
+    reproduction, sentence/paragraph/inline-math/image-pixel semantic
     exhaustiveness, independent review, and AlphaEvolve parity remain open.
 
 - [x] Inventory retained AlphaEvolve captions, displayed equations, and footnotes.
@@ -25,8 +36,8 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     resolved references to existing bounded claim ids, one maps to reviewed
     publication metadata, two are named-span locators, and three are decorative
     markers, with no unmapped construct or new claim.
-  - Remaining gap: proposition-level sentence/paragraph/inline-math/table-cell/
-    listing/image-pixel/citation semantics, source sufficiency, independent
+  - Remaining gap: proposition-level sentence/paragraph/inline-math/image-pixel/
+    citation semantics, source sufficiency, independent
     result reproduction, reviewer proof, and AlphaEvolve parity remain open.
 
 - [x] Inventory retained AlphaEvolve TeX citation uses and bibliography keys.

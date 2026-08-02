@@ -2,6 +2,17 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Add retained-TeX code-listing dispositions to the AlphaEvolve ROADMAP audit.
+  - Status: ROADMAP and its implementation-evidence, disposition, coverage, and
+    exhaustiveness boundaries now include all 8 retained listing environments
+    and all 305 physical source lines.
+  - Accounting: 214 bounded-claim-component lines map through 344 line-level
+    references to 60 existing claims; all remaining line roles are
+    dispositioned. No claim count or parity estimate changes.
+  - Remaining boundary: snippet execution/compilation, omitted-code recovery,
+    result reproduction, whole-paper proposition semantics, status/application
+    joins, independent review, and owner/CI signoff remain open.
+
 - [x] Add retained-TeX table row/cell dispositions to the AlphaEvolve ROADMAP audit.
   - Status: ROADMAP and its implementation-evidence, disposition, coverage, and
     exhaustiveness boundaries now include all 3 retained tables, 5 tabular

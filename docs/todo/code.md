@@ -126,7 +126,14 @@ sidecars, tests, and active TODOs.
     bounded-claim components, 8 are FunSearch baseline context, and 14 are
     structural headers. Nothing is unmapped or unresolved, and this adds no
     claims or parity credit. Citation semantics and table-result reproduction
-    remain owned by this TODO. Meanwhile,
+    remain owned by this TODO. The supplemental
+    `papers/alphaevolve_tex_code_listing_inventory_boundary.json` inventories
+    all 8 retained listing environments and 305 physical source lines. It maps
+    214 bounded-claim-component lines through 344 line-level references to 60
+    existing claims and dispositions baseline, abbreviation, diff-marker, and
+    structural lines with no unmapped or unresolved units. It adds no claims or
+    parity credit; snippet execution/compilation, omitted-code recovery, and
+    result reproduction remain owned by this TODO. Meanwhile,
     `papers/status_claim_inventory.json` now records checked row-level paper
     status inventory plus status-cell phrase hashes, source offsets, local
     artifact mention source offsets, and candidate evidence-link lists with
@@ -150,11 +157,12 @@ sidecars, tests, and active TODOs.
     and Figures 10-14 claims are now machine-readable and PDF-verified, and
     citation commands plus bibliography-key linkage are lexically exhaustive
     for the retained TeX, and all caption/equation/footnote constructs have
-    dispositions, and all 83 table rows and 240 cells have row/cell
-    dispositions. However, citation proposition/role/sufficiency and
+    dispositions, all 83 table rows and 240 cells have row/cell dispositions,
+    and all 8 code listings and 305 source lines have line-level dispositions.
+    However, citation proposition/role/sufficiency and
     implementation relevance remain unclassified, and there is no AlphaEvolve
     requirement inventory exhaustive at sentence, paragraph, inline-math,
-    listing, image-pixel, citation-semantic, or proposition level
+    image-pixel, citation-semantic, or proposition level
     across remaining source details and the other paper
     spans and all code modules, tests, runtime report
     schemas, sidecar JSON records, TODO entries, and completion evidence; no

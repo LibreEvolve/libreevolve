@@ -12,11 +12,11 @@ from libreevolve.problems.benchmarks.alphaevolve_source_inventory_boundary impor
 
 
 IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_SCHEMA = (
-    "libreevolve.alphaevolve_implementation_evidence_map_boundary.v17"
+    "libreevolve.alphaevolve_implementation_evidence_map_boundary.v18"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_BOUNDARY_STATUS = (
-    "verified_core_anchors_plus_833_bounded_claims_195_citation_uses_30_tex_source_details_and_240_table_cells_without_whole_paper_exhaustiveness"
+    "verified_core_anchors_plus_833_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_and_305_listing_lines_without_whole_paper_exhaustiveness"
 )
 EXPECTED_SOURCE_INVENTORY_REF = "papers/alphaevolve_source_inventory_boundary.json"
 EXPECTED_CONTEXT_CLAIM_INVENTORY_REF = (
@@ -60,6 +60,9 @@ EXPECTED_TEX_SOURCE_DETAIL_INVENTORY_REF = (
 )
 EXPECTED_TEX_TABLE_CELL_INVENTORY_REF = (
     "papers/alphaevolve_tex_table_cell_inventory_boundary.json"
+)
+EXPECTED_TEX_CODE_LISTING_INVENTORY_REF = (
+    "papers/alphaevolve_tex_code_listing_inventory_boundary.json"
 )
 EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF = (
     "papers/alphaevolve_system_requirement_inventory_boundary.json"
@@ -109,13 +112,16 @@ EXPECTED_RECORDED_EVIDENCE = {
     "tex_table_cell_disposition_inventory": (
         "83_rows_240_cells_78_existing_claims_218_claim_components"
     ),
+    "tex_code_listing_line_disposition_inventory": (
+        "8_environments_305_lines_60_existing_claims_214_claim_components"
+    ),
     "reference_existence_checks": (
         "module_test_sidecar_todo_paths_and_todo_phrases"
     ),
 }
 EXPECTED_MISSING_EVIDENCE = {
-    "exhaustive_requirement_inventory": "833_bounded_claims_plus_195_lexical_citation_uses_30_dispositioned_tex_source_details_and_240_dispositioned_table_cells_without_whole_paper_sentence_paragraph_inline_math_listing_image_pixel_citation_semantic_or_reproduction_exhaustiveness",
-    "claim_level_source_span_coverage_matrix": "833_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_and_240_table_cells_have_row_cell_dispositions_without_whole_paper_sentence_paragraph_inline_math_listing_image_pixel_citation_semantic_or_reproduction_exhaustiveness",
+    "exhaustive_requirement_inventory": "833_bounded_claims_plus_195_lexical_citation_uses_30_dispositioned_tex_source_details_240_dispositioned_table_cells_and_305_dispositioned_listing_lines_without_whole_paper_sentence_paragraph_inline_math_image_pixel_citation_semantic_or_reproduction_exhaustiveness",
+    "claim_level_source_span_coverage_matrix": "833_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_and_305_listing_lines_have_line_dispositions_without_whole_paper_sentence_paragraph_inline_math_image_pixel_citation_semantic_or_reproduction_exhaustiveness",
     "citation_semantic_mapping": "195_citation_uses_lexically_linked_without_supported_proposition_source_sufficiency_or_implementation_relevance_classification",
     "status_cell_semantic_verifier": "not_recorded_locally",
     "implemented_benchmark_bullet_semantic_verifier": "not_recorded_locally",
@@ -408,6 +414,7 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
         "citation_use_inventory_ref": EXPECTED_CITATION_USE_INVENTORY_REF,
         "tex_source_detail_inventory_ref": EXPECTED_TEX_SOURCE_DETAIL_INVENTORY_REF,
         "tex_table_cell_inventory_ref": EXPECTED_TEX_TABLE_CELL_INVENTORY_REF,
+        "tex_code_listing_inventory_ref": EXPECTED_TEX_CODE_LISTING_INVENTORY_REF,
         "system_requirement_inventory_ref": EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF,
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "claim_ready": False,
@@ -440,7 +447,11 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
             "equations, and semantic footnotes, plus row- and cell-level "
             "disposition for all 83 rows and 240 cells in Tables 1-3, with "
             "all 78 data rows mapped to 78 existing bounded claims and zero "
-            "new claims. It does not establish "
+            "new claims, plus environment- and line-level disposition for all "
+            "8 retained TeX code listing environments and all 305 physical "
+            "source lines, with 214 bounded-claim-component lines mapped to "
+            "60 existing claims and zero new or unmapped lines. It does not "
+            "establish "
             "whole-paper proposition-level semantic exhaustiveness and does "
             "not classify "
             "citation semantics, source sufficiency, or implementation "
@@ -532,6 +543,10 @@ def validate_implementation_evidence_map_boundary(
         issues.append(_issue("invalid_tex_table_cell_inventory_ref", f"tex_table_cell_inventory_ref must be {EXPECTED_TEX_TABLE_CELL_INVENTORY_REF}"))
     if not (Path(root) / EXPECTED_TEX_TABLE_CELL_INVENTORY_REF).is_file():
         issues.append(_issue("missing_tex_table_cell_inventory_ref", f"{EXPECTED_TEX_TABLE_CELL_INVENTORY_REF} is missing"))
+    if data.get("tex_code_listing_inventory_ref") != EXPECTED_TEX_CODE_LISTING_INVENTORY_REF:
+        issues.append(_issue("invalid_tex_code_listing_inventory_ref", f"tex_code_listing_inventory_ref must be {EXPECTED_TEX_CODE_LISTING_INVENTORY_REF}"))
+    if not (Path(root) / EXPECTED_TEX_CODE_LISTING_INVENTORY_REF).is_file():
+        issues.append(_issue("missing_tex_code_listing_inventory_ref", f"{EXPECTED_TEX_CODE_LISTING_INVENTORY_REF} is missing"))
     if data.get("system_requirement_inventory_ref") != EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF:
         issues.append(_issue("invalid_system_requirement_inventory_ref", f"system_requirement_inventory_ref must be {EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF}"))
     if not (Path(root) / EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF).is_file():
@@ -560,6 +575,7 @@ def validate_implementation_evidence_map_boundary(
         or "does not classify citation semantics" not in boundary_text
         or "30 retained-source captions" not in boundary_text
         or "all 83 rows and 240 cells" not in boundary_text
+        or "all 8 retained TeX code listing environments and all 305 physical source lines" not in boundary_text
         or "whole-paper proposition-level semantic exhaustiveness" not in boundary_text
         or "paper-index phrase evidence-link sufficiency" not in boundary_text
         or "implemented benchmark bullet semantic verifier" not in boundary_text

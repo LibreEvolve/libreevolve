@@ -4,6 +4,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document the retained-TeX code-listing line audit in README.
+  - Status: README now reports all 8 listing environments, all 305 physical
+    source lines, 214 bounded-claim-component lines, 344 line-level references,
+    60 existing claims, and zero unmapped lines or new claims.
+  - Boundary: README distinguishes listing-line disposition from snippet
+    execution/compilation, omitted-code recovery, result reproduction,
+    proposition-level exhaustiveness, and AlphaEvolve parity; parity
+    percentages remain unchanged.
+
 - [x] Document the retained-TeX table row and cell audit in README.
   - Status: README now reports all 3 table environments, 5 tabular blocks, 83
     rows, 240 cells, 78 existing claim mappings, 218 bounded-claim components,

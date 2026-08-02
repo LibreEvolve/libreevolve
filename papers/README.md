@@ -1653,8 +1653,16 @@ bounded-claim components, 8 are FunSearch baseline context, and 14 are
 structural headers. Nothing is unmapped or unresolved, and no claim or parity
 credit is added. The 71 lexical citation-command occurrences and 72 key links
 do not establish citation semantics, and row/cell mapping is not table-result
-reproduction. Together the twelve bounded claim inventories
-still disposition 833 claims: 29 locally
+reproduction. The separate
+`papers/alphaevolve_tex_code_listing_inventory_boundary.json` inventories all
+8 retained code-listing environments (4 `minted`, 3 `lstlisting`, and 1
+`verbatim`) and all 305 physical source lines. It classifies 214 bounded-claim
+component lines mapped through 344 line-level references to 60 existing claims,
+21 unchanged baseline-context lines, 10 abbreviation lines, 4 diff-hunk lines,
+and 56 structural blank/diff lines. Nothing is unmapped or unresolved, and no
+claim or parity credit is added. This does not recover omitted code, execute or
+compile a listing, or reproduce a result. Together the twelve bounded claim
+inventories still disposition 833 claims: 29 locally
 implemented, 275 partial, 108 not implemented, 362 not demonstrated, and 59
 source-context-only. Across 774 implementation-relevant claims this is 3.7%
 strict implemented parity, or 21.5% when partial claims receive half credit.
@@ -1668,8 +1676,9 @@ existence-checked source-span/module/test/sidecar/TODO references. Citation
 syntax and key linkage are exhaustive for the retained TeX source, and all
 retained-source captions, displayed equations, and semantic footnotes have
 construct-level dispositions; all 83 table rows and 240 cells have row/cell
-dispositions. This is not a whole-paper sentence-, paragraph-,
-inline-math-, listing-, image-pixel-, citation-semantic, or
+dispositions; and all 8 retained code listings and 305 physical source lines
+have line-level dispositions. This is not a whole-paper sentence-, paragraph-,
+inline-math-, image-pixel-, citation-semantic, or
 proposition-level exhaustive inventory, per-phrase evidence-link sufficiency proof,
 coverage detector,
 generated code-audit report, or CI exhaustiveness gate. The checked
@@ -4052,6 +4061,15 @@ Implemented:
   and records zero unmapped units or unresolved references. It adds no claims
   and does not establish citation semantics, baseline correctness, table-result
   reproduction, whole-paper proposition exhaustiveness, or AlphaEvolve parity.
+- `papers/alphaevolve_tex_code_listing_inventory_boundary.json`: retained-TeX
+  code-listing environment and source-line disposition sidecar for all 4
+  `minted`, 3 `lstlisting`, and 1 `verbatim` environments and all 305 physical
+  lines. It maps 214 bounded-claim-component lines through 344 line-level
+  references to 60 existing claims and dispositions baseline, abbreviation,
+  diff-marker, and structural lines with zero unmapped units or unresolved
+  references. It adds no claims and does not execute or compile snippets,
+  recover omitted code, reproduce results, establish whole-paper proposition
+  exhaustiveness, or demonstrate AlphaEvolve parity.
 - `papers/alphaevolve_current_version_boundary.json`: AlphaEvolve
   current-version/floating-PDF sidecar with pinned current abstract URL,
   retrieval date, status, content type, byte count, SHA-256 digest, title,

@@ -11,11 +11,11 @@ from libreevolve.problems.benchmarks.alphaevolve_source_inventory_boundary impor
 
 
 ROADMAP_SOURCE_SPAN_DISPOSITION_BOUNDARY_SCHEMA = (
-    "libreevolve.roadmap_source_span_disposition_boundary.v14"
+    "libreevolve.roadmap_source_span_disposition_boundary.v15"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_BOUNDARY_STATUS = (
-    "named_span_dispositions_plus_833_bounded_claims_195_citation_uses_30_tex_source_details_and_240_table_cells_without_whole_paper_exhaustiveness"
+    "named_span_dispositions_plus_833_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_and_305_listing_lines_without_whole_paper_exhaustiveness"
 )
 STATUS_CLAIM_INVENTORY_PATH = "papers/status_claim_inventory.json"
 SOURCE_INVENTORY_PATH = "papers/alphaevolve_source_inventory_boundary.json"
@@ -61,6 +61,9 @@ TEX_SOURCE_DETAIL_INVENTORY_PATH = (
 TEX_TABLE_CELL_INVENTORY_PATH = (
     "papers/alphaevolve_tex_table_cell_inventory_boundary.json"
 )
+TEX_CODE_LISTING_INVENTORY_PATH = (
+    "papers/alphaevolve_tex_code_listing_inventory_boundary.json"
+)
 SYSTEM_REQUIREMENT_INVENTORY_PATH = (
     "papers/alphaevolve_system_requirement_inventory_boundary.json"
 )
@@ -76,7 +79,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "ci_source_span_exhaustiveness_gate",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "claim_level_requirement_inventory": "833_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_and_240_table_cells_have_row_cell_dispositions_without_whole_paper_sentence_paragraph_inline_math_listing_image_pixel_citation_semantic_or_reproduction_exhaustiveness",
+    "claim_level_requirement_inventory": "833_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_and_305_listing_lines_have_line_dispositions_without_whole_paper_sentence_paragraph_inline_math_image_pixel_citation_semantic_or_reproduction_exhaustiveness",
     "application_result_claim_matrix": "not_recorded_locally",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
     "missing_partial_todo_proof": "not_recorded_locally",
@@ -131,6 +134,7 @@ def roadmap_source_span_disposition_boundary_record(
         "citation_use_inventory_input": CITATION_USE_INVENTORY_PATH,
         "tex_source_detail_inventory_input": TEX_SOURCE_DETAIL_INVENTORY_PATH,
         "tex_table_cell_inventory_input": TEX_TABLE_CELL_INVENTORY_PATH,
+        "tex_code_listing_inventory_input": TEX_CODE_LISTING_INVENTORY_PATH,
         "system_requirement_inventory_input": SYSTEM_REQUIREMENT_INVENTORY_PATH,
         "source_status_inventory_input": STATUS_CLAIM_INVENTORY_PATH,
         "disposition_record_count": len(disposition_records),
@@ -164,6 +168,7 @@ def roadmap_source_span_disposition_boundary_record(
             "citation_uses": "195_tex_source_anchored_uses_with_240_key_links_and_120_compiled_references_without_semantic_classification",
             "tex_source_details": "30_construct_level_dispositions_for_22_captions_5_displayed_equations_and_3_semantic_footnotes",
             "tex_table_cells": "83_rows_240_cells_78_existing_claims_and_zero_unmapped_units",
+            "tex_code_listing_lines": "8_environments_305_lines_60_existing_claims_and_zero_unmapped_lines",
         },
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
@@ -190,10 +195,12 @@ def roadmap_source_span_disposition_boundary_record(
             "references, plus construct-level disposition for all 30 "
             "retained-source captions, displayed equations, and semantic "
             "footnotes, plus row- and cell-level dispositions for all 83 rows "
-            "and 240 cells in Tables 1-3. It does not classify citation semantics, source "
+            "and 240 cells in Tables 1-3, plus environment- and line-level "
+            "dispositions for all 8 retained TeX code listing environments and "
+            "all 305 physical source lines. It does not classify citation semantics, source "
             "sufficiency, or implementation relevance, and does not "
             "claim whole-paper sentence-, paragraph-, inline-math-, "
-            "listing-, image-pixel-, citation-semantic, or requirement-level "
+            "image-pixel-, citation-semantic, or requirement-level "
             "proposition exhaustiveness, a claim-level application-result matrix, complete "
             "paper-index row to ROADMAP disposition map, proof that every "
             "missing or partial source span has a live TODO, or a CI "
@@ -244,6 +251,7 @@ def validate_roadmap_source_span_disposition_boundary(
         "citation_use_inventory_input",
         "tex_source_detail_inventory_input",
         "tex_table_cell_inventory_input",
+        "tex_code_listing_inventory_input",
         "system_requirement_inventory_input",
         "source_status_inventory_input",
         "disposition_record_count",
@@ -265,6 +273,7 @@ def validate_roadmap_source_span_disposition_boundary(
         or "all 55 PDF-verified named AlphaEvolve structural spans" not in boundary_text
         or "all 30 retained-source captions" not in boundary_text
         or "all 83 rows and 240 cells" not in boundary_text
+        or "all 8 retained TeX code listing environments" not in boundary_text
         or "requirement-level proposition exhaustiveness" not in boundary_text
         or "complete paper-index row to ROADMAP disposition map" not in boundary_text
     ):

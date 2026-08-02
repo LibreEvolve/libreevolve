@@ -999,9 +999,18 @@ AlphaEvolve reproduction.
   unmapped, and the inventory adds zero claims. Its 71 lexical citation-command
   occurrences and 72 key links do not establish citation semantics, and its
   row/cell mapping does not reproduce any table result, so parity remains
-  unchanged. The twelve bounded claim inventories still disposition 833 claims
-  in total: 29 locally implemented,
-  275 partial, 108 not implemented, 362 not demonstrated, and 59
+  unchanged. The supplemental
+  `papers/alphaevolve_tex_code_listing_inventory_boundary.json` inventories all
+  8 retained code-listing environments (4 `minted`, 3 `lstlisting`, and 1
+  `verbatim`) and all 305 physical source lines. Of those lines, 214 are
+  bounded-claim components mapped through 344 line-level references to 60
+  existing claims; 21 are unchanged baseline context, 10 are abbreviations, 4
+  are diff-hunk markers, and the remaining 56 are structural blank/diff lines.
+  Nothing is unmapped or unresolved, and no claim or parity credit is added.
+  This line audit does not recover omitted code, execute or compile a listing,
+  or reproduce any reported result. The twelve bounded claim inventories
+  still disposition 833 claims in total: 29 locally implemented, 275 partial,
+  108 not implemented, 362 not demonstrated, and 59
   source-context-only,
   and `papers/status_claim_inventory.json` records checked row-level paper
   status inventory plus status-cell phrase hashes, source offsets, local
@@ -1021,8 +1030,9 @@ AlphaEvolve reproduction.
   coverage, bounded 833-claim coverage, complete lexical citation linkage, and
   construct-level disposition of all retained-source captions, displayed
   equations, and semantic footnotes, plus row/cell disposition for all 83 rows
-  and 240 cells in Tables 1-3, not a whole-paper sentence-, paragraph-,
-  inline-math-, listing-, image-pixel-, citation-semantic, or
+  and 240 cells in Tables 1-3, plus line-level disposition for all 8 retained
+  code listings and 305 physical source lines, not a whole-paper sentence-,
+  paragraph-, inline-math-, image-pixel-, citation-semantic, or
   claim-level proposition inventory,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,
   implemented-benchmark bullet semantic verifier,

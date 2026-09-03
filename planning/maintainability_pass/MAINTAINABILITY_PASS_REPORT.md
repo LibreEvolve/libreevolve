@@ -175,7 +175,7 @@ after a verifier found an embedded-NUL cancellation-path defect. It has no
 terminal gate result and is not evidence of a pass. A corrected run is now
 active under `/tmp/libreevolve-maintainability-full-corrected-2DyZG7/`; it
 collected 6,337 items, selected 6,334 after the same three deselections, and
-had reached 28% with no logged failure at report refresh. Its terminal status
+had reached 82% at `2026-09-02T23:06:23-04:00` with no logged failure at report refresh. Its terminal status
 remains pending.
 
 ### Runtime and end-to-end
@@ -214,7 +214,12 @@ AlphaEvolve-scale evidence.
 
 ## Current Git/result status
 
-No commit or push was performed. The checkout is intentionally left dirty with
-pre-existing and pass-owned changes intermingled; no destructive cleanup was
-used. The broad gate is not yet a pass, so this report must not be read as a
-release approval or as a statement that the maintainability pass is complete.
+Commit `ef70695364ee66e168fd905a2b1bcdb2430c3186` was created from the scoped
+maintainability changes and pushed to both `LibreEvolve/master` and
+`origin/master`; both remote heads resolve to that exact SHA. No merge was
+needed because the local and remote heads were synchronized before the
+fast-forward push. The checkout still has 260 worktree-only status records
+from the preserved dirty baseline; they were not staged or committed. No
+destructive cleanup was used. The broad gate is not yet a pass, so this report
+must not be read as a release approval or as a statement that the
+maintainability pass is complete.

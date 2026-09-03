@@ -18,8 +18,13 @@ recoverable exit status and is classified `interrupted/unverified`. A second
 run was explicitly logged under `/tmp/libreevolve-maintainability-full-*`,
 interrupted at 28% after the independent path review exposed a cancellation
 NUL-path defect. The corrected run is active under
-`/tmp/libreevolve-maintainability-full-corrected-2DyZG7/`; its terminal status
-is still pending.
+`/tmp/libreevolve-maintainability-full-corrected-2DyZG7/`; it reached 82% at
+the report refresh with no logged failure, and its terminal status is still
+pending.
+
+The scoped maintainability changes were committed as
+`ef70695364ee66e168fd905a2b1bcdb2430c3186` and pushed to both configured
+`master` remotes. The preserved dirty baseline remains outside that commit.
 
 ## Required final gates
 

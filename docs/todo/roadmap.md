@@ -249,9 +249,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     inherits 34 source-detail and 75 table-cell dispositions and maps the
     remaining 200 constructs directly to existing bounded claim ids, with no
     unmapped or unresolved references and no new claims or parity credit. The
-    proposition inventory now reviews all 244 sentences from the Abstract
-    through Section 4 ablations as 812 atomic propositions, maps 753 through 783
-    references to 362 bounded claims, and classifies 59 as context, outlook, or
+    proposition inventory now reviews all 286 sentences from the Abstract
+    through Section 5 Related Work as 985 atomic propositions, maps 919 through
+    963 references to 431 bounded claims, and classifies 66 as context, outlook,
+    or
     interpretation. The Section 4 slice adds no new bounded claim or parity
     credit, but repairs five alternative-definition sentences so their variants
     retain the shared component-efficacy purpose. Existing active TODOs own all
@@ -284,10 +285,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     exhaustive for the retained TeX, and all caption/equation-environment/
     footnote constructs have dispositions, all 83 table rows and 240 cells have
     row/cell dispositions, all 8 code listings and 305 source lines have
-    line-level dispositions; all 309 math constructs and 402 prose sentences
-    have dispositions; 812 propositions across all 244 sentences through Section
-    4 ablations are reviewed. The matrix remains incomplete
-    across the rest of the paper: 158 sentences
+    line-level dispositions; all 309 math constructs and 403 prose sentences
+    have dispositions; 985 propositions across all 286 sentences through Section
+    5 Related Work are reviewed. The matrix remains incomplete
+    across the rest of the paper: 117 sentences
     still lack proposition review; it cannot prove
     local math/image/citation correctness and result reproduction;
     show TODO ownership for every gap and add an application matrix;

@@ -23,9 +23,9 @@ def test_tex_prose_inventory_accepts_complete_sentence_disposition_scope():
     assert boundary["result_reproduction_claim_ready"] is False
     assert boundary["alphaevolve_parity_claim_ready"] is False
     assert validation.paragraph_count == 128
-    assert validation.sentence_count == 402
+    assert validation.sentence_count == 403
     assert boundary["disposition_counts"] == {
-        "existing_bounded_claim_mapping": 372,
+        "existing_bounded_claim_mapping": 373,
         "reviewed_nonclaim": 30,
     }
     assert boundary["excluded_range_count"] == 37
@@ -53,7 +53,7 @@ def test_tex_prose_inventory_preserves_file_counts_and_resolved_dispositions():
         "introduction.tex": 29,
         "main.tex": 8,
         "methods.tex": 61,
-        "related_work.tex": 41,
+        "related_work.tex": 42,
         "results.tex": 122,
     }
     assert boundary["unmapped_sentence_count"] == 0
@@ -313,6 +313,43 @@ def test_tex_prose_inventory_maps_new_claims_and_disambiguates_repeated_anchors(
         "section4_component_efficacy_goal",
         "small_base_only_alternative",
     }
+    assert {
+        ref["claim_id"] for ref in records[("related_work.tex", 6, 0)]["claim_refs"]
+    } == {
+        "classical_scheduling_success",
+        "classical_scientific_algorithmic_discovery_success",
+        "classical_symbolic_regression_success",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("related_work.tex", 22, 0)]["claim_refs"]
+    } == {
+        "alphaevolve_flexibility_distinction",
+        "alphaevolve_generality_distinction",
+        "alphaevolve_scale_distinction",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("related_work.tex", 36, 0)]["claim_refs"]
+    } == {
+        "pre_llm_deep_reinforcement_learning",
+        "pre_llm_genetic_search",
+        "pre_llm_monte_carlo_sampling",
+        "pre_llm_systematic_enumeration",
+        "superoptimization_1980s_origin",
+    }
+    assert records[("related_work.tex", 25, 0)]["rendered_text"].endswith(
+        "through reinforcement learning."
+    )
+    assert [
+        ref["claim_id"]
+        for ref in records[("related_work.tex", 25, 0)]["claim_refs"]
+    ] == ["continuous_llm_finetuning_rl"]
+    assert records[("related_work.tex", 26, 0)]["rendered_text"].startswith(
+        "[citation] enhance the evolution process"
+    )
+    assert [
+        ref["claim_id"]
+        for ref in records[("related_work.tex", 26, 0)]["claim_refs"]
+    ] == ["llm_directed_concept_learning"]
     assert "already_highly_optimized_baseline" not in {
         ref["claim_id"] for ref in records[("results.tex", 168, 0)]["claim_refs"]
     }
@@ -327,7 +364,7 @@ def test_tex_prose_inventory_maps_new_claims_and_disambiguates_repeated_anchors(
 def test_tex_prose_inventory_rejects_record_count_and_overclaim_drift():
     boundary = deepcopy(alphaevolve_tex_prose_inventory_boundary_record())
     boundary["sentence_records"][0]["rendered_text"] = "drift"
-    boundary["sentence_count"] = 401
+    boundary["sentence_count"] = 402
     boundary["whole_paper_semantic_exhaustiveness_claim_ready"] = True
     boundary["alphaevolve_parity_claim_ready"] = True
 
@@ -365,6 +402,6 @@ def test_render_tex_prose_inventory_summary_reports_shape():
     assert "AlphaEvolve TeX prose inventory boundary" in summary
     assert "| schema_status | ok |" in summary
     assert "| paragraph_count | 128 |" in summary
-    assert "| sentence_count | 402 |" in summary
+    assert "| sentence_count | 403 |" in summary
     assert "| unmapped_sentence_count | 0 |" in summary
     assert "| unresolved_reference_count | 0 |" in summary

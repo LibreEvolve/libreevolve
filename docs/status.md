@@ -1849,21 +1849,21 @@ Important limits:
   existing bounded claims, with zero unmapped or unresolved references and no
   new claim or parity credit. This closes explicit-delimiter disposition, not
   formula correctness, proof validity, or result reproduction.
-- Retained-TeX prose evidence inventories all 128 body paragraphs and 402
+- Retained-TeX prose evidence inventories all 128 body paragraphs and 403
   grammatical sentences after masking the table, figure, equation, listing,
-  and footnote surfaces audited separately. It maps 372 sentences to existing
+  and footnote surfaces audited separately. It maps 373 sentences to existing
   bounded claims and reviews 30 as nonclaims, with zero unmapped or unresolved
-  sentences. The walk contributed seven new bounded claims; it does not prove
+  sentences. The walk adds no new claims; it does not prove
   sentence-internal clause/proposition exhaustiveness, independent semantic
   review, mathematical correctness, or result reproduction.
-- Retained-TeX proposition evidence decomposes all 244 sentences from the
-  Abstract through Section 4 ablations into 812 atomic propositions. Seven
-  hundred fifty-three map through 783 references to 362 bounded claims, 46 are
+- Retained-TeX proposition evidence decomposes all 286 sentences from the
+  Abstract through Section 5 Related Work into 985 atomic propositions. Nine
+  hundred nineteen map through 963 references to 431 bounded claims, 53 are
   source context, 2 are author outlook, and 11 are qualified interpretations.
   The Section 4 slice adds no bounded claim or parity credit, but repairs five
   alternative-definition sentences so their variants retain the shared
   component-efficacy purpose. Existing active TODOs own all 49 ablation gaps.
-  The remaining 158 prose sentences, independent
+  The remaining 117 prose sentences, independent
   semantic review, mathematical correctness, and result reproduction remain
   open.
 - ROADMAP source-span coverage evidence now records eight coverage surfaces
@@ -1875,9 +1875,9 @@ Important limits:
   claims through Appendix B and Figures 10-14, and the 30 construct-level TeX
   source-detail dispositions, plus all 83 table rows, 240 table cells, 8 code
   listings, 305 listing source lines, 309 explicit TeX math constructs, 128
-  retained prose paragraphs, 402 grammatical sentences, and 812 proposition
-  dispositions across all 244 sentences from the Abstract through Section 4
-  ablations. The 787 implementation-relevant
+  retained prose paragraphs, 403 grammatical sentences, and 985 proposition
+  dispositions across all 286 sentences from the Abstract through Section 5
+  Related Work. The 787 implementation-relevant
   claims currently
   yield 3.8% strict implemented
   parity or 21.5% with partial claims counted at half credit. The weighted
@@ -1886,7 +1886,7 @@ Important limits:
   the retained TeX, and caption/equation-environment/footnote construct
   dispositions are complete, and all table rows/cells, listing lines, and
   explicit math delimiters and retained prose sentences have dispositions, but
-  this is not proposition review for the remaining 158 prose sentences,
+  this is not proposition review for the remaining 117 prose sentences,
   mathematical-correctness, image-pixel, citation-semantic, or independent-
   review audit, joined
   figure/table/appendix reproduction matrix, complete

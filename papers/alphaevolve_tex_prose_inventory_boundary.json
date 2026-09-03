@@ -1,5 +1,5 @@
 {
-  "schema": "libreevolve.alphaevolve_tex_prose_inventory_boundary.v1",
+  "schema": "libreevolve.alphaevolve_tex_prose_inventory_boundary.v2",
   "source_paper_id": "2506.13131",
   "boundary_status": "retained_tex_paragraph_and_sentence_inventory_complete_without_semantic_clause_exhaustiveness",
   "prose_inventory_ready": true,
@@ -354,7 +354,7 @@
     }
   ],
   "paragraph_count": 128,
-  "sentence_count": 402,
+  "sentence_count": 403,
   "paragraph_counts_by_file": {
     "ablations.tex": 7,
     "acknowledgement.tex": 6,
@@ -374,11 +374,11 @@
     "introduction.tex": 29,
     "main.tex": 8,
     "methods.tex": 61,
-    "related_work.tex": 41,
+    "related_work.tex": 42,
     "results.tex": 122
   },
   "disposition_counts": {
-    "existing_bounded_claim_mapping": 372,
+    "existing_bounded_claim_mapping": 373,
     "reviewed_nonclaim": 30
   },
   "unmapped_sentence_count": 0,
@@ -1571,8 +1571,8 @@
         "Optimizing Google's computing ecosystem",
         "Improving data center scheduling"
       ],
-      "source_text": "We address this challenge by framing the online job scheduling problem as a vector bin-packing problem with two variables. In this context, machines represent bins with defined capacities for CPU and memory, and incoming jobs are items with specific resource demands. A heuristic function takes as input a pending job\u2019s CPU and memory requirements and a potential machine\u2019s CPU and memory availability. This function then outputs a priority score for the machine. The Borg scheduler subsequently assigns the pending job to the machine with the highest priority score as determined by the heuristic function, among other objectives. Because this heuristic only influences the ranking of machines already determined by Borg to be available and capable of running each pending job, the resulting scheduling decisions are effectively correct by construction.",
-      "rendered_text": "We address this challenge by framing the online job scheduling problem as a vector bin-packing problem with two variables. In this context, machines represent bins with defined capacities for CPU and memory, and incoming jobs are items with specific resource demands. A heuristic function takes as input a pending job\u2019s CPU and memory requirements and a potential machine\u2019s CPU and memory availability. This function then outputs a priority score for the machine. The Borg scheduler subsequently assigns the pending job to the machine with the highest priority score as determined by the heuristic function, among other objectives. Because this heuristic only influences the ranking of machines already determined by Borg to be available and capable of running each pending job, the resulting scheduling decisions are effectively correct by construction.",
+      "source_text": "We address this challenge by framing the online job scheduling problem as a vector bin-packing problem with two variables. In this context, machines represent bins with defined capacities for CPU and memory, and incoming jobs are items with specific resource demands. A heuristic function takes as input a pending job’s CPU and memory requirements and a potential machine’s CPU and memory availability. This function then outputs a priority score for the machine. The Borg scheduler subsequently assigns the pending job to the machine with the highest priority score as determined by the heuristic function, among other objectives. Because this heuristic only influences the ranking of machines already determined by Borg to be available and capable of running each pending job, the resulting scheduling decisions are effectively correct by construction.",
+      "rendered_text": "We address this challenge by framing the online job scheduling problem as a vector bin-packing problem with two variables. In this context, machines represent bins with defined capacities for CPU and memory, and incoming jobs are items with specific resource demands. A heuristic function takes as input a pending job’s CPU and memory requirements and a potential machine’s CPU and memory availability. This function then outputs a priority score for the machine. The Borg scheduler subsequently assigns the pending job to the machine with the highest priority score as determined by the heuristic function, among other objectives. Because this heuristic only influences the ranking of machines already determined by Borg to be available and capable of running each pending job, the resulting scheduling decisions are effectively correct by construction.",
       "source_text_sha256": "e4bbc79cff0470f161508ed940a5b8141749e9af2b5d60fb2363ed4d44020735",
       "sentence_ids": [
         "tex_prose_sentence_0161",
@@ -1597,8 +1597,8 @@
         "Optimizing Google's computing ecosystem",
         "Improving data center scheduling"
       ],
-      "source_text": "An early version of \\method was used to discover a remarkably simple yet effective heuristic function (shown in \\Cref{fig:alphaevolve_heuristic}), evolving from the existing one in production. We use a simulator of our data centers to provide feedback to \\method based on historical snapshots of workloads and capacity across Google\u2019s fleet. We measure the performance of \\method's heuristic function on an unseen test dataset of recent workloads and capacity to ensure generalization. Observing that \\method's heuristic function outperforms the one in production, we rolled out \\method's heuristic function to the entire fleet. Post-deployment measurements across Google\u2019s fleet confirmed the simulator results, revealing that this heuristic function continuously recovers on average 0.7\\% of Google\u2019s fleet-wide compute resources, which would otherwise be stranded. \\method was chosen over a deep reinforcement learning approach because its code solution not only leads to better performance, but also offers clear advantages in interpretability, debuggability, predictability, and ease of deployment\u2014essential qualities for a mission-critical system.",
-      "rendered_text": "An early version of AlphaEvolve was used to discover a remarkably simple yet effective heuristic function (shown in [citation] ), evolving from the existing one in production. We use a simulator of our data centers to provide feedback to AlphaEvolve based on historical snapshots of workloads and capacity across Google\u2019s fleet. We measure the performance of AlphaEvolve's heuristic function on an unseen test dataset of recent workloads and capacity to ensure generalization. Observing that AlphaEvolve's heuristic function outperforms the one in production, we rolled out AlphaEvolve's heuristic function to the entire fleet. Post-deployment measurements across Google\u2019s fleet confirmed the simulator results, revealing that this heuristic function continuously recovers on average 0.7 percent of Google\u2019s fleet-wide compute resources, which would otherwise be stranded. AlphaEvolve was chosen over a deep reinforcement learning approach because its code solution not only leads to better performance, but also offers clear advantages in interpretability, debuggability, predictability, and ease of deployment\u2014essential qualities for a mission-critical system.",
+      "source_text": "An early version of \\method was used to discover a remarkably simple yet effective heuristic function (shown in \\Cref{fig:alphaevolve_heuristic}), evolving from the existing one in production. We use a simulator of our data centers to provide feedback to \\method based on historical snapshots of workloads and capacity across Google’s fleet. We measure the performance of \\method's heuristic function on an unseen test dataset of recent workloads and capacity to ensure generalization. Observing that \\method's heuristic function outperforms the one in production, we rolled out \\method's heuristic function to the entire fleet. Post-deployment measurements across Google’s fleet confirmed the simulator results, revealing that this heuristic function continuously recovers on average 0.7\\% of Google’s fleet-wide compute resources, which would otherwise be stranded. \\method was chosen over a deep reinforcement learning approach because its code solution not only leads to better performance, but also offers clear advantages in interpretability, debuggability, predictability, and ease of deployment—essential qualities for a mission-critical system.",
+      "rendered_text": "An early version of AlphaEvolve was used to discover a remarkably simple yet effective heuristic function (shown in [citation] ), evolving from the existing one in production. We use a simulator of our data centers to provide feedback to AlphaEvolve based on historical snapshots of workloads and capacity across Google’s fleet. We measure the performance of AlphaEvolve's heuristic function on an unseen test dataset of recent workloads and capacity to ensure generalization. Observing that AlphaEvolve's heuristic function outperforms the one in production, we rolled out AlphaEvolve's heuristic function to the entire fleet. Post-deployment measurements across Google’s fleet confirmed the simulator results, revealing that this heuristic function continuously recovers on average 0.7 percent of Google’s fleet-wide compute resources, which would otherwise be stranded. AlphaEvolve was chosen over a deep reinforcement learning approach because its code solution not only leads to better performance, but also offers clear advantages in interpretability, debuggability, predictability, and ease of deployment—essential qualities for a mission-critical system.",
       "source_text_sha256": "f937c961ce876b816c371ce9f76250ca61e58d0b077d9d4572860f4bb529f24c",
       "sentence_ids": [
         "tex_prose_sentence_0167",
@@ -1623,8 +1623,8 @@
         "Optimizing Google's computing ecosystem",
         "Enhancing Gemini kernel engineering"
       ],
-      "source_text": "Training large models like Gemini requires substantial computational resources. Gemini is built on JAX \\cite{jax2018github}, and Pallas is an extension to JAX that enables writing custom, highly specialized programs (kernels) tailored for optimal execution on hardware accelerators. Therefore, efficient Pallas kernels are crucial for optimizing Gemini\u2019s training performance. A critical aspect of kernel optimization is tuning the tiling strategy for matrix multiplication operations (see~\\Cref{fig:tiling_heuristic}). This technique involves dividing a large matrix multiplication computation into smaller subproblems to better balance computation with data movement, which is key to accelerating the overall computation. Traditionally, kernel engineers rely on either search-based autotuning or manually crafted heuristics to determine near-optimal tiling configurations for various input shapes. Search-based tuning interrupts the research workflow, necessitating retuning for every input shape change. Conversely, manually crafting effective tiling heuristics is a major engineering bottleneck due to its complexity, demanding a deep understanding of both kernel functionality and hardware intricacies. The key advantage of a performant heuristic is its ability to deliver high performance across arbitrary input shapes. Consequently, to expedite the design of performant kernels for emerging hardware and to simplify their utilization by model developers, we aim to facilitate the heuristic generation process.",
-      "rendered_text": "Training large models like Gemini requires substantial computational resources. Gemini is built on JAX [citation] , and Pallas is an extension to JAX that enables writing custom, highly specialized programs (kernels) tailored for optimal execution on hardware accelerators. Therefore, efficient Pallas kernels are crucial for optimizing Gemini\u2019s training performance. A critical aspect of kernel optimization is tuning the tiling strategy for matrix multiplication operations (see [citation] ). This technique involves dividing a large matrix multiplication computation into smaller subproblems to better balance computation with data movement, which is key to accelerating the overall computation. Traditionally, kernel engineers rely on either search-based autotuning or manually crafted heuristics to determine near-optimal tiling configurations for various input shapes. Search-based tuning interrupts the research workflow, necessitating retuning for every input shape change. Conversely, manually crafting effective tiling heuristics is a major engineering bottleneck due to its complexity, demanding a deep understanding of both kernel functionality and hardware intricacies. The key advantage of a performant heuristic is its ability to deliver high performance across arbitrary input shapes. Consequently, to expedite the design of performant kernels for emerging hardware and to simplify their utilization by model developers, we aim to facilitate the heuristic generation process.",
+      "source_text": "Training large models like Gemini requires substantial computational resources. Gemini is built on JAX \\cite{jax2018github}, and Pallas is an extension to JAX that enables writing custom, highly specialized programs (kernels) tailored for optimal execution on hardware accelerators. Therefore, efficient Pallas kernels are crucial for optimizing Gemini’s training performance. A critical aspect of kernel optimization is tuning the tiling strategy for matrix multiplication operations (see~\\Cref{fig:tiling_heuristic}). This technique involves dividing a large matrix multiplication computation into smaller subproblems to better balance computation with data movement, which is key to accelerating the overall computation. Traditionally, kernel engineers rely on either search-based autotuning or manually crafted heuristics to determine near-optimal tiling configurations for various input shapes. Search-based tuning interrupts the research workflow, necessitating retuning for every input shape change. Conversely, manually crafting effective tiling heuristics is a major engineering bottleneck due to its complexity, demanding a deep understanding of both kernel functionality and hardware intricacies. The key advantage of a performant heuristic is its ability to deliver high performance across arbitrary input shapes. Consequently, to expedite the design of performant kernels for emerging hardware and to simplify their utilization by model developers, we aim to facilitate the heuristic generation process.",
+      "rendered_text": "Training large models like Gemini requires substantial computational resources. Gemini is built on JAX [citation] , and Pallas is an extension to JAX that enables writing custom, highly specialized programs (kernels) tailored for optimal execution on hardware accelerators. Therefore, efficient Pallas kernels are crucial for optimizing Gemini’s training performance. A critical aspect of kernel optimization is tuning the tiling strategy for matrix multiplication operations (see [citation] ). This technique involves dividing a large matrix multiplication computation into smaller subproblems to better balance computation with data movement, which is key to accelerating the overall computation. Traditionally, kernel engineers rely on either search-based autotuning or manually crafted heuristics to determine near-optimal tiling configurations for various input shapes. Search-based tuning interrupts the research workflow, necessitating retuning for every input shape change. Conversely, manually crafting effective tiling heuristics is a major engineering bottleneck due to its complexity, demanding a deep understanding of both kernel functionality and hardware intricacies. The key advantage of a performant heuristic is its ability to deliver high performance across arbitrary input shapes. Consequently, to expedite the design of performant kernels for emerging hardware and to simplify their utilization by model developers, we aim to facilitate the heuristic generation process.",
       "source_text_sha256": "a6200c572f41c45007a41f5e9d4b953d49efb92a2638f05900f7d172a3672449",
       "sentence_ids": [
         "tex_prose_sentence_0173",
@@ -1653,8 +1653,8 @@
         "Optimizing Google's computing ecosystem",
         "Enhancing Gemini kernel engineering"
       ],
-      "source_text": "We address this challenge by employing \\method to optimize tiling heuristics for an important matrix multiplication kernel used to train Gemini. The objective is to minimize the kernel's actual runtime. \\method iteratively explores and refines tiling heuristics for this kernel by proposing candidate code, aiming to minimize this runtime on various input shapes on real TPU accelerators. The kernel\u2019s correctness is maintained by construction because \\method is optimizing the tiling strategy for this kernel rather than altering its underlying mathematical operation. To build the training and evaluation datasets for \\method, we automatically collect realistic kernel input shapes from kernel users. Half of these input shapes form the training set, providing the optimization targets during the evolutionary process. The remaining input shapes form the evaluation set, used to test the general applicability of the resulting heuristic.",
-      "rendered_text": "We address this challenge by employing AlphaEvolve to optimize tiling heuristics for an important matrix multiplication kernel used to train Gemini. The objective is to minimize the kernel's actual runtime. AlphaEvolve iteratively explores and refines tiling heuristics for this kernel by proposing candidate code, aiming to minimize this runtime on various input shapes on real TPU accelerators. The kernel\u2019s correctness is maintained by construction because AlphaEvolve is optimizing the tiling strategy for this kernel rather than altering its underlying mathematical operation. To build the training and evaluation datasets for AlphaEvolve, we automatically collect realistic kernel input shapes from kernel users. Half of these input shapes form the training set, providing the optimization targets during the evolutionary process. The remaining input shapes form the evaluation set, used to test the general applicability of the resulting heuristic.",
+      "source_text": "We address this challenge by employing \\method to optimize tiling heuristics for an important matrix multiplication kernel used to train Gemini. The objective is to minimize the kernel's actual runtime. \\method iteratively explores and refines tiling heuristics for this kernel by proposing candidate code, aiming to minimize this runtime on various input shapes on real TPU accelerators. The kernel’s correctness is maintained by construction because \\method is optimizing the tiling strategy for this kernel rather than altering its underlying mathematical operation. To build the training and evaluation datasets for \\method, we automatically collect realistic kernel input shapes from kernel users. Half of these input shapes form the training set, providing the optimization targets during the evolutionary process. The remaining input shapes form the evaluation set, used to test the general applicability of the resulting heuristic.",
+      "rendered_text": "We address this challenge by employing AlphaEvolve to optimize tiling heuristics for an important matrix multiplication kernel used to train Gemini. The objective is to minimize the kernel's actual runtime. AlphaEvolve iteratively explores and refines tiling heuristics for this kernel by proposing candidate code, aiming to minimize this runtime on various input shapes on real TPU accelerators. The kernel’s correctness is maintained by construction because AlphaEvolve is optimizing the tiling strategy for this kernel rather than altering its underlying mathematical operation. To build the training and evaluation datasets for AlphaEvolve, we automatically collect realistic kernel input shapes from kernel users. Half of these input shapes form the training set, providing the optimization targets during the evolutionary process. The remaining input shapes form the evaluation set, used to test the general applicability of the resulting heuristic.",
       "source_text_sha256": "3e1f867d4e0c1751955a0aa8b787d13ea7308a1f7af585abfdb69fe6c89f71c5",
       "sentence_ids": [
         "tex_prose_sentence_0183",
@@ -1680,8 +1680,8 @@
         "Optimizing Google's computing ecosystem",
         "Enhancing Gemini kernel engineering"
       ],
-      "source_text": "This automated approach enables \\method to discover a heuristic that yields an average 23\\% kernel speedup across all kernels over the existing expert-designed heuristic, and a corresponding 1\\% reduction in Gemini\u2019s overall training time. In addition, the use of \\method significantly reduced the kernel optimization time, from several months of dedicated engineering effort to just days of automated experimentation. This acceleration speeds up the deployment of optimized kernels, allowing kernel engineers to dedicate their expertise to more strategic, higher-level optimization problems. Furthermore, \\method offers a path towards automating the manual tuning process and improving the ergonomics of Gemini kernel usage. The tiling heuristic discovered by \\method has been deployed in production, directly enhancing Gemini's training efficiency and the Gemini team\u2019s research and engineering velocity. This deployment also marks a novel instance where Gemini, through the capabilities of \\method, optimizes its own training process.",
-      "rendered_text": "This automated approach enables AlphaEvolve to discover a heuristic that yields an average 23 percent kernel speedup across all kernels over the existing expert-designed heuristic, and a corresponding 1 percent reduction in Gemini\u2019s overall training time. In addition, the use of AlphaEvolve significantly reduced the kernel optimization time, from several months of dedicated engineering effort to just days of automated experimentation. This acceleration speeds up the deployment of optimized kernels, allowing kernel engineers to dedicate their expertise to more strategic, higher-level optimization problems. Furthermore, AlphaEvolve offers a path towards automating the manual tuning process and improving the ergonomics of Gemini kernel usage. The tiling heuristic discovered by AlphaEvolve has been deployed in production, directly enhancing Gemini's training efficiency and the Gemini team\u2019s research and engineering velocity. This deployment also marks a novel instance where Gemini, through the capabilities of AlphaEvolve, optimizes its own training process.",
+      "source_text": "This automated approach enables \\method to discover a heuristic that yields an average 23\\% kernel speedup across all kernels over the existing expert-designed heuristic, and a corresponding 1\\% reduction in Gemini’s overall training time. In addition, the use of \\method significantly reduced the kernel optimization time, from several months of dedicated engineering effort to just days of automated experimentation. This acceleration speeds up the deployment of optimized kernels, allowing kernel engineers to dedicate their expertise to more strategic, higher-level optimization problems. Furthermore, \\method offers a path towards automating the manual tuning process and improving the ergonomics of Gemini kernel usage. The tiling heuristic discovered by \\method has been deployed in production, directly enhancing Gemini's training efficiency and the Gemini team’s research and engineering velocity. This deployment also marks a novel instance where Gemini, through the capabilities of \\method, optimizes its own training process.",
+      "rendered_text": "This automated approach enables AlphaEvolve to discover a heuristic that yields an average 23 percent kernel speedup across all kernels over the existing expert-designed heuristic, and a corresponding 1 percent reduction in Gemini’s overall training time. In addition, the use of AlphaEvolve significantly reduced the kernel optimization time, from several months of dedicated engineering effort to just days of automated experimentation. This acceleration speeds up the deployment of optimized kernels, allowing kernel engineers to dedicate their expertise to more strategic, higher-level optimization problems. Furthermore, AlphaEvolve offers a path towards automating the manual tuning process and improving the ergonomics of Gemini kernel usage. The tiling heuristic discovered by AlphaEvolve has been deployed in production, directly enhancing Gemini's training efficiency and the Gemini team’s research and engineering velocity. This deployment also marks a novel instance where Gemini, through the capabilities of AlphaEvolve, optimizes its own training process.",
       "source_text_sha256": "1021dd0085d2ac480ae4ddb13cc6c6b760c1ca9265bff62b1f8337ac6209f753",
       "sentence_ids": [
         "tex_prose_sentence_0190",
@@ -1754,8 +1754,8 @@
         "Optimizing Google's computing ecosystem",
         "Assisting in hardware circuit design"
       ],
-      "source_text": "Integrated into an upcoming TPU, this improvement represents Gemini\u2019s first direct contribution to TPU arithmetic circuits, achieved via \\method, paving the way for future contributions. A key advantage of \\method is that it communicates the suggested changes directly in Verilog, the standard language used by hardware engineers, fostering trust and simplifying adoption. This early exploration demonstrates a novel approach where LLM-powered code evolution assists in hardware design, potentially reducing time to market.",
-      "rendered_text": "Integrated into an upcoming TPU, this improvement represents Gemini\u2019s first direct contribution to TPU arithmetic circuits, achieved via AlphaEvolve, paving the way for future contributions. A key advantage of AlphaEvolve is that it communicates the suggested changes directly in Verilog, the standard language used by hardware engineers, fostering trust and simplifying adoption. This early exploration demonstrates a novel approach where LLM-powered code evolution assists in hardware design, potentially reducing time to market.",
+      "source_text": "Integrated into an upcoming TPU, this improvement represents Gemini’s first direct contribution to TPU arithmetic circuits, achieved via \\method, paving the way for future contributions. A key advantage of \\method is that it communicates the suggested changes directly in Verilog, the standard language used by hardware engineers, fostering trust and simplifying adoption. This early exploration demonstrates a novel approach where LLM-powered code evolution assists in hardware design, potentially reducing time to market.",
+      "rendered_text": "Integrated into an upcoming TPU, this improvement represents Gemini’s first direct contribution to TPU arithmetic circuits, achieved via AlphaEvolve, paving the way for future contributions. A key advantage of AlphaEvolve is that it communicates the suggested changes directly in Verilog, the standard language used by hardware engineers, fostering trust and simplifying adoption. This early exploration demonstrates a novel approach where LLM-powered code evolution assists in hardware design, potentially reducing time to market.",
       "source_text_sha256": "d1ecd4e279bdfd294b50dc05f0ef58b946044c79b21c3fee3f3eb39afd14eaea",
       "sentence_ids": [
         "tex_prose_sentence_0204",
@@ -2075,9 +2075,10 @@
       "sentence_ids": [
         "tex_prose_sentence_0261",
         "tex_prose_sentence_0262",
-        "tex_prose_sentence_0263"
+        "tex_prose_sentence_0263",
+        "tex_prose_sentence_0264"
       ],
-      "sentence_count": 3,
+      "sentence_count": 4,
       "all_sentences_dispositioned": true
     },
     {
@@ -2094,10 +2095,10 @@
       "rendered_text": "Evolutionary methods have also found use in the recent AI Co-Scientist work [citation] , which seeks to automate scientific discovery using distinct agents for tasks like hypothesis discovery, ranking of hypotheses, and literature review. While AI Co-Scientist represents scientific hypotheses and their evaluation criteria in natural language, AlphaEvolve focuses on evolving code, and directs evolution using programmatic evaluation functions. This choice enables us to substantially sidestep LLM hallucinations, which allows AlphaEvolve to carry on the evolution process for a large number of time steps. Nevertheless, it is possible in principle to combine the two approaches, leading to a method that allows a flexible combination of natural-language and programmatic idioms.",
       "source_text_sha256": "4a333b38e0747686778e01ec40ca9799808f21b1f4a76e1e550c2382391eb8bd",
       "sentence_ids": [
-        "tex_prose_sentence_0264",
         "tex_prose_sentence_0265",
         "tex_prose_sentence_0266",
-        "tex_prose_sentence_0267"
+        "tex_prose_sentence_0267",
+        "tex_prose_sentence_0268"
       ],
       "sentence_count": 4,
       "all_sentences_dispositioned": true
@@ -2116,9 +2117,9 @@
       "rendered_text": "AlphaEvolve can be viewed as a method for code superoptimization in that it iteratively improves an initial program using execution feedback. The idea of code superoptimization goes back to the 1980s [citation] ; pre-LLM approaches to the problem included systematic enumeration [citation] , genetic search [citation] , Monte Carlo sampling [citation] , and deep reinforcement learning [citation] . Additionally, in limited settings that focus on a single problem such as matrix multiplication, there have been systems such as AlphaTensor that were also able to discover provably correct algorithms [citation] .",
       "source_text_sha256": "2132bfb4423ce293d9d3f9de62d2437c23e665a15f59cc96912544cc6ddcd6de",
       "sentence_ids": [
-        "tex_prose_sentence_0268",
         "tex_prose_sentence_0269",
-        "tex_prose_sentence_0270"
+        "tex_prose_sentence_0270",
+        "tex_prose_sentence_0271"
       ],
       "sentence_count": 3,
       "all_sentences_dispositioned": true
@@ -2137,11 +2138,11 @@
       "rendered_text": "More recently, a body of LLM-based approaches to superoptimization and algorithm discovery have emerged. This literature builds on the success of LLMs in coding tasks, perhaps best illustrated by their success in (simulated) programming competitions as in the case of AlphaCode [citation] . For instance, LLM agents have been used to optimize certain operations in GPU kernels, such as the attention operation [citation] or more general user-specified operations [citation] . There is also work on using LLMs to discover novel evolutionary algorithms [citation] , train language models [citation] , and optimize warehouse-scale computers [citation] . Other recent work [citation] has also proposed the use of multiple LLM agents that converse with each other to accomplish mathematical and coding tasks.",
       "source_text_sha256": "4929bce35c5d84e320eb066ce0df8a37223e8be82a070091f9d714277abae374",
       "sentence_ids": [
-        "tex_prose_sentence_0271",
         "tex_prose_sentence_0272",
         "tex_prose_sentence_0273",
         "tex_prose_sentence_0274",
-        "tex_prose_sentence_0275"
+        "tex_prose_sentence_0275",
+        "tex_prose_sentence_0276"
       ],
       "sentence_count": 5,
       "all_sentences_dispositioned": true
@@ -2160,7 +2161,7 @@
       "rendered_text": "While previous work on using LLMs for algorithm discovery provided promising results, AlphaEvolve's approach to leverage it for evolutionary algorithms allows us to address significantly more challenging problems, as demonstrated in [citation] .",
       "source_text_sha256": "0e750848e29cd84d2d26adb5c696b062d8521299b5279eac08611f542f4d29d1",
       "sentence_ids": [
-        "tex_prose_sentence_0276"
+        "tex_prose_sentence_0277"
       ],
       "sentence_count": 1,
       "all_sentences_dispositioned": true
@@ -2179,8 +2180,8 @@
       "rendered_text": "Over the last decade, AI systems have been applied to a wide range of scientific disciplines and tasks, from protein structure prediction [citation] to quantum physics [citation] to climate sciences [citation] . In particular, there are numerous recent LLM-based methods that target scientific problems in multiple disciplines, such as materials science [citation] , chemistry [citation] , bioinformatics [citation] , geoscience [citation] , and quantum physics [citation] (for surveys on the topic, see [citation] ).",
       "source_text_sha256": "948cbb6a48750a40a90699ffa5545aced203f223ab2adf881c6165aa92949721",
       "sentence_ids": [
-        "tex_prose_sentence_0277",
-        "tex_prose_sentence_0278"
+        "tex_prose_sentence_0278",
+        "tex_prose_sentence_0279"
       ],
       "sentence_count": 2,
       "all_sentences_dispositioned": true
@@ -2199,11 +2200,11 @@
       "rendered_text": "Many of these methods use LLMs to automate several distinct stages of the scientific discovery process [citation] , e.g., for generating and ranking hypotheses and ideas [citation] . Of these methods, especially related to AlphaEvolve are the methods that use LLM-guided tree search-based algorithms [citation] or LLM-guided evolutionary algorithms [citation] . Other works use LLMs to optimize experimental planning and design [citation] or experiment execution and workflow [citation] . Finally, there are also works focusing on the data analysis stage [citation] . AlphaEvolve differs from most of these methods in its use of programmatic hypothesis representations and evaluation metrics.",
       "source_text_sha256": "7e38b6d0a04136ce4090abcf6802dc729dba2a4c5cd048e77e81c052fc2884a1",
       "sentence_ids": [
-        "tex_prose_sentence_0279",
         "tex_prose_sentence_0280",
         "tex_prose_sentence_0281",
         "tex_prose_sentence_0282",
-        "tex_prose_sentence_0283"
+        "tex_prose_sentence_0283",
+        "tex_prose_sentence_0284"
       ],
       "sentence_count": 5,
       "all_sentences_dispositioned": true
@@ -2222,8 +2223,8 @@
       "rendered_text": "AI systems have also contributed to advances in pure mathematics [citation] . In this context, the FunSearch approach [citation] established LLM-guided evolution as a powerful tool for discovering witnesses for, and counterexamples to, mathematical statements---a problem that is complementary to that of finding formal and informal proofs of mathematical statements [citation] .",
       "source_text_sha256": "d50afeaaab334bcd256a04eaf73d41a57678857e7c677da6c4725e0285f1f853",
       "sentence_ids": [
-        "tex_prose_sentence_0284",
-        "tex_prose_sentence_0285"
+        "tex_prose_sentence_0285",
+        "tex_prose_sentence_0286"
       ],
       "sentence_count": 2,
       "all_sentences_dispositioned": true
@@ -2242,7 +2243,7 @@
       "rendered_text": "AlphaEvolve demonstrates the surprising power of combining state-of-the-art LLMs with automated evaluation metrics within an evolutionary framework, which can lead to new discoveries on decades-old mathematical problems as well as practical improvements to highly optimized compute stacks.",
       "source_text_sha256": "d2dc7cabe310a6720ca0e2c764bedcfb9c913719ff6e2a3424f4db7d1b92f08b",
       "sentence_ids": [
-        "tex_prose_sentence_0286"
+        "tex_prose_sentence_0287"
       ],
       "sentence_count": 1,
       "all_sentences_dispositioned": true
@@ -2261,8 +2262,8 @@
       "rendered_text": "Interestingly, AlphaEvolve often allows approaching the same problem in different ways: searching for the solution directly, finding a function that constructs it from scratch, or evolving a search algorithm to find it. Applying AlphaEvolve in different ways comes with different biases (for example, finding constructive functions may favor discovering highly symmetric objects [citation] ) and thus can suit different problems.",
       "source_text_sha256": "580ba97398cdf6bd0bcc5bc0bc5e4085ccbc60929c7e9d42ef3e65eb72f66573",
       "sentence_ids": [
-        "tex_prose_sentence_0287",
-        "tex_prose_sentence_0288"
+        "tex_prose_sentence_0288",
+        "tex_prose_sentence_0289"
       ],
       "sentence_count": 2,
       "all_sentences_dispositioned": true
@@ -2281,10 +2282,10 @@
       "rendered_text": "AlphaEvolve can also be seen as a test-time compute agent that, through its evolutionary procedure, significantly enhances the capability of the base LLM (compared to, e.g., repeated sampling). On one hand, this can be seen as a compelling demonstration of how machine feedback is able to sustain test-time compute scaling up to regimes where new scientific discoveries and highly valuable practical optimizations are made. On the other hand, a natural next step will be to consider distilling the AlphaEvolve-augmented performance of the base LLMs into the next generation of the base models. This can have intrinsic value and also, likely, uplift the next version of AlphaEvolve.",
       "source_text_sha256": "f14928a7827228c886802ec4776b36a5ea15af9b985b6e5ea2b754a3cf0a3377",
       "sentence_ids": [
-        "tex_prose_sentence_0289",
         "tex_prose_sentence_0290",
         "tex_prose_sentence_0291",
-        "tex_prose_sentence_0292"
+        "tex_prose_sentence_0292",
+        "tex_prose_sentence_0293"
       ],
       "sentence_count": 4,
       "all_sentences_dispositioned": true
@@ -2303,9 +2304,9 @@
       "rendered_text": "Beyond distillation, it is also intriguing that AlphaEvolve can make practical discoveries that increase the efficiency of its own infrastructure and of (future versions of) its base LLMs. Currently, the gains are moderate and the feedback loops for improving the next version of AlphaEvolve are on the order of months. However, with these improvements we envision that the value of setting up more environments (problems) with robust evaluation functions will become more widely recognized, which in turn will result in more high-value practical discoveries going forward.",
       "source_text_sha256": "19e13be3a5c70530e5648b42fc32db734e917cd129a812c7a4a1bd0c4ab13c3c",
       "sentence_ids": [
-        "tex_prose_sentence_0293",
         "tex_prose_sentence_0294",
-        "tex_prose_sentence_0295"
+        "tex_prose_sentence_0295",
+        "tex_prose_sentence_0296"
       ],
       "sentence_count": 3,
       "all_sentences_dispositioned": true
@@ -2324,10 +2325,10 @@
       "rendered_text": "The main limitation of AlphaEvolve is that it handles problems for which it is possible to devise an automated evaluator. While this is true of many problems in the mathematical and computational sciences, there are domains such as the natural sciences where only some experiments can be simulated or automated. While AlphaEvolve does allow for LLM-provided evaluation of ideas, this is not a setting we have optimized for. However, concurrent work shows this is possible [citation] , and a natural step would be to link the two settings, with LLMs providing feedback on high-level ideas before transitioning to an implementation stage, for which machine feedback is available through code execution.",
       "source_text_sha256": "b140a57e01b0b969d55a455ed535059882de3dc9d0ca3c3c81bf98bd5db6f1bf",
       "sentence_ids": [
-        "tex_prose_sentence_0296",
         "tex_prose_sentence_0297",
         "tex_prose_sentence_0298",
-        "tex_prose_sentence_0299"
+        "tex_prose_sentence_0299",
+        "tex_prose_sentence_0300"
       ],
       "sentence_count": 4,
       "all_sentences_dispositioned": true
@@ -2346,8 +2347,8 @@
       "rendered_text": "We thank Michael Figurnov for reviewing this white paper; Alhussein Fawzi, Bernardino Romera-Paredes, and Ankit Anand for early explorations and insightful discussions; Stig Petersen and Demis Hassabis for support and advice; JD Velasquez for helpful advice on managing the practical applications; and all early users and collaborators of AlphaEvolve for their diverse use cases and insightful feedback, which shaped it into a more robust and versatile tool for a wide range of applications. We gratefully acknowledge the invaluable contributions of these individuals towards the applications highlighted in this white paper:",
       "source_text_sha256": "1c38e2578e024a6a8cabc4cb6dc82428e27406d27d6b82c33c5b6f084d1d5ab9",
       "sentence_ids": [
-        "tex_prose_sentence_0300",
-        "tex_prose_sentence_0301"
+        "tex_prose_sentence_0301",
+        "tex_prose_sentence_0302"
       ],
       "sentence_count": 2,
       "all_sentences_dispositioned": true
@@ -2366,7 +2367,7 @@
       "rendered_text": "Terence Tao, Javier Gomez Serrano, and Jordan Ellenberg for suggesting specific open mathematical problems and advising on how to best formulate them for AlphaEvolve; Bogdan Georgiev, Ray Jiang, and Johannes Bausch for their contributions to applying AlphaEvolve to such problems.",
       "source_text_sha256": "5c4f3e960a5e0594ed483712f2f7a79ef9684f1755430ee2995af33370cc02bd",
       "sentence_ids": [
-        "tex_prose_sentence_0302"
+        "tex_prose_sentence_0303"
       ],
       "sentence_count": 1,
       "all_sentences_dispositioned": true
@@ -2385,7 +2386,7 @@
       "rendered_text": "Mohammadamin Barekatain, Patrick Heisel, Chase Hensel, Robert O'Callahan, and Pengming Wang for co-leading the application to data center scheduling; Federico Piccinini, Sultan Kenjeyev, and Andrea Michi for making significant contributions; Kieran Milan, Daniel Mankowitz, Cosmin Paduraru, Calin Cascaval, Tammo Spalink, and Natasha Antropova for providing helpful advice; Aaron Gentleman, Gaurav Dhiman, Parthasarathy Ranganatha, and Amin Vahdat for reviewing this work.",
       "source_text_sha256": "41281f3fbfba6b7e50da4fe2d388a73d89ca340d15ed1fdf83ce174cb31946ba",
       "sentence_ids": [
-        "tex_prose_sentence_0303"
+        "tex_prose_sentence_0304"
       ],
       "sentence_count": 1,
       "all_sentences_dispositioned": true
@@ -2404,7 +2405,7 @@
       "rendered_text": "Yanislav Donchev for leading the application to Gemini kernel engineering; Richard Tanburn for making significant contributions; Justin Chiu and Julian Walker for providing helpful advice; Jean-Baptiste Alayrac, Dmitry Lepikhin, Sebastian Borgeaud, Koray Kavukcuoglu and Jeff Dean for reviewing this work.",
       "source_text_sha256": "5755f4613a01f268d88b2c7e544d5fcdae9cd3f7e75df75a9b1201f2d3af4d70",
       "sentence_ids": [
-        "tex_prose_sentence_0304"
+        "tex_prose_sentence_0305"
       ],
       "sentence_count": 1,
       "all_sentences_dispositioned": true
@@ -2423,7 +2424,7 @@
       "rendered_text": "Timur Sitdikov for leading the application to TPU circuit design; Georges Rotival for providing the circuit evaluation infrastructure; Kirk Sanders, Srikanth Dwarakanath, Indranil Chakraborty, Christopher Clark for verifying and validating the results in the TPU design; Vinod Nair, Sergio Guadarrama, Dimitrios Vytiniotis, and Daniel Belov for their helpful advice; Kerry Takenaka, Jeff Dean, Sridhar Lakshmanamurthy, Parthasarathy Ranganathan, and Amin Vahdat for reviewing this work.",
       "source_text_sha256": "ae674345f4467f2d5a128945263623a473e5ea30d6e6d3a8fff54e24c508f0ef",
       "sentence_ids": [
-        "tex_prose_sentence_0305"
+        "tex_prose_sentence_0306"
       ],
       "sentence_count": 1,
       "all_sentences_dispositioned": true
@@ -2442,7 +2443,7 @@
       "rendered_text": "Benjamin Chetioui, Sergei Lebedev, Alexander Belyaev, Henning Becker, Oleg Shyshkov, and Aliia Khasanova for their help with XLA modifications as well as their helpful advice; Giorgio Arena, Marco Cornero, and Sebastian Bodenstein for reviewing this work.",
       "source_text_sha256": "fb70175180c880b95efba2dd902a3320a42a14f9ae4a46db657e64ec8f1fc453",
       "sentence_ids": [
-        "tex_prose_sentence_0306"
+        "tex_prose_sentence_0307"
       ],
       "sentence_count": 1,
       "all_sentences_dispositioned": true
@@ -2461,10 +2462,10 @@
       "rendered_text": "We provide the best ranks obtained by AlphaEvolve in [citation] . Overall, we considered 54 matrix multiplication sizes in our experiments. These were chosen roughly representing sizes m,n,p where 2 m,n 5 , with some reasonable cutoff for p . Due to symmetries of the underlying matrix multiplication tensor, there exist equivalent algorithms for any permutations of the three axes, hence we focus on sorted sizes m n p .",
       "source_text_sha256": "ba1e6530c357feabdc5eb017173657968850e15d45993b6bdaf70e2a9fc014ab",
       "sentence_ids": [
-        "tex_prose_sentence_0307",
         "tex_prose_sentence_0308",
         "tex_prose_sentence_0309",
-        "tex_prose_sentence_0310"
+        "tex_prose_sentence_0310",
+        "tex_prose_sentence_0311"
       ],
       "sentence_count": 4,
       "all_sentences_dispositioned": true
@@ -2483,9 +2484,9 @@
       "rendered_text": "In all but two considered sizes, AlphaEvolve discovered programs which either match or surpass the best known rank. Anecdotally, we encountered some difficulty when increasing the problem size: when we run the discovered programs on sizes beyond 5,5,5 on 1000 random seeds on evaluators with a single GPU accelerator, we often run out of memory. Hence, extending our setup to larger matrix sizes requires further optimization.",
       "source_text_sha256": "448832c4b3b337f8b7bd068520880dbfec46873d0281f88ea7ac20a74bb07f8e",
       "sentence_ids": [
-        "tex_prose_sentence_0311",
         "tex_prose_sentence_0312",
-        "tex_prose_sentence_0313"
+        "tex_prose_sentence_0313",
+        "tex_prose_sentence_0314"
       ],
       "sentence_count": 3,
       "all_sentences_dispositioned": true
@@ -2504,7 +2505,7 @@
       "rendered_text": "Note: Concurrent work [citation] has also found a rank- 90 algorithm for 4, 5, 6 .",
       "source_text_sha256": "d5aa558079712892c9ece4fb01fa933187820f531cad9b142ae794ddc66a2c5b",
       "sentence_ids": [
-        "tex_prose_sentence_0314"
+        "tex_prose_sentence_0315"
       ],
       "sentence_count": 1,
       "all_sentences_dispositioned": true
@@ -2523,7 +2524,7 @@
       "rendered_text": "In [citation] , we show a magnified version of [citation] (left), which corresponds to the program that discovers a decomposition of rank 48 for the 3D tensor representing the operation of multiplying two 4 times 4 matrices.",
       "source_text_sha256": "36745e6c1f93c72a231abb5174adb7ee9537cd3ceb7c1a782d5d9f77489d8022",
       "sentence_ids": [
-        "tex_prose_sentence_0315"
+        "tex_prose_sentence_0316"
       ],
       "sentence_count": 1,
       "all_sentences_dispositioned": true
@@ -2542,7 +2543,7 @@
       "rendered_text": "The data and verification code for all constructions reported in this section appear in .",
       "source_text_sha256": "397be9a5f2c4eeedd5c502be7c14c73b94eb9a488d526ef166cbf850413f3bd9",
       "sentence_ids": [
-        "tex_prose_sentence_0316"
+        "tex_prose_sentence_0317"
       ],
       "sentence_count": 1,
       "all_sentences_dispositioned": true
@@ -2562,8 +2563,8 @@
       "rendered_text": "For any function f: R R , define the autoconvolution of f as f*f (t) _ R f(t-x) f(x) dx. Let C_1 denote the largest constant satisfying",
       "source_text_sha256": "8c2b4c3583186352700466c1a31459ff736f7c963d33382cf5420ba481b02add",
       "sentence_ids": [
-        "tex_prose_sentence_0317",
-        "tex_prose_sentence_0318"
+        "tex_prose_sentence_0318",
+        "tex_prose_sentence_0319"
       ],
       "sentence_count": 2,
       "all_sentences_dispositioned": true
@@ -2583,10 +2584,10 @@
       "rendered_text": "for all non-negative f: R R . This problem arises in additive combinatorics, relating to the size of Sidon sets. It is currently known that 1.28 C_1 1.5098, with the lower bound achieved in [citation] and the upper bound achieved in [citation] via a step function construction. AlphaEvolve found a step function with 600 equally-spaced intervals on [-1/4,1/4] that gives a slightly better upper bound C_1 1.5053 .",
       "source_text_sha256": "7bdbabe3cbe6f1506cc52c7f4ad86442586199656882c287cf9f3b1b15c2da32",
       "sentence_ids": [
-        "tex_prose_sentence_0319",
         "tex_prose_sentence_0320",
         "tex_prose_sentence_0321",
-        "tex_prose_sentence_0322"
+        "tex_prose_sentence_0322",
+        "tex_prose_sentence_0323"
       ],
       "sentence_count": 4,
       "all_sentences_dispositioned": true
@@ -2606,9 +2607,9 @@
       "rendered_text": "Let C_2 be the smallest constant for which one has |f*f |_2^2 C_2 |f*f |_1 |f*f |_ for all non-negative f: R R . It is known that 0.88922 C_2 1 with the lower bound coming from a step function construction [citation] . AlphaEvolve found a step function with 50 equally-spaced intervals on [-1/4,1/4] that gives a slightly better lower bound 0.8962 C_2 .",
       "source_text_sha256": "71ac113c079a0eb111ff52c2cace3cc66bca008992218c4404d7418db547a577",
       "sentence_ids": [
-        "tex_prose_sentence_0323",
         "tex_prose_sentence_0324",
-        "tex_prose_sentence_0325"
+        "tex_prose_sentence_0325",
+        "tex_prose_sentence_0326"
       ],
       "sentence_count": 3,
       "all_sentences_dispositioned": true
@@ -2628,10 +2629,10 @@
       "rendered_text": "Let C_3 be the largest constant satisfying _ -1/2 t 1/2 |f*f(t) | C_3 ( _ -1/4 ^ 1/4 f(x) dx )^2 for any function f: R R . Clearly C_3 C_1 , since we now allow f to take positive and negative values. There is a step function that gives the upper bound C_3 1.45810 [citation] . AlphaEvolve found a step function with 400 equally-spaced intervals on [-1/4,1/4] that gives a slightly better upper bound C_3 1.4557 .",
       "source_text_sha256": "2b7c41726ca77cd5034e7ec027ed7ac3aeaa3f0d9c7d3328b291bbf58b45389c",
       "sentence_ids": [
-        "tex_prose_sentence_0326",
         "tex_prose_sentence_0327",
         "tex_prose_sentence_0328",
-        "tex_prose_sentence_0329"
+        "tex_prose_sentence_0329",
+        "tex_prose_sentence_0330"
       ],
       "sentence_count": 4,
       "all_sentences_dispositioned": true
@@ -2651,11 +2652,11 @@
       "rendered_text": "Given a function f: R R , define the Fourier transform f( ) := _ R f(x) e^ -2 i x dx and A(f) := r > 0: f(x) 0 for all |x| r . Let C_4 be the largest constant for which one has A(f) A( f) C_4 for all even f with (f(0), f(0)) < 0 . It is known [citation] that 0.2025 C_4 0.3523. (The upper bound is stated as 0.353 in the paper, but rounding their solution to the fourth digit gives 0.3523 ). We improved the upper bound to C_4 0.3521 with a similar linear combination as in [citation] , but with refined constants that were found by AlphaEvolve.",
       "source_text_sha256": "bafdb7faf2f6ceaeb2740b42a5d9950ce986f104a864022d733fec16e9d73c59",
       "sentence_ids": [
-        "tex_prose_sentence_0330",
         "tex_prose_sentence_0331",
         "tex_prose_sentence_0332",
         "tex_prose_sentence_0333",
-        "tex_prose_sentence_0334"
+        "tex_prose_sentence_0334",
+        "tex_prose_sentence_0335"
       ],
       "sentence_count": 5,
       "all_sentences_dispositioned": true
@@ -2675,13 +2676,13 @@
       "rendered_text": "To obtain upper bounds for C_4 , one constructs a specific \"test function\" f satisfying the conditions and calculates the value A(f)A( f) for this function, which provides an upper bound C_4 A(f)A( f) . Following the approach in [citation] , the test function is sought in the form f(x) = P(x)e^ - x^2 , where P(x) is an even polynomial constructed as a linear combination of Hermite polynomials H_ 4k (x) . This form is particularly useful because the Fourier transform of H_n(x)e^ - x^2 is i^n H_n( )e^ - ^2 . For an even polynomial P(x) = c_ 4k H_ 4k (x) , the Fourier transform of f(x) is f( ) = c_ 4k i^ 4k H_ 4k ( )e^ - ^2 = ( c_ 4k H_ 4k ( ))e^ - ^2 = P( )e^ - ^2 . Thus, A(f) is related to the largest positive root of P(x) , and A( f) is related to the largest positive root of P( ) . Specifically, if P(x) 0 for large |x| , A(f) is the largest positive root of P(x) , and A( f) is the largest positive root of P( ) , implying A(f) = A( f) . The inequality becomes C_4 (A(f))^2 .",
       "source_text_sha256": "48317d72935e7d4e8d56b351b094e6d0b2fefc495121d6d60820a675dd0ebf22",
       "sentence_ids": [
-        "tex_prose_sentence_0335",
         "tex_prose_sentence_0336",
         "tex_prose_sentence_0337",
         "tex_prose_sentence_0338",
         "tex_prose_sentence_0339",
         "tex_prose_sentence_0340",
-        "tex_prose_sentence_0341"
+        "tex_prose_sentence_0341",
+        "tex_prose_sentence_0342"
       ],
       "sentence_count": 7,
       "all_sentences_dispositioned": true
@@ -2701,10 +2702,10 @@
       "rendered_text": "The method involves finding coefficients c_0, c_1, c_2, for the polynomial P(x) = c_0 H_0(x) + c_1 H_4(x) + c_2 H_8(x) + such that P(x) satisfies certain constraints (related to f(0)<0, f(0)<0 and being positive for large |x| ) and minimizes the largest positive root of P(x) . In our approach, the polynomial P(x) is constructed such that P(0)=0 (a condition used in the optimization process to simplify constraints), meaning P(x) has a factor of x^2 . The largest positive root r_ of P(x) is then the largest positive root of P(x)/x^2 . The upper bound on C_4 derived from this construction is r_ ^2 / (2 ) .",
       "source_text_sha256": "161ca64d20481e8b8d0a5fb52ab8086de3ccd2b65683b90674cd6ac35c4ac45d",
       "sentence_ids": [
-        "tex_prose_sentence_0342",
         "tex_prose_sentence_0343",
         "tex_prose_sentence_0344",
-        "tex_prose_sentence_0345"
+        "tex_prose_sentence_0345",
+        "tex_prose_sentence_0346"
       ],
       "sentence_count": 4,
       "all_sentences_dispositioned": true
@@ -2724,9 +2725,9 @@
       "rendered_text": "The refined constants found by AlphaEvolve for P(x) = c_0 H_0(x) + c_1 H_4(x) + c_2 H_8(x) are [c_0, c_1, c_2] [0.32925, -0.01159, -8.9216 times 10^ -5 ] . Using these coefficients to construct P(x) , finding its largest positive root r_ (by finding the largest positive root of P(x)/x^2 ), and calculating r_ ^2 / (2 ) yields the improved upper bound C_4 0.3521 . Qualitatively our linear combination is very similar to the one found in [citation] , thus empirically confirming their hypothesis the construction is nearly optimal.",
       "source_text_sha256": "5401082d58dee426b3fd10199ca56faa6cb0e9f4803706f34fad2da468233249",
       "sentence_ids": [
-        "tex_prose_sentence_0346",
         "tex_prose_sentence_0347",
-        "tex_prose_sentence_0348"
+        "tex_prose_sentence_0348",
+        "tex_prose_sentence_0349"
       ],
       "sentence_count": 3,
       "all_sentences_dispositioned": true
@@ -2746,9 +2747,9 @@
       "rendered_text": "Note: After publishing the first version of this manuscript, Henry Cohn pointed out that in a recent paper [citation] they used a similar, but more refined approach to get the better constant 0.3284. By incorporating their refined approach into AlphaEvolve, we improved our reported constant further to 0.3216. For details, we refer to .",
       "source_text_sha256": "814f867498f4f20cefefb03eb5f5ff3c6c50e82b15e1d39fb4bf1d6a8c275eeb",
       "sentence_ids": [
-        "tex_prose_sentence_0349",
         "tex_prose_sentence_0350",
-        "tex_prose_sentence_0351"
+        "tex_prose_sentence_0351",
+        "tex_prose_sentence_0352"
       ],
       "sentence_count": 3,
       "all_sentences_dispositioned": true
@@ -2768,9 +2769,9 @@
       "rendered_text": "Let C_5 be the largest constant for which _ x [-2,2] _ -1 ^1 f(t) g(x+t) dt C_5 for all non-negative f,g: [-1,1] [0,1] with f+g=1 on [-1,1] and f = 1 , where we extend f,g by zero outside of [-1,1] . This constant controls the asymptotics of the Minimum Overlap Problem of [citation] . The bounds 0.379005 C_5 0.380927 are known, where the lower bound was obtained in [citation] via convex programming methods.",
       "source_text_sha256": "a5ecd79f74ccbed805393363aa873d35a4b9327a343e18c2e9b720022ccb976b",
       "sentence_ids": [
-        "tex_prose_sentence_0352",
         "tex_prose_sentence_0353",
-        "tex_prose_sentence_0354"
+        "tex_prose_sentence_0354",
+        "tex_prose_sentence_0355"
       ],
       "sentence_count": 3,
       "all_sentences_dispositioned": true
@@ -2790,9 +2791,9 @@
       "rendered_text": "It is known (see [citation] ) that this constant is equal to the infimum, over all step functions h on [0, 2] with values in [0, 1] and satisfying _0^2 h(x)dx = 1 of _k h(x)(1 - h(x+k))dx . The upper bound to the Erd o s minimum overlap problem was then obtained by using this result, in [citation] by a step function construction. The step function depicted in [citation] does ever so slightly better than the previous bound, giving the upper bound of C_5 0.380924 .",
       "source_text_sha256": "a72fd85270cdaec57a0a28991eff49aeeb59b0fcbc3a4c249e94b899745c7e3c",
       "sentence_ids": [
-        "tex_prose_sentence_0355",
         "tex_prose_sentence_0356",
-        "tex_prose_sentence_0357"
+        "tex_prose_sentence_0357",
+        "tex_prose_sentence_0358"
       ],
       "sentence_count": 3,
       "all_sentences_dispositioned": true
@@ -2812,10 +2813,10 @@
       "rendered_text": "Let C_6 be the largest constant for which the following statement holds: there exist arbitrarily large finite sets of integers A,B with |A+B| |A| and |A-B| |A+B|^ C_6 . (Here A+B = a+b : a A, b B and A-B = a-b : a A, b B denote the sumset and difference set, respectively. The notation X Y means that X C Y for some constant C independent of the sets A,B (for sufficiently large sets A,B ). The notation X Y means that X C' Y for some positive constant C' independent of the sets A,B (for sufficiently large sets A,B ).)",
       "source_text_sha256": "5f3ab56fc56fa00c7e6f499fda10a2ad42b3d52be7edb9d258e0113b7468780b",
       "sentence_ids": [
-        "tex_prose_sentence_0358",
         "tex_prose_sentence_0359",
         "tex_prose_sentence_0360",
-        "tex_prose_sentence_0361"
+        "tex_prose_sentence_0361",
+        "tex_prose_sentence_0362"
       ],
       "sentence_count": 4,
       "all_sentences_dispositioned": true
@@ -2835,8 +2836,8 @@
       "rendered_text": "see [citation] for the upper bound and [citation] for the lower bound. The main tool for the lower bound is the following result of [citation] :",
       "source_text_sha256": "4072bb9075428406f3aaff0c90332795581eae0eeb3216edc39fb59fb08f1a3a",
       "sentence_ids": [
-        "tex_prose_sentence_0362",
-        "tex_prose_sentence_0363"
+        "tex_prose_sentence_0363",
+        "tex_prose_sentence_0364"
       ],
       "sentence_count": 2,
       "all_sentences_dispositioned": true
@@ -2856,8 +2857,8 @@
       "rendered_text": "for any finite set U of non-negative integers containing zero satisfying |U-U| 2 (U) + 1 . AlphaEvolve found a set U_1 of size 2003 improving the lower bound to 1.1479 C_6 , and another set U_2 of size 54265 further improving the lower bound to 1.1584 C_6 .",
       "source_text_sha256": "86bfbbf1dbc8a1bb2e83a01d47b27902ae561df393a95bf93ddcc088809a478e",
       "sentence_ids": [
-        "tex_prose_sentence_0364",
-        "tex_prose_sentence_0365"
+        "tex_prose_sentence_0365",
+        "tex_prose_sentence_0366"
       ],
       "sentence_count": 2,
       "all_sentences_dispositioned": true
@@ -2877,10 +2878,10 @@
       "rendered_text": "Consider the problem of packing n disjoint regular hexagons with unit side length into a larger regular hexagon, minimizing the side length of the outer hexagon. For n=11 and n=12 , the best known constructions use outer hexagons of side lengths 3.943 and 4.0 , respectively [citation] . AlphaEvolve found packing arrangements that improve these bounds to 3.931 and 3.942 , respectively. These arrangements are shown in [citation] .",
       "source_text_sha256": "2d4eb131e32e44d5222da30b6558da10c9b58b474f52b2559f1be421ad482242",
       "sentence_ids": [
-        "tex_prose_sentence_0366",
         "tex_prose_sentence_0367",
         "tex_prose_sentence_0368",
-        "tex_prose_sentence_0369"
+        "tex_prose_sentence_0369",
+        "tex_prose_sentence_0370"
       ],
       "sentence_count": 4,
       "all_sentences_dispositioned": true
@@ -2900,9 +2901,9 @@
       "rendered_text": "For any n and d , the goal of this problem is to find n points in the d -dimensional space so as to minimize the ratio between the maximum and minimum pairwise distances. AlphaEvolve found two new constructions improving the best known bounds. The found constructions are shown in [citation] .",
       "source_text_sha256": "13da77fadb2a8dd80be4a8c838854cfc4ec80a97363317a1cb8c9f707be98d8d",
       "sentence_ids": [
-        "tex_prose_sentence_0370",
         "tex_prose_sentence_0371",
-        "tex_prose_sentence_0372"
+        "tex_prose_sentence_0372",
+        "tex_prose_sentence_0373"
       ],
       "sentence_count": 3,
       "all_sentences_dispositioned": true
@@ -2922,8 +2923,8 @@
       "rendered_text": "In 2 dimensions, AlphaEvolve found 16 points with ratio 12.889266112 , improving the best known bound of 12.890 [citation] . (In this reference, instead of the ratio itself, the square of the ratio is reported, and we use the same convention.)",
       "source_text_sha256": "ff48c637110ca9579629fdb778ffe16ff3f306ac82d12ed966ee234e1a58752d",
       "sentence_ids": [
-        "tex_prose_sentence_0373",
-        "tex_prose_sentence_0374"
+        "tex_prose_sentence_0374",
+        "tex_prose_sentence_0375"
       ],
       "sentence_count": 2,
       "all_sentences_dispositioned": true
@@ -2943,7 +2944,7 @@
       "rendered_text": "In 3 dimensions, AlphaEvolve found 14 points with ratio 4.165849767 , improving the best known bound of 4.168 [citation] .",
       "source_text_sha256": "1142e38186720fa271026abca5208897a4a37e23735a62ec635f5d897a3dc8b8",
       "sentence_ids": [
-        "tex_prose_sentence_0375"
+        "tex_prose_sentence_0376"
       ],
       "sentence_count": 1,
       "all_sentences_dispositioned": true
@@ -2963,8 +2964,8 @@
       "rendered_text": "The goal of this problem is to find n points on or inside a triangle with unit area so that the area of the smallest triangle formed by these points is maximized. For n=11 , the SOTA was 0.036 [citation] , and AlphaEvolve found a construction with minimum area larger than 0.0365 , which is shown in [citation] (left).",
       "source_text_sha256": "0d931ea4518093d5afdf67a933459f02b7406c2e1d120b41a4c68d40365ff18e",
       "sentence_ids": [
-        "tex_prose_sentence_0376",
-        "tex_prose_sentence_0377"
+        "tex_prose_sentence_0377",
+        "tex_prose_sentence_0378"
       ],
       "sentence_count": 2,
       "all_sentences_dispositioned": true
@@ -2984,8 +2985,8 @@
       "rendered_text": "The goal of this problem is to find n points on or inside a convex region with unit area so that the area of the smallest triangle formed by these points is maximized. AlphaEvolve improved two of the best known bounds.",
       "source_text_sha256": "051f792819fdcf6e8dfe4c3d1e9cd1f2b6458246ba4401bdc9ccbbd27fd82cae",
       "sentence_ids": [
-        "tex_prose_sentence_0378",
-        "tex_prose_sentence_0379"
+        "tex_prose_sentence_0379",
+        "tex_prose_sentence_0380"
       ],
       "sentence_count": 2,
       "all_sentences_dispositioned": true
@@ -3005,8 +3006,8 @@
       "rendered_text": "For n=13 , the SOTA was 0.0306 [citation] , and AlphaEvolve improved it to 0.0309 (see [citation] (middle)). For n=14 , the SOTA was 0.0277 [citation] and AlphaEvolve improved it to 0.0278 (see [citation] (right)).",
       "source_text_sha256": "44e11f98dd0525685be4e369d5057c83e01434f5a314720cc9cb1b983a561193",
       "sentence_ids": [
-        "tex_prose_sentence_0380",
-        "tex_prose_sentence_0381"
+        "tex_prose_sentence_0381",
+        "tex_prose_sentence_0382"
       ],
       "sentence_count": 2,
       "all_sentences_dispositioned": true
@@ -3026,11 +3027,11 @@
       "rendered_text": "The kissing problem asks how many disjoint unit spheres can be packed tangent to a given unit sphere. The maximum such number in d dimensions is called the d -dimensional kissing number [citation] . For d=11 , the best known lower bound was 592 [citation] and AlphaEvolve improved this to 593. To prove the lower bound of 593 for the kissing number in dimension 11, AlphaEvolve found 593 many 11-dimensional non-zero points with integral coordinates such that the maximum norm of these points is smaller than their minimum pairwise distance. By the following lemma, this implies the kissing number in dimension 11 is at least 593.",
       "source_text_sha256": "b4d7b5d90749553a0ed62ae797db315b10a4899a934f7775552e2e6f5dc34c3f",
       "sentence_ids": [
-        "tex_prose_sentence_0382",
         "tex_prose_sentence_0383",
         "tex_prose_sentence_0384",
         "tex_prose_sentence_0385",
-        "tex_prose_sentence_0386"
+        "tex_prose_sentence_0386",
+        "tex_prose_sentence_0387"
       ],
       "sentence_count": 5,
       "all_sentences_dispositioned": true
@@ -3050,7 +3051,7 @@
       "rendered_text": "Let C R ^d be a set of points satisfying 0 C and",
       "source_text_sha256": "f031b1e0d7a3d172ccde492e26ada9aa043a87b3c8491f4922bc2c00dc91cb10",
       "sentence_ids": [
-        "tex_prose_sentence_0387"
+        "tex_prose_sentence_0388"
       ],
       "sentence_count": 1,
       "all_sentences_dispositioned": true
@@ -3070,8 +3071,8 @@
       "rendered_text": "Then unit spheres centred at 2x |x | : x C form a valid kissing configuration in dimension d . In particular, the kissing number in dimension d is at least |C| .",
       "source_text_sha256": "4438f771d3b9299ba273966b89e2b916eb3d62c29bf4423268bddeb92a7ec0a6",
       "sentence_ids": [
-        "tex_prose_sentence_0388",
-        "tex_prose_sentence_0389"
+        "tex_prose_sentence_0389",
+        "tex_prose_sentence_0390"
       ],
       "sentence_count": 2,
       "all_sentences_dispositioned": true
@@ -3091,7 +3092,7 @@
       "rendered_text": "For any x y C , the inequality |x - y |^2 |x |^2, |y |^2 implies",
       "source_text_sha256": "d8f1de683eea2ef9c408ff10380a69f62793dc1e51e904578620d80924ade2ab",
       "sentence_ids": [
-        "tex_prose_sentence_0390"
+        "tex_prose_sentence_0391"
       ],
       "sentence_count": 1,
       "all_sentences_dispositioned": true
@@ -3111,12 +3112,12 @@
       "rendered_text": "where the last inequality holds because the minimum of two positive numbers is less than or equal to their geometric mean. The points 2x |x | : x C have norm 2, so unit spheres centred at them are tangent to a unit sphere centred at the origin. The last step is to show that these spheres do not overlap. This is equivalent to showing, for all x y C , that [ | 2x |x | - 2y |y | | 2. ] After simplifying, this is equivalent to ( 2 x, y |x | |y | ), which we have proved in eq:abi . Thus unit spheres centred at 2x |x | : x C form a valid kissing configuration in dimension d , as required.",
       "source_text_sha256": "b1b42bacfab514f4ae385595b72b9f9c129d43780fb433f70976f9ef6e825cf3",
       "sentence_ids": [
-        "tex_prose_sentence_0391",
         "tex_prose_sentence_0392",
         "tex_prose_sentence_0393",
         "tex_prose_sentence_0394",
         "tex_prose_sentence_0395",
-        "tex_prose_sentence_0396"
+        "tex_prose_sentence_0396",
+        "tex_prose_sentence_0397"
       ],
       "sentence_count": 6,
       "all_sentences_dispositioned": true
@@ -3136,8 +3137,8 @@
       "rendered_text": "Given a positive integer n , the problem is to pack n disjoint circles inside a unit square so as to maximize the sum of their radii. AlphaEvolve found two new constructions improving the state of the art [citation] .",
       "source_text_sha256": "af1e4e005b4991b54009bdf5cad0356f7f47aa19208c1fb0502ac175a64ed2c0",
       "sentence_ids": [
-        "tex_prose_sentence_0397",
-        "tex_prose_sentence_0398"
+        "tex_prose_sentence_0398",
+        "tex_prose_sentence_0399"
       ],
       "sentence_count": 2,
       "all_sentences_dispositioned": true
@@ -3157,8 +3158,8 @@
       "rendered_text": "For n=26 , the SOTA was 2.634 , and AlphaEvolve improved it to 2.635 ; see [citation] (left). For n=32 , the SOTA was 2.936 , and AlphaEvolve improved it to 2.937 ; see [citation] (middle).",
       "source_text_sha256": "2e863dd952c068b59e6f624abdabb3654fd6b78512bc82422db9fddc33cf1884",
       "sentence_ids": [
-        "tex_prose_sentence_0399",
-        "tex_prose_sentence_0400"
+        "tex_prose_sentence_0400",
+        "tex_prose_sentence_0401"
       ],
       "sentence_count": 2,
       "all_sentences_dispositioned": true
@@ -3178,8 +3179,8 @@
       "rendered_text": "Given a positive integer n , the problem is to pack n disjoint circles inside a rectangle of perimeter 4 so as to maximize the sum of their radii. AlphaEvolve found a new construction for n=21 , improving the state of the art from 2.364 [citation] to 2.3658 ; see [citation] (right).",
       "source_text_sha256": "f7777e2ef7585577701d9065d098a32a551aad8fb247794697c9ae84a5e3fcdf",
       "sentence_ids": [
-        "tex_prose_sentence_0401",
-        "tex_prose_sentence_0402"
+        "tex_prose_sentence_0402",
+        "tex_prose_sentence_0403"
       ],
       "sentence_count": 2,
       "all_sentences_dispositioned": true
@@ -7802,8 +7803,8 @@
         "Optimizing Google's computing ecosystem",
         "Improving data center scheduling"
       ],
-      "source_text": "A heuristic function takes as input a pending job\u2019s CPU and memory requirements and a potential machine\u2019s CPU and memory availability.",
-      "rendered_text": "A heuristic function takes as input a pending job\u2019s CPU and memory requirements and a potential machine\u2019s CPU and memory availability.",
+      "source_text": "A heuristic function takes as input a pending job’s CPU and memory requirements and a potential machine’s CPU and memory availability.",
+      "rendered_text": "A heuristic function takes as input a pending job’s CPU and memory requirements and a potential machine’s CPU and memory availability.",
       "source_text_sha256": "967e51b0f0b26f60f9425f00922d97fe920425ff7884dca431379861905bac5a",
       "disposition": "existing_bounded_claim_mapping",
       "claim_refs": [
@@ -7960,8 +7961,8 @@
         "Optimizing Google's computing ecosystem",
         "Improving data center scheduling"
       ],
-      "source_text": "We use a simulator of our data centers to provide feedback to \\method based on historical snapshots of workloads and capacity across Google\u2019s fleet.",
-      "rendered_text": "We use a simulator of our data centers to provide feedback to AlphaEvolve based on historical snapshots of workloads and capacity across Google\u2019s fleet.",
+      "source_text": "We use a simulator of our data centers to provide feedback to \\method based on historical snapshots of workloads and capacity across Google’s fleet.",
+      "rendered_text": "We use a simulator of our data centers to provide feedback to AlphaEvolve based on historical snapshots of workloads and capacity across Google’s fleet.",
       "source_text_sha256": "32b362a6686983bee3a1059ea7f2b1355026101695b877a2bfa727e74eb982fd",
       "disposition": "existing_bounded_claim_mapping",
       "claim_refs": [
@@ -8050,8 +8051,8 @@
         "Optimizing Google's computing ecosystem",
         "Improving data center scheduling"
       ],
-      "source_text": "Post-deployment measurements across Google\u2019s fleet confirmed the simulator results, revealing that this heuristic function continuously recovers on average 0.7\\% of Google\u2019s fleet-wide compute resources, which would otherwise be stranded.",
-      "rendered_text": "Post-deployment measurements across Google\u2019s fleet confirmed the simulator results, revealing that this heuristic function continuously recovers on average 0.7 percent of Google\u2019s fleet-wide compute resources, which would otherwise be stranded.",
+      "source_text": "Post-deployment measurements across Google’s fleet confirmed the simulator results, revealing that this heuristic function continuously recovers on average 0.7\\% of Google’s fleet-wide compute resources, which would otherwise be stranded.",
+      "rendered_text": "Post-deployment measurements across Google’s fleet confirmed the simulator results, revealing that this heuristic function continuously recovers on average 0.7 percent of Google’s fleet-wide compute resources, which would otherwise be stranded.",
       "source_text_sha256": "6b9447fd47e703fb147e809afea70a07825cae668e6ecf41bd1a930d8678fdba",
       "disposition": "existing_bounded_claim_mapping",
       "claim_refs": [
@@ -8090,8 +8091,8 @@
         "Optimizing Google's computing ecosystem",
         "Improving data center scheduling"
       ],
-      "source_text": "\\method was chosen over a deep reinforcement learning approach because its code solution not only leads to better performance, but also offers clear advantages in interpretability, debuggability, predictability, and ease of deployment\u2014essential qualities for a mission-critical system.",
-      "rendered_text": "AlphaEvolve was chosen over a deep reinforcement learning approach because its code solution not only leads to better performance, but also offers clear advantages in interpretability, debuggability, predictability, and ease of deployment\u2014essential qualities for a mission-critical system.",
+      "source_text": "\\method was chosen over a deep reinforcement learning approach because its code solution not only leads to better performance, but also offers clear advantages in interpretability, debuggability, predictability, and ease of deployment—essential qualities for a mission-critical system.",
+      "rendered_text": "AlphaEvolve was chosen over a deep reinforcement learning approach because its code solution not only leads to better performance, but also offers clear advantages in interpretability, debuggability, predictability, and ease of deployment—essential qualities for a mission-critical system.",
       "source_text_sha256": "d18d909e06ed102dfb351bc0843567696375e56b749741597594072081710239",
       "disposition": "existing_bounded_claim_mapping",
       "claim_refs": [
@@ -8228,8 +8229,8 @@
         "Optimizing Google's computing ecosystem",
         "Enhancing Gemini kernel engineering"
       ],
-      "source_text": "Therefore, efficient Pallas kernels are crucial for optimizing Gemini\u2019s training performance.",
-      "rendered_text": "Therefore, efficient Pallas kernels are crucial for optimizing Gemini\u2019s training performance.",
+      "source_text": "Therefore, efficient Pallas kernels are crucial for optimizing Gemini’s training performance.",
+      "rendered_text": "Therefore, efficient Pallas kernels are crucial for optimizing Gemini’s training performance.",
       "source_text_sha256": "3354e45c7eb47da890e4726e5587033171056cba028c78e975483b21cb202478",
       "disposition": "existing_bounded_claim_mapping",
       "claim_refs": [
@@ -8614,8 +8615,8 @@
         "Optimizing Google's computing ecosystem",
         "Enhancing Gemini kernel engineering"
       ],
-      "source_text": "The kernel\u2019s correctness is maintained by construction because \\method is optimizing the tiling strategy for this kernel rather than altering its underlying mathematical operation.",
-      "rendered_text": "The kernel\u2019s correctness is maintained by construction because AlphaEvolve is optimizing the tiling strategy for this kernel rather than altering its underlying mathematical operation.",
+      "source_text": "The kernel’s correctness is maintained by construction because \\method is optimizing the tiling strategy for this kernel rather than altering its underlying mathematical operation.",
+      "rendered_text": "The kernel’s correctness is maintained by construction because AlphaEvolve is optimizing the tiling strategy for this kernel rather than altering its underlying mathematical operation.",
       "source_text_sha256": "fc817b1969170e483257aec8c830f703e371f29bdf9d9b388836fb840a360613",
       "disposition": "existing_bounded_claim_mapping",
       "claim_refs": [
@@ -8756,8 +8757,8 @@
         "Optimizing Google's computing ecosystem",
         "Enhancing Gemini kernel engineering"
       ],
-      "source_text": "This automated approach enables \\method to discover a heuristic that yields an average 23\\% kernel speedup across all kernels over the existing expert-designed heuristic, and a corresponding 1\\% reduction in Gemini\u2019s overall training time.",
-      "rendered_text": "This automated approach enables AlphaEvolve to discover a heuristic that yields an average 23 percent kernel speedup across all kernels over the existing expert-designed heuristic, and a corresponding 1 percent reduction in Gemini\u2019s overall training time.",
+      "source_text": "This automated approach enables \\method to discover a heuristic that yields an average 23\\% kernel speedup across all kernels over the existing expert-designed heuristic, and a corresponding 1\\% reduction in Gemini’s overall training time.",
+      "rendered_text": "This automated approach enables AlphaEvolve to discover a heuristic that yields an average 23 percent kernel speedup across all kernels over the existing expert-designed heuristic, and a corresponding 1 percent reduction in Gemini’s overall training time.",
       "source_text_sha256": "e48d54b97b56e91c2f13304ca770be074cb9dfa78346108c88f7c80965061529",
       "disposition": "existing_bounded_claim_mapping",
       "claim_refs": [
@@ -8898,8 +8899,8 @@
         "Optimizing Google's computing ecosystem",
         "Enhancing Gemini kernel engineering"
       ],
-      "source_text": "The tiling heuristic discovered by \\method has been deployed in production, directly enhancing Gemini's training efficiency and the Gemini team\u2019s research and engineering velocity.",
-      "rendered_text": "The tiling heuristic discovered by AlphaEvolve has been deployed in production, directly enhancing Gemini's training efficiency and the Gemini team\u2019s research and engineering velocity.",
+      "source_text": "The tiling heuristic discovered by \\method has been deployed in production, directly enhancing Gemini's training efficiency and the Gemini team’s research and engineering velocity.",
+      "rendered_text": "The tiling heuristic discovered by AlphaEvolve has been deployed in production, directly enhancing Gemini's training efficiency and the Gemini team’s research and engineering velocity.",
       "source_text_sha256": "c8f315e2a015f35c5ced4aa8896e75388525fbb58ba1d5e9d2fe06ec2f920692",
       "disposition": "existing_bounded_claim_mapping",
       "claim_refs": [
@@ -9292,8 +9293,8 @@
         "Optimizing Google's computing ecosystem",
         "Assisting in hardware circuit design"
       ],
-      "source_text": "Integrated into an upcoming TPU, this improvement represents Gemini\u2019s first direct contribution to TPU arithmetic circuits, achieved via \\method, paving the way for future contributions.",
-      "rendered_text": "Integrated into an upcoming TPU, this improvement represents Gemini\u2019s first direct contribution to TPU arithmetic circuits, achieved via AlphaEvolve, paving the way for future contributions.",
+      "source_text": "Integrated into an upcoming TPU, this improvement represents Gemini’s first direct contribution to TPU arithmetic circuits, achieved via \\method, paving the way for future contributions.",
+      "rendered_text": "Integrated into an upcoming TPU, this improvement represents Gemini’s first direct contribution to TPU arithmetic circuits, achieved via AlphaEvolve, paving the way for future contributions.",
       "source_text_sha256": "15301c774e8233787161b3827f5401d1aee4ba3b3d9ed825a1ba48b605e99bb4",
       "disposition": "existing_bounded_claim_mapping",
       "claim_refs": [
@@ -10647,16 +10648,16 @@
       "paragraph_id": "tex_prose_paragraph_0072",
       "source_file": "ablations.tex",
       "source_line": 29,
-      "source_column": 30,
+      "source_column": 1,
       "source_end_line": 29,
       "source_end_column": 134,
       "line_ordinal": 0,
       "section_path": [
         "Ablations"
       ],
-      "source_text": "shows the results of the all-inclusive \\method approach as well as the various alternatives listed above.",
-      "rendered_text": "shows the results of the all-inclusive AlphaEvolve approach as well as the various alternatives listed above.",
-      "source_text_sha256": "b687baa6e8c8031919e0c65cc5225ad727bc5256a91f30719a5928a48d85edd1",
+      "source_text": "\\Cref{fig:ablations_rewrite} shows the results of the all-inclusive \\method approach as well as the various alternatives listed above.",
+      "rendered_text": "[citation] shows the results of the all-inclusive AlphaEvolve approach as well as the various alternatives listed above.",
+      "source_text_sha256": "0b7115dd647bfcafd817f06e674c0ae7461b7ac0264b526f652002540734f192",
       "disposition": "existing_bounded_claim_mapping",
       "claim_refs": [
         {
@@ -10747,7 +10748,19 @@
           "inventory_path": "papers/alphaevolve_related_work_claim_inventory_boundary.json",
           "claim_id": "classical_symbolic_regression_success",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_related_work_claim_inventory_boundary.json",
+          "claim_id": "classical_scientific_algorithmic_discovery_success",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_related_work_claim_inventory_boundary.json",
+          "claim_id": "classical_scheduling_success",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null
@@ -11211,15 +11224,21 @@
       "claim_refs": [
         {
           "inventory_path": "papers/alphaevolve_related_work_claim_inventory_boundary.json",
-          "claim_id": "alphaevolve_generality_distinction",
+          "claim_id": "alphaevolve_scale_distinction",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         },
         {
           "inventory_path": "papers/alphaevolve_related_work_claim_inventory_boundary.json",
-          "claim_id": "alphaevolve_scale_distinction",
+          "claim_id": "alphaevolve_flexibility_distinction",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_related_work_claim_inventory_boundary.json",
+          "claim_id": "alphaevolve_generality_distinction",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null
@@ -11252,15 +11271,15 @@
       "source_file": "related_work.tex",
       "source_line": 25,
       "source_column": 1,
-      "source_end_line": 26,
-      "source_end_column": 176,
+      "source_end_line": 25,
+      "source_end_column": 140,
       "line_ordinal": 0,
       "section_path": [
         "Related work"
       ],
-      "source_text": "For example, \\citet{surina2025algorithm} complement the evolution process by continuously finetuning the LLM through reinforcement learning.\n\\citet{grayeli2024symbolic} enhance the evolution process with an LLM-directed concept learning step that summarizes high-performing programs in the pool into natural language.",
-      "rendered_text": "For example, [citation] complement the evolution process by continuously finetuning the LLM through reinforcement learning. [citation] enhance the evolution process with an LLM-directed concept learning step that summarizes high-performing programs in the pool into natural language.",
-      "source_text_sha256": "1f8f4ac2f3809303a6b26f3726b91272084a2a0513a98ad07ba25179cb6da458",
+      "source_text": "For example, \\citet{surina2025algorithm} complement the evolution process by continuously finetuning the LLM through reinforcement learning.",
+      "rendered_text": "For example, [citation] complement the evolution process by continuously finetuning the LLM through reinforcement learning.",
+      "source_text_sha256": "7d7e37b9012499b20bfb8002225f078166c8b40a0c4daf6d9b5493dd48a3d573",
       "disposition": "existing_bounded_claim_mapping",
       "claim_refs": [
         {
@@ -11268,7 +11287,27 @@
           "claim_id": "continuous_llm_finetuning_rl",
           "resolved": true,
           "match_kind": "normalized_anchor_mapping"
-        },
+        }
+      ],
+      "nonclaim_disposition": null
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0263",
+      "paragraph_id": "tex_prose_paragraph_0076",
+      "source_file": "related_work.tex",
+      "source_line": 26,
+      "source_column": 1,
+      "source_end_line": 26,
+      "source_end_column": 176,
+      "line_ordinal": 0,
+      "section_path": [
+        "Related work"
+      ],
+      "source_text": "\\citet{grayeli2024symbolic} enhance the evolution process with an LLM-directed concept learning step that summarizes high-performing programs in the pool into natural language.",
+      "rendered_text": "[citation] enhance the evolution process with an LLM-directed concept learning step that summarizes high-performing programs in the pool into natural language.",
+      "source_text_sha256": "026108308c0951c5b605825bf3ccca23f0c8312ea5de9b6e7c166263e2a5e9ba",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
         {
           "inventory_path": "papers/alphaevolve_related_work_claim_inventory_boundary.json",
           "claim_id": "llm_directed_concept_learning",
@@ -11279,7 +11318,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0263",
+      "sentence_id": "tex_prose_sentence_0264",
       "paragraph_id": "tex_prose_paragraph_0076",
       "source_file": "related_work.tex",
       "source_line": 27,
@@ -11305,7 +11344,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0264",
+      "sentence_id": "tex_prose_sentence_0265",
       "paragraph_id": "tex_prose_paragraph_0077",
       "source_file": "related_work.tex",
       "source_line": 29,
@@ -11337,7 +11376,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0265",
+      "sentence_id": "tex_prose_sentence_0266",
       "paragraph_id": "tex_prose_paragraph_0077",
       "source_file": "related_work.tex",
       "source_line": 30,
@@ -11381,7 +11420,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0266",
+      "sentence_id": "tex_prose_sentence_0267",
       "paragraph_id": "tex_prose_paragraph_0077",
       "source_file": "related_work.tex",
       "source_line": 31,
@@ -11413,7 +11452,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0267",
+      "sentence_id": "tex_prose_sentence_0268",
       "paragraph_id": "tex_prose_paragraph_0077",
       "source_file": "related_work.tex",
       "source_line": 32,
@@ -11445,7 +11484,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0268",
+      "sentence_id": "tex_prose_sentence_0269",
       "paragraph_id": "tex_prose_paragraph_0078",
       "source_file": "related_work.tex",
       "source_line": 35,
@@ -11483,7 +11522,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0269",
+      "sentence_id": "tex_prose_sentence_0270",
       "paragraph_id": "tex_prose_paragraph_0078",
       "source_file": "related_work.tex",
       "source_line": 36,
@@ -11501,27 +11540,39 @@
       "claim_refs": [
         {
           "inventory_path": "papers/alphaevolve_related_work_claim_inventory_boundary.json",
-          "claim_id": "pre_llm_deep_reinforcement_learning",
+          "claim_id": "superoptimization_1980s_origin",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_related_work_claim_inventory_boundary.json",
+          "claim_id": "pre_llm_systematic_enumeration",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_related_work_claim_inventory_boundary.json",
+          "claim_id": "pre_llm_genetic_search",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
         },
         {
           "inventory_path": "papers/alphaevolve_related_work_claim_inventory_boundary.json",
           "claim_id": "pre_llm_monte_carlo_sampling",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         },
         {
           "inventory_path": "papers/alphaevolve_related_work_claim_inventory_boundary.json",
-          "claim_id": "superoptimization_1980s_origin",
+          "claim_id": "pre_llm_deep_reinforcement_learning",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0270",
+      "sentence_id": "tex_prose_sentence_0271",
       "paragraph_id": "tex_prose_paragraph_0078",
       "source_file": "related_work.tex",
       "source_line": 37,
@@ -11553,7 +11604,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0271",
+      "sentence_id": "tex_prose_sentence_0272",
       "paragraph_id": "tex_prose_paragraph_0079",
       "source_file": "related_work.tex",
       "source_line": 39,
@@ -11579,7 +11630,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0272",
+      "sentence_id": "tex_prose_sentence_0273",
       "paragraph_id": "tex_prose_paragraph_0079",
       "source_file": "related_work.tex",
       "source_line": 40,
@@ -11605,7 +11656,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0273",
+      "sentence_id": "tex_prose_sentence_0274",
       "paragraph_id": "tex_prose_paragraph_0079",
       "source_file": "related_work.tex",
       "source_line": 41,
@@ -11637,7 +11688,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0274",
+      "sentence_id": "tex_prose_sentence_0275",
       "paragraph_id": "tex_prose_paragraph_0079",
       "source_file": "related_work.tex",
       "source_line": 42,
@@ -11675,7 +11726,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0275",
+      "sentence_id": "tex_prose_sentence_0276",
       "paragraph_id": "tex_prose_paragraph_0079",
       "source_file": "related_work.tex",
       "source_line": 43,
@@ -11701,7 +11752,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0276",
+      "sentence_id": "tex_prose_sentence_0277",
       "paragraph_id": "tex_prose_paragraph_0080",
       "source_file": "related_work.tex",
       "source_line": 45,
@@ -11727,7 +11778,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0277",
+      "sentence_id": "tex_prose_sentence_0278",
       "paragraph_id": "tex_prose_paragraph_0081",
       "source_file": "related_work.tex",
       "source_line": 48,
@@ -11753,7 +11804,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0278",
+      "sentence_id": "tex_prose_sentence_0279",
       "paragraph_id": "tex_prose_paragraph_0081",
       "source_file": "related_work.tex",
       "source_line": 49,
@@ -11779,7 +11830,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0279",
+      "sentence_id": "tex_prose_sentence_0280",
       "paragraph_id": "tex_prose_paragraph_0082",
       "source_file": "related_work.tex",
       "source_line": 51,
@@ -11811,7 +11862,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0280",
+      "sentence_id": "tex_prose_sentence_0281",
       "paragraph_id": "tex_prose_paragraph_0082",
       "source_file": "related_work.tex",
       "source_line": 52,
@@ -11843,7 +11894,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0281",
+      "sentence_id": "tex_prose_sentence_0282",
       "paragraph_id": "tex_prose_paragraph_0082",
       "source_file": "related_work.tex",
       "source_line": 53,
@@ -11875,7 +11926,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0282",
+      "sentence_id": "tex_prose_sentence_0283",
       "paragraph_id": "tex_prose_paragraph_0082",
       "source_file": "related_work.tex",
       "source_line": 54,
@@ -11901,7 +11952,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0283",
+      "sentence_id": "tex_prose_sentence_0284",
       "paragraph_id": "tex_prose_paragraph_0082",
       "source_file": "related_work.tex",
       "source_line": 55,
@@ -11933,7 +11984,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0284",
+      "sentence_id": "tex_prose_sentence_0285",
       "paragraph_id": "tex_prose_paragraph_0083",
       "source_file": "related_work.tex",
       "source_line": 57,
@@ -11959,7 +12010,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0285",
+      "sentence_id": "tex_prose_sentence_0286",
       "paragraph_id": "tex_prose_paragraph_0083",
       "source_file": "related_work.tex",
       "source_line": 58,
@@ -11997,7 +12048,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0286",
+      "sentence_id": "tex_prose_sentence_0287",
       "paragraph_id": "tex_prose_paragraph_0084",
       "source_file": "discussion.tex",
       "source_line": 4,
@@ -12023,7 +12074,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0287",
+      "sentence_id": "tex_prose_sentence_0288",
       "paragraph_id": "tex_prose_paragraph_0085",
       "source_file": "discussion.tex",
       "source_line": 6,
@@ -12049,7 +12100,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0288",
+      "sentence_id": "tex_prose_sentence_0289",
       "paragraph_id": "tex_prose_paragraph_0085",
       "source_file": "discussion.tex",
       "source_line": 7,
@@ -12075,7 +12126,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0289",
+      "sentence_id": "tex_prose_sentence_0290",
       "paragraph_id": "tex_prose_paragraph_0086",
       "source_file": "discussion.tex",
       "source_line": 9,
@@ -12101,7 +12152,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0290",
+      "sentence_id": "tex_prose_sentence_0291",
       "paragraph_id": "tex_prose_paragraph_0086",
       "source_file": "discussion.tex",
       "source_line": 10,
@@ -12127,7 +12178,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0291",
+      "sentence_id": "tex_prose_sentence_0292",
       "paragraph_id": "tex_prose_paragraph_0086",
       "source_file": "discussion.tex",
       "source_line": 11,
@@ -12153,7 +12204,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0292",
+      "sentence_id": "tex_prose_sentence_0293",
       "paragraph_id": "tex_prose_paragraph_0086",
       "source_file": "discussion.tex",
       "source_line": 12,
@@ -12179,7 +12230,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0293",
+      "sentence_id": "tex_prose_sentence_0294",
       "paragraph_id": "tex_prose_paragraph_0087",
       "source_file": "discussion.tex",
       "source_line": 14,
@@ -12205,7 +12256,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0294",
+      "sentence_id": "tex_prose_sentence_0295",
       "paragraph_id": "tex_prose_paragraph_0087",
       "source_file": "discussion.tex",
       "source_line": 15,
@@ -12231,7 +12282,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0295",
+      "sentence_id": "tex_prose_sentence_0296",
       "paragraph_id": "tex_prose_paragraph_0087",
       "source_file": "discussion.tex",
       "source_line": 16,
@@ -12257,7 +12308,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0296",
+      "sentence_id": "tex_prose_sentence_0297",
       "paragraph_id": "tex_prose_paragraph_0088",
       "source_file": "discussion.tex",
       "source_line": 18,
@@ -12283,7 +12334,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0297",
+      "sentence_id": "tex_prose_sentence_0298",
       "paragraph_id": "tex_prose_paragraph_0088",
       "source_file": "discussion.tex",
       "source_line": 19,
@@ -12309,7 +12360,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0298",
+      "sentence_id": "tex_prose_sentence_0299",
       "paragraph_id": "tex_prose_paragraph_0088",
       "source_file": "discussion.tex",
       "source_line": 20,
@@ -12335,7 +12386,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0299",
+      "sentence_id": "tex_prose_sentence_0300",
       "paragraph_id": "tex_prose_paragraph_0088",
       "source_file": "discussion.tex",
       "source_line": 21,
@@ -12361,7 +12412,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0300",
+      "sentence_id": "tex_prose_sentence_0301",
       "paragraph_id": "tex_prose_paragraph_0089",
       "source_file": "acknowledgement.tex",
       "source_line": 4,
@@ -12387,7 +12438,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0301",
+      "sentence_id": "tex_prose_sentence_0302",
       "paragraph_id": "tex_prose_paragraph_0089",
       "source_file": "acknowledgement.tex",
       "source_line": 4,
@@ -12409,7 +12460,7 @@
       }
     },
     {
-      "sentence_id": "tex_prose_sentence_0302",
+      "sentence_id": "tex_prose_sentence_0303",
       "paragraph_id": "tex_prose_paragraph_0090",
       "source_file": "acknowledgement.tex",
       "source_line": 6,
@@ -12431,7 +12482,7 @@
       }
     },
     {
-      "sentence_id": "tex_prose_sentence_0303",
+      "sentence_id": "tex_prose_sentence_0304",
       "paragraph_id": "tex_prose_paragraph_0091",
       "source_file": "acknowledgement.tex",
       "source_line": 8,
@@ -12453,7 +12504,7 @@
       }
     },
     {
-      "sentence_id": "tex_prose_sentence_0304",
+      "sentence_id": "tex_prose_sentence_0305",
       "paragraph_id": "tex_prose_paragraph_0092",
       "source_file": "acknowledgement.tex",
       "source_line": 10,
@@ -12475,7 +12526,7 @@
       }
     },
     {
-      "sentence_id": "tex_prose_sentence_0305",
+      "sentence_id": "tex_prose_sentence_0306",
       "paragraph_id": "tex_prose_paragraph_0093",
       "source_file": "acknowledgement.tex",
       "source_line": 12,
@@ -12497,7 +12548,7 @@
       }
     },
     {
-      "sentence_id": "tex_prose_sentence_0306",
+      "sentence_id": "tex_prose_sentence_0307",
       "paragraph_id": "tex_prose_paragraph_0094",
       "source_file": "acknowledgement.tex",
       "source_line": 14,
@@ -12519,7 +12570,7 @@
       }
     },
     {
-      "sentence_id": "tex_prose_sentence_0307",
+      "sentence_id": "tex_prose_sentence_0308",
       "paragraph_id": "tex_prose_paragraph_0095",
       "source_file": "appendix.tex",
       "source_line": 3,
@@ -12545,7 +12596,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0308",
+      "sentence_id": "tex_prose_sentence_0309",
       "paragraph_id": "tex_prose_paragraph_0095",
       "source_file": "appendix.tex",
       "source_line": 3,
@@ -12571,7 +12622,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0309",
+      "sentence_id": "tex_prose_sentence_0310",
       "paragraph_id": "tex_prose_paragraph_0095",
       "source_file": "appendix.tex",
       "source_line": 3,
@@ -12603,7 +12654,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0310",
+      "sentence_id": "tex_prose_sentence_0311",
       "paragraph_id": "tex_prose_paragraph_0095",
       "source_file": "appendix.tex",
       "source_line": 3,
@@ -12635,7 +12686,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0311",
+      "sentence_id": "tex_prose_sentence_0312",
       "paragraph_id": "tex_prose_paragraph_0096",
       "source_file": "appendix.tex",
       "source_line": 5,
@@ -12661,7 +12712,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0312",
+      "sentence_id": "tex_prose_sentence_0313",
       "paragraph_id": "tex_prose_paragraph_0096",
       "source_file": "appendix.tex",
       "source_line": 5,
@@ -12711,7 +12762,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0313",
+      "sentence_id": "tex_prose_sentence_0314",
       "paragraph_id": "tex_prose_paragraph_0096",
       "source_file": "appendix.tex",
       "source_line": 5,
@@ -12737,7 +12788,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0314",
+      "sentence_id": "tex_prose_sentence_0315",
       "paragraph_id": "tex_prose_paragraph_0097",
       "source_file": "appendix.tex",
       "source_line": 84,
@@ -12763,7 +12814,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0315",
+      "sentence_id": "tex_prose_sentence_0316",
       "paragraph_id": "tex_prose_paragraph_0098",
       "source_file": "appendix.tex",
       "source_line": 86,
@@ -12789,7 +12840,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0316",
+      "sentence_id": "tex_prose_sentence_0317",
       "paragraph_id": "tex_prose_paragraph_0099",
       "source_file": "appendix.tex",
       "source_line": 93,
@@ -12815,7 +12866,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0317",
+      "sentence_id": "tex_prose_sentence_0318",
       "paragraph_id": "tex_prose_paragraph_0100",
       "source_file": "appendix.tex",
       "source_line": 96,
@@ -12842,7 +12893,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0318",
+      "sentence_id": "tex_prose_sentence_0319",
       "paragraph_id": "tex_prose_paragraph_0100",
       "source_file": "appendix.tex",
       "source_line": 97,
@@ -12875,7 +12926,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0319",
+      "sentence_id": "tex_prose_sentence_0320",
       "paragraph_id": "tex_prose_paragraph_0101",
       "source_file": "appendix.tex",
       "source_line": 101,
@@ -12902,7 +12953,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0320",
+      "sentence_id": "tex_prose_sentence_0321",
       "paragraph_id": "tex_prose_paragraph_0101",
       "source_file": "appendix.tex",
       "source_line": 101,
@@ -12935,7 +12986,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0321",
+      "sentence_id": "tex_prose_sentence_0322",
       "paragraph_id": "tex_prose_paragraph_0101",
       "source_file": "appendix.tex",
       "source_line": 101,
@@ -12986,7 +13037,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0322",
+      "sentence_id": "tex_prose_sentence_0323",
       "paragraph_id": "tex_prose_paragraph_0101",
       "source_file": "appendix.tex",
       "source_line": 104,
@@ -13031,7 +13082,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0323",
+      "sentence_id": "tex_prose_sentence_0324",
       "paragraph_id": "tex_prose_paragraph_0102",
       "source_file": "appendix.tex",
       "source_line": 107,
@@ -13070,7 +13121,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0324",
+      "sentence_id": "tex_prose_sentence_0325",
       "paragraph_id": "tex_prose_paragraph_0102",
       "source_file": "appendix.tex",
       "source_line": 110,
@@ -13109,7 +13160,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0325",
+      "sentence_id": "tex_prose_sentence_0326",
       "paragraph_id": "tex_prose_paragraph_0102",
       "source_file": "appendix.tex",
       "source_line": 113,
@@ -13154,7 +13205,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0326",
+      "sentence_id": "tex_prose_sentence_0327",
       "paragraph_id": "tex_prose_paragraph_0103",
       "source_file": "appendix.tex",
       "source_line": 116,
@@ -13193,7 +13244,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0327",
+      "sentence_id": "tex_prose_sentence_0328",
       "paragraph_id": "tex_prose_paragraph_0103",
       "source_file": "appendix.tex",
       "source_line": 118,
@@ -13226,7 +13277,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0328",
+      "sentence_id": "tex_prose_sentence_0329",
       "paragraph_id": "tex_prose_paragraph_0103",
       "source_file": "appendix.tex",
       "source_line": 119,
@@ -13259,7 +13310,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0329",
+      "sentence_id": "tex_prose_sentence_0330",
       "paragraph_id": "tex_prose_paragraph_0103",
       "source_file": "appendix.tex",
       "source_line": 120,
@@ -13298,7 +13349,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0330",
+      "sentence_id": "tex_prose_sentence_0331",
       "paragraph_id": "tex_prose_paragraph_0104",
       "source_file": "appendix.tex",
       "source_line": 125,
@@ -13331,7 +13382,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0331",
+      "sentence_id": "tex_prose_sentence_0332",
       "paragraph_id": "tex_prose_paragraph_0104",
       "source_file": "appendix.tex",
       "source_line": 127,
@@ -13376,7 +13427,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0332",
+      "sentence_id": "tex_prose_sentence_0333",
       "paragraph_id": "tex_prose_paragraph_0104",
       "source_file": "appendix.tex",
       "source_line": 129,
@@ -13415,7 +13466,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0333",
+      "sentence_id": "tex_prose_sentence_0334",
       "paragraph_id": "tex_prose_paragraph_0104",
       "source_file": "appendix.tex",
       "source_line": 131,
@@ -13448,7 +13499,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0334",
+      "sentence_id": "tex_prose_sentence_0335",
       "paragraph_id": "tex_prose_paragraph_0104",
       "source_file": "appendix.tex",
       "source_line": 132,
@@ -13487,7 +13538,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0335",
+      "sentence_id": "tex_prose_sentence_0336",
       "paragraph_id": "tex_prose_paragraph_0105",
       "source_file": "appendix.tex",
       "source_line": 134,
@@ -13514,7 +13565,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0336",
+      "sentence_id": "tex_prose_sentence_0337",
       "paragraph_id": "tex_prose_paragraph_0105",
       "source_file": "appendix.tex",
       "source_line": 134,
@@ -13547,7 +13598,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0337",
+      "sentence_id": "tex_prose_sentence_0338",
       "paragraph_id": "tex_prose_paragraph_0105",
       "source_file": "appendix.tex",
       "source_line": 134,
@@ -13574,7 +13625,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0338",
+      "sentence_id": "tex_prose_sentence_0339",
       "paragraph_id": "tex_prose_paragraph_0105",
       "source_file": "appendix.tex",
       "source_line": 134,
@@ -13607,7 +13658,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0339",
+      "sentence_id": "tex_prose_sentence_0340",
       "paragraph_id": "tex_prose_paragraph_0105",
       "source_file": "appendix.tex",
       "source_line": 134,
@@ -13634,7 +13685,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0340",
+      "sentence_id": "tex_prose_sentence_0341",
       "paragraph_id": "tex_prose_paragraph_0105",
       "source_file": "appendix.tex",
       "source_line": 134,
@@ -13667,7 +13718,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0341",
+      "sentence_id": "tex_prose_sentence_0342",
       "paragraph_id": "tex_prose_paragraph_0105",
       "source_file": "appendix.tex",
       "source_line": 134,
@@ -13694,7 +13745,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0342",
+      "sentence_id": "tex_prose_sentence_0343",
       "paragraph_id": "tex_prose_paragraph_0106",
       "source_file": "appendix.tex",
       "source_line": 136,
@@ -13721,7 +13772,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0343",
+      "sentence_id": "tex_prose_sentence_0344",
       "paragraph_id": "tex_prose_paragraph_0106",
       "source_file": "appendix.tex",
       "source_line": 136,
@@ -13754,7 +13805,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0344",
+      "sentence_id": "tex_prose_sentence_0345",
       "paragraph_id": "tex_prose_paragraph_0106",
       "source_file": "appendix.tex",
       "source_line": 136,
@@ -13781,7 +13832,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0345",
+      "sentence_id": "tex_prose_sentence_0346",
       "paragraph_id": "tex_prose_paragraph_0106",
       "source_file": "appendix.tex",
       "source_line": 136,
@@ -13808,7 +13859,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0346",
+      "sentence_id": "tex_prose_sentence_0347",
       "paragraph_id": "tex_prose_paragraph_0107",
       "source_file": "appendix.tex",
       "source_line": 138,
@@ -13841,7 +13892,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0347",
+      "sentence_id": "tex_prose_sentence_0348",
       "paragraph_id": "tex_prose_paragraph_0107",
       "source_file": "appendix.tex",
       "source_line": 138,
@@ -13874,7 +13925,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0348",
+      "sentence_id": "tex_prose_sentence_0349",
       "paragraph_id": "tex_prose_paragraph_0107",
       "source_file": "appendix.tex",
       "source_line": 138,
@@ -13907,7 +13958,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0349",
+      "sentence_id": "tex_prose_sentence_0350",
       "paragraph_id": "tex_prose_paragraph_0108",
       "source_file": "appendix.tex",
       "source_line": 140,
@@ -13940,7 +13991,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0350",
+      "sentence_id": "tex_prose_sentence_0351",
       "paragraph_id": "tex_prose_paragraph_0108",
       "source_file": "appendix.tex",
       "source_line": 140,
@@ -13973,7 +14024,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0351",
+      "sentence_id": "tex_prose_sentence_0352",
       "paragraph_id": "tex_prose_paragraph_0108",
       "source_file": "appendix.tex",
       "source_line": 140,
@@ -14000,7 +14051,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0352",
+      "sentence_id": "tex_prose_sentence_0353",
       "paragraph_id": "tex_prose_paragraph_0109",
       "source_file": "appendix.tex",
       "source_line": 144,
@@ -14057,7 +14108,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0353",
+      "sentence_id": "tex_prose_sentence_0354",
       "paragraph_id": "tex_prose_paragraph_0109",
       "source_file": "appendix.tex",
       "source_line": 146,
@@ -14084,7 +14135,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0354",
+      "sentence_id": "tex_prose_sentence_0355",
       "paragraph_id": "tex_prose_paragraph_0109",
       "source_file": "appendix.tex",
       "source_line": 146,
@@ -14123,7 +14174,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0355",
+      "sentence_id": "tex_prose_sentence_0356",
       "paragraph_id": "tex_prose_paragraph_0110",
       "source_file": "appendix.tex",
       "source_line": 150,
@@ -14156,7 +14207,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0356",
+      "sentence_id": "tex_prose_sentence_0357",
       "paragraph_id": "tex_prose_paragraph_0110",
       "source_file": "appendix.tex",
       "source_line": 159,
@@ -14183,7 +14234,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0357",
+      "sentence_id": "tex_prose_sentence_0358",
       "paragraph_id": "tex_prose_paragraph_0110",
       "source_file": "appendix.tex",
       "source_line": 160,
@@ -14216,7 +14267,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0358",
+      "sentence_id": "tex_prose_sentence_0359",
       "paragraph_id": "tex_prose_paragraph_0111",
       "source_file": "appendix.tex",
       "source_line": 173,
@@ -14261,7 +14312,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0359",
+      "sentence_id": "tex_prose_sentence_0360",
       "paragraph_id": "tex_prose_paragraph_0111",
       "source_file": "appendix.tex",
       "source_line": 174,
@@ -14294,7 +14345,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0360",
+      "sentence_id": "tex_prose_sentence_0361",
       "paragraph_id": "tex_prose_paragraph_0111",
       "source_file": "appendix.tex",
       "source_line": 174,
@@ -14321,7 +14372,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0361",
+      "sentence_id": "tex_prose_sentence_0362",
       "paragraph_id": "tex_prose_paragraph_0111",
       "source_file": "appendix.tex",
       "source_line": 174,
@@ -14348,7 +14399,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0362",
+      "sentence_id": "tex_prose_sentence_0363",
       "paragraph_id": "tex_prose_paragraph_0112",
       "source_file": "appendix.tex",
       "source_line": 178,
@@ -14381,7 +14432,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0363",
+      "sentence_id": "tex_prose_sentence_0364",
       "paragraph_id": "tex_prose_paragraph_0112",
       "source_file": "appendix.tex",
       "source_line": 179,
@@ -14408,7 +14459,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0364",
+      "sentence_id": "tex_prose_sentence_0365",
       "paragraph_id": "tex_prose_paragraph_0113",
       "source_file": "appendix.tex",
       "source_line": 183,
@@ -14435,7 +14486,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0365",
+      "sentence_id": "tex_prose_sentence_0366",
       "paragraph_id": "tex_prose_paragraph_0113",
       "source_file": "appendix.tex",
       "source_line": 184,
@@ -14480,7 +14531,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0366",
+      "sentence_id": "tex_prose_sentence_0367",
       "paragraph_id": "tex_prose_paragraph_0114",
       "source_file": "appendix.tex",
       "source_line": 189,
@@ -14513,7 +14564,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0367",
+      "sentence_id": "tex_prose_sentence_0368",
       "paragraph_id": "tex_prose_paragraph_0114",
       "source_file": "appendix.tex",
       "source_line": 190,
@@ -14546,7 +14597,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0368",
+      "sentence_id": "tex_prose_sentence_0369",
       "paragraph_id": "tex_prose_paragraph_0114",
       "source_file": "appendix.tex",
       "source_line": 191,
@@ -14579,7 +14630,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0369",
+      "sentence_id": "tex_prose_sentence_0370",
       "paragraph_id": "tex_prose_paragraph_0114",
       "source_file": "appendix.tex",
       "source_line": 193,
@@ -14606,7 +14657,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0370",
+      "sentence_id": "tex_prose_sentence_0371",
       "paragraph_id": "tex_prose_paragraph_0115",
       "source_file": "appendix.tex",
       "source_line": 206,
@@ -14639,7 +14690,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0371",
+      "sentence_id": "tex_prose_sentence_0372",
       "paragraph_id": "tex_prose_paragraph_0115",
       "source_file": "appendix.tex",
       "source_line": 206,
@@ -14672,7 +14723,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0372",
+      "sentence_id": "tex_prose_sentence_0373",
       "paragraph_id": "tex_prose_paragraph_0115",
       "source_file": "appendix.tex",
       "source_line": 207,
@@ -14705,7 +14756,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0373",
+      "sentence_id": "tex_prose_sentence_0374",
       "paragraph_id": "tex_prose_paragraph_0116",
       "source_file": "appendix.tex",
       "source_line": 209,
@@ -14750,7 +14801,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0374",
+      "sentence_id": "tex_prose_sentence_0375",
       "paragraph_id": "tex_prose_paragraph_0116",
       "source_file": "appendix.tex",
       "source_line": 210,
@@ -14777,7 +14828,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0375",
+      "sentence_id": "tex_prose_sentence_0376",
       "paragraph_id": "tex_prose_paragraph_0117",
       "source_file": "appendix.tex",
       "source_line": 212,
@@ -14822,7 +14873,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0376",
+      "sentence_id": "tex_prose_sentence_0377",
       "paragraph_id": "tex_prose_paragraph_0118",
       "source_file": "appendix.tex",
       "source_line": 226,
@@ -14855,7 +14906,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0377",
+      "sentence_id": "tex_prose_sentence_0378",
       "paragraph_id": "tex_prose_paragraph_0118",
       "source_file": "appendix.tex",
       "source_line": 226,
@@ -14888,7 +14939,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0378",
+      "sentence_id": "tex_prose_sentence_0379",
       "paragraph_id": "tex_prose_paragraph_0119",
       "source_file": "appendix.tex",
       "source_line": 229,
@@ -14921,7 +14972,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0379",
+      "sentence_id": "tex_prose_sentence_0380",
       "paragraph_id": "tex_prose_paragraph_0119",
       "source_file": "appendix.tex",
       "source_line": 229,
@@ -14948,7 +14999,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0380",
+      "sentence_id": "tex_prose_sentence_0381",
       "paragraph_id": "tex_prose_paragraph_0120",
       "source_file": "appendix.tex",
       "source_line": 231,
@@ -14981,7 +15032,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0381",
+      "sentence_id": "tex_prose_sentence_0382",
       "paragraph_id": "tex_prose_paragraph_0120",
       "source_file": "appendix.tex",
       "source_line": 232,
@@ -15014,7 +15065,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0382",
+      "sentence_id": "tex_prose_sentence_0383",
       "paragraph_id": "tex_prose_paragraph_0121",
       "source_file": "appendix.tex",
       "source_line": 245,
@@ -15041,7 +15092,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0383",
+      "sentence_id": "tex_prose_sentence_0384",
       "paragraph_id": "tex_prose_paragraph_0121",
       "source_file": "appendix.tex",
       "source_line": 245,
@@ -15068,7 +15119,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0384",
+      "sentence_id": "tex_prose_sentence_0385",
       "paragraph_id": "tex_prose_paragraph_0121",
       "source_file": "appendix.tex",
       "source_line": 246,
@@ -15101,7 +15152,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0385",
+      "sentence_id": "tex_prose_sentence_0386",
       "paragraph_id": "tex_prose_paragraph_0121",
       "source_file": "appendix.tex",
       "source_line": 246,
@@ -15134,7 +15185,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0386",
+      "sentence_id": "tex_prose_sentence_0387",
       "paragraph_id": "tex_prose_paragraph_0121",
       "source_file": "appendix.tex",
       "source_line": 248,
@@ -15161,7 +15212,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0387",
+      "sentence_id": "tex_prose_sentence_0388",
       "paragraph_id": "tex_prose_paragraph_0122",
       "source_file": "appendix.tex",
       "source_line": 251,
@@ -15188,7 +15239,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0388",
+      "sentence_id": "tex_prose_sentence_0389",
       "paragraph_id": "tex_prose_paragraph_0123",
       "source_file": "appendix.tex",
       "source_line": 256,
@@ -15215,7 +15266,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0389",
+      "sentence_id": "tex_prose_sentence_0390",
       "paragraph_id": "tex_prose_paragraph_0123",
       "source_file": "appendix.tex",
       "source_line": 256,
@@ -15242,7 +15293,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0390",
+      "sentence_id": "tex_prose_sentence_0391",
       "paragraph_id": "tex_prose_paragraph_0124",
       "source_file": "appendix.tex",
       "source_line": 260,
@@ -15269,7 +15320,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0391",
+      "sentence_id": "tex_prose_sentence_0392",
       "paragraph_id": "tex_prose_paragraph_0125",
       "source_file": "appendix.tex",
       "source_line": 265,
@@ -15296,7 +15347,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0392",
+      "sentence_id": "tex_prose_sentence_0393",
       "paragraph_id": "tex_prose_paragraph_0125",
       "source_file": "appendix.tex",
       "source_line": 266,
@@ -15323,7 +15374,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0393",
+      "sentence_id": "tex_prose_sentence_0394",
       "paragraph_id": "tex_prose_paragraph_0125",
       "source_file": "appendix.tex",
       "source_line": 267,
@@ -15350,7 +15401,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0394",
+      "sentence_id": "tex_prose_sentence_0395",
       "paragraph_id": "tex_prose_paragraph_0125",
       "source_file": "appendix.tex",
       "source_line": 267,
@@ -15377,7 +15428,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0395",
+      "sentence_id": "tex_prose_sentence_0396",
       "paragraph_id": "tex_prose_paragraph_0125",
       "source_file": "appendix.tex",
       "source_line": 271,
@@ -15404,7 +15455,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0396",
+      "sentence_id": "tex_prose_sentence_0397",
       "paragraph_id": "tex_prose_paragraph_0125",
       "source_file": "appendix.tex",
       "source_line": 275,
@@ -15431,7 +15482,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0397",
+      "sentence_id": "tex_prose_sentence_0398",
       "paragraph_id": "tex_prose_paragraph_0126",
       "source_file": "appendix.tex",
       "source_line": 281,
@@ -15464,7 +15515,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0398",
+      "sentence_id": "tex_prose_sentence_0399",
       "paragraph_id": "tex_prose_paragraph_0126",
       "source_file": "appendix.tex",
       "source_line": 281,
@@ -15491,7 +15542,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0399",
+      "sentence_id": "tex_prose_sentence_0400",
       "paragraph_id": "tex_prose_paragraph_0127",
       "source_file": "appendix.tex",
       "source_line": 283,
@@ -15524,7 +15575,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0400",
+      "sentence_id": "tex_prose_sentence_0401",
       "paragraph_id": "tex_prose_paragraph_0127",
       "source_file": "appendix.tex",
       "source_line": 284,
@@ -15557,7 +15608,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0401",
+      "sentence_id": "tex_prose_sentence_0402",
       "paragraph_id": "tex_prose_paragraph_0128",
       "source_file": "appendix.tex",
       "source_line": 287,
@@ -15590,7 +15641,7 @@
       "nonclaim_disposition": null
     },
     {
-      "sentence_id": "tex_prose_sentence_0402",
+      "sentence_id": "tex_prose_sentence_0403",
       "paragraph_id": "tex_prose_paragraph_0128",
       "source_file": "appendix.tex",
       "source_line": 288,

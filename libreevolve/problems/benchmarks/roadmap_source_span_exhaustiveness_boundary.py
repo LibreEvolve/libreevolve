@@ -6,20 +6,16 @@ from pathlib import Path
 from typing import Any
 
 from libreevolve.problems.benchmarks.roadmap_source_span_coverage_boundary import (
+    EXPECTED_BOUNDARY_STATUS as COVERAGE_BOUNDARY_STATUS,
     roadmap_source_span_coverage_boundary_record,
 )
 
 
 ROADMAP_SOURCE_SPAN_EXHAUSTIVENESS_BOUNDARY_SCHEMA = (
-    "libreevolve.roadmap_source_span_exhaustiveness_boundary.v27"
+    "libreevolve.roadmap_source_span_exhaustiveness_boundary.v28"
 )
-EXPECTED_BOUNDARY_STATUS = (
-    "named_structure_plus_846_bounded_claims_195_citation_uses_"
-    "30_tex_source_details_240_table_cells_305_listing_lines_309_tex_math_"
-    "constructs_402_tex_prose_sentences_and_812_propositions_across_244_"
-    "abstract_through_section4_ablation_sentences_"
-    "without_whole_paper_semantic_exhaustiveness"
-)
+# The coverage boundary owns the current retained-TeX scope label.
+EXPECTED_BOUNDARY_STATUS = COVERAGE_BOUNDARY_STATUS
 SOURCE_COVERAGE_BOUNDARY_INPUT = "papers/roadmap_source_span_coverage_boundary.json"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "pdf_section_walk",
@@ -32,7 +28,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "ci_exhaustiveness_and_owner_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "claim_level_requirement_inventory": "846_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_305_listing_lines_have_line_dispositions_309_explicit_math_constructs_have_delimiter_dispositions_128_paragraphs_402_sentences_have_prose_dispositions_and_244_abstract_through_section4_ablation_sentences_have_812_proposition_dispositions_without_remaining_158_sentence_proposition_image_pixel_citation_semantic_implementation_semantic_mathematical_correctness_independent_review_or_reproduction_exhaustiveness",
+    "claim_level_requirement_inventory": "846_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_305_listing_lines_have_line_dispositions_309_explicit_math_constructs_have_delimiter_dispositions_128_paragraphs_403_sentences_have_prose_dispositions_and_286_abstract_through_section5_related_work_sentences_have_985_proposition_dispositions_without_remaining_117_sentence_proposition_image_pixel_citation_semantic_implementation_semantic_mathematical_correctness_independent_review_or_reproduction_exhaustiveness",
     "claim_level_figure_table_appendix_matrix": "bounded_named_matrix_recorded_without_result_reproduction_or_whole_paper_semantic_exhaustiveness",
     "application_result_claim_matrix": "section_3_3_claim_dispositions_recorded_without_reproduction_phase_priority_or_non_goal_proof",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
@@ -48,8 +44,8 @@ CRITERION_SPECS = (
     {
         "criterion_id": "pdf_section_walk",
         "source_surface": "retained AlphaEvolve source PDF sections and requirement spans",
-        "current_scope": "all 38 named structural spans are page- and anchor-verified; 846 bounded Table 1/Section 2, context, Section 3.1/Table 2/Figure 4 matrix-result, Section 3.2/Figure 5 constructive-math, Section 3.3 opening/Section 3.3.1/Figure 6 scheduling, Section 3.3.2/Figure 7 kernel-engineering, Section 3.3.3 hardware-circuit-design, Section 3.3.4 compiler-generated-code, Section 4/Figure 8 ablation, Section 5 Related Work, Appendix A/Table 3/Figure 9, and Appendix B/Figures 10-14 claims have dispositions; all 195 retained-TeX citation uses have lexical key linkage; all 30 retained-source captions, five equation-environment constructs, and semantic footnotes have construct-level dispositions; all 83 table rows and 240 cells have row/cell dispositions; all 8 retained TeX code listing environments and 305 physical source lines have environment/line dispositions; all 309 explicit TeX math constructs have delimiter-level dispositions; all 128 retained TeX prose paragraphs and 402 grammatical sentences have dispositions; and all 244 sentences from the Abstract through Section 4 ablations have 812 atomic-proposition dispositions",
-        "missing_exhaustiveness": "proposition review for the remaining 158 prose sentences plus image-pixel, citation-semantic, implementation-semantic, mathematical-correctness, independent-review, and result-reproduction evidence",
+        "current_scope": "all 38 named structural spans are page- and anchor-verified; 846 bounded Table 1/Section 2, context, Section 3.1/Table 2/Figure 4 matrix-result, Section 3.2/Figure 5 constructive-math, Section 3.3 opening/Section 3.3.1/Figure 6 scheduling, Section 3.3.2/Figure 7 kernel-engineering, Section 3.3.3 hardware-circuit-design, Section 3.3.4 compiler-generated-code, Section 4/Figure 8 ablation, Section 5 Related Work, Appendix A/Table 3/Figure 9, and Appendix B/Figures 10-14 claims have dispositions; all 195 retained-TeX citation uses have lexical key linkage; all 30 retained-source captions, five equation-environment constructs, and semantic footnotes have construct-level dispositions; all 83 table rows and 240 cells have row/cell dispositions; all 8 retained TeX code listing environments and 305 physical source lines have environment/line dispositions; all 309 explicit TeX math constructs have delimiter-level dispositions; all 128 retained TeX prose paragraphs and 403 grammatical sentences have dispositions; and all 286 sentences from the Abstract through Section 5 Related Work have 985 atomic-proposition dispositions",
+        "missing_exhaustiveness": "proposition review for the remaining 117 prose sentences plus image-pixel, citation-semantic, implementation-semantic, mathematical-correctness, independent-review, and result-reproduction evidence",
         "sidecars": (
             "papers/alphaevolve_system_requirement_inventory_boundary.json",
             "papers/alphaevolve_context_claim_inventory_boundary.json",
@@ -77,7 +73,7 @@ CRITERION_SPECS = (
             {"path": "docs/todo/roadmap.md", "required_phrase": "every relevant AlphaEvolve source span"},
         ),
         "validation_gate": "retained PDF section-walk exhaustiveness gate",
-        "readiness_status": "846_bounded_claims_plus_195_lexical_citation_uses_30_dispositioned_tex_source_details_240_dispositioned_table_cells_305_dispositioned_listing_lines_309_dispositioned_tex_math_constructs_402_dispositioned_tex_prose_sentences_and_812_dispositioned_propositions_across_244_abstract_through_section4_ablation_sentences_without_remaining_158_sentence_proposition_semantic_requirements",
+        "readiness_status": "846_bounded_claims_plus_195_lexical_citation_uses_30_dispositioned_tex_source_details_240_dispositioned_table_cells_305_dispositioned_listing_lines_309_dispositioned_tex_math_constructs_403_dispositioned_tex_prose_sentences_and_985_dispositioned_propositions_across_286_abstract_through_section5_related_work_sentences_without_remaining_117_sentence_proposition_semantic_requirements",
     },
     {
         "criterion_id": "figure_table_appendix_matrix",
@@ -313,17 +309,17 @@ def roadmap_source_span_exhaustiveness_boundary_record(root: str | Path = ".") -
             "tex_math_display_construct_count": 18,
             "tex_math_inventory": "explicit_delimiter_disposition_verified_without_mathematical_correctness_or_result_reproduction",
             "tex_prose_paragraph_count": 128,
-            "tex_prose_sentence_count": 402,
-            "tex_prose_claim_mapped_sentence_count": 372,
+            "tex_prose_sentence_count": source_boundary["completed_evidence"]["tex_prose_sentence_count"],
+            "tex_prose_claim_mapped_sentence_count": source_boundary["completed_evidence"]["tex_prose_claim_mapped_sentence_count"],
             "tex_prose_reviewed_nonclaim_sentence_count": 30,
             "tex_prose_unmapped_sentence_count": 0,
             "tex_prose_inventory": "paragraph_and_sentence_disposition_verified_without_sentence_internal_clause_or_proposition_exhaustiveness",
-            "tex_proposition_reviewed_sentence_count": 244,
-            "tex_proposition_count": 812,
-            "tex_proposition_claim_mapped_count": 753,
-            "tex_proposition_context_outlook_interpretation_count": 59,
-            "tex_proposition_remaining_sentence_count": 158,
-            "tex_proposition_inventory": "abstract_through_section4_ablation_atomic_proposition_disposition_verified_without_remaining_paper_or_independent_semantic_exhaustiveness",
+            "tex_proposition_reviewed_sentence_count": source_boundary["completed_evidence"]["tex_proposition_reviewed_sentence_count"],
+            "tex_proposition_count": source_boundary["completed_evidence"]["tex_proposition_count"],
+            "tex_proposition_claim_mapped_count": source_boundary["completed_evidence"]["tex_proposition_claim_mapped_count"],
+            "tex_proposition_context_outlook_interpretation_count": source_boundary["completed_evidence"]["tex_proposition_context_outlook_interpretation_count"],
+            "tex_proposition_remaining_sentence_count": source_boundary["completed_evidence"]["tex_proposition_remaining_sentence_count"],
+            "tex_proposition_inventory": source_boundary["completed_evidence"]["tex_proposition_inventory"],
         },
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
@@ -351,14 +347,14 @@ def roadmap_source_span_exhaustiveness_boundary_record(root: str | Path = ".") -
             "split into 291 inline and 18 display constructs, without claiming "
             "mathematical correctness or result reproduction, plus paragraph- "
             "and sentence-level dispositions for all 128 retained TeX prose "
-            "paragraphs and all 402 grammatical sentences, with 372 mapped to "
+            "paragraphs and all 403 grammatical sentences, with 373 mapped to "
             "existing bounded claims, 30 reviewed as nonclaims, and zero unmapped "
-            "or unresolved sentences, plus 812 atomic propositions across all 244 "
-            "sentences from the Abstract through Section 4 ablations, "
-            "with 753 mapped to bounded claims and 59 "
+            "or unresolved sentences, plus 985 atomic propositions across all 286 "
+            "sentences from the Abstract through Section 5 Related Work, "
+            "with 919 mapped to bounded claims and 66 "
             "dispositioned as context, "
             "outlook, or interpretation. It does not claim proposition coverage "
-            "for the remaining 158 prose "
+            "for the remaining 117 prose "
             "sentences or independent semantic exhaustiveness, image-pixel coverage, "
             "citation-level proposition exhaustiveness, or independent semantic "
             "review. "
@@ -419,8 +415,8 @@ def validate_roadmap_source_span_exhaustiveness_boundary(
         or "all 83 rows and 240 cells" not in boundary_text
         or "all 8 retained TeX code listing environments and all 305 physical source lines" not in boundary_text
         or "all 309 explicit TeX math constructs" not in boundary_text
-        or "all 128 retained TeX prose paragraphs and all 402 grammatical sentences" not in boundary_text
-        or "remaining 158 prose sentences" not in boundary_text
+        or "all 128 retained TeX prose paragraphs and all 403 grammatical sentences" not in boundary_text
+        or "remaining 117 prose sentences" not in boundary_text
         or "citation-level proposition exhaustiveness" not in boundary_text
         or "claim-level requirement exhaustiveness" not in boundary_text
         or "CI source-span exhaustiveness gate" not in boundary_text

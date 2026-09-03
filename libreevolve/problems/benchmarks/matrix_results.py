@@ -22,6 +22,7 @@ from libreevolve.problems.benchmarks.companion_sources import (
     validate_alphaevolve_companion_selection_scope,
     validate_alphaevolve_companion_artifact_rights,
 )
+from libreevolve.problems.benchmarks._path_policy import safe_relative_path
 
 
 MATRIX_RESULT_SCHEMA = "libreevolve.matrix_result_report.v1"
@@ -7271,12 +7272,7 @@ def _validate_suite_artifact_inventory(
 
 
 def _safe_relative_path(value: object) -> Path | None:
-    if not isinstance(value, str) or not value:
-        return None
-    path = Path(value)
-    if path.is_absolute() or value.startswith(("/", "\\")) or ".." in path.parts:
-        return None
-    return path
+    return safe_relative_path(value)
 
 
 def _matrix_artifact_inventory_record(artifact: object, root: Path) -> dict[str, Any]:
@@ -7312,14 +7308,8 @@ def _matrix_artifact_inventory_record(artifact: object, root: Path) -> dict[str,
                 f"source_rights_{issue.code}"
                 for issue in rights_report.issues
             )
-    path_obj = Path(path) if isinstance(path, str) else None
-    if (
-        path_obj is None
-        or not path
-        or path_obj.is_absolute()
-        or path.startswith(("/", "\\"))
-        or ".." in path_obj.parts
-    ):
+    path_obj = _safe_relative_path(path)
+    if path_obj is None:
         record["status"] = "unsafe_path"
         record["issues"].append("invalid_artifact_path")
         return record
@@ -7488,14 +7478,8 @@ def _validate_artifacts(value: object, issues: list[MatrixResultIssue]) -> set[s
         else:
             kinds.add(artifact["kind"])
         path = artifact.get("path")
-        path_obj = Path(path) if isinstance(path, str) else None
-        if (
-            path_obj is None
-            or not path
-            or path_obj.is_absolute()
-            or path.startswith(("/", "\\"))
-            or ".." in path_obj.parts
-        ):
+        path_obj = _safe_relative_path(path)
+        if path_obj is None:
             issues.append(MatrixResultIssue("invalid_artifact_path", "artifact path must be safe and relative"))
         sha = artifact.get("sha256")
         if not isinstance(sha, str) or _SHA256_RE.fullmatch(sha) is None:

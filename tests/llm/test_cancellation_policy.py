@@ -1,6 +1,8 @@
 import hashlib
 import json
 
+import pytest
+
 from libreevolve.llm.cancellation_policy import (
     PROVIDER_CANCELLATION_ARTIFACT_INVENTORY_SCHEMA,
     PROVIDER_CANCELLATION_POLICY_SCHEMA,
@@ -238,9 +240,20 @@ def test_provider_cancellation_policy_rejects_runtime_readiness_overclaims():
     assert "cross_run_provider_quarantine_resume_overclaim" in codes
 
 
-def test_provider_cancellation_policy_rejects_unsafe_artifacts():
+@pytest.mark.parametrize(
+    "path",
+    [
+        "C:/secret.json",
+        r"C:\secret.json",
+        r"\\server\share\secret.json",
+        "nested/../secret.json",
+        r"nested\..\secret.json",
+        "nul\x00artifact.json",
+    ],
+)
+def test_provider_cancellation_policy_rejects_unsafe_artifacts(path):
     policy = _valid_policy()
-    policy["artifacts"][0].update({"path": "C:/secret.json", "sha256": "bad", "bytes": 0})
+    policy["artifacts"][0].update({"path": path, "sha256": "bad", "bytes": 0})
 
     validation = validate_provider_cancellation_policy(policy)
     codes = {issue.code for issue in validation.issues}
@@ -249,6 +262,68 @@ def test_provider_cancellation_policy_rejects_unsafe_artifacts():
     assert "invalid_artifact_path" in codes
     assert "invalid_artifact_hash" in codes
     assert "invalid_artifact_bytes" in codes
+
+
+def test_provider_cancellation_artifact_inventory_rejects_in_root_symlink(tmp_path):
+    target = tmp_path / "target.json"
+    target.write_text("cancellation evidence", encoding="utf-8")
+    link = tmp_path / "linked.json"
+    try:
+        link.symlink_to(target)
+    except (OSError, NotImplementedError) as exc:
+        pytest.skip(f"symlink creation is unavailable: {exc}")
+
+    policy = _valid_policy()
+    raw = target.read_bytes()
+    policy["artifacts"][0].update(
+        {
+            "path": "linked.json",
+            "sha256": hashlib.sha256(raw).hexdigest(),
+            "bytes": len(raw),
+        }
+    )
+
+    record = provider_cancellation_artifact_inventory(policy, tmp_path)["artifacts"][0]
+
+    assert record["status"] == "unsafe_path"
+    assert record["issues"] == ["artifact_path_symlink"]
+
+
+def test_provider_cancellation_artifact_inventory_rejects_nul_path_without_crashing(tmp_path):
+    policy = _valid_policy()
+    policy["artifacts"][0]["path"] = "nul\x00artifact.json"
+
+    record = provider_cancellation_artifact_inventory(policy, tmp_path)["artifacts"][0]
+
+    assert record["status"] == "unsafe_path"
+    assert record["issues"] == ["invalid_artifact_path"]
+
+
+def test_provider_cancellation_artifact_inventory_rejects_symlink_ancestor(tmp_path):
+    actual_dir = tmp_path / "actual"
+    actual_dir.mkdir()
+    actual_file = actual_dir / "artifact.json"
+    actual_file.write_text("cancellation evidence", encoding="utf-8")
+    linked_dir = tmp_path / "linked"
+    try:
+        linked_dir.symlink_to(actual_dir, target_is_directory=True)
+    except (OSError, NotImplementedError) as exc:
+        pytest.skip(f"directory symlink creation is unavailable: {exc}")
+
+    policy = _valid_policy()
+    raw = actual_file.read_bytes()
+    policy["artifacts"][0].update(
+        {
+            "path": "linked/artifact.json",
+            "sha256": hashlib.sha256(raw).hexdigest(),
+            "bytes": len(raw),
+        }
+    )
+
+    record = provider_cancellation_artifact_inventory(policy, tmp_path)["artifacts"][0]
+
+    assert record["status"] == "unsafe_path"
+    assert record["issues"] == ["artifact_path_symlink"]
 
 
 def test_provider_cancellation_summary_renders_readiness():

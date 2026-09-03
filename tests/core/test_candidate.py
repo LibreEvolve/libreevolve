@@ -979,7 +979,16 @@ def test_candidate_paths_reject_ambiguous_empty_and_dot_components():
 
 
 def test_candidate_paths_reject_posix_absolute_inputs():
-    for path in ("/abs.py", "//pkg/mod.py", "\\abs.py", "\\\\server\\share.py"):
+    for path in (
+        "/abs.py",
+        "//pkg/mod.py",
+        "\\abs.py",
+        "\\\\server\\share.py",
+        "C:/drive.py",
+        "C:\\drive.py",
+        "pkg/../escape.py",
+        "pkg\\..\\escape.py",
+    ):
         try:
             normalize_candidate_path(path)
         except ValueError as exc:
@@ -2410,36 +2419,24 @@ def test_workspace_rejects_move_to_existing_target_without_partial_apply():
     assert err == "main.py:target_exists"
 
 
-def test_workspace_rejects_casefold_file_creation_collision_without_partial_apply(
-    monkeypatch,
-):
-    from libreevolve.core import candidate as candidate_module
-
+def test_workspace_rejects_casefold_file_creation_collision_without_partial_apply():
     workspace = CandidateWorkspace(
         files={"README.md": "upper\n", "main.py": "x = 1\n"},
         primary_file="main.py",
     )
     response = "<<<FILE readme.md\nlower\n>>>FILE"
-    monkeypatch.setattr(candidate_module.os.path, "normcase", lambda value: value.lower())
-
     result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
 
     assert result == workspace
     assert err == "readme.md:host_path_collision"
 
 
-def test_workspace_rejects_casefold_move_target_collision_without_partial_apply(
-    monkeypatch,
-):
-    from libreevolve.core import candidate as candidate_module
-
+def test_workspace_rejects_casefold_move_target_collision_without_partial_apply():
     workspace = CandidateWorkspace(
         files={"README.md": "upper\n", "old.py": "value = 1\n"},
         primary_file="README.md",
     )
     response = "<<<FILE MOVE old.py -> readme.md\n>>>FILE"
-    monkeypatch.setattr(candidate_module.os.path, "normcase", lambda value: value.lower())
-
     result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
 
     assert result == workspace
@@ -2460,11 +2457,7 @@ def test_workspace_rejects_duplicate_move_targets_without_partial_apply():
     assert err == "target.py:duplicate_move_target"
 
 
-def test_workspace_rejects_casefold_duplicate_move_targets_without_partial_apply(
-    monkeypatch,
-):
-    from libreevolve.core import candidate as candidate_module
-
+def test_workspace_rejects_casefold_duplicate_move_targets_without_partial_apply():
     workspace = CandidateWorkspace(
         files={"main.py": "x = 1\n", "a.py": "a = 1\n", "b.py": "b = 1\n"},
         primary_file="main.py",
@@ -2473,8 +2466,6 @@ def test_workspace_rejects_casefold_duplicate_move_targets_without_partial_apply
         "<<<FILE MOVE a.py -> Target.py\n>>>FILE\n"
         "<<<FILE MOVE b.py -> target.py\n>>>FILE"
     )
-    monkeypatch.setattr(candidate_module.os.path, "normcase", lambda value: value.lower())
-
     result, err = apply_workspace_mutation(workspace, response, mutation_mode="full")
 
     assert result == workspace
@@ -2803,18 +2794,12 @@ def test_workspace_materialize_swap_failure_restores_existing_root(
     assert not (root / "main.py").exists()
 
 
-def test_workspace_materialize_preflight_failure_preserves_existing_root(
-    tmp_path, monkeypatch
-):
-    from libreevolve.core import candidate as candidate_module
-
+def test_workspace_materialize_preflight_failure_preserves_existing_root(tmp_path):
     (tmp_path / "old.py").write_text("old\n", encoding="utf-8")
     workspace = CandidateWorkspace(
         files={"Readme.md": "lower\n", "README.md": "upper\n"},
         primary_file="Readme.md",
     )
-    monkeypatch.setattr(candidate_module.os.path, "normcase", lambda value: value.lower())
-
     try:
         workspace.materialize(tmp_path)
     except CandidateMaterializationError as exc:
@@ -3069,15 +3054,11 @@ def test_workspace_rejects_duplicate_paths_after_normalization():
         raise AssertionError("expected duplicate normalized path rejection")
 
 
-def test_workspace_rejects_case_collisions_before_materialization(tmp_path, monkeypatch):
-    from libreevolve.core import candidate as candidate_module
-
+def test_workspace_rejects_case_collisions_before_materialization(tmp_path):
     workspace = CandidateWorkspace(
         files={"Readme.md": "lower\n", "README.md": "upper\n"},
         primary_file="Readme.md",
     )
-    monkeypatch.setattr(candidate_module.os.path, "normcase", lambda value: value.lower())
-
     try:
         workspace.materialize(tmp_path)
     except CandidateMaterializationError as exc:
@@ -3088,6 +3069,30 @@ def test_workspace_rejects_case_collisions_before_materialization(tmp_path, monk
         raise AssertionError("expected case-folded materialization collision")
     assert not (tmp_path / "Readme.md").exists()
     assert not (tmp_path / "README.md").exists()
+
+
+def test_workspace_materialize_rejects_casefold_static_collision(tmp_path):
+    raw = b"static\n"
+    workspace = CandidateWorkspace(
+        files={"README.md": "text\n"},
+        primary_file="README.md",
+        static_files=[
+            {
+                "path": "readme.md",
+                "kind": "binary",
+                "sha256": hashlib.sha256(raw).hexdigest(),
+                "bytes": len(raw),
+                "content_b64": base64.b64encode(raw).decode("ascii"),
+            }
+        ],
+    )
+
+    with pytest.raises(CandidateMaterializationError) as excinfo:
+        workspace.materialize(tmp_path / "candidate")
+
+    assert excinfo.value.reason == "candidate_path_collision"
+    assert excinfo.value.paths == ("README.md", "readme.md")
+    assert not (tmp_path / "candidate").exists()
 
 
 def test_workspace_rejects_empty_file_section_path():

@@ -14,6 +14,7 @@ from .ablation_registry import (
     FIGURE8_TARGET_FAMILIES,
     REPORT_SCHEMA,
 )
+from ._path_policy import safe_relative_path
 
 
 ABLATION_RESULT_SCHEMA = REPORT_SCHEMA
@@ -205,14 +206,8 @@ def _ablation_artifact_inventory_record(artifact: object, root: Path) -> dict[st
         "status": "verified",
         "issues": [],
     }
-    path_obj = Path(path) if isinstance(path, str) else None
-    if (
-        path_obj is None
-        or not path
-        or path_obj.is_absolute()
-        or path.startswith(("/", "\\"))
-        or ".." in path_obj.parts
-    ):
+    path_obj = safe_relative_path(path)
+    if path_obj is None:
         record["status"] = "unsafe_path"
         record["issues"].append("invalid_artifact_path")
         return record
@@ -565,14 +560,8 @@ def _validate_artifacts(value: object, issues: list[AblationResultIssue]) -> Non
 
 def _validate_file_record(record: dict[str, Any], prefix: str, issues: list[AblationResultIssue]) -> None:
     path = record.get("path")
-    path_obj = Path(path) if isinstance(path, str) else None
-    if (
-        path_obj is None
-        or not path
-        or path_obj.is_absolute()
-        or path.startswith(("/", "\\"))
-        or ".." in path_obj.parts
-    ):
+    path_obj = safe_relative_path(path)
+    if path_obj is None:
         issues.append(AblationResultIssue(f"invalid_{prefix}_path", f"{prefix} path must be safe and relative"))
     sha = record.get("sha256")
     if not isinstance(sha, str) or _SHA256_RE.fullmatch(sha) is None:

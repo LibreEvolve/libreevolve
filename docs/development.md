@@ -36,7 +36,7 @@ The main runtime dependencies are:
 - `click`
 - `python-dotenv`
 - `packaging`
-- `pypdf`
+- `pypdf>=6.6,<6.11` (the cached-PDF header evidence uses this extraction range)
 
 Development dependencies include:
 

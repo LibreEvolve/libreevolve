@@ -1,5 +1,8 @@
 from copy import deepcopy
 
+from libreevolve.problems.benchmarks.alphaevolve_related_work_claim_inventory_boundary import (
+    alphaevolve_related_work_claim_inventory_boundary_record,
+)
 from libreevolve.problems.benchmarks.alphaevolve_tex_proposition_inventory_boundary import (
     ALPHAEVOLVE_TEX_PROPOSITION_INVENTORY_BOUNDARY_SCHEMA,
     alphaevolve_tex_proposition_inventory_boundary_record,
@@ -8,7 +11,7 @@ from libreevolve.problems.benchmarks.alphaevolve_tex_proposition_inventory_bound
 )
 
 
-def test_tex_proposition_inventory_accepts_section4_ablation_scope():
+def test_tex_proposition_inventory_accepts_section5_related_work_scope():
     boundary = alphaevolve_tex_proposition_inventory_boundary_record()
 
     validation = validate_alphaevolve_tex_proposition_inventory_boundary(boundary)
@@ -23,35 +26,36 @@ def test_tex_proposition_inventory_accepts_section4_ablation_scope():
     assert boundary["review_scope_complete"] is True
     assert boundary["whole_paper_semantic_exhaustiveness_claim_ready"] is False
     assert boundary["independent_semantic_review_ready"] is False
-    assert validation.reviewed_sentence_count == 244
-    assert validation.proposition_count == 812
-    assert validation.remaining_sentence_count == 158
+    assert validation.reviewed_sentence_count == 286
+    assert validation.proposition_count == 985
+    assert validation.remaining_sentence_count == 117
     assert validation.unmapped_proposition_count == 0
     assert validation.unresolved_reference_count == 0
-    assert boundary["reviewed_sentence_fraction"] == 244 / 402
+    assert boundary["reviewed_sentence_fraction"] == 286 / 403
     assert boundary["reviewed_source_files"] == [
         "ablations.tex",
         "introduction.tex",
         "main.tex",
         "methods.tex",
+        "related_work.tex",
         "results.tex",
     ]
     assert boundary["disposition_counts"] == {
         "author_interpretation": 11,
         "author_outlook": 2,
-        "existing_bounded_claim_mapping": 753,
-        "source_context_only": 46,
+        "existing_bounded_claim_mapping": 919,
+        "source_context_only": 53,
     }
-    assert boundary["claim_reference_count"] == 783
-    assert boundary["unique_claim_reference_count"] == 362
-    assert boundary["implementation_relevant_proposition_count"] == 743
+    assert boundary["claim_reference_count"] == 963
+    assert boundary["unique_claim_reference_count"] == 431
+    assert boundary["implementation_relevant_proposition_count"] == 792
 
 
 def test_tex_proposition_inventory_resolves_every_reviewed_record():
     boundary = alphaevolve_tex_proposition_inventory_boundary_record()
 
-    assert len(boundary["reviewed_sentence_records"]) == 244
-    assert len(boundary["proposition_records"]) == 812
+    assert len(boundary["reviewed_sentence_records"]) == 286
+    assert len(boundary["proposition_records"]) == 985
     assert all(
         record["review_status"]
         == "manual_static_semantic_decomposition_complete"
@@ -67,6 +71,25 @@ def test_tex_proposition_inventory_resolves_every_reviewed_record():
         and record["source_quote_end"] > record["source_quote_start"]
         for record in boundary["proposition_records"]
     )
+
+
+def test_tex_proposition_inventory_records_related_work_slice_shape():
+    boundary = alphaevolve_tex_proposition_inventory_boundary_record()
+    related_work_records = [
+        record
+        for record in boundary["proposition_records"]
+        if record["sentence_id"] >= "tex_prose_sentence_0245"
+    ]
+
+    assert len(related_work_records) == 173
+    assert sum(
+        record["disposition"] == "existing_bounded_claim_mapping"
+        for record in related_work_records
+    ) == 166
+    assert sum(
+        record["disposition"] == "source_context_only"
+        for record in related_work_records
+    ) == 7
 
 
 def test_tex_proposition_inventory_records_new_and_repaired_claims():
@@ -107,15 +130,28 @@ def test_tex_proposition_inventory_records_new_and_repaired_claims():
         "section3_3_2_one_percent_gemini_training_reduction",
         "section3_3_2_team_research_engineering_velocity",
         "section4_component_efficacy_goal",
+        "alphaevolve_flexibility_distinction",
+        "classical_scheduling_success",
+        "classical_scientific_algorithmic_discovery_success",
         "direct_verilog_fosters_trust",
         "direct_verilog_simplifies_adoption",
         "gemini_first_direct_tpu_arithmetic_contribution",
         "jax_output_postprocessing",
         "pre_postprocessing_speedup_15_percent",
+        "pre_llm_genetic_search",
+        "pre_llm_systematic_enumeration",
         "task_problem_specific_abstraction_choice",
     }
     assert set(boundary["new_bounded_claim_ids"]) <= mapped_ids
     assert set(boundary["repaired_sentence_claim_ids"]) <= mapped_ids
+    related_work_claim_ids = {
+        record["claim_id"]
+        for record in alphaevolve_related_work_claim_inventory_boundary_record()[
+            "claim_records"
+        ]
+    }
+    assert len(related_work_claim_ids) == 85
+    assert related_work_claim_ids <= mapped_ids
     assert {
         "section3_2_ai_human_math_partnership_potential",
         "section3_2_autocorrelation_bounds_improved",
@@ -385,7 +421,7 @@ def test_render_tex_proposition_inventory_summary_reports_shape():
 
     assert "AlphaEvolve TeX proposition inventory boundary" in summary
     assert "| schema_status | ok |" in summary
-    assert "| reviewed_sentence_count | 244 |" in summary
-    assert "| proposition_count | 812 |" in summary
-    assert "| remaining_sentence_count | 158 |" in summary
+    assert "| reviewed_sentence_count | 286 |" in summary
+    assert "| proposition_count | 985 |" in summary
+    assert "| remaining_sentence_count | 117 |" in summary
     assert "| validation_status | ok |" in summary

@@ -7,6 +7,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from ._path_policy import safe_relative_path
+
 
 BENCHMARK_HARDENING_SCHEMA = "libreevolve.benchmark_hardening.v1"
 BENCHMARK_HARDENING_ARTIFACT_INVENTORY_SCHEMA = "libreevolve.benchmark_hardening_artifact_inventory.v1"
@@ -830,14 +832,8 @@ def _hardening_inventory_record(
         "status": "verified",
         "issues": [],
     }
-    path_obj = Path(path) if isinstance(path, str) else None
-    if (
-        path_obj is None
-        or not path
-        or path_obj.is_absolute()
-        or path.startswith(("/", "\\"))
-        or ".." in path_obj.parts
-    ):
+    path_obj = safe_relative_path(path)
+    if path_obj is None:
         inventory["status"] = "unsafe_path"
         inventory["issues"].append("invalid_record_path")
         return inventory
@@ -1007,14 +1003,8 @@ def _validate_artifacts(value: object, issues: list[BenchmarkHardeningIssue]) ->
 
 def _validate_file_record(record: dict[str, Any], prefix: str, issues: list[BenchmarkHardeningIssue]) -> None:
     path = record.get("path")
-    path_obj = Path(path) if isinstance(path, str) else None
-    if (
-        path_obj is None
-        or not path
-        or path_obj.is_absolute()
-        or path.startswith(("/", "\\"))
-        or ".." in path_obj.parts
-    ):
+    path_obj = safe_relative_path(path)
+    if path_obj is None:
         issues.append(BenchmarkHardeningIssue(f"invalid_{prefix}_path", f"{prefix} path must be safe and relative"))
     sha = record.get("sha256")
     if not isinstance(sha, str) or _SHA256_RE.fullmatch(sha) is None:

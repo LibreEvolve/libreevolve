@@ -1687,10 +1687,10 @@ have row/cell
 dispositions; and all 8 retained code listings and 305 physical source lines
 have line-level dispositions; all 309 explicit TeX math constructs have
 delimiter-level dispositions; prose sentences also have dispositions. This is
-supplemented by 812 atomic-proposition dispositions across all 244 sentences
-from the Abstract through Section 4 ablations, with 753 mapped to bounded claims
-and 59 classified as context, outlook, or interpretation.
-This is not proposition review for the remaining 158 prose
+supplemented by 985 atomic-proposition dispositions across all 286 sentences
+from the Abstract through Section 5 Related Work, with 919 mapped to bounded claims
+and 66 classified as context, outlook, or interpretation.
+This is not proposition review for the remaining 117 prose
 sentences or independent semantic review,
 mathematical correctness,
 image-pixel or citation-semantic review, or per-phrase sufficiency proof,
@@ -4205,19 +4205,19 @@ Planned or background-only:
 
 The retained-source prose audit in
 `papers/alphaevolve_tex_prose_inventory_boundary.json` inventories 128 body
-paragraphs and 402 grammatical sentences after masking separately audited
-table, figure, equation, listing, and footnote surfaces. It maps 372 sentences
+paragraphs and 403 grammatical sentences after masking separately audited
+table, figure, equation, listing, and footnote surfaces. It maps 373 sentences
 to existing bounded claims and reviews 30 as nonclaims, with zero unmapped or
-unresolved sentences. The walk contributes seven bounded claims but does not
+unresolved sentences. The walk contributes no new bounded claims but does not
 establish sentence-internal clause/proposition semantic exhaustiveness,
 independent semantic review, mathematical correctness, result reproduction, or
 AlphaEvolve parity.
 
 The scoped semantic review in
-`papers/alphaevolve_tex_proposition_inventory_boundary.json` decomposes all 244
-retained sentences from the Abstract through Section 4 ablations into 812
-atomic propositions. Seven hundred fifty-three map through 783 resolved
-references to 362 existing bounded claims; 46 are source context, 2 are
+`papers/alphaevolve_tex_proposition_inventory_boundary.json` decomposes all 286
+retained sentences from the Abstract through Section 5 Related Work into 985
+atomic propositions. Nine hundred nineteen map through 963 resolved
+references to 431 existing bounded claims; 53 are source context, 2 are
 author outlook, and 11 are qualified author
 interpretations. The cumulative
 review adds the previously unbounded direct-versus-instrumental-search and
@@ -4226,6 +4226,6 @@ bounded claim or parity credit, but repairs five alternative-definition
 sentences so their no-evolution, no-context, no-meta-prompt, loss-only, and
 small-base variants retain the shared component-efficacy purpose. Existing
 active TODOs own all 49 ablation gaps. It is a single-reviewer scoped inventory,
-not proposition coverage for the remaining 158 prose
+not proposition coverage for the remaining 117 prose
 sentences, independent
 semantic agreement, mathematical correctness, result reproduction, or parity.

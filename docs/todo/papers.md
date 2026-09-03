@@ -101,9 +101,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     inherits 34 source-detail and 75 table-cell dispositions and maps the other
     200 constructs directly to existing bounded claim ids with no unmapped or
     unresolved references and no new claim or parity credit. The supplemental
-    `papers/alphaevolve_tex_proposition_inventory_boundary.json` reviews all 244
-    sentences from the Abstract through Section 4 ablations as 812 atomic
-    propositions: 753 map through 783 references to 362 bounded claims, and 59
+    `papers/alphaevolve_tex_proposition_inventory_boundary.json` reviews all 286
+    sentences from the Abstract through Section 5 Related Work as 985 atomic
+    propositions: 919 map through 963 references to 431 bounded claims, and 66
     are context, outlook, or interpretation. The Section 4 slice adds no new
     bounded claim or parity credit, but repairs five alternative-definition
     sentences so their variants retain the shared component-efficacy purpose.
@@ -118,10 +118,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     inventory dispositions all retained rows and cells and the code-listing
     inventory
     dispositions all 8 environments and 305 source lines; the math inventory
-    covers 309 TeX constructs; prose maps 402 sentences, and review
-    covers 812 propositions across all 244 sentences through Section 4
-    ablations. Citation role and implementation relevance remain
-    unclassified. Remaining 158
+    covers 309 TeX constructs; prose maps 403 sentences, and review
+    covers 985 propositions across all 286 sentences through Section 5
+    Related Work. Citation role and implementation relevance remain
+    unclassified. Remaining 117
     sentence propositions, math/image-pixel/citation semantics, evidence sufficiency,
     result reproduction, and independent reviewer proof that any bounded inventory
     is semantically exhaustive also remain open.

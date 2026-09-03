@@ -29,7 +29,7 @@ dependencies = [
     "click>=8.1",
     "python-dotenv>=1.0",
     "packaging>=24.0",
-    "pypdf>=6.0",
+    "pypdf>=6.6,<6.11",
 ]
 
 [project.optional-dependencies]

@@ -1,4 +1,6 @@
 from libreevolve.problems.benchmarks.implementation_evidence_map_boundary import (
+    EXPECTED_BOUNDARY_STATUS,
+    EXPECTED_RECORDED_EVIDENCE,
     IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_SCHEMA,
     implementation_evidence_map_boundary_record,
     render_implementation_evidence_map_boundary_summary,
@@ -12,10 +14,7 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
     validation = validate_implementation_evidence_map_boundary(boundary)
 
     assert validation.ok is True
-    assert (
-        validation.boundary_status
-        == "verified_core_anchors_plus_846_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_309_tex_math_constructs_402_tex_prose_sentences_and_812_propositions_across_244_abstract_through_section4_ablation_sentences_without_whole_paper_semantic_exhaustiveness"
-    )
+    assert validation.boundary_status == EXPECTED_BOUNDARY_STATUS
     assert validation.requirement_count == 6
     assert validation.reference_check_count == 81
     assert validation.missing_evidence_count == 10
@@ -90,12 +89,12 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
     assert boundary["recorded_evidence"]["tex_math_construct_disposition_inventory"] == (
         "309_explicit_math_constructs_291_inline_18_display_zero_unmapped"
     )
-    assert boundary["recorded_evidence"]["tex_prose_sentence_disposition_inventory"] == (
-        "128_paragraphs_402_sentences_372_existing_claim_mappings_30_reviewed_nonclaims_zero_unmapped"
-    )
-    assert boundary["recorded_evidence"]["tex_proposition_disposition_inventory"] == (
-        "244_abstract_through_section4_ablation_sentences_812_atomic_propositions_753_existing_claim_mappings_59_context_outlook_or_interpretation_zero_unmapped"
-    )
+    assert boundary["recorded_evidence"]["tex_prose_sentence_disposition_inventory"] == EXPECTED_RECORDED_EVIDENCE[
+        "tex_prose_sentence_disposition_inventory"
+    ]
+    assert boundary["recorded_evidence"]["tex_proposition_disposition_inventory"] == EXPECTED_RECORDED_EVIDENCE[
+        "tex_proposition_disposition_inventory"
+    ]
     assert boundary["missing_evidence"]["citation_semantic_mapping"] == (
         "195_citation_uses_lexically_linked_without_supported_proposition_source_sufficiency_or_implementation_relevance_classification"
     )
@@ -137,7 +136,7 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
     assert "all 8 retained TeX code listing environments" in boundary["claim_boundary"]
     assert "all 309 explicit TeX math constructs" in boundary["claim_boundary"]
     assert "all 128 retained TeX prose paragraphs" in boundary["claim_boundary"]
-    assert "remaining 158 sentences" in boundary["claim_boundary"]
+    assert "remaining 117 sentences" in boundary["claim_boundary"]
 
 
 def test_implementation_evidence_map_boundary_rejects_exhaustive_overclaim():
@@ -187,10 +186,7 @@ def test_render_implementation_evidence_map_boundary_summary_reports_shape():
 
     assert "Implementation evidence map boundary" in summary
     assert "| schema_status | ok |" in summary
-    assert (
-        "| boundary_status | verified_core_anchors_plus_846_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_309_tex_math_constructs_402_tex_prose_sentences_and_812_propositions_across_244_abstract_through_section4_ablation_sentences_without_whole_paper_semantic_exhaustiveness |"
-        in summary
-    )
+    assert f"| boundary_status | {EXPECTED_BOUNDARY_STATUS} |" in summary
     assert "| requirement_count | 6 |" in summary
     assert "| reference_check_count | 81 |" in summary
     assert "| missing_evidence_count | 10 |" in summary

@@ -243,7 +243,15 @@ def _validate_missing_evidence(
         issues.append(_issue("invalid_missing_evidence", "missing_evidence must be an object"))
         return 0
     expected_keys = set(EXPECTED_MISSING_EVIDENCE)
-    actual_keys = set(value)
+    raw_keys = set(value)
+    if any(not isinstance(key, str) for key in raw_keys):
+        issues.append(
+            _issue(
+                "invalid_missing_evidence_key",
+                "missing_evidence keys must be strings",
+            )
+        )
+    actual_keys = {key for key in raw_keys if isinstance(key, str)}
     missing = sorted(expected_keys - actual_keys)
     extra = sorted(actual_keys - expected_keys)
     if missing:

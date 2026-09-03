@@ -686,6 +686,8 @@ class CascadeEvaluator:
             self._stages,
             validator_env_allowlist=self._validator_env_allowlist,
             validator_network_policy=self._validator_network_policy,
+            evaluator_data_include=self._data_include,
+            evaluator_data_exclude=self._data_exclude,
         )
         self._preflight_validated = True
 

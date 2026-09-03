@@ -6,7 +6,6 @@ from collections.abc import Mapping
 from dataclasses import dataclass, field
 import hashlib
 import io
-import os
 from pathlib import Path
 import re
 import shutil
@@ -201,12 +200,12 @@ class CandidateWorkspace:
         root = _prepare_materialization_root(Path(root))
         targets: dict[str, str] = {}
         for rel in files:
-            target = safe_candidate_path(
+            safe_candidate_path(
                 root,
                 rel,
                 allowed_reserved_paths=self.allowed_reserved_paths,
             )
-            key = os.path.normcase(str(target))
+            key = _candidate_path_collision_key(rel)
             if key in targets:
                 raise CandidateMaterializationError(
                     "Candidate paths collide when materialized: "
@@ -223,12 +222,12 @@ class CandidateWorkspace:
         ]
         for item in materialized_static_files:
             rel = str(item["path"])
-            target = safe_candidate_path(
+            safe_candidate_path(
                 root,
                 rel,
                 allowed_reserved_paths=self.allowed_reserved_paths,
             )
-            key = os.path.normcase(str(target))
+            key = _candidate_path_collision_key(rel)
             if key in targets:
                 raise CandidateMaterializationError(
                     "Candidate paths collide when materialized: "
@@ -1286,16 +1285,22 @@ def _workspace_host_path_collision(
     files: Mapping[str, str],
     static_files: tuple[dict[str, str | int], ...],
 ) -> tuple[str, str] | None:
+    """Detect collisions under the cross-platform materialization policy."""
     paths = list(files)
     paths.extend(_materializable_static_file_paths(static_files))
     seen: dict[str, str] = {}
     for rel_path in paths:
-        key = os.path.normcase(rel_path)
+        key = _candidate_path_collision_key(rel_path)
         existing = seen.get(key)
         if existing is not None and existing != rel_path:
             return existing, rel_path
         seen[key] = rel_path
     return None
+
+
+def _candidate_path_collision_key(rel_path: str) -> str:
+    """Return a deterministic key for filesystem-compatible path collisions."""
+    return unicodedata.normalize("NFC", rel_path).casefold()
 
 
 def _materializable_static_file_paths(

@@ -3008,6 +3008,43 @@ def test_direct_evaluator_passes_declared_data_context_to_validator():
         shutil.rmtree(d)
 
 
+def test_direct_evaluator_preflight_allows_top_level_declared_data_import():
+    p, d = _problem("def evaluate(c): return {'score': 0.1, 'is_valid': True}")
+    try:
+        validators = d / "validators"
+        validators.mkdir()
+        data_dir = validators / "data"
+        data_dir.mkdir()
+        (data_dir / "input.bin").write_bytes(b"expected")
+        validator_path = validators / "stage_validate.py"
+        validator_path.write_text(
+            "from pathlib import Path\n"
+            "IMPORTED = Path(__file__).parent.joinpath('data/input.bin').read_bytes()\n"
+            "def evaluate(code, workspace, stage):\n"
+            "    ok = IMPORTED == b'expected'\n"
+            "    return {'score': 1.0 if ok else 0.0, 'is_valid': ok}\n",
+            encoding="utf-8",
+        )
+        p.validate_path = validator_path
+
+        result = CascadeEvaluator(
+            p,
+            stages=[{"name": "stage", "validate_path": "validators/stage_validate.py"}],
+            data_include=["data/*.bin"],
+        ).evaluate("x=1", None)
+
+        assert result.is_valid is True
+        assert result.fitness == 1.0
+        assert result.metadata["stage"]["evaluator_data"]["files"] == [
+            {
+                "path": "data/input.bin",
+                "problem_relative_path": "validators/data/input.bin",
+            }
+        ]
+    finally:
+        shutil.rmtree(d)
+
+
 def test_evaluator_entrypoint_provenance_scopes_stage_companions_to_validator_dir():
     p, d = _problem("def evaluate(c): return {'score':0.1,'is_valid':True}")
     try:

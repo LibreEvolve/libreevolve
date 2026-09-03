@@ -24,14 +24,14 @@ from libreevolve.problems.benchmarks.paper_bibliography import (
 
 
 ALPHAEVOLVE_TEX_PROSE_INVENTORY_BOUNDARY_SCHEMA = (
-    "libreevolve.alphaevolve_tex_prose_inventory_boundary.v1"
+    "libreevolve.alphaevolve_tex_prose_inventory_boundary.v2"
 )
 EXPECTED_BOUNDARY_STATUS = (
     "retained_tex_paragraph_and_sentence_inventory_complete_without_"
     "semantic_clause_exhaustiveness"
 )
 EXPECTED_PARAGRAPH_COUNT = 128
-EXPECTED_SENTENCE_COUNT = 402
+EXPECTED_SENTENCE_COUNT = 403
 
 _EXCLUDED_FILE_REASONS = {
     "authors.tex": "author_metadata_covered_by_manifest_and_pdf_identity",
@@ -471,6 +471,26 @@ _DIRECT_CLAIM_MAP: dict[
     ),
     ("ablations.tex", 29, 0): _claim_refs(
         "ablation", "figure8_reports_full_and_alternative_results"
+    ),
+    ("related_work.tex", 6, 0): _claim_refs(
+        "related",
+        "classical_symbolic_regression_success",
+        "classical_scientific_algorithmic_discovery_success",
+        "classical_scheduling_success",
+    ),
+    ("related_work.tex", 22, 0): _claim_refs(
+        "related",
+        "alphaevolve_scale_distinction",
+        "alphaevolve_flexibility_distinction",
+        "alphaevolve_generality_distinction",
+    ),
+    ("related_work.tex", 36, 0): _claim_refs(
+        "related",
+        "superoptimization_1980s_origin",
+        "pre_llm_systematic_enumeration",
+        "pre_llm_genetic_search",
+        "pre_llm_monte_carlo_sampling",
+        "pre_llm_deep_reinforcement_learning",
     ),
     ("related_work.tex", 45, 0): _claim_refs(
         "related", "evolutionary_llm_approach_enables_harder_problems"
@@ -1342,6 +1362,8 @@ def _sentence_boundary_text(work: str) -> str:
             characters[terminal_punctuation] = work[terminal_punctuation]
     for match in _CITATION_COMMAND_PATTERN.finditer(work):
         _mask_range(characters, match.start(), _command_end(work, match.start()))
+        # A citation can supply the grammatical subject at a new sentence start.
+        characters[match.start()] = "C"
     return "".join(characters)
 
 

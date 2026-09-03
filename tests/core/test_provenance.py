@@ -2035,6 +2035,21 @@ def test_runtime_environment_provenance_records_missing_and_failed_provider_sdks
     assert "\u202e" not in rendered
 
 
+@pytest.mark.parametrize(
+    ("path", "expected"),
+    [
+        ("/usr/bin/nvidia-smi", "nvidia-smi"),
+        (r"C:\\Windows\\System32\\nvidia-smi.exe", "nvidia-smi.exe"),
+        (r"\\\\server\\share\\nvidia-smi.exe", "nvidia-smi.exe"),
+    ],
+)
+def test_portable_executable_basename_accepts_posix_and_windows_paths(
+    path,
+    expected,
+):
+    assert provenance_module._portable_executable_basename(path) == expected
+
+
 def test_runtime_environment_provenance_records_accelerator_runtime(
     tmp_path,
     monkeypatch,
@@ -2063,6 +2078,7 @@ def test_runtime_environment_provenance_records_accelerator_runtime(
         "_pip_config_snapshot",
         lambda: {"status": "stubbed"},
     )
+    monkeypatch.setattr(provenance_module.platform, "platform", lambda: "test-platform")
     monkeypatch.setenv("CUDA_VISIBLE_DEVICES", f"0,{secret}")
     provenance_module._accelerator_probe_record_cached.cache_clear()
 

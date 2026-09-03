@@ -191,25 +191,25 @@ Important limits:
   or parity credit. Formula correctness, proof validity, and result
   reproduction remain open.
 - `papers/alphaevolve_tex_prose_inventory_boundary.json` inventories all 128
-  retained body paragraphs and 402 grammatical sentences after masking the
+  retained body paragraphs and 403 grammatical sentences after masking the
   table, figure, equation, listing, and footnote surfaces audited separately.
-  It maps 372 sentences to existing bounded claims and reviews 30 as nonclaims,
-  with zero unmapped or unresolved sentences. This adds seven claims found by
-  the prose walk, but complete sentence disposition is not sentence-internal
+  It maps 373 sentences to existing bounded claims and reviews 30 as nonclaims,
+  with zero unmapped or unresolved sentences. The walk adds no new claims, and
+  complete sentence disposition is not sentence-internal
   clause/proposition exhaustiveness or independent semantic review.
 - `papers/alphaevolve_tex_proposition_inventory_boundary.json` decomposes all
-  244 retained sentences from the Abstract through Section 4 ablations
-  (60.7% of the 402 retained prose sentences) into 812 atomic propositions.
-  Seven hundred fifty-three map through 783 references to 362 bounded claims;
-  46 are source context, 2 are author
-  outlook, and 11 are qualified author interpretations.
+  286 retained sentences from the Abstract through Section 5 Related Work
+  (70.97% of the 403 retained prose sentences) into 985 atomic propositions.
+  Nine hundred nineteen map through 963 references to 431 bounded claims;
+  53 are source context, 2 are author outlook, and 11 are qualified author
+  interpretations.
   The cumulative review
   adds the previously unbounded direct-versus-instrumental-search and expensive-
   evaluation sample-efficiency claims. The Section 4 slice adds no new claim or
   parity credit, but repairs five alternative-definition sentences so their
   no-evolution, no-context, no-meta-prompt, loss-only, and small-base variants
   retain the shared component-efficacy purpose. Active TODOs already own all 49
-  ablation gaps. The remaining 158
+  ablation gaps. The remaining 117
   prose sentences and independent semantic review remain open.
 - Together the twelve bounded inventories cover 846 claims: 30 locally
   implemented, 278 partial, 110 not implemented, 369 not demonstrated, and 59
@@ -223,11 +223,11 @@ Important limits:
   dispositions; and
   all 8 retained code listings and 305 physical source lines have line-level
   dispositions; all 309 explicit TeX math constructs have delimiter-level
-  dispositions; and all 128 retained prose paragraphs and 402 grammatical
-  sentences have dispositions; all 244 sentences from the Abstract through
-  Section 4 ablations also have 812 atomic-proposition
+  dispositions; and all 128 retained prose paragraphs and 403 grammatical
+  sentences have dispositions; all 286 sentences from the Abstract through
+  Section 5 Related Work also have 985 atomic-proposition
   dispositions. Coverage still excludes proposition review for the remaining
-  158 sentences,
+  117 sentences,
   mathematical correctness,
   image-pixel and citation-semantic review, independent result reproduction,
   independent proof of semantic completeness, and AlphaEvolve-scale execution.

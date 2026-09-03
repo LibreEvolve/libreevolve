@@ -6,6 +6,7 @@ import functools
 import hashlib
 import importlib
 import io
+import ntpath
 import os
 from importlib import metadata
 import json
@@ -1688,7 +1689,7 @@ def _accelerator_probe_record_cached(name: str, executable: str, args: tuple[str
     if executable_path is None:
         return base | {"status": "executable_missing"}
     base["executable_path_hash"] = _hash_text(executable_path)
-    base["executable_basename"] = Path(executable_path).name
+    base["executable_basename"] = _portable_executable_basename(executable_path)
     try:
         result = subprocess.run(
             command,
@@ -1752,6 +1753,11 @@ def _accelerator_probe_line_record(raw_line: str) -> dict:
     }
     record.update({f"line_{key}": value for key, value in metadata.items()})
     return record
+
+
+def _portable_executable_basename(executable_path: str) -> str:
+    """Extract an executable name from POSIX or Windows path spelling."""
+    return ntpath.basename(executable_path)
 
 
 def _safe_accelerator_runtime_line(raw_value: str) -> tuple[str, dict]:

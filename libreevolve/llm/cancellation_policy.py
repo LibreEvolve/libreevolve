@@ -4,8 +4,10 @@ import hashlib
 import json
 import re
 from dataclasses import dataclass
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import Any
+
+from libreevolve.core.redaction import redact_sensitive_text
 
 from .prompt_roles import validate_prompt_role_label
 
@@ -197,13 +199,7 @@ def _cancellation_artifact_inventory_record(artifact: object, root: Path) -> dic
         "issues": [],
     }
     path_obj = Path(path) if isinstance(path, str) else None
-    if (
-        path_obj is None
-        or not path
-        or path_obj.is_absolute()
-        or path.startswith(("/", "\\"))
-        or ".." in path_obj.parts
-    ):
+    if not _is_safe_relative_artifact_path(path):
         record["status"] = "unsafe_path"
         record["issues"].append("invalid_artifact_path")
         return record
@@ -217,6 +213,10 @@ def _cancellation_artifact_inventory_record(artifact: object, root: Path) -> dic
     if not resolved_path.is_relative_to(resolved_root):
         record["status"] = "unsafe_path"
         record["issues"].append("artifact_path_outside_root")
+        return record
+    if _path_contains_link(resolved_root, path_obj):
+        record["status"] = "unsafe_path"
+        record["issues"].append("artifact_path_symlink")
         return record
     if not resolved_path.exists():
         record["status"] = "missing_file"
@@ -418,14 +418,7 @@ def _validate_runtime_readiness(
 
 def _validate_file_record(record: dict[str, Any], prefix: str, issues: list[CancellationPolicyIssue]) -> None:
     path = record.get("path")
-    path_obj = Path(path) if isinstance(path, str) else None
-    if (
-        path_obj is None
-        or not path
-        or path_obj.is_absolute()
-        or path.startswith(("/", "\\"))
-        or ".." in path_obj.parts
-    ):
+    if not _is_safe_relative_artifact_path(path):
         issues.append(CancellationPolicyIssue(f"invalid_{prefix}_path", f"{prefix} path must be safe and relative"))
     sha = record.get("sha256")
     if not isinstance(sha, str) or _SHA256_RE.fullmatch(sha) is None:
@@ -433,6 +426,37 @@ def _validate_file_record(record: dict[str, Any], prefix: str, issues: list[Canc
     byte_count = record.get("bytes")
     if isinstance(byte_count, bool) or not isinstance(byte_count, int) or byte_count <= 0:
         issues.append(CancellationPolicyIssue(f"invalid_{prefix}_bytes", f"{prefix} bytes must be a positive integer"))
+
+
+def _is_safe_relative_artifact_path(path: object) -> bool:
+    """Apply the artifact path grammar independently of the host OS."""
+    if not isinstance(path, str) or not path:
+        return False
+    posix_path = PurePosixPath(path)
+    windows_path = PureWindowsPath(path)
+    return not (
+        "\x00" in path or redact_sensitive_text(path) != path
+        or posix_path.is_absolute()
+        or windows_path.is_absolute()
+        or bool(windows_path.root)
+        or bool(windows_path.drive)
+        or ".." in posix_path.parts
+        or ".." in windows_path.parts
+    )
+
+
+def _is_link(path: Path) -> bool:
+    is_junction = getattr(path, "is_junction", None)
+    return path.is_symlink() or (is_junction is not None and is_junction())
+
+
+def _path_contains_link(root: Path, relative_path: Path) -> bool:
+    current = root
+    for part in relative_path.parts:
+        current /= part
+        if _is_link(current):
+            return True
+    return False
 
 
 def _role(value: object, issues: list[CancellationPolicyIssue]) -> str | None:

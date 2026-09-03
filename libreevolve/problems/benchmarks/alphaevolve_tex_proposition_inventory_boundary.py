@@ -20,16 +20,16 @@ from libreevolve.problems.benchmarks.paper_bibliography import (
 
 
 ALPHAEVOLVE_TEX_PROPOSITION_INVENTORY_BOUNDARY_SCHEMA = (
-    "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v10"
+    "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v11"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "abstract_through_section4_ablations_proposition_review_complete_without_"
+    "abstract_through_section5_related_work_proposition_review_complete_without_"
     "remaining_paper_or_independent_semantic_exhaustiveness"
 )
-EXPECTED_REVIEWED_SENTENCE_COUNT = 244
-EXPECTED_PROPOSITION_COUNT = 812
+EXPECTED_REVIEWED_SENTENCE_COUNT = 286
+EXPECTED_PROPOSITION_COUNT = 985
 EXPECTED_REVIEWED_SENTENCE_IDS = tuple(
-    f"tex_prose_sentence_{ordinal:04d}" for ordinal in range(1, 245)
+    f"tex_prose_sentence_{ordinal:04d}" for ordinal in range(1, 287)
 )
 EXPECTED_NEW_BOUNDED_CLAIM_IDS = (
     "introduction_algorithm_search_outperforms_direct_solution_search",
@@ -61,11 +61,16 @@ EXPECTED_REPAIRED_SENTENCE_CLAIM_IDS = (
     "section3_3_2_one_percent_gemini_training_reduction",
     "section3_3_2_team_research_engineering_velocity",
     "section4_component_efficacy_goal",
+    "alphaevolve_flexibility_distinction",
+    "classical_scheduling_success",
+    "classical_scientific_algorithmic_discovery_success",
     "direct_verilog_fosters_trust",
     "direct_verilog_simplifies_adoption",
     "gemini_first_direct_tpu_arithmetic_contribution",
     "jax_output_postprocessing",
     "pre_postprocessing_speedup_15_percent",
+    "pre_llm_genetic_search",
+    "pre_llm_systematic_enumeration",
     "task_problem_specific_abstraction_choice",
 )
 
@@ -5164,6 +5169,1038 @@ _PROPOSITION_SPECS.update(
 )
 
 
+_PROPOSITION_SPECS.update(
+    {
+        "tex_prose_sentence_0245": (
+            _mapped(
+                "AlphaEvolve extends a long tradition",
+                "AlphaEvolve is positioned as extending a longstanding research tradition.",
+                _ref("related", "evolutionary_programming_lineage"),
+            ),
+            _mapped(
+                "evolutionary or genetic programming",
+                "The named tradition is evolutionary or genetic programming.",
+                _ref("related", "evolutionary_programming_lineage"),
+            ),
+            _mapped(
+                "one repeatedly uses a set of",
+                "The classical pattern repeatedly applies a set of operators.",
+                _ref("related", "mutation_crossover_pool_pattern"),
+            ),
+            _mapped(
+                "mutation",
+                "The classical operator set includes mutation.",
+                _ref("related", "mutation_crossover_pool_pattern"),
+            ),
+            _mapped(
+                "crossover operators",
+                "The classical operator set includes crossover.",
+                _ref("related", "mutation_crossover_pool_pattern"),
+            ),
+            _mapped(
+                "evolve a pool of programs",
+                "The operators evolve a pool of programs.",
+                _ref("related", "mutation_crossover_pool_pattern"),
+            ),
+        ),
+        "tex_prose_sentence_0246": (
+            _mapped(
+                "symbolic regression applications",
+                "Classical evolutionary techniques have succeeded in symbolic regression.",
+                _ref("related", "classical_symbolic_regression_success"),
+            ),
+            _mapped(
+                "automated scientific",
+                "Classical evolutionary techniques have been used for automated scientific discovery.",
+                _ref(
+                    "related",
+                    "classical_scientific_algorithmic_discovery_success",
+                ),
+            ),
+            _mapped(
+                "algorithmic",
+                "Classical evolutionary techniques have been used for automated algorithmic discovery.",
+                _ref(
+                    "related",
+                    "classical_scientific_algorithmic_discovery_success",
+                ),
+            ),
+            _mapped(
+                "scheduling",
+                "Classical evolutionary techniques have been used for scheduling problems.",
+                _ref("related", "classical_scheduling_success"),
+            ),
+        ),
+        "tex_prose_sentence_0247": (
+            _reviewed_context(
+                "a challenge with these methods",
+                "The sentence frames handwritten operators as a challenge for classical methods.",
+                "related_work_setup",
+            ),
+            _mapped(
+                "use of handwritten evolution operators",
+                "The challenged methods use handwritten evolution operators.",
+                _ref("related", "handwritten_operators_hard_to_design"),
+            ),
+            _mapped(
+                "hard to design",
+                "Handwritten evolution operators can be hard to design.",
+                _ref("related", "handwritten_operators_hard_to_design"),
+            ),
+            _mapped(
+                "may fail to capture",
+                "Handwritten evolution operators may omit relevant properties.",
+                _ref("related", "handwritten_operators_miss_domain_properties"),
+            ),
+            _mapped(
+                "important properties of the domain",
+                "The potentially omitted properties can be important to the domain.",
+                _ref("related", "handwritten_operators_miss_domain_properties"),
+            ),
+        ),
+        "tex_prose_sentence_0248": (
+            _mapped(
+                "AlphaEvolve uses LLMs",
+                "AlphaEvolve uses language models to construct evolution operators.",
+                _ref("related", "llm_constructed_mutation_operators"),
+            ),
+            _mapped(
+                "automate the construction of these operators",
+                "Language models automate construction of the mutation operators.",
+                _ref("related", "llm_constructed_mutation_operators"),
+            ),
+            _mapped(
+                "leverages the LLM's world knowledge",
+                "AlphaEvolve leverages language-model world knowledge.",
+                _ref("related", "llm_world_knowledge_mutation"),
+            ),
+            _mapped(
+                "to mutate programs",
+                "Language-model world knowledge is used to mutate programs.",
+                _ref("related", "llm_world_knowledge_mutation"),
+            ),
+            _mapped(
+                "without the need to pre-define a set of allowed mutation operations",
+                "AlphaEvolve does not require a predefined allowed-mutation set.",
+                _ref("related", "no_predefined_allowed_mutation_set"),
+            ),
+        ),
+        "tex_prose_sentence_0249": (
+            _mapped(
+                "preceded by a body of recent efforts",
+                "Recent related efforts preceded AlphaEvolve.",
+                _ref("related", "recent_llm_evolution_predecessors"),
+            ),
+            _mapped(
+                "combine LLMs and evolution",
+                "The predecessor efforts combine language models and evolution.",
+                _ref("related", "recent_llm_evolution_predecessors"),
+            ),
+            _mapped(
+                "extends the FunSearch system",
+                "AlphaEvolve extends FunSearch.",
+                _ref("related", "extends_funsearch"),
+            ),
+            _mapped(
+                "introduced by [citation]",
+                "The sentence points to the work that introduced FunSearch.",
+                _ref("related", "funsearch_mathematical_discovery"),
+            ),
+            _mapped(
+                "approach to mathematical discovery",
+                "FunSearch was introduced as a mathematical-discovery approach.",
+                _ref("related", "funsearch_mathematical_discovery"),
+            ),
+        ),
+        "tex_prose_sentence_0250": (
+            _mapped(
+                "subsequently used in downstream tasks",
+                "FunSearch was subsequently applied to downstream tasks.",
+                _ref("related", "funsearch_bayesian_acquisition_functions"),
+                _ref("related", "funsearch_cognitive_models"),
+                _ref("related", "funsearch_graph_distances"),
+                _ref("related", "funsearch_competitive_programming"),
+            ),
+            _mapped(
+                "learning acquisition functions for Bayesian optimization",
+                "A downstream FunSearch task learned Bayesian-optimization acquisition functions.",
+                _ref("related", "funsearch_bayesian_acquisition_functions"),
+            ),
+            _mapped(
+                "discovering cognitive models",
+                "A downstream FunSearch task discovered cognitive models.",
+                _ref("related", "funsearch_cognitive_models"),
+            ),
+            _mapped(
+                "computing distances between graphs",
+                "A downstream FunSearch task computed distances between graphs.",
+                _ref("related", "funsearch_graph_distances"),
+            ),
+            _mapped(
+                "combinatorial competitive programming",
+                "A downstream FunSearch task concerned combinatorial competitive programming.",
+                _ref("related", "funsearch_competitive_programming"),
+            ),
+        ),
+        "tex_prose_sentence_0251": (
+            _mapped(
+                "goes beyond FunSearch",
+                "AlphaEvolve is presented as extending beyond FunSearch.",
+                _ref("related", "three_funsearch_extensions"),
+            ),
+            _mapped(
+                "recent reimplementation",
+                "The comparator includes a recent FunSearch reimplementation.",
+                _ref("related", "three_funsearch_extensions"),
+            ),
+            _mapped(
+                "three key ways",
+                "The paper identifies three key FunSearch extensions.",
+                _ref("related", "three_funsearch_extensions"),
+            ),
+        ),
+        "tex_prose_sentence_0252": (
+            _mapped(
+                "FunSearch only allowed the evolution",
+                "FunSearch constrained the evolution surface.",
+                _ref("related", "funsearch_single_python_function"),
+            ),
+            _mapped(
+                "single Python function",
+                "FunSearch evolved only one Python function.",
+                _ref("related", "funsearch_single_python_function"),
+            ),
+            _mapped(
+                "AlphaEvolve allows evolution over entire codebases",
+                "AlphaEvolve permits evolution over entire codebases.",
+                _ref("related", "alphaevolve_entire_codebases"),
+            ),
+            _mapped(
+                "wide range of programming languages",
+                "AlphaEvolve supports codebases in a wide range of programming languages.",
+                _ref("related", "alphaevolve_wide_programming_languages"),
+            ),
+        ),
+        "tex_prose_sentence_0253": (
+            _mapped(
+                "FunSearch optimized a single objective function",
+                "FunSearch optimized one objective function.",
+                _ref("related", "funsearch_single_objective"),
+            ),
+            _mapped(
+                "AlphaEvolve provides the ability to perform multiobjective optimization",
+                "AlphaEvolve supports multiobjective optimization.",
+                _ref("related", "alphaevolve_multiobjective_optimization"),
+            ),
+        ),
+        "tex_prose_sentence_0254": (
+            _mapped(
+                "LLMs in FunSearch were relatively small",
+                "FunSearch used relatively small language models.",
+                _ref("related", "funsearch_relatively_small_llms"),
+            ),
+            _mapped(
+                "solely trained on code",
+                "The FunSearch language models were trained solely on code.",
+                _ref("related", "funsearch_code_only_llms"),
+            ),
+        ),
+        "tex_prose_sentence_0255": (
+            _mapped(
+                "AlphaEvolve uses frontier LLMs",
+                "AlphaEvolve uses frontier language models.",
+                _ref("related", "alphaevolve_frontier_llms"),
+            ),
+            _mapped(
+                "rich forms of natural-language context",
+                "AlphaEvolve supplies rich natural-language context.",
+                _ref(
+                    "related",
+                    "alphaevolve_rich_natural_language_context_feedback",
+                ),
+            ),
+            _mapped(
+                "feedback",
+                "AlphaEvolve supplies rich feedback to its language models.",
+                _ref(
+                    "related",
+                    "alphaevolve_rich_natural_language_context_feedback",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0256": (
+            _mapped(
+                "demonstrated in this paper",
+                "The paper cites its own results as evidence for the extension claim.",
+                _ref("related", "funsearch_extensions_enable_harder_problems"),
+            ),
+            _mapped(
+                "these extensions allow AlphaEvolve",
+                "The three FunSearch extensions are credited with expanding AlphaEvolve's task reach.",
+                _ref("related", "funsearch_extensions_enable_harder_problems"),
+            ),
+            _mapped(
+                "important challenging problems",
+                "The expanded task reach includes important challenging problems.",
+                _ref("related", "funsearch_extensions_enable_harder_problems"),
+            ),
+            _mapped(
+                "not amenable to FunSearch",
+                "The claimed problems were not amenable to FunSearch.",
+                _ref("related", "funsearch_extensions_enable_harder_problems"),
+            ),
+        ),
+        "tex_prose_sentence_0257": (
+            _mapped(
+                "LLM-guided evolution process",
+                "One related approach uses language-model-guided evolution.",
+                _ref("related", "llm_evolution_robot_policies"),
+            ),
+            _mapped(
+                "discover programmatic policies",
+                "The related approach discovers programmatic policies.",
+                _ref("related", "llm_evolution_robot_policies"),
+            ),
+            _mapped(
+                "simulated robots",
+                "The programmatic policies target simulated robots.",
+                _ref("related", "llm_evolution_robot_policies"),
+            ),
+            _mapped(
+                "for code synthesis",
+                "Another related language-model-evolution approach targets code synthesis.",
+                _ref("related", "llm_evolution_code_synthesis"),
+            ),
+        ),
+        "tex_prose_sentence_0258": (
+            _reviewed_context(
+                "scientific and mathematical tasks",
+                "The sentence introduces scientific and mathematical applications of related methods.",
+                "related_work_application_group",
+            ),
+            _mapped(
+                "symbolic regression",
+                "Related language-model evolution has been applied to symbolic regression.",
+                _ref("related", "llm_evolution_symbolic_regression"),
+            ),
+            _mapped(
+                "discovering heuristics for combinatorial optimization",
+                "Related language-model evolution has discovered combinatorial-optimization heuristics.",
+                _ref("related", "llm_evolution_combinatorial_heuristics"),
+            ),
+            _mapped(
+                "synthesizing molecular structures",
+                "Related language-model evolution has synthesized molecular structures.",
+                _ref("related", "llm_evolution_molecular_structures"),
+            ),
+        ),
+        "tex_prose_sentence_0259": (
+            _reviewed_context(
+                "used to improve AI systems",
+                "The sentence groups prompt and architecture work as AI-system improvements.",
+                "related_work_application_group",
+            ),
+            _mapped(
+                "enhancing LLM prompts",
+                "Language-model-guided evolution has enhanced language-model prompts.",
+                _ref("related", "llm_evolution_prompt_enhancement"),
+            ),
+            _mapped(
+                "searching over neural architectures",
+                "Language-model-guided evolution has searched neural architectures.",
+                _ref("related", "llm_evolution_neural_architectures"),
+            ),
+        ),
+        "tex_prose_sentence_0260": (
+            _mapped(
+                "differs from these approaches in its scale",
+                "AlphaEvolve is reported to differ from related methods in scale.",
+                _ref("related", "alphaevolve_scale_distinction"),
+            ),
+            _mapped(
+                "flexibility",
+                "AlphaEvolve is reported to differ from related methods in flexibility.",
+                _ref("related", "alphaevolve_flexibility_distinction"),
+            ),
+            _mapped(
+                "general applicability",
+                "AlphaEvolve is reported to differ in general applicability.",
+                _ref("related", "alphaevolve_generality_distinction"),
+            ),
+            _mapped(
+                "broad range of domains",
+                "The general-applicability claim spans a broad range of domains.",
+                _ref("related", "alphaevolve_generality_distinction"),
+            ),
+        ),
+        "tex_prose_sentence_0261": (
+            _reviewed_context(
+                "Some recent efforts have augmented the basic paradigm of LLM-guided evolution with complementary ideas.",
+                "The sentence transitions to complementary extensions in prior work.",
+                "literature_transition",
+            ),
+        ),
+        "tex_prose_sentence_0262": (
+            _mapped(
+                "complement the evolution process",
+                "The cited work complements the evolution process.",
+                _ref("related", "continuous_llm_finetuning_rl"),
+            ),
+            _mapped(
+                "continuously finetuning the LLM",
+                "The complementary method continuously fine-tunes the language model.",
+                _ref("related", "continuous_llm_finetuning_rl"),
+            ),
+            _mapped(
+                "through reinforcement learning",
+                "The continuous language-model fine-tuning uses reinforcement learning.",
+                _ref("related", "continuous_llm_finetuning_rl"),
+            ),
+        ),
+        "tex_prose_sentence_0263": (
+            _mapped(
+                "enhance the evolution process",
+                "The cited concept-learning method enhances the evolution process.",
+                _ref("related", "llm_directed_concept_learning"),
+            ),
+            _mapped(
+                "LLM-directed concept learning step",
+                "The method adds a language-model-directed concept-learning step.",
+                _ref("related", "llm_directed_concept_learning"),
+            ),
+            _mapped(
+                "summarizes high-performing programs",
+                "The concept-learning step summarizes high-performing programs.",
+                _ref("related", "llm_directed_concept_learning"),
+            ),
+            _mapped(
+                "in the pool",
+                "The summarized programs come from the evolutionary pool.",
+                _ref("related", "llm_directed_concept_learning"),
+            ),
+            _mapped(
+                "into natural language",
+                "The program summaries are expressed in natural language.",
+                _ref("related", "llm_directed_concept_learning"),
+            ),
+        ),
+        "tex_prose_sentence_0264": (
+            _mapped(
+                "More investigation is required",
+                "The paper identifies further investigation as necessary.",
+                _ref("related", "complementary_ideas_need_scale_study"),
+            ),
+            _mapped(
+                "understand the benefits",
+                "The open investigation concerns the benefits of complementary ideas.",
+                _ref("related", "complementary_ideas_need_scale_study"),
+            ),
+            _mapped(
+                "these ideas",
+                "The open question concerns the preceding fine-tuning and concept-learning ideas.",
+                _ref("related", "complementary_ideas_need_scale_study"),
+            ),
+            _mapped(
+                "scale at which AlphaEvolve operates",
+                "The open benefits question is scoped to AlphaEvolve's operating scale.",
+                _ref("related", "complementary_ideas_need_scale_study"),
+            ),
+        ),
+        "tex_prose_sentence_0265": (
+            _mapped(
+                "Evolutionary methods have also found use",
+                "AI Co-Scientist is reported to use evolutionary methods.",
+                _ref("related", "ai_coscientist_evolutionary_use"),
+            ),
+            _mapped(
+                "recent AI Co-Scientist work",
+                "The evolutionary-method example is the recent AI Co-Scientist work.",
+                _ref("related", "ai_coscientist_evolutionary_use"),
+            ),
+            _reviewed_context(
+                "seeks to automate scientific discovery",
+                "AI Co-Scientist is described as seeking automated scientific discovery.",
+                "related_work_system_context",
+            ),
+            _mapped(
+                "using distinct agents",
+                "AI Co-Scientist uses distinct agents.",
+                _ref("related", "ai_coscientist_distinct_agent_tasks"),
+            ),
+            _mapped(
+                "hypothesis discovery",
+                "One AI Co-Scientist agent task is hypothesis discovery.",
+                _ref("related", "ai_coscientist_distinct_agent_tasks"),
+            ),
+            _mapped(
+                "ranking of hypotheses",
+                "One AI Co-Scientist agent task is hypothesis ranking.",
+                _ref("related", "ai_coscientist_distinct_agent_tasks"),
+            ),
+            _mapped(
+                "literature review",
+                "One AI Co-Scientist agent task is literature review.",
+                _ref("related", "ai_coscientist_distinct_agent_tasks"),
+            ),
+        ),
+    }
+)
+
+
+_PROPOSITION_SPECS.update(
+    {
+        "tex_prose_sentence_0266": (
+            _mapped(
+                "represents scientific hypotheses",
+                "AI Co-Scientist represents scientific hypotheses in natural language.",
+                _ref("related", "ai_coscientist_natural_language_hypotheses"),
+            ),
+            _mapped(
+                "evaluation criteria in natural language",
+                "AI Co-Scientist represents evaluation criteria in natural language.",
+                _ref(
+                    "related",
+                    "ai_coscientist_natural_language_evaluation_criteria",
+                ),
+            ),
+            _mapped(
+                "AlphaEvolve focuses on evolving code",
+                "AlphaEvolve represents its evolving hypotheses as code.",
+                _ref("related", "alphaevolve_code_representation"),
+            ),
+            _mapped(
+                "directs evolution",
+                "AlphaEvolve directs the evolution process.",
+                _ref(
+                    "related",
+                    "alphaevolve_programmatic_evaluation_functions",
+                ),
+            ),
+            _mapped(
+                "programmatic evaluation functions",
+                "AlphaEvolve directs evolution with programmatic evaluation functions.",
+                _ref(
+                    "related",
+                    "alphaevolve_programmatic_evaluation_functions",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0267": (
+            _mapped(
+                "This choice enables us",
+                "The programmatic representation and evaluation choice is credited with an operational effect.",
+                _ref("related", "programmatic_choice_sidesteps_hallucinations"),
+            ),
+            _mapped(
+                "substantially sidestep LLM hallucinations",
+                "The programmatic choice is reported to substantially sidestep language-model hallucinations.",
+                _ref("related", "programmatic_choice_sidesteps_hallucinations"),
+            ),
+            _mapped(
+                "allows AlphaEvolve to carry on the evolution process",
+                "The programmatic choice is reported to sustain AlphaEvolve's evolution process.",
+                _ref("related", "programmatic_choice_enables_many_timesteps"),
+            ),
+            _mapped(
+                "large number of time steps",
+                "The sustained evolution process can run for many time steps.",
+                _ref("related", "programmatic_choice_enables_many_timesteps"),
+            ),
+        ),
+        "tex_prose_sentence_0268": (
+            _mapped(
+                "possible in principle",
+                "The proposed hybrid is characterized as possible in principle.",
+                _ref(
+                    "related",
+                    "natural_language_programmatic_combination_possible",
+                ),
+            ),
+            _mapped(
+                "combine the two approaches",
+                "The paper identifies a possible combination of AI Co-Scientist and AlphaEvolve.",
+                _ref(
+                    "related",
+                    "natural_language_programmatic_combination_possible",
+                ),
+            ),
+            _mapped(
+                "leading to a method",
+                "Combining the approaches would produce a hybrid method.",
+                _ref("related", "natural_language_programmatic_hybrid_idioms"),
+            ),
+            _mapped(
+                "natural-language",
+                "The hybrid method would support natural-language idioms.",
+                _ref("related", "natural_language_programmatic_hybrid_idioms"),
+            ),
+            _mapped(
+                "programmatic idioms",
+                "The hybrid method would support programmatic idioms.",
+                _ref("related", "natural_language_programmatic_hybrid_idioms"),
+            ),
+        ),
+        "tex_prose_sentence_0269": (
+            _mapped(
+                "viewed as a method for code superoptimization",
+                "AlphaEvolve can be viewed as code superoptimization.",
+                _ref("related", "alphaevolve_code_superoptimization_view"),
+            ),
+            _mapped(
+                "iteratively improves an initial program",
+                "AlphaEvolve iteratively improves an initial program.",
+                _ref(
+                    "related",
+                    "alphaevolve_iteratively_improves_initial_program",
+                ),
+            ),
+            _mapped(
+                "using execution feedback",
+                "AlphaEvolve uses execution feedback for iterative improvement.",
+                _ref("related", "alphaevolve_uses_execution_feedback"),
+            ),
+        ),
+        "tex_prose_sentence_0270": (
+            _mapped(
+                "goes back to the 1980s",
+                "Code superoptimization dates to the 1980s.",
+                _ref("related", "superoptimization_1980s_origin"),
+            ),
+            _mapped(
+                "pre-LLM approaches",
+                "Code superoptimization had approaches predating language models.",
+                _ref("related", "pre_llm_systematic_enumeration"),
+                _ref("related", "pre_llm_genetic_search"),
+                _ref("related", "pre_llm_monte_carlo_sampling"),
+                _ref("related", "pre_llm_deep_reinforcement_learning"),
+            ),
+            _mapped(
+                "systematic enumeration",
+                "A pre-language-model approach used systematic enumeration.",
+                _ref("related", "pre_llm_systematic_enumeration"),
+            ),
+            _mapped(
+                "genetic search",
+                "A pre-language-model approach used genetic search.",
+                _ref("related", "pre_llm_genetic_search"),
+            ),
+            _mapped(
+                "Monte Carlo sampling",
+                "A pre-language-model approach used Monte Carlo sampling.",
+                _ref("related", "pre_llm_monte_carlo_sampling"),
+            ),
+            _mapped(
+                "deep reinforcement learning",
+                "A pre-language-model approach used deep reinforcement learning.",
+                _ref("related", "pre_llm_deep_reinforcement_learning"),
+            ),
+        ),
+        "tex_prose_sentence_0271": (
+            _mapped(
+                "limited settings",
+                "AlphaTensor is presented in the context of a limited setting.",
+                _ref("related", "alphatensor_limited_matrix_setting"),
+            ),
+            _mapped(
+                "single problem",
+                "The limited setting focuses on one problem.",
+                _ref("related", "alphatensor_limited_matrix_setting"),
+            ),
+            _mapped(
+                "matrix multiplication",
+                "The named single-problem setting is matrix multiplication.",
+                _ref("related", "alphatensor_limited_matrix_setting"),
+            ),
+            _mapped(
+                "systems such as AlphaTensor",
+                "AlphaTensor is the named system for the limited matrix setting.",
+                _ref("related", "alphatensor_limited_matrix_setting"),
+            ),
+            _mapped(
+                "discover provably correct algorithms",
+                "AlphaTensor discovered provably correct algorithms.",
+                _ref("related", "alphatensor_provably_correct_algorithms"),
+            ),
+        ),
+        "tex_prose_sentence_0272": (
+            _mapped(
+                "More recently",
+                "The language-model superoptimization literature is characterized as recent.",
+                _ref("related", "llm_superoptimization_literature"),
+            ),
+            _mapped(
+                "LLM-based approaches",
+                "The recent approaches are based on language models.",
+                _ref("related", "llm_superoptimization_literature"),
+            ),
+            _mapped(
+                "superoptimization",
+                "The recent literature includes language-model superoptimization.",
+                _ref("related", "llm_superoptimization_literature"),
+            ),
+            _mapped(
+                "algorithm discovery",
+                "The recent literature includes language-model algorithm discovery.",
+                _ref("related", "llm_superoptimization_literature"),
+            ),
+        ),
+        "tex_prose_sentence_0273": (
+            _mapped(
+                "builds on the success of LLMs in coding tasks",
+                "The recent literature is framed as building on language-model coding success.",
+                _ref("related", "alphacode_programming_competitions"),
+            ),
+            _mapped(
+                "coding tasks",
+                "The cited language-model success concerns coding tasks.",
+                _ref("related", "alphacode_programming_competitions"),
+            ),
+            _mapped(
+                "best illustrated",
+                "Programming competitions are presented as an illustration of coding success.",
+                _ref("related", "alphacode_programming_competitions"),
+            ),
+            _mapped(
+                "simulated) programming competitions",
+                "The illustrative competitions are simulated programming competitions.",
+                _ref("related", "alphacode_programming_competitions"),
+            ),
+            _mapped(
+                "AlphaCode",
+                "AlphaCode is the named programming-competition example.",
+                _ref("related", "alphacode_programming_competitions"),
+            ),
+        ),
+        "tex_prose_sentence_0274": (
+            _mapped(
+                "LLM agents have been used to optimize",
+                "Language-model agents have been used for kernel-operation optimization.",
+                _ref("related", "llm_attention_kernel_optimization"),
+                _ref("related", "llm_user_specified_kernel_operations"),
+            ),
+            _mapped(
+                "operations in GPU kernels",
+                "The optimization targets operations in GPU kernels.",
+                _ref("related", "llm_attention_kernel_optimization"),
+                _ref("related", "llm_user_specified_kernel_operations"),
+            ),
+            _mapped(
+                "attention operation",
+                "One optimized GPU-kernel operation is attention.",
+                _ref("related", "llm_attention_kernel_optimization"),
+            ),
+            _mapped(
+                "general user-specified operations",
+                "Related work also optimizes general user-specified kernel operations.",
+                _ref("related", "llm_user_specified_kernel_operations"),
+            ),
+        ),
+        "tex_prose_sentence_0275": (
+            _mapped(
+                "discover novel evolutionary algorithms",
+                "Prior work used language models to discover evolutionary algorithms.",
+                _ref("related", "llm_discovered_evolutionary_algorithms"),
+            ),
+            _mapped(
+                "train language models",
+                "Prior work used language-model-guided methods to train language models.",
+                _ref("related", "llm_trained_language_models"),
+            ),
+            _mapped(
+                "optimize warehouse-scale computers",
+                "Prior work used language models to optimize warehouse-scale computers.",
+                _ref("related", "llm_optimized_warehouse_scale_computers"),
+            ),
+        ),
+        "tex_prose_sentence_0276": (
+            _mapped(
+                "multiple LLM agents",
+                "Prior work proposed using multiple language-model agents.",
+                _ref("related", "multi_agent_llm_math_coding"),
+            ),
+            _mapped(
+                "converse with each other",
+                "The multiple language-model agents converse with one another.",
+                _ref("related", "multi_agent_llm_math_coding"),
+            ),
+            _mapped(
+                "mathematical",
+                "The conversing agents target mathematical tasks.",
+                _ref("related", "multi_agent_llm_math_coding"),
+            ),
+            _mapped(
+                "coding tasks",
+                "The conversing agents target coding tasks.",
+                _ref("related", "multi_agent_llm_math_coding"),
+            ),
+        ),
+        "tex_prose_sentence_0277": (
+            _reviewed_context(
+                "previous work on using LLMs for algorithm discovery provided promising results",
+                "The paper characterizes prior language-model algorithm-discovery results as promising.",
+                "related_work_result_context",
+            ),
+            _mapped(
+                "AlphaEvolve's approach to leverage it for evolutionary algorithms",
+                "AlphaEvolve applies language-model algorithm discovery through evolutionary algorithms.",
+                _ref(
+                    "related",
+                    "evolutionary_llm_approach_enables_harder_problems",
+                ),
+            ),
+            _mapped(
+                "allows us to address",
+                "The evolutionary language-model approach is credited with broader problem reach.",
+                _ref(
+                    "related",
+                    "evolutionary_llm_approach_enables_harder_problems",
+                ),
+            ),
+            _mapped(
+                "significantly more challenging problems",
+                "The claimed additional problems are significantly more challenging.",
+                _ref(
+                    "related",
+                    "evolutionary_llm_approach_enables_harder_problems",
+                ),
+            ),
+            _mapped(
+                "as demonstrated in [citation]",
+                "The paper points to its results section as evidence for the harder-problem claim.",
+                _ref(
+                    "related",
+                    "evolutionary_llm_approach_enables_harder_problems",
+                ),
+            ),
+        ),
+        "tex_prose_sentence_0278": (
+            _mapped(
+                "Over the last decade",
+                "The broad AI-for-science application period spans the last decade.",
+                _ref("related", "ai_for_science_broad_domains"),
+            ),
+            _mapped(
+                "wide range of scientific disciplines and tasks",
+                "AI systems have been applied across a wide range of scientific work.",
+                _ref("related", "ai_for_science_broad_domains"),
+            ),
+            _mapped(
+                "protein structure prediction",
+                "The broad AI-for-science examples include protein-structure prediction.",
+                _ref("related", "ai_for_science_broad_domains"),
+            ),
+            _mapped(
+                "quantum physics",
+                "The broad AI-for-science examples include quantum physics.",
+                _ref("related", "ai_for_science_broad_domains"),
+            ),
+            _mapped(
+                "climate sciences",
+                "The broad AI-for-science examples include climate science.",
+                _ref("related", "ai_for_science_broad_domains"),
+            ),
+        ),
+        "tex_prose_sentence_0279": (
+            _mapped(
+                "numerous recent LLM-based methods",
+                "Numerous recent scientific methods are based on language models.",
+                _ref("related", "llm_science_multiple_disciplines"),
+            ),
+            _mapped(
+                "target scientific problems in multiple disciplines",
+                "Recent language-model methods target science across multiple disciplines.",
+                _ref("related", "llm_science_multiple_disciplines"),
+            ),
+            _mapped(
+                "materials science",
+                "The recent language-model science examples include materials science.",
+                _ref("related", "llm_science_multiple_disciplines"),
+            ),
+            _mapped(
+                "chemistry",
+                "The recent language-model science examples include chemistry.",
+                _ref("related", "llm_science_multiple_disciplines"),
+            ),
+            _mapped(
+                "bioinformatics",
+                "The recent language-model science examples include bioinformatics.",
+                _ref("related", "llm_science_multiple_disciplines"),
+            ),
+            _mapped(
+                "geoscience",
+                "The recent language-model science examples include geoscience.",
+                _ref("related", "llm_science_multiple_disciplines"),
+            ),
+            _mapped(
+                "quantum physics",
+                "The recent language-model science examples include quantum physics.",
+                _ref("related", "llm_science_multiple_disciplines"),
+            ),
+            _reviewed_context(
+                "surveys on the topic",
+                "The sentence points readers to surveys of language-model science methods.",
+                "citation_navigation_context",
+            ),
+        ),
+        "tex_prose_sentence_0280": (
+            _mapped(
+                "automate several distinct stages",
+                "Language models automate several scientific-discovery stages.",
+                _ref("related", "llms_automate_scientific_stages"),
+            ),
+            _mapped(
+                "scientific discovery process",
+                "The automated stages belong to the scientific-discovery process.",
+                _ref("related", "llms_automate_scientific_stages"),
+            ),
+            _mapped(
+                "generating",
+                "One automated scientific-discovery activity is generating hypotheses and ideas.",
+                _ref("related", "llms_generate_rank_hypotheses"),
+            ),
+            _mapped(
+                "ranking hypotheses and ideas",
+                "One automated scientific-discovery activity is ranking hypotheses and ideas.",
+                _ref("related", "llms_generate_rank_hypotheses"),
+            ),
+        ),
+        "tex_prose_sentence_0281": (
+            _mapped(
+                "especially related to AlphaEvolve",
+                "The paper identifies two science-method families as especially related to AlphaEvolve.",
+                _ref("related", "llm_guided_tree_search_science"),
+                _ref("related", "llm_guided_evolutionary_science"),
+            ),
+            _mapped(
+                "LLM-guided tree search-based algorithms",
+                "One especially related family uses language-model-guided tree search.",
+                _ref("related", "llm_guided_tree_search_science"),
+            ),
+            _mapped(
+                "LLM-guided evolutionary algorithms",
+                "One especially related family uses language-model-guided evolution.",
+                _ref("related", "llm_guided_evolutionary_science"),
+            ),
+        ),
+        "tex_prose_sentence_0282": (
+            _mapped(
+                "Other works use LLMs",
+                "Other scientific-discovery work uses language models for experimental processes.",
+                _ref("related", "llms_experimental_planning_design"),
+                _ref("related", "llms_experiment_execution_workflow"),
+            ),
+            _mapped(
+                "experimental planning and design",
+                "Language models have been used for experimental planning and design.",
+                _ref("related", "llms_experimental_planning_design"),
+            ),
+            _mapped(
+                "experiment execution and workflow",
+                "Language models have been used for experiment execution and workflow.",
+                _ref("related", "llms_experiment_execution_workflow"),
+            ),
+        ),
+        "tex_prose_sentence_0283": (
+            _mapped(
+                "focusing on the data analysis stage",
+                "Some language-model scientific-discovery work focuses on data analysis.",
+                _ref("related", "llms_data_analysis_stage"),
+            ),
+        ),
+        "tex_prose_sentence_0284": (
+            _mapped(
+                "differs from most of these methods",
+                "AlphaEvolve is contrasted with most adjacent AI-for-science methods.",
+                _ref(
+                    "related",
+                    "alphaevolve_programmatic_hypothesis_representation",
+                ),
+                _ref("related", "alphaevolve_programmatic_evaluation_metrics"),
+            ),
+            _mapped(
+                "programmatic hypothesis representations",
+                "AlphaEvolve uses programmatic hypothesis representations.",
+                _ref(
+                    "related",
+                    "alphaevolve_programmatic_hypothesis_representation",
+                ),
+            ),
+            _mapped(
+                "evaluation metrics",
+                "AlphaEvolve uses programmatic evaluation metrics.",
+                _ref("related", "alphaevolve_programmatic_evaluation_metrics"),
+            ),
+        ),
+        "tex_prose_sentence_0285": (
+            _mapped(
+                "AI systems have also contributed",
+                "AI systems are reported to have contributed to mathematical advances.",
+                _ref("related", "ai_advances_pure_mathematics"),
+            ),
+            _mapped(
+                "advances in pure mathematics",
+                "The reported AI contributions concern pure mathematics.",
+                _ref("related", "ai_advances_pure_mathematics"),
+            ),
+        ),
+        "tex_prose_sentence_0286": (
+            _mapped(
+                "FunSearch approach",
+                "FunSearch is the mathematical-discovery approach under discussion.",
+                _ref("related", "funsearch_mathematical_witnesses"),
+                _ref("related", "funsearch_mathematical_counterexamples"),
+            ),
+            _mapped(
+                "established LLM-guided evolution as a powerful tool",
+                "FunSearch is reported to establish language-model-guided evolution as a powerful mathematical tool.",
+                _ref("related", "funsearch_mathematical_witnesses"),
+                _ref("related", "funsearch_mathematical_counterexamples"),
+            ),
+            _mapped(
+                "discovering witnesses for",
+                "FunSearch established language-model-guided evolution for discovering mathematical witnesses.",
+                _ref("related", "funsearch_mathematical_witnesses"),
+            ),
+            _mapped(
+                "counterexamples to",
+                "FunSearch established language-model-guided evolution for discovering mathematical counterexamples.",
+                _ref("related", "funsearch_mathematical_counterexamples"),
+            ),
+            _mapped(
+                "mathematical statements---a problem",
+                "The witness and counterexample problem concerns mathematical statements.",
+                _ref("related", "funsearch_mathematical_witnesses"),
+                _ref("related", "funsearch_mathematical_counterexamples"),
+            ),
+            _mapped(
+                "complementary to that of finding formal and informal proofs",
+                "Witness and counterexample discovery is complementary to proof finding.",
+                _ref(
+                    "related",
+                    "witness_counterexample_complements_proof_search",
+                ),
+            ),
+            _mapped(
+                "finding formal",
+                "The complementary proof-search task includes finding formal proofs.",
+                _ref(
+                    "related",
+                    "witness_counterexample_complements_proof_search",
+                ),
+            ),
+            _mapped(
+                "informal proofs",
+                "The complementary proof-search task includes finding informal proofs.",
+                _ref(
+                    "related",
+                    "witness_counterexample_complements_proof_search",
+                ),
+            ),
+        ),
+    }
+)
+
+
 @dataclass(frozen=True)
 class AlphaEvolveTexPropositionInventoryBoundaryIssue:
     code: str
@@ -5185,7 +6222,7 @@ class AlphaEvolveTexPropositionInventoryBoundaryValidation:
 def alphaevolve_tex_proposition_inventory_boundary_record(
     root: str | Path = ".",
 ) -> dict[str, Any]:
-    """Review atomic propositions through retained Section 4 ablation work."""
+    """Review atomic propositions through retained Section 5 Related Work."""
 
     root_path = Path(root)
     prose = alphaevolve_tex_prose_inventory_boundary_record(root_path)
@@ -5312,6 +6349,7 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
         "introduction.tex",
         "main.tex",
         "methods.tex",
+        "related_work.tex",
         "results.tex",
     ]
     source_prose_ready = bool(
@@ -5397,11 +6435,12 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
                 "all 11 retained Section 3.3.3 hardware-circuit-design sentences in results.tex",
                 "all 14 retained Section 3.3.4 compiler-optimization sentences in results.tex",
                 "all 24 retained Section 4 ablation sentences in ablations.tex",
+                "all 42 retained Section 5 Related Work sentences in related_work.tex",
                 "manual atomic-proposition statements and exact rendered-source quote offsets",
                 "resolved bounded-claim mappings or explicit context, outlook, and interpretation dispositions",
             ],
             "excluded": [
-                "the remaining 158 retained prose sentences",
+                "the remaining 117 retained prose sentences",
                 "separately audited captions, tables, equations, listings, footnotes, and explicit math constructs",
                 "independent second-reviewer semantic agreement",
                 "mathematical correctness, citation sufficiency, image-pixel semantics, or result reproduction",
@@ -5410,9 +6449,9 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
         },
         "claim_boundary": (
             "This boundary records a single-reviewer atomic-proposition decomposition "
-            "for every retained sentence from the Abstract through Section 4 "
-            "ablations. Complete disposition inside this 244-sentence "
-            "scope does not cover the remaining 158 prose "
+            "for every retained sentence from the Abstract through Section 5 "
+            "Related Work. Complete disposition inside this 286-sentence "
+            "scope does not cover the remaining 117 prose "
             "sentences and does not prove independent semantic exhaustiveness, "
             "mathematical correctness, result reproduction, or AlphaEvolve parity."
         ),
@@ -5457,7 +6496,7 @@ def validate_alphaevolve_tex_proposition_inventory_boundary(
         issues.append(
             _issue(
                 "review_scope_incomplete",
-                "Abstract through Section 4 ablation review scope is incomplete",
+                "Abstract through Section 5 Related Work review scope is incomplete",
             )
         )
     for field in (

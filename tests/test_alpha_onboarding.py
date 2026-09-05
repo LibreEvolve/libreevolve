@@ -8,11 +8,22 @@ from libreevolve.cli import cli
 
 
 @pytest.mark.parametrize("price,budget", [(0, 1), (-1, 1), (float("nan"), 1),
-                                         (1, float("inf")), (1, 0)])
+                                         (1, float("inf")), (1, 0), (1, 1e308)])
 def test_invalid_price_and_budget_do_not_create_task(tmp_path, price, budget):
     with pytest.raises(ValueError):
         alpha_config("account-model", price, budget)
     assert list(tmp_path.iterdir()) == []
+
+
+def test_oversized_budget_is_actionable_cli_error(tmp_path):
+    destination = tmp_path / "experiment"
+    result = CliRunner().invoke(cli, [
+        "alpha", "init", str(destination), "--model", "account-model",
+        "--token-price", "10", "--budget-usd", "1e308",
+    ])
+    assert result.exit_code == 1
+    assert "too large" in result.output
+    assert not destination.exists()
 
 
 def test_initialized_task_has_bounded_config_and_no_credentials(tmp_path):
@@ -71,3 +82,27 @@ def test_cli_cancellation_points_to_partial_results(tmp_path, monkeypatch):
     assert result.exit_code == 130
     assert "Cancelled" in result.output
     assert "may be incomplete" in result.output
+
+
+@pytest.mark.parametrize("limit", ["max_generations", "max_llm_calls",
+                                   "max_llm_provider_attempts", "max_llm_tokens",
+                                   "max_llm_cost_microusd"])
+def test_doctor_does_not_claim_skipped_provider_setup_passed(tmp_path, monkeypatch, limit):
+    import yaml
+    import libreevolve.cli as cli_module
+    runner = CliRunner()
+    destination = tmp_path / "experiment"
+    result = runner.invoke(cli, ["alpha", "init", str(destination), "--model", "account-model",
+                                 "--token-price", "10", "--budget-usd", "1"])
+    assert result.exit_code == 0, result.output
+    path = destination / "config.yaml"
+    config = yaml.safe_load(path.read_text())
+    config[limit] = 0
+    path.write_text(yaml.safe_dump(config))
+    def unexpected():
+        raise AssertionError("Disabled mutation must not inspect credential files")
+    monkeypatch.setattr(cli_module, "_load_cli_dotenv", unexpected)
+    result = runner.invoke(cli, ["alpha", "doctor", str(destination)])
+    assert result.exit_code == 0, result.output
+    assert "skipped (mutation disabled" in result.output
+    assert "Local provider setup: passed" not in result.output

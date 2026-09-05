@@ -3,7 +3,7 @@
 LibreEvolve is a Python research workbench for LLM-guided evolutionary program
 discovery. It loads a problem directory, evaluates seed programs, asks
 configured LLM backends for mutations, scores the candidates, and keeps useful
-programs in local quality-diversity archives.
+programs in local quality-diversity archives. Start with the [local alpha quickstart](docs/alpha-quickstart.md).
 
 The project is inspired by AlphaEvolve, Karpathy's `autoresearch`, MAP-Elites,
 and related LLM-guided program-search work. It is independent research code and

@@ -12,11 +12,11 @@ Branch: codex/early-alpha-20260905. Original shared checkout is preserved.
 | --- | --- | --- | --- | --- |
 | Bin-packing example | Galileo | baseline | valid next-fit seed, deterministic training/held-out corpora, negative correctness tests, measured positive calibration | local evaluator passed |
 | Init and preflight | coordinator | example | clean template creation, bounded config, useful failures, no network during offline checks | local workflow passed |
-| Reliability | Mill + coordinator | baseline | reproduce docs helper fault, inspect cancellation/persistence and prompt compatibility, regression tests | 31 focused regressions pass; broad loop suite running |
+| Reliability | Mill + coordinator | baseline | reproduce docs helper fault, inspect cancellation/persistence and prompt compatibility, regression tests | 496 broad loop/reliability tests pass, 2 skip |
 | Report and export verification | Plato + coordinator | example, runtime inspection | baseline/best, held-out checks, diff, usage/cost/status; failure report; HTML escaping and artifact binding | 33 combined tests pass, real offline CLI smoke passes |
 | Repeated real runs | coordinator | supported workflow, spending authorization | all attempts retained, independent seeds, comparable baseline/export reevaluation, actual usage and estimated spend | pending |
-| Package and CI | coordinator | implementation | exact candidate commit, wheel/sdist, coverage/hashes, clean Windows Python 3.12 install, CLI workflow, passing CI | pending |
-| External usability | coordinator + participants | installed workflow | 3–5 users, time/errors/help/export comprehension, approximately 30 minutes | pending |
+| Package and CI | coordinator | implementation | exact candidate commit, wheel/sdist, coverage/hashes, clean Windows Python 3.12 install, CLI workflow, passing CI | 97a5a822 offline wheel verified; newer fixes need packaging; CI billing blocked |
+| External usability | coordinator + participants | installed workflow | 3–5 users, time/errors/help/export comprehension, approximately 30 minutes | trial materials prepared; participant evidence pending |
 
 Initial declared reference environment: Windows with Python 3.12. Additional
 platform support requires its own installed-package evidence. Initial provider

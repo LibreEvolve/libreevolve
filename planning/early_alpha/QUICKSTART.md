@@ -1,5 +1,8 @@
 # Local alpha quickstart draft
 
+The maintained user guide is [docs/alpha-quickstart.md](../../docs/alpha-quickstart.md).
+This planning draft is retained as historical scope, not the installation guide.
+
 Status: engineering preview in development. Package, live-model, and independent
 user gates are pending. Reference environment: Windows, Python 3.12.
 

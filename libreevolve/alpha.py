@@ -21,6 +21,9 @@ def alpha_config(model: str, token_price: float, budget_usd: float) -> dict:
         raise ValueError("Token price must be finite and greater than zero.")
     if not math.isfinite(budget_usd) or budget_usd < 0.000001:
         raise ValueError("Estimated budget must be finite and at least $0.000001.")
+    budget_microusd = budget_usd * 1_000_000
+    if not math.isfinite(budget_microusd):
+        raise ValueError("Estimated budget is too large to represent in microdollars.")
     settings = {
         "max_generations": 10,
         "max_evaluations": 11,
@@ -29,7 +32,7 @@ def alpha_config(model: str, token_price: float, budget_usd: float) -> dict:
         "max_llm_calls": 10,
         "max_llm_provider_attempts": 10,
         "max_llm_tokens": 60000,
-        "max_llm_cost_microusd": int(budget_usd * 1_000_000),
+        "max_llm_cost_microusd": int(budget_microusd),
         "llm_max_retries": 0,
         "llm_max_call_attempts": 1,
         "llm_fallback": False,
@@ -89,7 +92,7 @@ def doctor(problem_dir: Path, offline: bool) -> None:
     # Lazy import avoids coupling module registration to the CLI's helpers.
     from libreevolve.cli import (
         _build_config, _load_cli_dotenv, _preflight_llm_backends_if_needed,
-        _preflight_run_contracts,
+        _preflight_run_contracts, _mutation_llm_can_run,
     )
     from libreevolve.problems.loader import load_problem
 
@@ -106,7 +109,8 @@ def doctor(problem_dir: Path, offline: bool) -> None:
         if not config.backends[0].get("cost_usd_per_million_tokens"):
             raise ValueError("Set cost_usd_per_million_tokens using current provider pricing.")
         _preflight_run_contracts(problem, config)
-        if not offline:
+        mutation_enabled = _mutation_llm_can_run(problem, config)
+        if not offline and mutation_enabled:
             _load_cli_dotenv()
             _preflight_llm_backends_if_needed(problem, config)
     except (OSError, ValueError) as exc:
@@ -115,7 +119,12 @@ def doctor(problem_dir: Path, offline: bool) -> None:
     click.echo(f"Provider: openai; model: {config.backends[0]['model']}")
     for name in limits:
         click.echo(f"{name}: {getattr(config, name)}")
-    click.echo("Credential checks: skipped" if offline else "Local provider setup: passed")
+    if offline:
+        click.echo("Credential checks: skipped (offline)")
+    elif not mutation_enabled:
+        click.echo("Local provider setup: skipped (mutation disabled by configured limits)")
+    else:
+        click.echo("Local provider setup: passed")
     click.echo("Model access and billing remain unverified until a real request succeeds.")
     click.echo("Candidate execution inherits host access. Use a trusted local task.")
 
@@ -153,7 +162,9 @@ def report_command(run_dir: Path, output: Path) -> None:
 @alpha.command("export")
 @click.argument("run_dir", type=click.Path(exists=True, file_okay=False, path_type=Path))
 @click.argument("destination", type=click.Path(path_type=Path))
-def export_command(run_dir: Path, destination: Path) -> None:
+@click.option("--source", type=click.Choice(["auto", "history", "workspace"]), default="auto",
+              help="Require an explicit choice if the on-disk export differs from history.")
+def export_command(run_dir: Path, destination: Path, source: str) -> None:
     """Verify and export a single-file bin-packing candidate from saved history.
 
     Also supports inspectable cancelled runs. Executes candidate code locally.
@@ -170,15 +181,33 @@ def export_command(run_dir: Path, destination: Path) -> None:
         primary, workspace = inspection.workspace
         if set(workspace) != {primary} or not primary.endswith(".py"):
             raise ValueError("Alpha export supports the single-file Python bin-packing task.")
-        verification = verify_candidate(workspace[primary])
+        code = workspace[primary].encode("utf-8")
+        source_kind = "history"
+        exported = run_dir / "best_workspace" / primary
+        if source == "workspace" or (source == "auto" and exported.exists()):
+            exported.resolve().relative_to(run_dir.resolve())
+            with exported.open("rb") as stream:
+                exported_code = stream.read(1_000_001)
+            if len(exported_code) > 1_000_000:
+                raise ValueError("Exported candidate exceeds the alpha size limit.")
+            if (source == "auto" and exported_code.replace(b"\r\n", b"\n")
+                    != code.replace(b"\r\n", b"\n")):
+                raise ValueError("The workspace differs from saved history. The report reviews "
+                                 "workspace bytes. Choose --source workspace to export those bytes "
+                                 "or --source history to export the recorded candidate.")
+            code = exported_code
+            source_kind = "workspace"
+        verification = verify_candidate(code)
         if any(verification[split].get("status") != "completed"
                or verification[split].get("correctness") is not True
                for split in ("training", "holdout")):
             raise ValueError("Independent training/held-out verification did not pass; no export created.")
         destination.mkdir(parents=False)
         # Fixed export filename avoids applying historical path names to disk.
-        (destination / "solution.py").write_text(workspace[primary], encoding="utf-8", newline="")
-        verification.update(source_program_id=inspection.best.get("id"),
+        (destination / "solution.py").write_bytes(code)
+        history_match = code.replace(b"\r\n", b"\n") == workspace[primary].encode("utf-8").replace(b"\r\n", b"\n")
+        verification.update(source_program_id=inspection.best.get("id") if history_match else None,
+                            source_kind=source_kind, matches_history=history_match,
                             source_runtime_status=inspection.runtime_status,
                             exported_filename="solution.py")
         (destination / "verification.json").write_text(

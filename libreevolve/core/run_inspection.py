@@ -438,7 +438,8 @@ def _non_jsonl_artifact_policy_summary(run_dir: Path) -> str | None:
 
 
 def run_artifacts_doc_text() -> str | None:
-    doc_path = Path(__file__).resolve().parents[1] / "docs" / "run-artifacts.md"
+    """Read the checkout guide when present; installed packages may omit it."""
+    doc_path = Path(__file__).resolve().parents[2] / "docs" / "run-artifacts.md"
     try:
         return doc_path.read_text(encoding="utf-8")
     except OSError:

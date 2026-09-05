@@ -1,0 +1,17 @@
+metrics:
+  - name: quality
+    direction: maximize
+    primary: true
+    bounds: [0.0, 1.0]
+  - name: total_bins
+    direction: minimize
+    primary: false
+    bounds: [0.0, 10000.0]
+  - name: lower_bound_bins
+    direction: minimize
+    primary: false
+    bounds: [0.0, 10000.0]
+  - name: case_count
+    direction: maximize
+    primary: false
+    bounds: [0.0, 100.0]

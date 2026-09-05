@@ -64,6 +64,11 @@ def cli() -> None:
     """LibreEvolve -- LLM-guided evolutionary program discovery."""
 
 
+from libreevolve.alpha import register_alpha
+
+register_alpha(cli)
+
+
 @cli.command()
 @click.argument("problem_dir", type=click.Path(exists=True, file_okay=False))
 @click.option("--max-generations", "-g", type=int, default=None)
@@ -179,6 +184,7 @@ def cli() -> None:
         "top-level runtime budget snapshot before new seed/generation work."
     ),
 )
+@click.option("--progress", is_flag=True, help="Print evaluated candidate counts, generations, and scores.")
 @click.option("--overwrite", is_flag=True,
               help="Delete existing run artifacts in the target run directory before starting.")
 def run(problem_dir, max_generations, max_evaluations, max_evaluator_seconds,
@@ -192,7 +198,7 @@ def run(problem_dir, max_generations, max_evaluations, max_evaluator_seconds,
         run_name, restore_runtime_from_manifest,
         restore_rng_from_manifest, restore_llm_scheduler_from_manifest,
         restore_archive_cursor_from_manifest,
-        restore_archive_from_manifest, restore_budget_from_manifest, overwrite):
+        restore_archive_from_manifest, restore_budget_from_manifest, overwrite, progress=False):
     """Run evolution on a problem directory."""
     from libreevolve.core.config import ConfigError
     from libreevolve.problems.loader import load_problem
@@ -310,16 +316,29 @@ def run(problem_dir, max_generations, max_evaluations, max_evaluator_seconds,
         raise click.ClickException(str(exc)) from exc
     run_dir = Path(config.log_dir) / config.problem_name
     click.echo(f"Running {config.max_generations} generations on '{config.problem_name}'...")
-    best = evolve(
-        problem,
-        config,
-        runtime_rng_state_snapshot=runtime_rng_state_snapshot,
-        runtime_llm_scheduler_state_snapshot=runtime_llm_scheduler_state_snapshot,
-        runtime_archive_state_snapshot=runtime_archive_state_snapshot,
-        runtime_archive_programs_by_id=runtime_archive_programs_by_id,
-        runtime_budget_state_snapshot=runtime_budget_state_snapshot,
-        runtime_restore_certification=runtime_restore_certification,
-    )
+    click.echo(f"Run artifacts: {run_dir}. Press Ctrl+C to cancel.")
+    from libreevolve.alpha_progress import observe_progress
+    try:
+        with observe_progress(run_dir, progress):
+            best = evolve(
+                problem,
+                config,
+                runtime_rng_state_snapshot=runtime_rng_state_snapshot,
+                runtime_llm_scheduler_state_snapshot=runtime_llm_scheduler_state_snapshot,
+                runtime_archive_state_snapshot=runtime_archive_state_snapshot,
+                runtime_archive_programs_by_id=runtime_archive_programs_by_id,
+                runtime_budget_state_snapshot=runtime_budget_state_snapshot,
+                runtime_restore_certification=runtime_restore_certification,
+            )
+    except KeyboardInterrupt:
+        click.echo(f"Cancelled. Inspect saved state in {run_dir}; "
+                   "the latest work may be incomplete.", err=True)
+        raise click.exceptions.Exit(130)
+    except Exception as exc:
+        message = redact_sensitive_text(str(exc))[:1000]
+        raise click.ClickException(
+            f"Run failed: {message}. Inspect saved state in {run_dir}."
+        ) from exc
     if best is None:
         raise click.ClickException("Evolution produced no valid programs.")
     click.echo(f"\nBest fitness: {best.fitness:.6f}")

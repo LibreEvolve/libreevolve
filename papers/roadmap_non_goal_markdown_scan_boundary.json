@@ -6,8 +6,8 @@
   "source_non_goal_count": 3,
   "source_constrained_surface_count": 9,
   "markdown_corpus_status": "all_non_planning_repo_markdown_files_scanned",
-  "markdown_file_count": 27,
-  "readable_markdown_file_count": 27,
+  "markdown_file_count": 28,
+  "readable_markdown_file_count": 28,
   "unreadable_markdown_file_count": 0,
   "markdown_files": [
     "AGENTS.md",
@@ -34,6 +34,7 @@
     "docs/todo/papers.md",
     "docs/todo/readme.md",
     "docs/todo/roadmap.md",
+    "libreevolve/problems/examples/bin_packing/README.md",
     "libreevolve/problems/examples/workspace_math/source_setup/fixture_lib_v1/MANIFEST.md",
     "old/superpowers/plans/2026-03-17-alphaevolve.md",
     "papers/README.md"

@@ -1958,39 +1958,46 @@ def evolve(
         if async_controller is not None and async_controller_report is None:
             try:
                 async_controller_report = async_controller.close()
-            except Exception as shutdown_exc:
-                async_controller_report = async_controller.snapshot()
-                async_controller_report["shutdown_error_type"] = type(
-                    shutdown_exc
-                ).__name__
+            except BaseException as shutdown_exc:
+                _note_abort_finalization_failure(exc, shutdown_exc)
+                try:
+                    async_controller_report = async_controller.snapshot()
+                    async_controller_report["shutdown_error_type"] = type(shutdown_exc).__name__
+                except BaseException as snapshot_exc:
+                    _note_abort_finalization_failure(exc, snapshot_exc)
         if (
             async_sampler_controller is not None
             and async_sampler_controller_report is None
         ):
             try:
                 async_sampler_controller_report = async_sampler_controller.close()
-            except Exception as shutdown_exc:
-                async_sampler_controller_report = async_sampler_controller.snapshot()
-                async_sampler_controller_report["shutdown_error_type"] = type(
-                    shutdown_exc
-                ).__name__
-        _write_aborted_runtime(
-            db,
-            config,
-            budget,
-            run_dir,
-            phase,
-            exc,
-            plugins,
-            llm=llm,
-            run_rng=run_rng,
-            rng_resume_status=rng_resume_status,
-            llm_scheduler_resume_status=llm_scheduler_resume_status,
-            runtime_restore_certification=runtime_restore_certification,
-            core_resolves_config_plugins=core_resolved_config_plugins,
-            async_controller_report=async_controller_report,
-            async_sampler_controller_report=async_sampler_controller_report,
-        )
+            except BaseException as shutdown_exc:
+                _note_abort_finalization_failure(exc, shutdown_exc)
+                try:
+                    async_sampler_controller_report = async_sampler_controller.snapshot()
+                    async_sampler_controller_report["shutdown_error_type"] = type(shutdown_exc).__name__
+                except BaseException as snapshot_exc:
+                    _note_abort_finalization_failure(exc, snapshot_exc)
+        try:
+            _write_aborted_runtime(
+                db,
+                config,
+                budget,
+                run_dir,
+                phase,
+                exc,
+                plugins,
+                llm=llm,
+                run_rng=run_rng,
+                rng_resume_status=rng_resume_status,
+                llm_scheduler_resume_status=llm_scheduler_resume_status,
+                runtime_restore_certification=runtime_restore_certification,
+                core_resolves_config_plugins=core_resolved_config_plugins,
+                async_controller_report=async_controller_report,
+                async_sampler_controller_report=async_sampler_controller_report,
+            )
+        except BaseException as finalize_exc:
+            _note_abort_finalization_failure(exc, finalize_exc)
         raise
 
 
@@ -2102,6 +2109,8 @@ def _run_async_sampler_generation(
             ),
         }
         if outcome.error is not None:
+            if not isinstance(outcome.error, Exception):
+                raise outcome.error
             failure = _log_async_mutation_failure(
                 request,
                 outcome.error,
@@ -3749,62 +3758,91 @@ def _write_aborted_runtime(
     async_sampler_controller_report: Mapping[str, object] | None = None,
 ) -> None:
     budget.stop_reason = "aborted"
-    db.log_controller_budget_event({"kind": "stop", "stop_reason": "aborted"})
-    runtime = budget.snapshot()
-    runtime["status"] = "aborted"
-    _mark_runtime_wall_clock_status(runtime, "aborted")
-    runtime["rng"] = _runtime_rng_state(
-        run_rng,
-        config.seed,
-        resume_status=rng_resume_status,
-    )
-    runtime["abort"] = {
+    abort = {
         "exception_type": exc.__class__.__name__,
         **_aborted_exception_manifest(exc),
         "phase": phase,
         "role": _phase_role(phase),
         "keyboard_interrupt": isinstance(exc, KeyboardInterrupt),
     }
-    plugin_failure = _plugin_failure_manifest(exc, phase)
-    if plugin_failure:
-        runtime["abort"]["plugin_failure"] = plugin_failure
-        runtime["plugin_failures"] = [plugin_failure]
-    runtime["history"] = _runtime_history_summary(
-        db,
-        run_dir,
-        budget,
-        async_controller_report=async_controller_report,
-        async_sampler_controller_report=async_sampler_controller_report,
-    )
-    _attach_runtime_benchmark_goal_prompt(runtime, db)
-    runtime["artifacts"] = _runtime_artifact_pointers(run_dir)
-    if runtime_restore_certification is not None:
-        runtime["restore_certification"] = copy.deepcopy(runtime_restore_certification)
-    runtime["run_artifact_bundle_report"] = _run_artifact_bundle_report(
-        run_dir,
-        runtime,
-    )
-    _attach_runtime_summaries(
-        runtime,
-        db,
-        config,
-        plugins,
-        llm=llm,
-        llm_scheduler_resume_status=llm_scheduler_resume_status,
-        include_plugin_artifacts=True,
-        plugin_artifact_errors="record",
-        core_resolves_config_plugins=core_resolves_config_plugins,
-    )
+    # Keep a minimal terminal record even if richer persistence diagnostics fail.
+    runtime = {"status": "aborted", "stop_reason": "aborted", "abort": abort}
     try:
+        runtime.update(budget.snapshot())
+        runtime.update(status="aborted", stop_reason="aborted", abort=abort)
+        _mark_runtime_wall_clock_status(runtime, "aborted")
+        runtime["rng"] = _runtime_rng_state(
+            run_rng, config.seed, resume_status=rng_resume_status,
+        )
+        db.log_controller_budget_event({"kind": "stop", "stop_reason": "aborted"})
+    except BaseException as finalize_exc:
+        _note_abort_finalization_failure(exc, finalize_exc)
+    best_export = None
+    try:
+        best = db.best()
+        if best is not None:
+            best_export = export_best_artifacts(best, run_dir)
+            if best_export.get("status") == "failed":
+                _note_abort_finalization_failure(
+                    exc,
+                    RuntimeError(
+                        "Best artifact export failed: "
+                        f"{best_export.get('error_type')}: {best_export.get('error')}"
+                    ),
+                )
+    except BaseException as finalize_exc:
+        _note_abort_finalization_failure(exc, finalize_exc)
+    try:
+        plugin_failure = _plugin_failure_manifest(exc, phase)
+        if plugin_failure:
+            runtime["abort"]["plugin_failure"] = plugin_failure
+            runtime["plugin_failures"] = [plugin_failure]
+        runtime["history"] = _runtime_history_summary(
+            db,
+            run_dir,
+            budget,
+            async_controller_report=async_controller_report,
+            async_sampler_controller_report=async_sampler_controller_report,
+        )
+        _attach_runtime_benchmark_goal_prompt(runtime, db)
+        runtime["artifacts"] = _runtime_artifact_pointers(run_dir)
+        if runtime_restore_certification is not None:
+            runtime["restore_certification"] = copy.deepcopy(runtime_restore_certification)
+        runtime["run_artifact_bundle_report"] = _run_artifact_bundle_report(
+            run_dir,
+            runtime,
+        )
+        _attach_runtime_summaries(
+            runtime,
+            db,
+            config,
+            plugins,
+            llm=llm,
+            llm_scheduler_resume_status=llm_scheduler_resume_status,
+            include_plugin_artifacts=True,
+            plugin_artifact_errors="record",
+            core_resolves_config_plugins=core_resolves_config_plugins,
+        )
+    except BaseException as finalize_exc:
+        _note_abort_finalization_failure(exc, finalize_exc)
+    try:
+        runtime.update(status="aborted", stop_reason="aborted", abort=abort)
+        attach_best_artifact_export(runtime, best_export)
         db.update_manifest_runtime(runtime)
     except BaseException as finalize_exc:
-        try:
-            exc.add_note(
-                "Failed to write aborted-run manifest runtime: "
-                f"{finalize_exc.__class__.__name__}: {finalize_exc}"
-            )
-        except Exception:
-            pass
+        _note_abort_finalization_failure(exc, finalize_exc)
+
+
+def _note_abort_finalization_failure(exc: BaseException, failure: BaseException) -> None:
+    try:
+        message = _aborted_exception_manifest(failure)["message"]
+        exc.add_note(
+            "Failed to finalize aborted run: "
+            f"{failure.__class__.__name__}: {message}"
+        )
+    except BaseException:
+        # A broken exception formatter or add_note must not mask the original.
+        pass
 
 
 def _mark_runtime_wall_clock_status(runtime: dict, status: str) -> None:

@@ -155,10 +155,10 @@ records, `134` untracked records, and `0` staged paths. The status includes
 pre-existing user-owned dirt and additive coordinator artifacts, so it is not
 an attribution claim.
 
-Post-publication verification: commit `99580dbf` is present on local `master`,
-`origin/master`, and `LibreEvolve/master`. The current checkout has `260`
-records: `259` pre-existing tracked dirty paths, one pre-existing untracked
-prompt, and `0` staged paths.
+Post-publication verification: commits `99580dbf` and `17917c87` are present;
+current local `master`, `origin/master`, and `LibreEvolve/master` all point to
+`17917c87`. The current checkout has `260` records: `259` pre-existing
+tracked dirty paths, one pre-existing untracked prompt, and `0` staged paths.
 
 No external PR or release artifact exists, and no merge commit was necessary.
 No release, provider use, live execution, or security certification is

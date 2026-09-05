@@ -1,0 +1,600 @@
+{
+  "schema_version": 1,
+  "run": "libreevolve-maintainability-refactor-2026-09-03",
+  "captured_at": "2026-09-03T20:26:03-04:00",
+  "baseline_head": "7983544e28e478eb6a0f5c35e4af5a86b125cea2",
+  "baseline_branch": "master",
+  "scheduler": {
+    "max_active_child_slots": 50,
+    "max_nesting_depth": 3,
+    "root_depth": 0,
+    "writer_rule": "one implementation writer per primary file",
+    "verifier_rule": "verifier must be non-authoring and inspect a fresh actual diff"
+  },
+  "dirty_baseline": {
+    "tracked_or_index_records": 260,
+    "untracked_records": 1,
+    "normalized_semantic_diff_files": 0,
+    "normalized_semantic_diff_added": 0,
+    "normalized_semantic_diff_deleted": 0,
+    "status_command": "git status --porcelain=v1 --untracked-files=all",
+    "state": "pre-existing-preserved"
+  },
+  "dependency_edges": [
+    {
+      "from": "libreevolve/core/loop.py",
+      "to": "libreevolve/core/config.py",
+      "reason": "run normalization and runtime switches",
+      "state": "proposed"
+    },
+    {
+      "from": "libreevolve/core/loop.py",
+      "to": "libreevolve/core/database.py",
+      "reason": "admission, archive state, restore",
+      "state": "proposed"
+    },
+    {
+      "from": "libreevolve/core/loop.py",
+      "to": "libreevolve/core/jsonl.py",
+      "reason": "durable stream writes and recovery",
+      "state": "proposed"
+    },
+    {
+      "from": "libreevolve/core/loop.py",
+      "to": "libreevolve/core/artifact_schema.py",
+      "reason": "manifest and runtime artifact validation",
+      "state": "proposed"
+    },
+    {
+      "from": "libreevolve/core/loop.py",
+      "to": "libreevolve/core/best_artifacts.py",
+      "reason": "best-candidate promotion and export",
+      "state": "proposed"
+    },
+    {
+      "from": "libreevolve/core/loop.py",
+      "to": "libreevolve/core/budget.py",
+      "reason": "budget and reward accounting",
+      "state": "proposed"
+    },
+    {
+      "from": "libreevolve/core/loop.py",
+      "to": "libreevolve/core/prompt.py",
+      "reason": "prompt assembly and feedback context",
+      "state": "proposed"
+    },
+    {
+      "from": "libreevolve/core/loop.py",
+      "to": "libreevolve/core/feedback.py",
+      "reason": "feedback ordering and rendering",
+      "state": "proposed"
+    },
+    {
+      "from": "libreevolve/core/loop.py",
+      "to": "libreevolve/core/meta_prompt.py",
+      "reason": "meta-prompt lifecycle",
+      "state": "proposed"
+    },
+    {
+      "from": "libreevolve/core/loop.py",
+      "to": "libreevolve/core/yaml_utils.py",
+      "reason": "configuration and task normalization",
+      "state": "proposed"
+    },
+    {
+      "from": "libreevolve/core/loop.py",
+      "to": "libreevolve/problems/loader.py",
+      "reason": "problem/task loading boundary",
+      "state": "proposed"
+    },
+    {
+      "from": "libreevolve/cli.py",
+      "to": "libreevolve/core/loop.py",
+      "reason": "run/show entrypoint contract",
+      "state": "proposed"
+    },
+    {
+      "from": "libreevolve/cli.py",
+      "to": "libreevolve/core/config.py",
+      "reason": "CLI configuration and preflight",
+      "state": "proposed"
+    },
+    {
+      "from": "libreevolve/tools/paper_manifest.py",
+      "to": "libreevolve/problems/benchmarks/matrix_results.py",
+      "reason": "shared artifact/source evidence inspection",
+      "state": "proposed"
+    }
+  ],
+  "lanes": [
+    {
+      "lane_id": "core-loop",
+      "family": "core-orchestration",
+      "primary_path": "libreevolve/core/loop.py",
+      "lead_agent_id": "01a069e6-7bbd-7532-acae-c77b833df979",
+      "slice_agent_ids": [
+        "01a069ce-a5be-7633-846e-54b1fc8c1d1b",
+        "01a069ce-a8c8-7513-8649-3b816ad53101",
+        "01a069ce-ac5e-7b00-956c-9482a9a830ad",
+        "01a069ce-af6d-7452-986f-59c9cfc553a9",
+        "01a069ce-b2d8-7f61-97d5-5987112c7bc1",
+        "01a069ce-b62b-7192-9e67-a56caeb84ee2",
+        "01a069ce-ba14-7380-811c-c1a3a0db07df",
+        "01a069ce-bd42-7953-bf57-a1bfc3af87e0"
+      ],
+      "writer_agent_id": "01a06a06-fddb-7b13-9676-4af41fea53ea",
+      "verifier_agent_id": "01a06a0e-41ef-7393-a012-c8da889ab98c",
+      "branch": null,
+      "status": "wave2-verified-pass",
+      "evidence_state": "full-loop-regression-and-ast-verified",
+      "depends_on": [],
+      "support_paths": [
+        "libreevolve/core/loop_models.py",
+        "tests/core/test_loop_characterization.py"
+      ],
+      "changed_path_allowlist": [
+        "libreevolve/core/loop.py",
+        "libreevolve/core/loop_models.py",
+        "tests/core/test_loop_characterization.py"
+      ],
+      "characterization_report": "planning/maintainability_pass/refactors/reports/core-loop/CHARACTERIZATION.md",
+      "verification_report": "planning/maintainability_pass/refactors/reports/core-loop/VERIFICATION.md"
+    },
+    {
+      "lane_id": "core-database",
+      "family": "persistence-artifact",
+      "primary_path": "libreevolve/core/database.py",
+      "lead_agent_id": "01a069d0-7a2a-7472-a199-788b5c8c167c",
+      "slice_agent_ids": [
+        "01a069d0-7a2a-7472-a199-788b5c8c167c",
+        "01a0705b-5e15-7fa1-8e4b-02b7f1be9f9a",
+        "01a0705b-611f-7540-a47d-441eb34b7af8",
+        "01a07081-b58d-7e61-ae98-f2565549a26f"
+      ],
+      "writer_agent_id": null,
+      "verifier_agent_id": "01a06fa4-e0a3-7d43-aaea-9ea8dddc5a9d",
+      "branch": null,
+      "pr": null,
+      "status": "wave3-characterized-no-op",
+      "evidence_state": "focused-tested-no-production-writer-independent-no-op-verified",
+      "depends_on": [
+        "core-loop"
+      ],
+      "support_paths": [],
+      "changed_path_allowlist": [
+        "libreevolve/core/database.py",
+        "tests/population/test_database.py"
+      ],
+      "characterization_report": "planning/maintainability_pass/refactors/reports/core-database/CHARACTERIZATION.md",
+      "verification_report": "planning/maintainability_pass/refactors/reports/core-database/VERIFICATION.md"
+    },
+    {
+      "lane_id": "core-jsonl",
+      "family": "persistence-artifact",
+      "primary_path": "libreevolve/core/jsonl.py",
+      "lead_agent_id": "01a069d0-8e77-7a41-8169-7e897d880583",
+      "slice_agent_ids": [],
+      "writer_agent_id": "01a06a4e-76e8-7513-a6f1-619cb9c4e768",
+      "verifier_agent_id": "01a06a52-807e-7a62-879f-7894ec8c55f7",
+      "branch": null,
+      "pr": null,
+      "status": "wave3-verified-conditional",
+      "evidence_state": "62-focused-passes-known-repair-atomicity-gap",
+      "depends_on": [
+        "core-loop"
+      ],
+      "support_paths": [
+        "libreevolve/core/jsonl_storage.py",
+        "tests/core/test_jsonl.py"
+      ],
+      "changed_path_allowlist": [
+        "libreevolve/core/jsonl.py",
+        "libreevolve/core/jsonl_storage.py",
+        "tests/core/test_jsonl.py"
+      ],
+      "characterization_report": "planning/maintainability_pass/refactors/reports/core-jsonl/CHARACTERIZATION.md",
+      "verification_report": "planning/maintainability_pass/refactors/reports/core-jsonl/VERIFICATION.md",
+      "characterization_agent_ids": [
+        "01a06a28-085a-7a70-897d-bbc5155395d9"
+      ],
+      "coupling_agent_ids": [
+        "01a06a29-e0f0-7cf0-881b-d9843541c78a"
+      ]
+    },
+    {
+      "lane_id": "core-artifact-schema",
+      "family": "persistence-artifact",
+      "primary_path": "libreevolve/core/artifact_schema.py",
+      "lead_agent_id": "01a069d0-976e-7423-836d-d80aa4c39372",
+      "slice_agent_ids": [],
+      "writer_agent_id": "01a06a4a-ce96-7a53-afc9-f679c0e72c33",
+      "verifier_agent_id": "01a06a52-8400-7352-beee-81d08ccb012b",
+      "branch": null,
+      "pr": null,
+      "status": "wave3-verified-pass",
+      "evidence_state": "86-focused-passes-ast-and-identity-checks",
+      "depends_on": [
+        "core-loop",
+        "core-jsonl"
+      ],
+      "support_paths": [
+        "libreevolve/core/artifact_schema_record_contracts.py",
+        "tests/core/test_artifact_schema_characterization.py"
+      ],
+      "changed_path_allowlist": [
+        "libreevolve/core/artifact_schema.py",
+        "libreevolve/core/artifact_schema_record_contracts.py",
+        "tests/core/test_artifact_schema_characterization.py"
+      ],
+      "characterization_report": "planning/maintainability_pass/refactors/reports/core-artifact-schema/CHARACTERIZATION.md",
+      "verification_report": "planning/maintainability_pass/refactors/reports/core-artifact-schema/VERIFICATION.md",
+      "characterization_agent_ids": [
+        "01a06a28-1f5f-7933-864d-f036348911f2"
+      ],
+      "coupling_agent_ids": [
+        "01a06a2a-01f6-7f71-be74-b5c744cbf876"
+      ]
+    },
+    {
+      "lane_id": "core-best-artifacts",
+      "family": "persistence-artifact",
+      "primary_path": "libreevolve/core/best_artifacts.py",
+      "lead_agent_id": "01a069d0-a260-78c0-b21c-c3bfab37997c",
+      "slice_agent_ids": [],
+      "writer_agent_id": null,
+      "verifier_agent_id": "01a06fa4-e367-7830-877a-fdc499cb07cf",
+      "branch": null,
+      "pr": null,
+      "status": "wave3-characterized-no-op",
+      "evidence_state": "5-passed-2-skipped-not-ready-for-writer-independent-no-op-verified",
+      "depends_on": [
+        "core-loop",
+        "core-artifact-schema"
+      ],
+      "support_paths": [],
+      "changed_path_allowlist": [
+        "libreevolve/core/best_artifacts.py",
+        "tests/core/test_best_artifacts.py"
+      ],
+      "characterization_report": "planning/maintainability_pass/refactors/reports/core-best-artifacts/CHARACTERIZATION.md",
+      "verification_report": "planning/maintainability_pass/refactors/reports/core-best-artifacts/VERIFICATION.md",
+      "review_agent_ids": [
+        "01a06a28-4807-7ed2-b039-c529443d8bcf"
+      ]
+    },
+    {
+      "lane_id": "core-budget",
+      "family": "persistence-artifact",
+      "primary_path": "libreevolve/core/budget.py",
+      "lead_agent_id": "01a069d0-bd55-7090-a9bd-5cd88ee10c22",
+      "slice_agent_ids": [],
+      "writer_agent_id": "01a06a4f-2635-7671-b141-26772442bf9f",
+      "verifier_agent_id": "01a06a63-4b58-7661-a978-272442b9961e",
+      "branch": null,
+      "pr": null,
+      "status": "wave3-verified-conditional",
+      "evidence_state": "150-focused-passes-conditional-wsl-mode",
+      "depends_on": [
+        "core-loop"
+      ],
+      "support_paths": [
+        "libreevolve/core/budget_contract.py",
+        "tests/core/test_budget.py"
+      ],
+      "changed_path_allowlist": [
+        "libreevolve/core/budget.py",
+        "libreevolve/core/budget_contract.py",
+        "tests/core/test_budget.py"
+      ],
+      "characterization_report": "planning/maintainability_pass/refactors/reports/core-budget/CHARACTERIZATION.md",
+      "verification_report": "planning/maintainability_pass/refactors/reports/core-budget/VERIFICATION.md",
+      "review_agent_ids": [
+        "01a06a28-4807-7ed2-b039-c529443d8bcf"
+      ]
+    },
+    {
+      "lane_id": "core-prompt",
+      "family": "prompt-feedback",
+      "primary_path": "libreevolve/core/prompt.py",
+      "lead_agent_id": "01a069d0-aa0b-7242-9e8f-52f9a6682f5e",
+      "slice_agent_ids": [
+        "01a069d0-aa0b-7242-9e8f-52f9a6682f5e",
+        "01a0705b-646b-7f61-9286-fdb8bd846df4",
+        "01a0705b-679a-7b90-a897-7348639b8ee6",
+        "01a07081-d3d6-7521-8323-65fb75adcafb"
+      ],
+      "writer_agent_id": "01a06a4c-6dd2-7803-baf3-b950bb143d89",
+      "verifier_agent_id": "01a06a72-9795-7fe1-b247-2c60c1fdac70",
+      "branch": null,
+      "pr": null,
+      "status": "wave3-verified-pass",
+      "evidence_state": "390-focused-passes-reload-path-identity-verified",
+      "depends_on": [
+        "core-loop"
+      ],
+      "support_paths": [
+        "libreevolve/core/prompt_context_policy.py",
+        "tests/core/test_prompt_characterization.py"
+      ],
+      "changed_path_allowlist": [
+        "libreevolve/core/prompt.py",
+        "libreevolve/core/prompt_context_policy.py",
+        "tests/core/test_prompt_characterization.py"
+      ],
+      "characterization_report": "planning/maintainability_pass/refactors/reports/core-prompt/CHARACTERIZATION.md",
+      "verification_report": "planning/maintainability_pass/refactors/reports/core-prompt/VERIFICATION.md"
+    },
+    {
+      "lane_id": "core-feedback",
+      "family": "prompt-feedback",
+      "primary_path": "libreevolve/core/feedback.py",
+      "lead_agent_id": "01a069d0-b10b-7001-84a2-de1b63fd8efb",
+      "slice_agent_ids": [],
+      "writer_agent_id": null,
+      "verifier_agent_id": "01a06fa4-e69a-7f23-b4e8-ddd61649f309",
+      "branch": null,
+      "pr": null,
+      "status": "wave3-characterized-deferred",
+      "evidence_state": "655-focused-passes-no-production-writer-independent-deferred-verified",
+      "depends_on": [
+        "core-prompt"
+      ],
+      "support_paths": [
+        "tests/core/test_feedback.py"
+      ],
+      "changed_path_allowlist": [
+        "libreevolve/core/feedback.py",
+        "tests/core/test_feedback.py"
+      ],
+      "characterization_report": "planning/maintainability_pass/refactors/reports/core-feedback/CHARACTERIZATION.md",
+      "verification_report": "planning/maintainability_pass/refactors/reports/core-feedback/VERIFICATION.md",
+      "characterization_agent_ids": [
+        "01a06a28-342a-7bb3-9085-0da530a36ef3"
+      ],
+      "coupling_agent_ids": [
+        "01a06a2b-4d4f-7a62-9336-60fb799d41cc"
+      ]
+    },
+    {
+      "lane_id": "core-meta-prompt",
+      "family": "prompt-feedback",
+      "primary_path": "libreevolve/core/meta_prompt.py",
+      "lead_agent_id": "01a069d0-d7fa-7042-88a5-7b2ca4f3111d",
+      "slice_agent_ids": [],
+      "writer_agent_id": null,
+      "verifier_agent_id": "01a06fa4-e97e-7833-a413-f4e8718b7db3",
+      "branch": null,
+      "pr": null,
+      "status": "wave3-characterized-blocked-no-op",
+      "evidence_state": "94-focused-passes-dependency-blocked-no-writer-independent-no-op-verified",
+      "depends_on": [
+        "core-prompt",
+        "core-loop"
+      ],
+      "support_paths": [],
+      "changed_path_allowlist": [
+        "libreevolve/core/meta_prompt.py",
+        "tests/core/test_meta_prompt.py"
+      ],
+      "characterization_report": "planning/maintainability_pass/refactors/reports/core-meta-prompt/CHARACTERIZATION.md",
+      "verification_report": "planning/maintainability_pass/refactors/reports/core-meta-prompt/VERIFICATION.md"
+    },
+    {
+      "lane_id": "paper-manifest",
+      "family": "evidence-tooling",
+      "primary_path": "libreevolve/tools/paper_manifest.py",
+      "lead_agent_id": "01a069d0-ccfc-7072-b92d-aea5c8f9e79f",
+      "slice_agent_ids": [
+        "01a069d0-ccfc-7072-b92d-aea5c8f9e79f",
+        "01a0705b-6aee-7203-9f9f-ef79cf64ab2f",
+        "01a0705b-6de5-71c0-b633-f00517e5ef0f",
+        "01a07081-d6cf-74f2-8173-5da90648377c"
+      ],
+      "writer_agent_id": "01a06a9b-b505-77d1-a33c-71b8fb56fad1",
+      "verifier_agent_id": "01a06fa4-c3c2-7d41-bfb0-aba5f355cfa9",
+      "branch": null,
+      "pr": null,
+      "status": "wave4-verified-conditional",
+      "evidence_state": "mr007-focused-and-full-module-pass-later-extraction-deferred",
+      "depends_on": [
+        "benchmark-matrix"
+      ],
+      "support_paths": [
+        "tests/test_paper_manifest.py"
+      ],
+      "changed_path_allowlist": [
+        "libreevolve/tools/paper_manifest.py",
+        "tests/test_paper_manifest.py"
+      ],
+      "characterization_report": "planning/maintainability_pass/refactors/reports/paper-manifest/CHARACTERIZATION.md",
+      "review_agent_ids": [
+        "01a06a28-5194-7bc3-ab5d-abe86f7d267c"
+      ],
+      "verification_report": "planning/maintainability_pass/refactors/reports/paper-manifest/VERIFICATION.md"
+    },
+    {
+      "lane_id": "cli",
+      "family": "evidence-tooling",
+      "primary_path": "libreevolve/cli.py",
+      "lead_agent_id": "01a069d0-e7ae-7bc3-b1eb-b622d737f40f",
+      "slice_agent_ids": [],
+      "writer_agent_id": "01a06afc-5d03-7b21-8b36-60e0c5bdc9a9",
+      "verifier_agent_id": "01a06fcd-6417-7233-9dbf-b28509dd70a2",
+      "branch": null,
+      "status": "wave4-verified-conditional",
+      "evidence_state": "focused-and-readme-boundary-pass-dirty-attribution-conditional",
+      "depends_on": [
+        "core-loop",
+        "core-config",
+        "problem-loader"
+      ],
+      "support_paths": [
+        "libreevolve/core/run_inspection.py"
+      ],
+      "changed_path_allowlist": [
+        "libreevolve/cli.py",
+        "libreevolve/core/run_inspection.py",
+        "tests/test_cli_characterization.py"
+      ],
+      "characterization_report": "planning/maintainability_pass/refactors/reports/cli/CHARACTERIZATION.md",
+      "verification_report": "planning/maintainability_pass/refactors/reports/cli/VERIFICATION.md"
+    },
+    {
+      "lane_id": "benchmark-matrix",
+      "family": "benchmark-contract",
+      "primary_path": "libreevolve/problems/benchmarks/matrix_results.py",
+      "lead_agent_id": "01a069d0-f946-7381-9805-0d1ae33abdff",
+      "slice_agent_ids": [],
+      "writer_agent_id": "01a06a03-f527-7f42-a4b9-e7aa8a19f665",
+      "verifier_agent_id": "01a06a07-ad4d-7641-aa55-fe6b0e6690c9",
+      "branch": null,
+      "status": "wave2-verified-conditional",
+      "evidence_state": "focused-tested-conditional-attribution",
+      "depends_on": [],
+      "support_paths": [
+        "libreevolve/problems/benchmarks/matrix_artifact_identity.py"
+      ],
+      "changed_path_allowlist": [
+        "libreevolve/problems/benchmarks/matrix_results.py",
+        "libreevolve/problems/benchmarks/matrix_artifact_identity.py",
+        "tests/test_matrix_results.py"
+      ],
+      "characterization_report": "planning/maintainability_pass/refactors/reports/benchmark-matrix/CHARACTERIZATION.md",
+      "verification_report": "planning/maintainability_pass/refactors/reports/benchmark-matrix/VERIFICATION.md"
+    },
+    {
+      "lane_id": "core-config",
+      "family": "configuration-contract",
+      "primary_path": "libreevolve/core/config.py",
+      "lead_agent_id": "01a069d1-1bf6-7720-8a6d-912ffcad6a7a",
+      "slice_agent_ids": [],
+      "writer_agent_id": null,
+      "verifier_agent_id": "01a06fa4-ec39-7cb2-b357-a0fd6b25f14d",
+      "branch": null,
+      "pr": null,
+      "status": "wave3-characterized-no-op",
+      "evidence_state": "639-focused-passes-no-semantic-seam-independent-no-op-verified",
+      "depends_on": [
+        "core-yaml-utils",
+        "problem-loader"
+      ],
+      "support_paths": [],
+      "changed_path_allowlist": [
+        "libreevolve/core/config.py",
+        "tests/core/test_config.py"
+      ],
+      "characterization_report": "planning/maintainability_pass/refactors/reports/core-config/CHARACTERIZATION.md",
+      "verification_report": "planning/maintainability_pass/refactors/reports/core-config/VERIFICATION.md",
+      "characterization_agent_ids": [
+        "01a06a28-40f3-7c10-b468-58f434497e63"
+      ],
+      "coupling_agent_ids": [
+        "01a06a2a-fed3-7312-87f3-e2be01f9b0ae"
+      ]
+    },
+    {
+      "lane_id": "core-yaml-utils",
+      "family": "configuration-contract",
+      "primary_path": "libreevolve/core/yaml_utils.py",
+      "lead_agent_id": "01a069d1-2ef9-7e61-bb9c-d646589ed973",
+      "slice_agent_ids": [],
+      "writer_agent_id": null,
+      "verifier_agent_id": "01a06fa4-eef1-7722-96c0-27a8f34a05be",
+      "branch": null,
+      "pr": null,
+      "status": "wave3-characterized-no-op",
+      "evidence_state": "54-focused-and-339-boundary-passes-no-production-change-independent-no-op-verified",
+      "depends_on": [],
+      "support_paths": [],
+      "changed_path_allowlist": [
+        "libreevolve/core/yaml_utils.py",
+        "tests/core/test_yaml_utils_characterization.py"
+      ],
+      "characterization_report": "planning/maintainability_pass/refactors/reports/core-yaml-utils/CHARACTERIZATION.md",
+      "verification_report": "planning/maintainability_pass/refactors/reports/core-yaml-utils/VERIFICATION.md",
+      "characterization_agent_ids": [
+        "01a06a28-2983-7093-9d8b-448fc4836e73"
+      ],
+      "coupling_agent_ids": [
+        "01a06a2a-9a59-7001-a997-4b7616793231"
+      ]
+    },
+    {
+      "lane_id": "problem-loader",
+      "family": "configuration-contract",
+      "primary_path": "libreevolve/problems/loader.py",
+      "lead_agent_id": "01a069d1-42de-7d13-b044-267056f2a5a1",
+      "slice_agent_ids": [],
+      "writer_agent_id": "01a069ea-e070-77e1-8a17-132b974077a5",
+      "verifier_agent_id": "01a069f4-5cec-7bc2-bb61-dc6d2204337a",
+      "branch": null,
+      "pr": null,
+      "status": "wave2-verified-pass",
+      "evidence_state": "focused-tested-and-boundary-verified",
+      "depends_on": [
+        "core-config",
+        "core-yaml-utils"
+      ],
+      "support_paths": [
+        "libreevolve/problems/context_loader.py"
+      ],
+      "changed_path_allowlist": [
+        "libreevolve/problems/loader.py",
+        "libreevolve/problems/context_loader.py",
+        "tests/core/test_loader.py"
+      ],
+      "characterization_report": "planning/maintainability_pass/refactors/reports/problem-loader/CHARACTERIZATION.md",
+      "verification_report": "planning/maintainability_pass/refactors/reports/problem-loader/VERIFICATION.md"
+    },
+    {
+      "lane_id": "roadmap-non-goal-boundary",
+      "family": "docs-evidence-boundary",
+      "primary_path": "libreevolve/problems/benchmarks/roadmap_non_goal_markdown_scan_boundary.py",
+      "lead_agent_id": "01a0704f-ad08-74c1-8d59-a8f6bb53b08c",
+      "slice_agent_ids": [
+        "01a0704f-ad08-74c1-8d59-a8f6bb53b08c"
+      ],
+      "writer_agent_id": "01a07049-c76f-7020-9816-c6e3aed63c4f",
+      "verifier_agent_id": "01a07071-1c53-78b2-80e0-32690ebcc5d9",
+      "branch": null,
+      "pr": null,
+      "status": "wave5-verified-pass-eol-qualified",
+      "evidence_state": "clean-head-77-current-27-non-planning-source-verifier-pass-eol-qualified-sidecar-dependency-terminal-pass",
+      "depends_on": [
+        "roadmap-non-goal-sidecar"
+      ],
+      "support_paths": [
+        "tests/test_roadmap_non_goal_markdown_scan_boundary.py",
+        "papers/roadmap_non_goal_markdown_scan_boundary.json"
+      ],
+      "changed_path_allowlist": [
+        "libreevolve/problems/benchmarks/roadmap_non_goal_markdown_scan_boundary.py",
+        "tests/test_roadmap_non_goal_markdown_scan_boundary.py"
+      ],
+      "characterization_report": "planning/maintainability_pass/refactors/reports/roadmap-non-goal-boundary/CHARACTERIZATION.md",
+      "verification_report": "planning/maintainability_pass/refactors/roadmap-non-goal-boundary/VERIFICATION.md"
+    },
+    {
+      "lane_id": "roadmap-non-goal-sidecar",
+      "family": "docs-evidence-boundary",
+      "primary_path": "papers/roadmap_non_goal_markdown_scan_boundary.json",
+      "lead_agent_id": "01a0704f-ad08-74c1-8d59-a8f6bb53b08c",
+      "slice_agent_ids": [],
+      "writer_agent_id": "01a07060-9573-70f0-937d-4d0cf4b9abff",
+      "verifier_agent_id": "01a07064-4df3-7441-a5e4-0030d92383b4",
+      "branch": null,
+      "pr": null,
+      "status": "wave5-sidecar-verified-pass",
+      "evidence_state": "27-non-planning-files-direct-validator-and-five-focused-tests-pass-crlf-at-eol",
+      "depends_on": [],
+      "support_paths": [
+        "libreevolve/problems/benchmarks/roadmap_non_goal_markdown_scan_boundary.py"
+      ],
+      "changed_path_allowlist": [
+        "papers/roadmap_non_goal_markdown_scan_boundary.json"
+      ],
+      "characterization_report": "planning/maintainability_pass/refactors/reports/roadmap-non-goal-sidecar/CHARACTERIZATION.md",
+      "verification_report": "planning/maintainability_pass/refactors/reports/roadmap-non-goal-sidecar/VERIFICATION.md"
+    }
+  ]
+}

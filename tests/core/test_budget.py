@@ -33,6 +33,12 @@ def _parse_utc_timestamp(value: str) -> datetime:
     return datetime.fromisoformat(value[:-1] + "+00:00")
 
 
+def _consumed_without_runtime(budget: RunBudget) -> dict:
+    consumed = budget.snapshot()["consumed"]
+    consumed.pop("runtime_seconds")
+    return consumed
+
+
 def test_record_evaluation_counts_exact_seed_and_candidate_events():
     budget = _budget()
 
@@ -188,11 +194,13 @@ def test_record_llm_provider_attempts_rejects_invalid_attempts_before_mutation(
     attempts,
 ):
     budget = _budget()
+    before = _consumed_without_runtime(budget)
 
     with pytest.raises(ValueError, match="llm_provider_attempts"):
         budget.record_llm_provider_attempts(attempts)
 
     assert budget.snapshot()["consumed"]["llm_provider_attempts"] == 0
+    assert _consumed_without_runtime(budget) == before
 
 
 @pytest.mark.parametrize(
@@ -215,11 +223,13 @@ def test_record_llm_token_and_cost_reject_invalid_values_before_mutation(
     value,
 ):
     budget = _budget()
+    before = _consumed_without_runtime(budget)
 
     with pytest.raises(ValueError, match=field):
         getattr(budget, method)(value)
 
     assert budget.snapshot()["consumed"][field] == 0
+    assert _consumed_without_runtime(budget) == before
 
 
 def test_snapshot_includes_utc_wall_clock_timestamps():
@@ -229,9 +239,12 @@ def test_snapshot_includes_utc_wall_clock_timestamps():
     wall_clock = snapshot["wall_clock"]
 
     assert wall_clock["schema"] == "utc_run_timestamps_v1"
+    assert wall_clock["clock"] == "UTC wall clock"
     assert wall_clock["started_at"] == "2000-01-01T00:00:00.000Z"
     assert wall_clock["runtime_seconds_source"] == "consumed.runtime_seconds"
     assert wall_clock["monotonic_budget_clock"] == "time.monotonic"
+    assert isinstance(snapshot["consumed"]["runtime_seconds"], float)
+    assert snapshot["consumed"]["runtime_seconds"] >= 0.0
     assert _parse_utc_timestamp(wall_clock["updated_at"]) >= _parse_utc_timestamp(
         wall_clock["started_at"]
     )
@@ -254,6 +267,105 @@ def test_finished_snapshot_includes_wall_clock_finish_timestamp():
 
     assert wall_clock["finished_at"] == wall_clock["updated_at"]
     assert wall_clock["resume_segments"][0]["finished_at"] == wall_clock["finished_at"]
+
+
+@pytest.mark.parametrize(
+    ("best_found", "expected_stop_reason"),
+    [(False, "no_valid_programs"), (True, "completed")],
+)
+def test_finish_assigns_terminal_reason_and_closes_runtime_segment(
+    best_found,
+    expected_stop_reason,
+):
+    budget = _budget()
+
+    snapshot = budget.finish(best_found=best_found)
+
+    assert snapshot["stop_reason"] == expected_stop_reason
+    wall_clock = snapshot["wall_clock"]
+    assert wall_clock["finished_at"] == wall_clock["updated_at"]
+    assert wall_clock["resume_segments"][0]["finished_at"] == wall_clock["finished_at"]
+
+
+def test_snapshot_has_stable_shape_and_normalizes_role_maps():
+    budget = _budget()
+    budget.llm_role_token_limits = {"zeta": 2, "alpha": 1}
+    budget.llm_tokens = 3
+    budget.llm_tokens_by_role = {"zeta": 2, "alpha": 1}
+
+    snapshot = budget.snapshot()
+
+    assert set(snapshot) == {"wall_clock", "limits", "consumed", "stop_reason"}
+    assert list(snapshot["limits"]["llm_role_token_limits"]) == ["alpha", "zeta"]
+    assert list(snapshot["consumed"]["llm_tokens_by_role"]) == ["alpha", "zeta"]
+    snapshot["limits"]["llm_role_token_limits"]["alpha"] = 99
+    snapshot["consumed"]["llm_tokens_by_role"]["alpha"] = 99
+    assert budget.llm_role_token_limits == {"zeta": 2, "alpha": 1}
+    assert budget.llm_tokens_by_role == {"zeta": 2, "alpha": 1}
+
+
+def test_remaining_runtime_seconds_uses_monotonic_budget_clock(monkeypatch):
+    budget = _budget()
+    budget.max_runtime_seconds = 10.0
+    monkeypatch.setattr("libreevolve.core.budget.time.monotonic", lambda: 4.25)
+
+    assert budget.remaining_runtime_seconds() == 5.75
+
+
+@pytest.mark.parametrize(
+    ("limits", "expected"),
+    [
+        (
+            {
+                "max_evaluations": 0,
+                "max_evaluator_seconds": 0.0,
+                "max_llm_calls": 0,
+            },
+            "max_evaluations",
+        ),
+        (
+            {
+                "max_evaluator_seconds": 0.0,
+                "max_llm_calls": 0,
+                "max_llm_provider_attempts": 0,
+            },
+            "max_evaluator_seconds",
+        ),
+        (
+            {
+                "max_llm_calls": 0,
+                "max_llm_provider_attempts": 0,
+                "max_llm_tokens": 0,
+            },
+            "max_llm_calls",
+        ),
+    ],
+)
+def test_zero_limits_follow_stop_reason_precedence(limits, expected):
+    budget = _budget()
+    for field, value in limits.items():
+        setattr(budget, field, value)
+
+    assert budget.check_before_llm_call() == expected
+    assert budget.stop_reason == expected
+    assert budget.check_before_generation() == expected
+
+
+def test_evaluation_limit_records_one_over_usage_and_retains_stop_reason():
+    budget = _budget()
+    budget.max_evaluations = 1
+
+    assert budget.check_before_evaluation() is None
+    budget.record_evaluation(0.25, seed=True)
+    assert budget.check_before_evaluation() == "max_evaluations"
+
+    budget.record_evaluation(0.50, seed=False)
+
+    consumed = budget.snapshot()["consumed"]
+    assert consumed["evaluations"] == 2
+    assert consumed["seed_evaluations"] == 1
+    assert consumed["candidate_evaluations"] == 1
+    assert budget.check_before_evaluation() == "max_evaluations"
 
 
 @pytest.mark.parametrize(
@@ -318,6 +430,7 @@ def test_detailed_evaluator_accounting_limits_stop_after_recorded_evaluation(
 )
 def test_record_evaluation_rejects_invalid_accounting_before_counter_mutation(accounting):
     budget = _budget()
+    before = _consumed_without_runtime(budget)
 
     with pytest.raises(ValueError, match="accounting"):
         budget.record_evaluation(0.25, seed=False, accounting=accounting)
@@ -325,11 +438,13 @@ def test_record_evaluation_rejects_invalid_accounting_before_counter_mutation(ac
     snapshot = budget.snapshot()["consumed"]
     assert snapshot["evaluations"] == 0
     assert snapshot["evaluator_subprocess_attempts"] == 0
+    assert _consumed_without_runtime(budget) == before
 
 
 @pytest.mark.parametrize("seed", ["false", 1, 0, None, [], object()])
 def test_record_evaluation_rejects_non_boolean_seed_kind_before_counter_mutation(seed):
     budget = _budget()
+    before = _consumed_without_runtime(budget)
 
     with pytest.raises(ValueError, match="seed flag"):
         budget.record_evaluation(0.25, seed=seed)
@@ -339,11 +454,13 @@ def test_record_evaluation_rejects_non_boolean_seed_kind_before_counter_mutation
     assert snapshot["seed_evaluations"] == 0
     assert snapshot["candidate_evaluations"] == 0
     assert snapshot["evaluator_seconds"] == 0.0
+    assert _consumed_without_runtime(budget) == before
 
 
 @pytest.mark.parametrize("elapsed_sec", [math.inf, -math.inf, math.nan, -0.01, True, "1", None])
 def test_record_evaluation_rejects_invalid_elapsed_time_before_counter_mutation(elapsed_sec):
     budget = _budget()
+    before = _consumed_without_runtime(budget)
 
     with pytest.raises(ValueError, match="elapsed_sec"):
         budget.record_evaluation(elapsed_sec, seed=False)
@@ -353,6 +470,7 @@ def test_record_evaluation_rejects_invalid_elapsed_time_before_counter_mutation(
     assert snapshot["seed_evaluations"] == 0
     assert snapshot["candidate_evaluations"] == 0
     assert snapshot["evaluator_seconds"] == 0.0
+    assert _consumed_without_runtime(budget) == before
 
 
 @pytest.mark.parametrize(
@@ -697,6 +815,24 @@ def test_controller_llm_call_event_replays_usage_budget_consumption_by_role():
     )
 
 
+def test_controller_llm_event_omits_zero_usage_fields_after_normalization():
+    event = _controller_event(
+        "llm_call",
+        role="mutation",
+        provider_attempts=0,
+        tokens=0,
+        cost_microusd=0,
+        seconds=0.0,
+    )
+
+    assert validate_controller_budget_event(event) == {
+        "schema": CONTROLLER_BUDGET_EVENT_SCHEMA,
+        "sequence": 0,
+        "kind": "llm_call",
+        "role": "mutation",
+    }
+
+
 @pytest.mark.parametrize(
     ("event", "message"),
     [
@@ -821,6 +957,29 @@ def test_validate_controller_budget_replay_state_matches_llm_usage_snapshot():
     assert consumed["llm_tokens_by_role"] == {"mutation": 2000}
     assert consumed["llm_cost_microusd_by_role"] == {"mutation": 10000}
     assert consumed["llm_seconds_by_role"] == {"mutation": 1.5}
+
+
+def test_validate_controller_budget_replay_uses_manifest_runtime_seconds():
+    budget = _budget()
+    event = _controller_event("seed_evaluation", sequence=0)
+    apply_controller_budget_event(budget, event)
+    snapshot = budget.snapshot()
+    snapshot["consumed"]["runtime_seconds"] += 123.0
+    state = {
+        "schema": CONTROLLER_BUDGET_STATE_SCHEMA,
+        "snapshot": snapshot,
+        "events": [event],
+    }
+
+    replay = validate_controller_budget_replay_state(state)
+
+    assert replay["replay"]["status"] == "matched_snapshot"
+    assert replay["replay"]["runtime_seconds_policy"] == (
+        "manifest_snapshot_authoritative"
+    )
+    assert replay["snapshot"]["consumed"]["runtime_seconds"] == snapshot["consumed"][
+        "runtime_seconds"
+    ]
 
 
 def test_validate_controller_budget_replay_state_rejects_snapshot_drift():

@@ -5,6 +5,10 @@ from copy import deepcopy
 from pathlib import Path
 
 from libreevolve.core.jsonl import StrictJsonlError, iter_quarantine_records
+from libreevolve.core.artifact_schema_record_contracts import (
+    jsonl_record_families,
+    quarantine_record_families,
+)
 
 ARTIFACT_SCHEMA_VERSION = 1
 RUN_MANIFEST_SCHEMA = "libreevolve.run_manifest.v1"
@@ -2094,59 +2098,35 @@ def _run_artifact_schema_without_inventory() -> dict:
                 ),
             ),
         },
-        "jsonl_records": {
-            "history.jsonl": HISTORY_RECORD_SCHEMA,
-            "evaluator_results.jsonl": EVALUATOR_RESULT_RECORD_SCHEMA,
-            "failure_history.jsonl": FAILURE_RECORD_SCHEMA,
-            "archive_events.jsonl": ARCHIVE_EVENT_RECORD_SCHEMA,
-            "llm_calls.jsonl": {
-                "call": LLM_CALL_RECORD_SCHEMA,
-                "reward": LLM_REWARD_RECORD_SCHEMA,
-            },
-            "prompt_history.jsonl": PROMPT_HISTORY_RECORD_SCHEMA,
-            "prompt_current_binding_table.jsonl": (
-                PROMPT_CURRENT_BINDING_TABLE_RECORD_SCHEMA
-            ),
-            "prompt_prior_score_table.jsonl": (
-                PROMPT_PRIOR_SCORE_TABLE_RECORD_SCHEMA
-            ),
-            "duplicate_work_cache_index.jsonl": (
-                DUPLICATE_WORK_CACHE_INDEX_RECORD_SCHEMA
-            ),
-            "controller_budget_events.jsonl": CONTROLLER_BUDGET_EVENT_RECORD_SCHEMA,
-        },
+        "jsonl_records": jsonl_record_families(
+            history=HISTORY_RECORD_SCHEMA,
+            evaluator_result=EVALUATOR_RESULT_RECORD_SCHEMA,
+            failure=FAILURE_RECORD_SCHEMA,
+            archive_event=ARCHIVE_EVENT_RECORD_SCHEMA,
+            llm_call=LLM_CALL_RECORD_SCHEMA,
+            llm_reward=LLM_REWARD_RECORD_SCHEMA,
+            prompt_history=PROMPT_HISTORY_RECORD_SCHEMA,
+            prompt_current_binding_table=PROMPT_CURRENT_BINDING_TABLE_RECORD_SCHEMA,
+            prompt_prior_score_table=PROMPT_PRIOR_SCORE_TABLE_RECORD_SCHEMA,
+            duplicate_work_cache_index=DUPLICATE_WORK_CACHE_INDEX_RECORD_SCHEMA,
+            controller_budget_event=CONTROLLER_BUDGET_EVENT_RECORD_SCHEMA,
+        ),
         "quarantine_jsonl_records": {
-            "history_invalid.jsonl": _quarantine_record(
-                "history.jsonl",
-                HISTORY_RECORD_SCHEMA,
-            ),
-            "failure_history_invalid.jsonl": _quarantine_record(
-                "failure_history.jsonl",
-                FAILURE_RECORD_SCHEMA,
-            ),
-            "archive_events_invalid.jsonl": _quarantine_record(
-                "archive_events.jsonl",
-                ARCHIVE_EVENT_RECORD_SCHEMA,
-            ),
-            "controller_budget_events_invalid.jsonl": _quarantine_record(
-                "controller_budget_events.jsonl",
-                CONTROLLER_BUDGET_EVENT_RECORD_SCHEMA,
-            ),
-            "llm_calls_invalid.jsonl": _quarantine_record(
-                "llm_calls.jsonl",
-                {
-                    "call": LLM_CALL_RECORD_SCHEMA,
-                    "reward": LLM_REWARD_RECORD_SCHEMA,
-                },
-            ),
-            "prompt_history_invalid.jsonl": _quarantine_record(
-                "prompt_history.jsonl",
-                PROMPT_HISTORY_RECORD_SCHEMA,
-            ),
-            "manifest_invalid.jsonl": _quarantine_record(
-                "manifest.json",
-                RUN_MANIFEST_SCHEMA,
-            ),
+            name: _quarantine_record(
+                record["source_stream"],
+                record["source_record_schema"],
+            )
+            for name, record in quarantine_record_families(
+                history=HISTORY_RECORD_SCHEMA,
+                failure=FAILURE_RECORD_SCHEMA,
+                archive_event=ARCHIVE_EVENT_RECORD_SCHEMA,
+                controller_budget_event=CONTROLLER_BUDGET_EVENT_RECORD_SCHEMA,
+                llm_call=LLM_CALL_RECORD_SCHEMA,
+                llm_reward=LLM_REWARD_RECORD_SCHEMA,
+                prompt_history=PROMPT_HISTORY_RECORD_SCHEMA,
+                manifest=RUN_MANIFEST_SCHEMA,
+                diagnostic=QUARANTINE_RECORD_SCHEMA,
+            ).items()
         },
     }
 

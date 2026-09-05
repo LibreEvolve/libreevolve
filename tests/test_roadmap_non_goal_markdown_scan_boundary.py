@@ -19,6 +19,15 @@ def test_roadmap_non_goal_markdown_scan_excludes_packaging_outputs(tmp_path):
     assert _markdown_corpus_files(tmp_path) == [Path("README.md")]
 
 
+def test_roadmap_non_goal_markdown_scan_excludes_planning_documents(tmp_path):
+    (tmp_path / "README.md").write_text("product claim surface\n", encoding="utf-8")
+    planning_path = tmp_path / "planning" / "coordination" / "notes.md"
+    planning_path.parent.mkdir(parents=True, exist_ok=True)
+    planning_path.write_text("coordination note\n", encoding="utf-8")
+
+    assert _markdown_corpus_files(tmp_path) == [Path("README.md")]
+
+
 def test_roadmap_non_goal_markdown_scan_accepts_current_corpus():
     boundary = roadmap_non_goal_markdown_scan_boundary_record()
 
@@ -37,7 +46,10 @@ def test_roadmap_non_goal_markdown_scan_accepts_current_corpus():
     )
     assert boundary["source_non_goal_count"] == 3
     assert boundary["source_constrained_surface_count"] == 9
-    assert boundary["markdown_corpus_status"] == "all_repo_markdown_files_scanned"
+    assert (
+        boundary["markdown_corpus_status"]
+        == "all_non_planning_repo_markdown_files_scanned"
+    )
     assert boundary["markdown_file_count"] == 27
     assert boundary["readable_markdown_file_count"] == 27
     assert boundary["unreadable_markdown_file_count"] == 0
@@ -62,7 +74,10 @@ def test_roadmap_non_goal_markdown_scan_accepts_current_corpus():
         "runtime_plugin_scope_join": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
     }
-    assert "every Markdown file in the repository corpus" in boundary["claim_boundary"]
+    assert (
+        "every non-planning Markdown file in the repository corpus"
+        in boundary["claim_boundary"]
+    )
 
 
 def test_roadmap_non_goal_markdown_scan_rejects_overclaim_and_drift():

@@ -10459,6 +10459,66 @@ def test_rehydrate_paper_cache_skips_existing_matching_pdf(tmp_path, monkeypatch
     assert report.results[0].status == "verified_existing"
 
 
+def test_rehydrate_paper_cache_rejects_invalid_download_before_replacing_existing_target(
+    tmp_path, monkeypatch
+):
+    invalid_content = b"%PDF-1.4\nheader-only-invalid-pdf\n"
+    valid_content = _valid_pdf_bytes()
+    row = _row(tmp_path, content=invalid_content)
+    target = tmp_path / row["file"]
+    target.write_bytes(valid_content)
+    _write_manifest(tmp_path, [row])
+
+    def fake_urlopen(request, timeout):
+        assert request.full_url == row["url"]
+        assert timeout == 60.0
+        response = BytesIO(invalid_content)
+        response.status = 200
+        return response
+
+    monkeypatch.setattr(paper_manifest, "urlopen", fake_urlopen)
+
+    report = rehydrate_paper_cache(tmp_path)
+
+    assert report.ok is False
+    assert report.failed_count == 1
+    assert report.results[0].status == "failed"
+    assert report.results[0].message == "invalid_pdf_structure"
+    assert target.read_bytes() == valid_content
+    assert list(target.parent.glob(f".{target.name}.*.download")) == []
+
+
+def test_rehydrate_paper_cache_does_not_verify_matching_invalid_existing_pdf(
+    tmp_path, monkeypatch
+):
+    invalid_content = b"%PDF-1.4\nheader-only-invalid-pdf\n"
+    row = _row(tmp_path, content=invalid_content)
+    _write_manifest(tmp_path, [row])
+    calls = 0
+
+    def fake_urlopen(request, timeout):
+        nonlocal calls
+        calls += 1
+        assert request.full_url == row["url"]
+        assert timeout == 60.0
+        response = BytesIO(invalid_content)
+        response.status = 200
+        return response
+
+    monkeypatch.setattr(paper_manifest, "urlopen", fake_urlopen)
+
+    report = rehydrate_paper_cache(tmp_path)
+
+    assert report.ok is False
+    assert calls == 1
+    assert report.verified_existing_count == 0
+    assert report.failed_count == 1
+    assert report.results[0].status == "failed"
+    assert report.results[0].message == "invalid_pdf_structure"
+    assert (tmp_path / row["file"]).read_bytes() == invalid_content
+    assert list((tmp_path / row["file"]).parent.glob(".*.download")) == []
+
+
 def test_rehydrate_paper_cache_force_redownloads_matching_pdf(tmp_path, monkeypatch):
     content = _valid_pdf_bytes()
     row = _row(tmp_path, content=content)
@@ -15022,3 +15082,269 @@ def test_validate_paper_manifest_rejects_reparse_point_local_pdf(tmp_path, monke
 
     assert report.ok is False
     assert "linked_pdf" in {issue.code for issue in report.issues}
+
+
+def test_paper_manifest_json_report_preserves_mixed_order_and_is_deterministic(
+    tmp_path, capsys
+):
+    present = _row(tmp_path)
+    missing = _row(
+        tmp_path,
+        row_id="2506.13132",
+        title="Second paper",
+        url="https://arxiv.org/pdf/2506.13132.pdf",
+        file="papers/2506.13132__Second-paper.pdf",
+        content=_valid_pdf_bytes(b"second-paper"),
+    )
+    (tmp_path / missing["file"]).unlink()
+    _write_manifest(tmp_path, [present, missing])
+
+    assert not (tmp_path / ".git").exists()
+    first_exit = main(["--root", str(tmp_path), "--json"])
+    first = capsys.readouterr()
+    second_exit = main(["--root", str(tmp_path), "--json"])
+    second = capsys.readouterr()
+
+    assert first_exit == 0
+    assert second_exit == 0
+    assert first.err == ""
+    assert second.err == ""
+    assert first.out == second.out
+    data = json.loads(first.out)
+    assert data["row_count"] == 2
+    assert data["local_present_count"] == 1
+    assert data["local_missing_count"] == 1
+    assert data["local_unique_file_count"] == 1
+    assert [item["row_id"] for item in data["availability"]] == [
+        present["id"],
+        missing["id"],
+    ]
+    assert [item["local_status"] for item in data["availability"]] == [
+        "present",
+        "missing",
+    ]
+    assert [item["git_tracked"] for item in data["availability"]] == [None, None]
+    assert data["issues"] == []
+
+
+def test_rehydrate_paper_cache_rejects_nonpositive_timeout_without_network(
+    tmp_path, monkeypatch
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    calls = []
+
+    def fail_urlopen(request, timeout):
+        calls.append((request.full_url, timeout))
+        raise AssertionError("invalid timeout must stop before downloading")
+
+    monkeypatch.setattr(paper_manifest, "urlopen", fail_urlopen)
+
+    report = rehydrate_paper_cache(tmp_path, timeout=0)
+
+    assert report.ok is False
+    assert report.row_count == 1
+    assert report.verified_existing_count == 0
+    assert report.downloaded_count == 0
+    assert report.failed_count == 0
+    assert report.results == []
+    assert [issue.code for issue in report.issues] == ["invalid_download_timeout"]
+    assert report.issues[0].message == "download timeout must be positive"
+    assert calls == []
+
+
+def test_paper_manifest_cli_rejects_force_without_rehydrate(tmp_path, capsys):
+    try:
+        main(["--root", str(tmp_path), "--force"])
+    except SystemExit as exc:
+        assert exc.code == 2
+    else:
+        raise AssertionError("--force without --rehydrate must be rejected")
+
+    captured = capsys.readouterr()
+    assert captured.out == ""
+    assert "--force requires --rehydrate" in captured.err
+
+
+def test_rehydrate_paper_cache_closes_http_error_response_and_leaves_target_absent(
+    tmp_path, monkeypatch
+):
+    class TrackingResponse(BytesIO):
+        def __init__(self, payload, status):
+            super().__init__(payload)
+            self.status = status
+            self.closed_by_consumer = False
+
+        def close(self):
+            self.closed_by_consumer = True
+            super().close()
+
+    row = _row(tmp_path)
+    target = tmp_path / row["file"]
+    target.unlink()
+    _write_manifest(tmp_path, [row])
+    response = TrackingResponse(b"server failure", 503)
+
+    def fake_urlopen(request, timeout):
+        assert request.full_url == row["url"]
+        assert timeout == 60.0
+        return response
+
+    monkeypatch.setattr(paper_manifest, "urlopen", fake_urlopen)
+
+    report = rehydrate_paper_cache(tmp_path)
+
+    assert report.ok is False
+    assert report.failed_count == 1
+    assert report.results[0].status == "failed"
+    assert report.results[0].bytes is None
+    assert report.results[0].sha256 is None
+    assert report.results[0].message == "download returned HTTP 503"
+    assert response.closed_by_consumer is True
+    assert not target.exists()
+    assert list(target.parent.glob(f".{target.name}.*.download")) == []
+
+
+def test_rehydrate_paper_cache_closes_read_failure_cleans_temp_and_preserves_target(
+    tmp_path, monkeypatch
+):
+    class ReadFailureResponse:
+        status = 200
+
+        def __init__(self, first_chunk):
+            self.first_chunk = first_chunk
+            self.read_count = 0
+            self.closed_by_consumer = False
+
+        def read(self, _size):
+            self.read_count += 1
+            if self.read_count == 1:
+                return self.first_chunk
+            raise OSError("response read failed")
+
+        def close(self):
+            self.closed_by_consumer = True
+
+    original = _valid_pdf_bytes()
+    row = _row(tmp_path, content=original)
+    target = tmp_path / row["file"]
+    preserved = b"pre-existing target bytes"
+    target.write_bytes(preserved)
+    _write_manifest(tmp_path, [row])
+    first_chunk = b"partial download"
+    response = ReadFailureResponse(first_chunk)
+
+    def fake_urlopen(request, timeout):
+        assert request.full_url == row["url"]
+        assert timeout == 60.0
+        return response
+
+    monkeypatch.setattr(paper_manifest, "urlopen", fake_urlopen)
+
+    report = rehydrate_paper_cache(tmp_path)
+
+    result = report.results[0]
+    assert report.ok is False
+    assert report.failed_count == 1
+    assert result.status == "failed"
+    assert result.bytes == len(first_chunk)
+    assert result.sha256 == hashlib.sha256(first_chunk).hexdigest()
+    assert result.message == "download failed: response read failed"
+    assert response.closed_by_consumer is True
+    assert target.read_bytes() == preserved
+    assert list(target.parent.glob(f".{target.name}.*.download")) == []
+
+
+def test_paper_status_claim_inventory_records_readme_spans_and_word_boundaries(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    _write_status_fixture_artifact(tmp_path)
+    status_text = (
+        "Partially implemented: `libreevolve/core/loop.py` uses version 1.2. "
+        "No full paper behavior; notebook examples remain illustrative."
+    )
+    readme_path = tmp_path / "papers" / "README.md"
+    readme_text = readme_path.read_text(encoding="utf-8").replace(
+        PARTIAL_FIXTURE_STATUS,
+        status_text,
+    )
+    readme_path.write_text(readme_text, encoding="utf-8")
+
+    inventory = paper_manifest.paper_status_claim_inventory_record(tmp_path)
+    repeated_inventory = paper_manifest.paper_status_claim_inventory_record(tmp_path)
+    status_row = inventory["rows"][0]
+    claims = status_row["status_claims"]
+    status_line_number = next(
+        index
+        for index, line in enumerate(readme_text.splitlines(), start=1)
+        if status_text in line
+    )
+    expected_phrases = [
+        "Partially implemented: `libreevolve/core/loop.py` uses version 1.2.",
+        "No full paper behavior;",
+        "notebook examples remain illustrative.",
+    ]
+
+    assert json.dumps(inventory, sort_keys=True) == json.dumps(
+        repeated_inventory,
+        sort_keys=True,
+    )
+    assert [
+        status_text[claim["status_text_char_start"] : claim["status_text_char_end"]]
+        for claim in claims
+    ] == expected_phrases
+    assert [claim["source_span"]["line_start"] for claim in claims] == [
+        status_line_number,
+        status_line_number,
+        status_line_number,
+    ]
+    assert all(
+        claim["source_span"]["path"] == "papers/README.md"
+        and claim["source_span"]["section"] == "Implementation status"
+        for claim in claims
+    )
+    assert inventory["absence_signal_terms"] == ["no"]
+    assert inventory["absence_signal_record_count"] == 1
+    assert claims[0]["evidence_links"]["phrase_local_artifact_paths"] == [
+        "libreevolve/core/loop.py"
+    ]
+    artifact_start = status_text.index("`libreevolve/core/loop.py`")
+    artifact_end = artifact_start + len("`libreevolve/core/loop.py`")
+    assert claims[0]["evidence_links"]["phrase_local_artifact_mention_records"] == [
+        {
+            "path": "libreevolve/core/loop.py",
+            "status_text_char_start": artifact_start,
+            "status_text_char_end": artifact_end,
+            "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": status_line_number,
+                "line_end": status_line_number,
+                "status_text_char_start": artifact_start,
+                "status_text_char_end": artifact_end,
+            },
+        }
+    ]
+
+
+def test_validate_paper_manifest_casefolds_duplicate_pdf_paths(tmp_path):
+    first = _row(
+        tmp_path,
+        row_id="2506.00001",
+        url="https://arxiv.org/pdf/2506.00001.pdf",
+        file="papers/Shared.pdf",
+    )
+    second = _row(
+        tmp_path,
+        row_id="2506.00002",
+        url="https://arxiv.org/pdf/2506.00002.pdf",
+        file="papers/shared.pdf",
+    )
+    _write_manifest(tmp_path, [first, second])
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is False
+    assert [item.local_status for item in report.availability] == ["present"]
+    assert "duplicate_file_path" in {issue.code for issue in report.issues}

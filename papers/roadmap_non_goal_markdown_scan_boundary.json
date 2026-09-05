@@ -5,7 +5,7 @@
   "source_non_goal_boundary_input": "papers/roadmap_non_goal_contradiction_boundary.json",
   "source_non_goal_count": 3,
   "source_constrained_surface_count": 9,
-  "markdown_corpus_status": "all_repo_markdown_files_scanned",
+  "markdown_corpus_status": "all_non_planning_repo_markdown_files_scanned",
   "markdown_file_count": 27,
   "readable_markdown_file_count": 27,
   "unreadable_markdown_file_count": 0,
@@ -111,5 +111,5 @@
     "runtime_plugin_scope_join": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary scans every Markdown file in the repository corpus for exact forbidden ROADMAP non-goal support-claim phrases and retains line-level hit records. It does not claim runtime metadata scanning, plugin docstring scanning, CI promotion enforcement, an intentional promotion workflow, joined runtime/plugin/docs/paper scope proof, or owner-reviewed remediation readiness."
+  "claim_boundary": "This boundary scans every non-planning Markdown file in the repository corpus for exact forbidden ROADMAP non-goal support-claim phrases; coordination and planning Markdown is excluded from the product claim surface and line-level hit records are retained. It does not claim runtime metadata scanning, plugin docstring scanning, CI promotion enforcement, an intentional promotion workflow, joined runtime/plugin/docs/paper scope proof, or owner-reviewed remediation readiness."
 }

@@ -1,4 +1,5 @@
 import collections
+import builtins
 import hashlib
 import json
 import math
@@ -9,6 +10,7 @@ from pathlib import Path
 
 import pytest
 
+import libreevolve.core.jsonl as jsonl_module
 from libreevolve.core.jsonl import (
     StrictJsonlError,
     append_strict_jsonl,
@@ -756,3 +758,609 @@ def test_prompt_history_quarantines_tuple_metadata_without_state_mutation(tmp_pa
     ]
     assert record["error"] == "TypeError"
     assert "must use list, not tuple" in record["message"]
+
+
+def test_strict_json_dump_replace_failure_preserves_exact_prior_bytes(tmp_path, monkeypatch):
+    path = tmp_path / "manifest.json"
+    prior_bytes = b'{"prior": true}\r\nprior trailing bytes\x00\n'
+    path.write_bytes(prior_bytes)
+    replace_calls = []
+
+    def fail_replace(source, destination):
+        replace_calls.append((Path(source), Path(destination)))
+        raise OSError("replace injected")
+
+    monkeypatch.setattr(jsonl_module.os, "replace", fail_replace)
+
+    with pytest.raises(OSError, match="replace injected"):
+        strict_json_dump({"new": True}, path)
+
+    assert path.read_bytes() == prior_bytes
+    assert len(replace_calls) == 1
+    assert replace_calls[0][1] == path
+    assert replace_calls[0][0].parent == path.parent
+    assert replace_calls[0][0].name.startswith(f".{path.name}.")
+    assert replace_calls[0][0].name.endswith(".tmp")
+    assert list(tmp_path.glob(f".{path.name}.*.tmp")) == []
+
+
+def test_strict_json_dump_temp_fsync_failure_preserves_exact_prior_bytes(
+    tmp_path, monkeypatch
+):
+    path = tmp_path / "manifest.json"
+    prior_bytes = b"prior manifest bytes\r\n"
+    path.write_bytes(prior_bytes)
+    fsync_calls = []
+
+    def fail_fsync(fd):
+        fsync_calls.append(fd)
+        raise OSError("temporary-file fsync injected")
+
+    monkeypatch.setattr(jsonl_module.os, "fsync", fail_fsync)
+
+    with pytest.raises(OSError, match="temporary-file fsync injected"):
+        strict_json_dump({"new": True}, path)
+
+    assert len(fsync_calls) == 1
+    assert path.read_bytes() == prior_bytes
+    assert list(tmp_path.glob(f".{path.name}.*.tmp")) == []
+
+
+def test_strict_json_dump_parent_directory_fsync_failure_is_best_effort(
+    tmp_path, monkeypatch
+):
+    path = tmp_path / "manifest.json"
+    fake_directory_fd = 246801
+    calls = []
+    original_open = os.open
+    original_fsync = os.fsync
+    original_close = os.close
+
+    def fake_open(target, flags, *args, **kwargs):
+        if Path(target) == tmp_path:
+            calls.append(("open", Path(target), flags))
+            return fake_directory_fd
+        return original_open(target, flags, *args, **kwargs)
+
+    def fake_fsync(fd):
+        if fd == fake_directory_fd:
+            calls.append(("fsync", fd))
+            raise OSError("parent-directory fsync injected")
+        return original_fsync(fd)
+
+    def fake_close(fd):
+        if fd == fake_directory_fd:
+            calls.append(("close", fd))
+            return None
+        return original_close(fd)
+
+    monkeypatch.setattr(jsonl_module.os, "open", fake_open)
+    monkeypatch.setattr(jsonl_module.os, "fsync", fake_fsync)
+    monkeypatch.setattr(jsonl_module.os, "close", fake_close)
+
+    strict_json_dump({"new": True}, path)
+
+    assert json.loads(path.read_text(encoding="utf-8")) == {"new": True}
+    assert calls == [
+        ("open", tmp_path, os.O_RDONLY),
+        ("fsync", fake_directory_fd),
+        ("close", fake_directory_fd),
+    ]
+
+
+class _WrappedJsonlFile:
+    def __init__(
+        self,
+        handle,
+        *,
+        fail_write=False,
+        fail_flush=False,
+        fail_truncate=False,
+        partial_write_chars=None,
+    ):
+        self._handle = handle
+        self._fail_write = fail_write
+        self._fail_flush = fail_flush
+        self._fail_truncate = fail_truncate
+        self._partial_write_chars = partial_write_chars
+
+    def __enter__(self):
+        self._handle.__enter__()
+        return self
+
+    def __exit__(self, *args):
+        return self._handle.__exit__(*args)
+
+    def write(self, data):
+        if self._fail_write:
+            raise OSError("append write injected")
+        if self._partial_write_chars is not None:
+            self._handle.write(data[: self._partial_write_chars])
+            raise OSError("append partial write injected")
+        return self._handle.write(data)
+
+    def flush(self):
+        if self._fail_flush:
+            self._handle.flush()
+            raise OSError("append flush injected")
+        return self._handle.flush()
+
+    def truncate(self, *args):
+        if self._fail_truncate:
+            raise OSError("repair truncate injected")
+        return self._handle.truncate(*args)
+
+    def __getattr__(self, name):
+        return getattr(self._handle, name)
+
+
+def _seed_jsonl_lock(path):
+    path.with_name(f".{path.name}.lock").write_bytes(b"\0")
+
+
+def test_append_strict_jsonl_write_failure_preserves_exact_prior_bytes(
+    tmp_path, monkeypatch
+):
+    path = tmp_path / "history.jsonl"
+    prior_bytes = b'{"prior": true}\r\n'
+    path.write_bytes(prior_bytes)
+    _seed_jsonl_lock(path)
+    original_open = builtins.open
+
+    def failing_open(target, mode="r", *args, **kwargs):
+        handle = original_open(target, mode, *args, **kwargs)
+        if Path(target) == path and mode == "a":
+            return _WrappedJsonlFile(handle, fail_write=True)
+        return handle
+
+    monkeypatch.setattr(jsonl_module, "open", failing_open, raising=False)
+
+    with pytest.raises(OSError, match="append write injected"):
+        append_strict_jsonl(path, {"new": True})
+
+    assert path.read_bytes() == prior_bytes
+
+
+def test_append_strict_jsonl_flush_failure_preserves_prefix_and_records_written_line(
+    tmp_path, monkeypatch
+):
+    path = tmp_path / "history.jsonl"
+    prior_bytes = b'{"prior": true}\n'
+    path.write_bytes(prior_bytes)
+    _seed_jsonl_lock(path)
+    original_open = builtins.open
+
+    def failing_open(target, mode="r", *args, **kwargs):
+        handle = original_open(target, mode, *args, **kwargs)
+        if Path(target) == path and mode == "a":
+            return _WrappedJsonlFile(handle, fail_flush=True)
+        return handle
+
+    monkeypatch.setattr(jsonl_module, "open", failing_open, raising=False)
+
+    with pytest.raises(OSError, match="append flush injected"):
+        append_strict_jsonl(path, {"new": True})
+
+    assert path.read_bytes() == prior_bytes + b'{"new": true}' + os.linesep.encode()
+
+
+def test_append_strict_jsonl_fsync_failure_preserves_prefix_and_records_written_line(
+    tmp_path, monkeypatch
+):
+    path = tmp_path / "history.jsonl"
+    prior_bytes = b'{"prior": true}\n'
+    path.write_bytes(prior_bytes)
+    _seed_jsonl_lock(path)
+    fsync_calls = []
+
+    def fail_fsync(fd):
+        fsync_calls.append(fd)
+        raise OSError("append fsync injected")
+
+    monkeypatch.setattr(jsonl_module.os, "fsync", fail_fsync)
+
+    with pytest.raises(OSError, match="append fsync injected"):
+        append_strict_jsonl(path, {"new": True})
+
+    assert len(fsync_calls) == 1
+    assert path.read_bytes() == prior_bytes + b'{"new": true}' + os.linesep.encode()
+
+
+def test_append_strict_jsonl_lock_acquire_failure_preserves_exact_prior_bytes(
+    tmp_path, monkeypatch
+):
+    path = tmp_path / "history.jsonl"
+    prior_bytes = b'{"prior": true}\n'
+    path.write_bytes(prior_bytes)
+    lock_calls = []
+
+    def fail_acquire(handle, lock_path):
+        lock_calls.append(Path(lock_path))
+        raise StrictJsonlError("lock acquire injected")
+
+    monkeypatch.setattr(jsonl_module, "_acquire_jsonl_file_lock", fail_acquire)
+
+    with pytest.raises(StrictJsonlError, match="lock acquire injected"):
+        append_strict_jsonl(path, {"new": True})
+
+    assert lock_calls == [path.with_name(f".{path.name}.lock")]
+    assert path.read_bytes() == prior_bytes
+
+
+def test_append_strict_jsonl_lock_release_failure_is_reported_after_append(
+    tmp_path, monkeypatch
+):
+    path = tmp_path / "history.jsonl"
+    prior_bytes = b'{"prior": true}\n'
+    path.write_bytes(prior_bytes)
+    _seed_jsonl_lock(path)
+    release_calls = []
+
+    def fail_release(handle, lock_path):
+        release_calls.append(Path(lock_path))
+        raise StrictJsonlError("lock release injected")
+
+    monkeypatch.setattr(jsonl_module, "_release_jsonl_file_lock", fail_release)
+
+    with pytest.raises(StrictJsonlError, match="lock release injected"):
+        append_strict_jsonl(path, {"new": True})
+
+    assert release_calls == [path.with_name(f".{path.name}.lock")]
+    assert path.read_bytes() == prior_bytes + b'{"new": true}' + os.linesep.encode()
+
+
+def test_append_repairs_before_quarantine_and_accepted_append_under_ordered_locks(
+    tmp_path, monkeypatch
+):
+    accepted = tmp_path / "z_history.jsonl"
+    quarantine = tmp_path / "a_history_invalid.jsonl"
+    complete_prefix = b'{"prior": true}\n'
+    accepted.write_bytes(complete_prefix + b'{"torn":')
+    quarantine_prior = b'{"previous": true}\n'
+    quarantine.write_bytes(quarantine_prior)
+    events = []
+    original_repair = jsonl_module.repair_trailing_partial_jsonl
+    original_append = jsonl_module._append_serialized_jsonl_line
+
+    def trace_acquire(handle, lock_path):
+        events.append(("acquire", Path(lock_path).name))
+
+    def trace_release(handle, lock_path):
+        events.append(("release", Path(lock_path).name))
+
+    def trace_repair(path, *args, **kwargs):
+        events.append(("repair", Path(path).name))
+        return original_repair(path, *args, **kwargs)
+
+    def trace_append(path, line):
+        events.append(("append", Path(path).name))
+        return original_append(path, line)
+
+    monkeypatch.setattr(jsonl_module, "_acquire_jsonl_file_lock", trace_acquire)
+    monkeypatch.setattr(jsonl_module, "_release_jsonl_file_lock", trace_release)
+    monkeypatch.setattr(jsonl_module, "repair_trailing_partial_jsonl", trace_repair)
+    monkeypatch.setattr(jsonl_module, "_append_serialized_jsonl_line", trace_append)
+
+    append_strict_jsonl(
+        accepted,
+        {"after": True},
+        quarantine_path=quarantine,
+    )
+
+    accepted_lock = f".{accepted.name}.lock"
+    quarantine_lock = f".{quarantine.name}.lock"
+    assert events == [
+        ("acquire", quarantine_lock),
+        ("acquire", accepted_lock),
+        ("repair", accepted.name),
+        ("append", quarantine.name),
+        ("append", accepted.name),
+        ("release", accepted_lock),
+        ("release", quarantine_lock),
+    ]
+    assert accepted.read_bytes() == (
+        complete_prefix + b'{"after": true}' + os.linesep.encode()
+    )
+    assert quarantine.read_bytes().startswith(quarantine_prior)
+    [previous, diagnostic] = [
+        json.loads(line)
+        for line in quarantine.read_text(encoding="utf-8").splitlines()
+    ]
+    assert previous == {"previous": True}
+    assert diagnostic["event"] == "jsonl_torn_final_record_repaired"
+
+
+def test_repair_truncate_failure_preserves_exact_prior_bytes_and_skips_quarantine(
+    tmp_path, monkeypatch
+):
+    path = tmp_path / "history.jsonl"
+    quarantine = tmp_path / "history_invalid.jsonl"
+    prior_bytes = b'{"prior": true}\n{"torn":'
+    path.write_bytes(prior_bytes)
+    original_path_open = jsonl_module.Path.open
+
+    def failing_path_open(target, mode="r", *args, **kwargs):
+        handle = original_path_open(target, mode, *args, **kwargs)
+        if Path(target) == path and mode == "r+b":
+            return _WrappedJsonlFile(handle, fail_truncate=True)
+        return handle
+
+    monkeypatch.setattr(jsonl_module.Path, "open", failing_path_open)
+
+    with pytest.raises(OSError, match="repair truncate injected"):
+        repair_trailing_partial_jsonl(path, quarantine_path=quarantine)
+
+    assert path.read_bytes() == prior_bytes
+    assert not quarantine.exists()
+
+
+def test_repair_fsync_failure_leaves_only_complete_prefix_without_quarantine(
+    tmp_path, monkeypatch
+):
+    path = tmp_path / "history.jsonl"
+    quarantine = tmp_path / "history_invalid.jsonl"
+    complete_prefix = b'{"prior": true}\n'
+    path.write_bytes(complete_prefix + b'{"torn":')
+    _seed_jsonl_lock(path)
+    _seed_jsonl_lock(quarantine)
+
+    def fail_fsync(fd):
+        raise OSError("repair fsync injected")
+
+    monkeypatch.setattr(jsonl_module.os, "fsync", fail_fsync)
+
+    with pytest.raises(OSError, match="repair fsync injected"):
+        repair_trailing_partial_jsonl(path, quarantine_path=quarantine)
+
+    assert path.read_bytes() == complete_prefix
+    assert not quarantine.exists()
+
+
+def test_iter_strict_jsonl_objects_rejects_invalid_utf8_with_line_and_preserves_bytes(
+    tmp_path,
+):
+    path = tmp_path / "history.jsonl"
+    prior_bytes = b'{"ok": true}\n{"bad":"\xff"}\n'
+    path.write_bytes(prior_bytes)
+
+    with pytest.raises(
+        StrictJsonlError,
+        match=r"Malformed history\.jsonl at line 2: invalid UTF-8",
+    ):
+        list(iter_strict_jsonl_objects(path, stream_name="history.jsonl"))
+
+    assert path.read_bytes() == prior_bytes
+
+
+def test_repair_invalid_utf8_fragment_preserves_prefix_and_records_hex_diagnostic(
+    tmp_path,
+):
+    path = tmp_path / "history.jsonl"
+    quarantine = tmp_path / "history_invalid.jsonl"
+    complete_prefix = b'{"ok": true}\n'
+    fragment = b'{"payload":\xff\xfe'
+    path.write_bytes(complete_prefix + fragment)
+
+    result = repair_trailing_partial_jsonl(path, quarantine_path=quarantine)
+
+    assert result["status"] == "repaired"
+    assert path.read_bytes() == complete_prefix
+    [diagnostic] = list(iter_quarantine_records(quarantine))
+    assert diagnostic["fragment_utf8_valid"] is False
+    assert diagnostic["fragment_bytes"] == len(fragment)
+    assert diagnostic["fragment_preview"] == fragment.hex()
+    assert diagnostic["fragment_sha256"] == hashlib.sha256(fragment).hexdigest()
+    assert diagnostic["complete_bytes_preserved"] == len(complete_prefix)
+    assert validate_quarantine_record(diagnostic) == diagnostic
+
+
+@pytest.mark.parametrize(
+    ("repr_length", "truncated"),
+    [(4000, False), (4001, True)],
+)
+def test_quarantine_record_repr_retention_boundary_is_explicit(
+    tmp_path, repr_length, truncated
+):
+    class FixedRepr:
+        def __repr__(self):
+            return "x" * repr_length
+
+    path = tmp_path / "history.jsonl"
+    quarantine = tmp_path / "history_invalid.jsonl"
+
+    with pytest.raises(StrictJsonlError, match="not JSON serializable"):
+        append_strict_jsonl(path, FixedRepr(), quarantine_path=quarantine)
+
+    [record] = list(iter_quarantine_records(quarantine))
+    assert record["record_repr_retention"]["max_chars"] == 4000
+    assert record["record_repr_retention"]["chars"] == repr_length
+    assert record["record_repr_truncated"] is truncated
+    if truncated:
+        assert record["record_repr"].endswith("...<truncated>")
+        assert len(record["record_repr"]) <= 4000
+    else:
+        assert record["record_repr"] == "x" * repr_length
+        assert record["record_repr_retention"]["stored_chars"] == repr_length
+
+
+def test_quarantine_full_retention_keeps_text_beyond_redacted_boundary(tmp_path):
+    class FixedRepr:
+        def __repr__(self):
+            return "x" * 4001
+
+    path = tmp_path / "history.jsonl"
+    quarantine = tmp_path / "history_invalid.jsonl"
+
+    with pytest.raises(StrictJsonlError, match="not JSON serializable"):
+        append_strict_jsonl(
+            path,
+            FixedRepr(),
+            quarantine_path=quarantine,
+            quarantine_snapshot_retention_mode="full",
+        )
+
+    [record] = list(iter_quarantine_records(quarantine))
+    assert record["record_repr"] == "x" * 4001
+    assert record["record_repr_retention"] == {
+        "retention_mode": "full",
+        "retention_policy": "full_secret_redacted_text_with_raw_sha256",
+        "sha256": hashlib.sha256(("x" * 4001).encode()).hexdigest(),
+        "chars": 4001,
+        "stored_chars": 4001,
+        "max_chars": 4000,
+        "redacted": False,
+        "truncated": False,
+    }
+
+
+@pytest.mark.parametrize(
+    ("fragment_length", "truncated"),
+    [(500, False), (501, True)],
+)
+def test_repair_fragment_retention_boundary_is_explicit(
+    tmp_path, fragment_length, truncated
+):
+    path = tmp_path / "history.jsonl"
+    quarantine = tmp_path / "history_invalid.jsonl"
+    complete_prefix = b'{"ok": true}\n'
+    fragment = b"x" * fragment_length
+    path.write_bytes(complete_prefix + fragment)
+
+    repair_trailing_partial_jsonl(path, quarantine_path=quarantine)
+
+    [diagnostic] = list(iter_quarantine_records(quarantine))
+    retention = diagnostic["fragment_retention"]
+    assert retention["max_chars"] == 500
+    assert retention["chars"] == fragment_length
+    assert retention["truncated"] is truncated
+    assert diagnostic["fragment_utf8_valid"] is True
+    if truncated:
+        assert diagnostic["fragment_preview"].endswith("...<truncated>")
+        assert len(diagnostic["fragment_preview"]) <= 500
+    else:
+        assert diagnostic["fragment_preview"] == "x" * fragment_length
+        assert retention["stored_chars"] == fragment_length
+
+
+def test_append_strict_jsonl_quarantine_append_failure_after_repair_preserves_repair(
+    tmp_path, monkeypatch
+):
+    path = tmp_path / "history.jsonl"
+    quarantine = tmp_path / "history_invalid.jsonl"
+    complete_prefix = b'{"prior": true}\n'
+    quarantine_prior = b'{"previous": true}\n'
+    path.write_bytes(complete_prefix + b'{"torn":')
+    quarantine.write_bytes(quarantine_prior)
+    original_open = builtins.open
+    failed_targets = []
+
+    def failing_open(target, mode="r", *args, **kwargs):
+        handle = original_open(target, mode, *args, **kwargs)
+        if Path(target) == quarantine and mode == "a":
+            failed_targets.append(Path(target))
+            return _WrappedJsonlFile(handle, fail_write=True)
+        return handle
+
+    monkeypatch.setattr(jsonl_module, "open", failing_open, raising=False)
+
+    with pytest.raises(OSError, match="append write injected"):
+        append_strict_jsonl(
+            path,
+            {"after": True},
+            quarantine_path=quarantine,
+        )
+
+    assert failed_targets == [quarantine]
+    assert path.read_bytes() == complete_prefix
+    assert quarantine.read_bytes() == quarantine_prior
+
+
+def test_append_strict_jsonl_accepted_append_failure_after_repair_preserves_diagnostic(
+    tmp_path, monkeypatch
+):
+    path = tmp_path / "history.jsonl"
+    quarantine = tmp_path / "history_invalid.jsonl"
+    complete_prefix = b'{"prior": true}\n'
+    path.write_bytes(complete_prefix + b'{"torn":')
+    original_open = builtins.open
+    failed_targets = []
+
+    def failing_open(target, mode="r", *args, **kwargs):
+        handle = original_open(target, mode, *args, **kwargs)
+        if Path(target) == path and mode == "a":
+            failed_targets.append(Path(target))
+            return _WrappedJsonlFile(handle, fail_write=True)
+        return handle
+
+    monkeypatch.setattr(jsonl_module, "open", failing_open, raising=False)
+
+    with pytest.raises(OSError, match="append write injected"):
+        append_strict_jsonl(
+            path,
+            {"after": True},
+            quarantine_path=quarantine,
+        )
+
+    assert failed_targets == [path]
+    assert path.read_bytes() == complete_prefix
+    [diagnostic] = list(iter_quarantine_records(quarantine))
+    assert diagnostic["event"] == "jsonl_torn_final_record_repaired"
+    assert diagnostic["fragment_preview"] == '{"torn":'
+
+
+def test_append_strict_jsonl_body_and_release_failure_prioritizes_release(
+    tmp_path, monkeypatch
+):
+    path = tmp_path / "history.jsonl"
+    prior_bytes = b'{"prior": true}\n'
+    path.write_bytes(prior_bytes)
+    body_error = OSError("body append injected")
+    release_error = StrictJsonlError("lock release injected")
+
+    def fail_append(path, line):
+        raise body_error
+
+    def fail_release(handle, lock_path):
+        raise release_error
+
+    monkeypatch.setattr(jsonl_module, "_append_serialized_jsonl_line", fail_append)
+    monkeypatch.setattr(jsonl_module, "_release_jsonl_file_lock", fail_release)
+
+    with pytest.raises(StrictJsonlError, match="lock release injected") as raised:
+        append_strict_jsonl(path, {"new": True})
+
+    assert raised.value is release_error
+    assert raised.value.__context__ is body_error
+    assert path.read_bytes() == prior_bytes
+
+
+def test_append_strict_jsonl_partial_write_preserves_bytes_written_before_failure(
+    tmp_path, monkeypatch
+):
+    path = tmp_path / "history.jsonl"
+    prior_bytes = b'{"prior": true}\n'
+    partial_line = '{"new'
+    path.write_bytes(prior_bytes)
+    _seed_jsonl_lock(path)
+    original_open = builtins.open
+
+    def partially_writing_open(target, mode="r", *args, **kwargs):
+        handle = original_open(target, mode, *args, **kwargs)
+        if Path(target) == path and mode == "a":
+            return _WrappedJsonlFile(
+                handle,
+                partial_write_chars=len(partial_line),
+            )
+        return handle
+
+    monkeypatch.setattr(
+        jsonl_module,
+        "open",
+        partially_writing_open,
+        raising=False,
+    )
+
+    with pytest.raises(OSError, match="append partial write injected"):
+        append_strict_jsonl(path, {"new": True})
+
+    assert path.read_bytes() == prior_bytes + partial_line.encode("utf-8")

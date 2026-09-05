@@ -104,6 +104,12 @@ from libreevolve.core.jsonl import (
     load_strict_json_object,
     strict_json_dumps,
 )
+from libreevolve.core.loop_models import (
+    _PendingAsyncMutation,
+    _PendingCandidateEvaluation,
+    _PreparedCandidate,
+    _PreparedMutationRequest,
+)
 from libreevolve.core.meta_prompt import (
     PromptDatabase,
     PromptProgram,
@@ -203,69 +209,6 @@ _MAX_ARTIFACT_ERROR_CHARS = 500
 _MAX_PLUGIN_SIDE_EFFECT_ERROR_CHARS = 500
 
 
-@dataclass(frozen=True)
-class _PreparedCandidate:
-    submission_order: int
-    loop_generation_index: int
-    proposal_index: int
-    proposals_per_generation: int
-    candidate_generation: int
-    parent: Program
-    child_workspace: CandidateWorkspace
-    diff_error: object | None
-    candidate_id: str
-    retained_prompt: dict
-    diff: str
-    prompt_diagnostics: dict
-    proposal_metadata: dict
-    explanatory_preamble: dict
-    backend_idx: int
-    critique_metadata: dict | None
-    parent_selection_metadata: dict
-    inspiration_selection_metadata: dict
-    plugin_context: list[dict]
-    prompt_program: PromptProgram
-    mutation_mode: str
-    mutation_mode_selection: dict
-    mutation_llm_call: dict | None
-    proposal_llm_calls: list[dict]
-    async_llm_sampler: dict | None = None
-
-
-@dataclass(frozen=True)
-class _PreparedMutationRequest:
-    submission_order: int
-    loop_generation_index: int
-    proposal_index: int
-    proposals_per_generation: int
-    candidate_generation: int
-    parent: Program
-    parent_selection_metadata: dict
-    prompt_program: PromptProgram
-    mutation_mode: str
-    mutation_mode_selection: dict
-    proposal_metadata_enabled: bool
-    prompt: str
-    prompt_diagnostics: dict
-    prompt_context_text: str
-    inspiration_selection_metadata: dict
-    plugin_context: list[dict]
-
-
-@dataclass(frozen=True)
-class _PendingAsyncMutation:
-    request: _PreparedMutationRequest
-    future: Future[AsyncLLMSamplerOutcome]
-
-
-@dataclass(frozen=True)
-class _PendingCandidateEvaluation:
-    prepared: _PreparedCandidate
-    source: str
-    future: Future[AsyncEvaluationOutcome] | None = None
-    immediate_result: EvaluationResult | None = None
-    cache_key_sha256: str | None = None
-    source_submission_order: int | None = None
 _MAX_DIRECT_INLINE_SEED_CHARS = 1_000_000
 _MAX_CRITIQUE_RETAINED_PROMPT_CHARS = 6000
 _MAX_CRITIQUE_RETAINED_MUTATION_CHARS = 4000

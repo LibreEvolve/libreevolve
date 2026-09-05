@@ -15228,6 +15228,17 @@ def _existing_rehydrate_match(row: dict[str, Any], target: Path, row_id: str) ->
             _sanitize_download_message(f"could not read local PDF: {exc}"),
         )
     if local_stat.st_size == row["bytes"] and actual_sha == row["sha256"]:
+        existing_pdf_issues = _validate_local_pdf(row, target, row_id)
+        if existing_pdf_issues:
+            return PaperRehydrateResult(
+                row_id,
+                file_value,
+                "stale",
+                local_stat.st_size,
+                actual_sha,
+                "local PDF failed validation: "
+                + "; ".join(issue.code for issue in existing_pdf_issues),
+            )
         return PaperRehydrateResult(
             row_id,
             file_value,
@@ -15304,9 +15315,7 @@ def _download_rehydrate_row(row: dict[str, Any], root: Path, timeout: float) -> 
                 actual_sha,
                 "downloaded SHA-256 does not match manifest",
             )
-        os.replace(temp_path, target)
-        temp_path = None
-        post_download_issues = _validate_local_pdf(row, target, row_id)
+        post_download_issues = _validate_local_pdf(row, temp_path, row_id)
         if post_download_issues:
             return PaperRehydrateResult(
                 row_id,
@@ -15316,6 +15325,8 @@ def _download_rehydrate_row(row: dict[str, Any], root: Path, timeout: float) -> 
                 actual_sha,
                 "; ".join(issue.code for issue in post_download_issues),
             )
+        os.replace(temp_path, target)
+        temp_path = None
         return PaperRehydrateResult(
             row_id,
             file_value,

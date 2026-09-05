@@ -7,14 +7,22 @@ from pathlib import Path
 import pytest
 
 from libreevolve.core.candidate import CandidateWorkspace
+from libreevolve.core.config import Config
+from libreevolve.core.database import (
+    ProgramDatabase,
+    load_accepted_history_index,
+    load_failure_history_records,
+)
 from libreevolve.core.evaluator import EvaluationResult, EvaluationStageResult
 from libreevolve.core.feedback import (
+    _retained_feedback_text,
     apply_llm_feedback,
     build_critique_prompt,
     parse_feedback_response,
 )
 from libreevolve.core.jsonl import strict_json_dumps
 from libreevolve.llm.ensemble import LLMEnsemble
+from libreevolve.population.program import Program
 from libreevolve.problems.loader import Problem
 
 
@@ -1726,3 +1734,337 @@ def test_apply_llm_feedback_records_non_finite_score():
 
     assert updated.fitness == 0.8
     assert "finite" in updated.metadata["llm_feedback"][0]["message"]
+
+
+def test_apply_llm_feedback_preserves_grader_order_across_invalid_and_valid_items():
+    llm = MagicMock()
+    llm.generate.side_effect = [
+        ('{"score": 0.25, "feedback": "first"}', 3),
+        ('{"score": 0.75, "feedback": "third"}', 4),
+    ]
+    result = EvaluationResult(
+        fitness=0.2,
+        metrics={"score": 0.2, "is_valid": True},
+        is_valid=True,
+        stages=[EvaluationStageResult(name="evaluator", passed=True, score=0.2)],
+    )
+
+    updated = apply_llm_feedback(
+        result,
+        CandidateWorkspace.from_code("x = 1"),
+        _problem(),
+        [
+            {"name": "first", "metric": "first", "weight": 0.1},
+            {"name": "bad", "metric": "second", "prompt": ["not text"]},
+            {"name": "third", "metric": "third", "weight": 0.2},
+        ],
+        llm,
+    )
+
+    assert [call.kwargs["role"] for call in llm.generate.call_args_list] == [
+        "feedback:first",
+        "feedback:third",
+    ]
+    records = updated.metadata["llm_feedback"]
+    assert [record.get("name") for record in records] == ["first", None, "third"]
+    assert records[1]["grader_index"] == 1
+    assert records[1]["error"] == "invalid_feedback_config"
+    assert updated.metrics["first"] == 0.25
+    assert updated.metrics["third"] == 0.75
+    assert updated.fitness == pytest.approx(0.375)
+    assert [stage.name for stage in updated.stages] == [
+        "evaluator",
+        "llm_feedback:first",
+        "llm_feedback:feedback_1",
+        "llm_feedback:third",
+    ]
+    assert [stage.metadata["record_index"] for stage in updated.stages[1:]] == [0, 1, 2]
+
+
+def test_apply_llm_feedback_renders_partial_evaluator_diagnostics_and_preserves_plugin_state():
+    llm = MagicMock()
+    llm.generate.return_value = ('{"score": 0.5, "feedback": "reviewed"}', 0)
+    plugin_state = {
+        "plugin": "quality_hook",
+        "hook": "on_evaluated",
+        "score_delta": 0.05,
+    }
+    old_stage = EvaluationStageResult(
+        name="old-evaluator",
+        passed=False,
+        error="old failure marker",
+    )
+    partial_stage = EvaluationStageResult(
+        name="validator:partial",
+        passed=False,
+        error="partial evaluator failure",
+        stdout="partial stdout",
+        stderr="partial stderr",
+    )
+    plugin_stage = EvaluationStageResult(
+        name="plugin:quality",
+        passed=True,
+        score=0.3,
+        metrics={"plugin_quality": 0.3},
+        metadata=plugin_state,
+    )
+    final_stage = EvaluationStageResult(
+        name="evaluator:tail",
+        passed=False,
+        stderr="tail diagnostic",
+    )
+    result = EvaluationResult(
+        fitness=-0.2,
+        metrics={"score": -0.2, "plugin_quality": 0.3, "is_valid": False},
+        is_valid=False,
+        error="evaluator failed",
+        stdout="aggregate stdout",
+        stderr="aggregate stderr",
+        stages=[old_stage, partial_stage, plugin_stage, final_stage],
+        metadata={"plugin_score_composition": plugin_state},
+    )
+
+    updated = apply_llm_feedback(
+        result,
+        CandidateWorkspace.from_code("x = 1"),
+        _problem(),
+        [
+            {
+                "name": "review",
+                "metric": "review",
+                "weight": 0.2,
+                "include_invalid": True,
+            }
+        ],
+        llm,
+    )
+
+    prompt = llm.generate.call_args.args[0]
+    assert "evaluator failed" in prompt
+    assert "partial evaluator failure" in prompt
+    assert "partial stdout" in prompt
+    assert "tail diagnostic" in prompt
+    assert "plugin_quality" in prompt
+    assert '"name": "old-evaluator"' not in prompt
+    assert prompt.index('"name": "validator:partial"') < prompt.index(
+        '"name": "plugin:quality"'
+    ) < prompt.index('"name": "evaluator:tail"')
+    assert updated.is_valid is False
+    assert updated.fitness == pytest.approx(-0.1)
+    assert updated.error == "evaluator failed"
+    assert updated.metrics["plugin_quality"] == 0.3
+    assert updated.metadata["plugin_score_composition"] == plugin_state
+    assert "llm_feedback" not in result.metadata
+    assert result.stages == [old_stage, partial_stage, plugin_stage, final_stage]
+    assert [stage.name for stage in updated.stages[:4]] == [
+        "old-evaluator",
+        "validator:partial",
+        "plugin:quality",
+        "evaluator:tail",
+    ]
+    assert updated.stages[-1].name == "llm_feedback:review"
+
+
+def test_feedback_retention_uses_exact_character_boundaries_and_raw_utf8_hashes():
+    exact = "é" * 500
+    retained, retention = _retained_feedback_text(
+        exact,
+        max_chars=500,
+        mode="redacted",
+    )
+
+    assert retained == exact
+    assert retention == {
+        "policy": "redact_bound_hash_v1",
+        "retention_mode": "redacted",
+        "sha256": hashlib.sha256(exact.encode("utf-8")).hexdigest(),
+        "chars": 500,
+        "stored_chars": 500,
+        "max_chars": 500,
+        "redacted": False,
+        "truncated": False,
+    }
+
+    over = "é" * 501
+    retained, retention = _retained_feedback_text(
+        over,
+        max_chars=500,
+        mode="redacted",
+    )
+
+    assert retained == "é" * 480 + "\n[truncated 1 chars]"
+    assert len(retained) == 500
+    assert retention["sha256"] == hashlib.sha256(over.encode("utf-8")).hexdigest()
+    assert retention["chars"] == 501
+    assert retention["stored_chars"] == 500
+    assert retention["truncated"] is True
+
+
+@pytest.mark.parametrize(
+    ("mode", "expected_policy", "expects_text", "expects_hash", "truncated"),
+    [
+        ("full", "full_secret_redacted_text_with_raw_sha256", True, True, False),
+        ("redacted", "redact_bound_hash_v1", True, True, True),
+        ("hash_only", "hash_only_with_raw_sha256", False, True, False),
+        ("off", "off_no_text_or_hash", False, False, False),
+        ("legacy", "redact_bound_hash_v1", True, True, True),
+    ],
+)
+def test_feedback_retention_modes_preserve_redaction_and_compatibility_policy(
+    mode,
+    expected_policy,
+    expects_text,
+    expects_hash,
+    truncated,
+):
+    raw_secret = "ghp_feedback_mode_secret_1234567890"
+    raw = "token=" + raw_secret + " " + ("x" * 600)
+
+    text, retention = _retained_feedback_text(raw, max_chars=100, mode=mode)
+
+    assert retention["policy"] == expected_policy
+    assert retention["retention_mode"] == mode
+    assert (text is not None) is expects_text
+    assert bool(retention["sha256"]) is expects_hash
+    assert retention["truncated"] is truncated
+    assert raw_secret not in (text or "")
+    assert retention["chars"] == (None if mode == "off" else len(raw))
+    assert retention["stored_chars"] == (len(text) if text is not None else 0)
+    if expects_hash:
+        assert retention["sha256"] == hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+
+@pytest.mark.parametrize(
+    ("payload", "expected_exception"),
+    [
+        (None, "AttributeError"),
+        ({"score": 0.5}, "AttributeError"),
+        (b"not-json", "TypeError"),
+    ],
+)
+def test_apply_llm_feedback_records_non_text_response_payloads_as_failures(
+    payload,
+    expected_exception,
+):
+    llm = MagicMock()
+    llm.generate.return_value = (payload, 7)
+
+    updated = apply_llm_feedback(
+        EvaluationResult(
+            fitness=0.8,
+            metrics={"score": 0.8, "is_valid": True},
+            is_valid=True,
+        ),
+        CandidateWorkspace.from_code("x = 1"),
+        _problem(),
+        [{"name": "review", "metric": "review", "weight": 0.2}],
+        llm,
+    )
+
+    record = updated.metadata["llm_feedback"][0]
+    assert record["error"] == "llm_feedback_failed"
+    assert record["exception"] == expected_exception
+    assert record["backend_idx"] == 7
+    assert "review" not in updated.metrics
+    assert updated.stages[-1].error == "llm_feedback_failed"
+
+
+def test_feedback_prompt_and_failure_diagnostics_round_trip_through_local_history_and_failure_jsonl(
+    tmp_path,
+):
+    raw_secret = "sk-proj_feedback_persist_secret_1234567890"
+    llm = MagicMock()
+    llm.generate.side_effect = RuntimeError("provider token=" + raw_secret)
+    updated = apply_llm_feedback(
+        EvaluationResult(
+            fitness=0.8,
+            metrics={"score": 0.8, "is_valid": True},
+            is_valid=True,
+        ),
+        CandidateWorkspace.from_code("x = 1"),
+        _problem(),
+        [{"name": "review", "metric": "review", "weight": 0.2}],
+        llm,
+    )
+    prompt = llm.generate.call_args.args[0]
+    assert raw_secret not in prompt
+
+    db = ProgramDatabase(
+        Config(log_dir=str(tmp_path), problem_name="feedback-compat"),
+        objective_schema={
+            "metrics": [
+                {
+                    "name": "score",
+                    "direction": "maximize",
+                    "primary": True,
+                    "bounds": [0.0, 1.0],
+                }
+            ],
+            "primary_metric": "score",
+            "primary_bounds": [0.0, 1.0],
+            "metric_count": 1,
+        },
+    )
+    parent = Program(
+        id="feedback-parent",
+        code="x = 1",
+        fitness=0.8,
+        metrics={"score": 0.8, "is_valid": True},
+        evaluation={
+            "fitness": 0.8,
+            "metrics": {"score": 0.8, "is_valid": True},
+            "is_valid": True,
+        },
+    )
+    db.log(parent)
+    history_child = Program(
+        id="feedback-history-child",
+        code="x = 2",
+        fitness=updated.fitness,
+        generation=1,
+        parent_id=parent.id,
+        lineage=[parent.id],
+        metadata={
+            "prompt": prompt,
+            "prompt_retention": {
+                "retention_mode": "redacted",
+                "stored_chars": len(prompt),
+            },
+        },
+        metrics=updated.metrics,
+        evaluation=updated.to_dict(),
+    )
+    db.log(history_child)
+    failure_child = Program(
+        id="feedback-failure-child",
+        code="x = 3",
+        fitness=updated.fitness,
+        generation=1,
+        parent_id=parent.id,
+        lineage=[parent.id],
+        metrics=updated.metrics,
+        evaluation=updated.to_dict(),
+    )
+    db.log_failure(
+        failure_child,
+        parent,
+        "mutation token=ghp_feedback_mutation_secret_1234567890",
+        "feedback_failed",
+    )
+
+    run_dir = tmp_path / "feedback-compat"
+    history = load_accepted_history_index(run_dir / "history.jsonl")
+    failures = load_failure_history_records(run_dir / "failure_history.jsonl")
+    persisted_history = history[history_child.id]
+    persisted_failure = failures[0]
+
+    assert persisted_history["metadata"]["prompt"] == prompt
+    assert persisted_history["evaluation"] == updated.to_dict()
+    feedback_summary = persisted_failure["evaluation"]["llm_feedback"][0]
+    assert feedback_summary["error"] == "llm_feedback_failed"
+    assert feedback_summary["retention"]["raw_response_retention"]["retention_mode"] == (
+        "redacted"
+    )
+    persisted_text = (run_dir / "failure_history.jsonl").read_text(encoding="utf-8")
+    assert raw_secret not in persisted_text
+    assert "ghp_feedback_mutation_secret_1234567890" not in persisted_text

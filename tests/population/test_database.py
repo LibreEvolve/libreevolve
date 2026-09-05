@@ -1899,6 +1899,145 @@ def test_admit_records_archive_event_on_program_metadata():
     assert p.metadata["archive_admission"]["threshold"] == 0.0
 
 
+def test_archive_event_append_failure_leaves_archive_state_ahead_of_stream(
+    tmp_path, monkeypatch
+):
+    db = ProgramDatabase(Config(log_dir=str(tmp_path), problem_name="t"))
+    program = Program(
+        id="failed-append",
+        code="failed_append",
+        fitness=0.8,
+        evaluation={"is_valid": True},
+    )
+
+    def fail_archive_append(*args, **kwargs):
+        raise StrictJsonlError("simulated archive event append failure")
+
+    monkeypatch.setattr(
+        "libreevolve.core.database.append_strict_jsonl",
+        fail_archive_append,
+    )
+
+    with pytest.raises(StrictJsonlError, match="simulated archive event append failure"):
+        db.admit(program)
+
+    assert not (tmp_path / "t" / "archive_events.jsonl").exists()
+    assert db.best().id == program.id
+    assert db.archive_state_snapshot()["archive_sequence"] == 1
+    assert db._archive_admission_event_sequence == 1
+    assert program.metadata["archive_admission"]["admitted"] is True
+
+
+def test_archive_admission_flags_distinguish_retention_outcomes(tmp_path):
+    flag_names = (
+        "cell_admitted",
+        "elite_retained",
+        "search_state_changed",
+        "sampling_eligible",
+        "admitted",
+    )
+    cases = [
+        (
+            "elite_only",
+            "elite_only",
+            Config(
+                log_dir=str(tmp_path / "elite_only"),
+                problem_name="t",
+                n_islands=1,
+                map_elites_bins=1,
+            ),
+            [
+                Program(
+                    id="occupied",
+                    code="occupied",
+                    fitness=0.9,
+                    evaluation={"is_valid": True},
+                    metadata={
+                        "selection_score": 0.9,
+                        "normalized_metrics": {"score": 0.1},
+                    },
+                )
+            ],
+            Program(
+                id="elite",
+                code="elite",
+                fitness=0.1,
+                evaluation={"is_valid": True},
+                metadata={
+                    "selection_score": 0.1,
+                    "normalized_metrics": {"score": 0.95},
+                },
+            ),
+            (False, True, True, False, True),
+        ),
+        (
+            "not_improving_cell",
+            "not_improving_cell",
+            Config(
+                log_dir=str(tmp_path / "not_improving_cell"),
+                problem_name="t",
+                n_islands=1,
+                map_elites_bins=1,
+                elite_archive_size=1,
+            ),
+            [
+                Program(
+                    id="occupied",
+                    code="occupied",
+                    fitness=0.9,
+                    evaluation={"is_valid": True},
+                )
+            ],
+            Program(
+                id="weak",
+                code="weak",
+                fitness=0.1,
+                evaluation={"is_valid": True},
+            ),
+            (False, False, False, False, False),
+        ),
+        (
+            "cell_replaced",
+            "cell_replaced",
+            Config(
+                log_dir=str(tmp_path / "cell_replaced"),
+                problem_name="t",
+                n_islands=1,
+                map_elites_bins=1,
+                elite_archive_size=1,
+            ),
+            [
+                Program(
+                    id="occupied",
+                    code="occupied",
+                    fitness=0.5,
+                    evaluation={"is_valid": True},
+                )
+            ],
+            Program(
+                id="replacement",
+                code="replacement",
+                fitness=0.8,
+                evaluation={"is_valid": True},
+            ),
+            (True, True, True, True, True),
+        ),
+    ]
+
+    for name, expected_reason, config, existing, candidate, expected_flags in cases:
+        db = ProgramDatabase(config)
+        for program in existing:
+            db.admit(program)
+
+        event = db.admit(candidate)
+        record = load_archive_event_records(db._archive_events)[-1]
+
+        assert event["reason"] == expected_reason, name
+        assert tuple(event[field] for field in flag_names) == expected_flags, name
+        assert record["reason"] == expected_reason, name
+        assert tuple(record[field] for field in flag_names) == expected_flags, name
+
+
 def test_admit_non_improving_candidate_does_not_advance_island_cursor():
     db = ProgramDatabase(
         Config(
@@ -2569,6 +2708,13 @@ def test_database_constructor_restores_replayable_archive_contents(tmp_path):
     )
     assert manifest["policies"]["archive_cursor_restore"]["archive_contents_restored"] is True
     assert manifest["policies"]["archive_cursor_restore"]["full_archive_restore_required"] is False
+    assert restored.archive_state_snapshot() == archive_state
+    assert restored.best().id == source.best().id
+    for strategy in ("exploit", "metric", "frontier", "lineage", "novelty", "recency"):
+        assert restored.sample(strategy).id == source.sample(strategy).id
+    assert [program.id for program in restored.sample_diverse(k=2, strategy="selection")] == [
+        program.id for program in source.sample_diverse(k=2, strategy="selection")
+    ]
     assert restored.best().id == "p1"
     assert {program.id for program in restored.sample_diverse(k=2, strategy="random")} == {
         "p1",
@@ -2646,6 +2792,9 @@ def test_database_full_archive_restore_uses_restored_cursor_for_next_admission(t
     assert event["archive_sequence"] == archive_state["archive_sequence"] + 1
     assert event["previous_occupant_id"] == "p1"
     assert event["search_state_changed"] is True
+    restored_after = restored.archive_state_snapshot()
+    assert restored_after["archive_sequence"] == archive_state["archive_sequence"] + 1
+    assert restored_after["next_island_id"] == 1
 
 
 def test_database_constructor_rejects_cursor_snapshot_for_wrong_island_count(tmp_path):

@@ -272,6 +272,78 @@ def test_matrix_result_report_loads_json_file(tmp_path):
     assert validation.target_id == "mm_4x4x4"
 
 
+@pytest.mark.parametrize(
+    ("filename", "payload", "issue_code", "message_prefix"),
+    [
+        ("missing.json", None, "read_error", "failed to read report:"),
+        ("malformed.json", "{", "invalid_json", "invalid report JSON:"),
+        ("non_object.json", "[]", "invalid_shape", "matrix result report must be a JSON object"),
+    ],
+)
+def test_matrix_result_report_load_errors_preserve_public_validation_result(
+    tmp_path,
+    filename,
+    payload,
+    issue_code,
+    message_prefix,
+):
+    report_path = tmp_path / filename
+    if payload is not None:
+        report_path.write_text(payload, encoding="utf-8")
+
+    validation = validate_matrix_result_report(report_path)
+
+    assert validation.ok is False
+    assert validation.alphaevolve_comparable is False
+    assert validation.target_id is None
+    assert validation.seed_count == 0
+    assert validation.best_rank is None
+    assert validation.hit_fraction is None
+    assert [issue.code for issue in validation.issues] == [issue_code]
+    if issue_code == "invalid_shape":
+        assert validation.issues[0].message == message_prefix
+    else:
+        assert validation.issues[0].message.startswith(message_prefix)
+
+
+@pytest.mark.parametrize(
+    ("field", "value", "issue_code"),
+    [
+        ("dimensions", [True, 4, 4], "invalid_dimensions"),
+        ("dimensions", [0, 4, 4], "invalid_dimensions"),
+        ("dimensions", [-1, 4, 4], "invalid_dimensions"),
+        ("seed_count", True, "invalid_seed_count"),
+        ("seed_count", 0, "invalid_seed_count"),
+        ("seed_count", -1, "invalid_seed_count"),
+        ("best_rank", False, "invalid_best_rank"),
+        ("best_rank", 0, "invalid_best_rank"),
+        ("best_rank", -1, "invalid_best_rank"),
+        ("hit_count", True, "invalid_hit_count"),
+        ("hit_count", -1, "invalid_hit_count"),
+        ("hit_fraction", float("nan"), "invalid_hit_fraction"),
+        ("hit_fraction", float("inf"), "invalid_hit_fraction"),
+    ],
+)
+def test_matrix_result_report_characterizes_scalar_and_dimension_boundaries(
+    field,
+    value,
+    issue_code,
+):
+    report = _valid_report()
+    report[field] = value
+
+    validation = validate_matrix_result_report(report)
+
+    assert validation.ok is False
+    assert issue_code in {issue.code for issue in validation.issues}
+    if field == "seed_count":
+        assert validation.seed_count == 0
+    elif field == "best_rank":
+        assert validation.best_rank is None
+    elif field == "hit_fraction":
+        assert validation.hit_fraction is None
+
+
 def test_matrix_baseline_component_runtime_boundary_accepts_current_absence():
     boundary = matrix_baseline_component_runtime_boundary_record()
 
@@ -507,6 +579,37 @@ def test_matrix_cascade_run_runtime_boundary_builds_emitted_records_from_result(
     )
 
 
+def test_matrix_cascade_runtime_boundary_builder_isolates_caller_inputs():
+    report = _valid_report()
+    stage_traces_by_seed = _valid_stage_traces_by_seed(report)
+    artifact_paths_by_seed = {
+        row["seed"]: [f"matrix/{report['target_id']}/cascade_{row['seed']}.json"]
+        for row in report["seed_results"]
+    }
+    original_candidate_id = stage_traces_by_seed[100][0]["candidate_id"]
+    original_artifact_path = artifact_paths_by_seed[100][0]
+
+    boundary = matrix_cascade_run_runtime_boundary_from_matrix_result(
+        run_id="run_001",
+        cascade_id="matrix_rank_cascade",
+        cascade_version="v1",
+        matrix_result_report=report,
+        matrix_result_ref="matrix/mm_4x4x4/result.json",
+        stage_traces_by_seed=stage_traces_by_seed,
+        artifact_paths_by_seed=artifact_paths_by_seed,
+    )
+
+    report["seed_results"][0]["rank"] = 999
+    stage_traces_by_seed[100][0]["candidate_id"] = "caller-mutated"
+    artifact_paths_by_seed[100][0] = "caller-mutated.json"
+    emitted = boundary["emitted_records"][0]
+
+    assert emitted["accepted_final_rank"] == 47
+    assert emitted["matrix_result_report"]["seed_results"][0]["rank"] == 47
+    assert emitted["stage_traces"][0]["candidate_id"] == original_candidate_id
+    assert emitted["artifact_paths"] == [original_artifact_path]
+
+
 def test_matrix_cascade_run_runtime_boundary_builder_requires_seed_traces():
     report = _valid_report()
 
@@ -662,6 +765,58 @@ def test_matrix_result_artifact_inventory_reports_missing_mismatch_and_unsafe_pa
     assert "artifact_bytes_mismatch" in records["algorithm"]["issues"]
     assert records["certificate"]["status"] == "missing_file"
     assert records["notebook"]["status"] == "unsafe_path"
+
+
+def test_matrix_result_artifact_inventory_characterizes_duplicate_paths(tmp_path):
+    report = _valid_report()
+    artifact = report["artifacts"][0]
+    path = tmp_path / artifact["path"]
+    path.parent.mkdir(parents=True, exist_ok=True)
+    content = b"duplicate-path artifact"
+    path.write_bytes(content)
+    artifact["sha256"] = hashlib.sha256(content).hexdigest()
+    artifact["bytes"] = len(content)
+    report["artifacts"] = [artifact, dict(artifact)]
+
+    inventory = matrix_result_artifact_inventory(report, tmp_path)
+
+    assert inventory["ok"] is True
+    assert inventory["artifact_count"] == 2
+    assert inventory["verified_count"] == 2
+    assert inventory["invalid_count"] == 0
+    assert inventory["issues"] == []
+    assert [record["status"] for record in inventory["artifacts"]] == [
+        "verified",
+        "verified",
+    ]
+
+
+@pytest.mark.parametrize(
+    "path",
+    [
+        "../escape.json",
+        "C:/escape.json",
+        r"C:\escape.json",
+        r"\\server\share\escape.json",
+        "matrix/mm_4x4x4/bad\x00.json",
+    ],
+)
+def test_matrix_result_artifact_inventory_rejects_cross_platform_unsafe_paths(
+    tmp_path,
+    path,
+):
+    report = _valid_report()
+    artifact = dict(report["artifacts"][0])
+    artifact["path"] = path
+    report["artifacts"] = [artifact]
+
+    inventory = matrix_result_artifact_inventory(report, tmp_path)
+
+    assert inventory["ok"] is False
+    assert inventory["artifact_count"] == 1
+    assert inventory["invalid_count"] == 1
+    assert inventory["artifacts"][0]["status"] == "unsafe_path"
+    assert inventory["artifacts"][0]["issues"] == ["invalid_artifact_path"]
 
 
 def test_matrix_result_report_allows_exploratory_non_publication_domains():
@@ -874,6 +1029,29 @@ def test_strassen_2x2_publication_bundle_writes_valid_artifacts(tmp_path):
     assert json.loads(inventory_path.read_text(encoding="utf-8")) == inventory
 
 
+def test_strassen_2x2_publication_bundle_repeated_generation_is_byte_deterministic(
+    tmp_path,
+):
+    root = tmp_path / "bundle"
+    first = write_strassen_2x2_publication_bundle(root, seeds=(7, 11, 13))
+    relative_paths = (
+        "matrix/mm_2x2x2/algorithm.json",
+        "matrix/mm_2x2x2/certificate.json",
+        "matrix/mm_2x2x2/reproduce.ipynb",
+        "matrix/mm_2x2x2/report.json",
+        "matrix/mm_2x2x2/inventory.json",
+    )
+    first_bytes = {relative: (root / relative).read_bytes() for relative in relative_paths}
+
+    second = write_strassen_2x2_publication_bundle(root, seeds=(7, 11, 13))
+
+    assert {
+        relative: (root / relative).read_bytes() for relative in relative_paths
+    } == first_bytes
+    assert second["report"] == first["report"]
+    assert second["inventory"] == first["inventory"]
+
+
 def test_strassen_2x2_publication_bundle_validator_rejects_tampering(tmp_path):
     bundle = write_strassen_2x2_publication_bundle(tmp_path, seeds=(7, 11, 13))
     bundle["schema"] = "bad.schema"
@@ -1068,6 +1246,23 @@ def test_matrix_suite_publication_artifact_boundary_accepts_generated_suite_fixt
     assert validation.artifact_status == "generated"
     assert validation.generated_target_count == EXPECTED_TARGET_COUNT
     assert validation.issues == []
+
+
+def test_matrix_suite_publication_artifact_boundary_rejects_duplicate_artifact_paths():
+    boundary = matrix_suite_publication_artifact_boundary_from_artifacts(
+        _suite_publication_artifacts()
+    )
+    artifact = boundary["generated_target_artifacts"][0]
+    artifact["artifact_paths"] = [
+        artifact["artifact_paths"][0],
+        artifact["artifact_paths"][0],
+    ]
+
+    validation = validate_matrix_suite_publication_artifact_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "duplicate_artifact_path" in codes
 
 
 def test_matrix_suite_publication_artifact_boundary_builder_rejects_incomplete_suite():

@@ -1559,3 +1559,212 @@ def test_prompt_database_honors_quarantine_snapshot_off_retention():
     assert retention["sha256"] is None
     assert retention["chars"] is None
     assert "sk-proj_" not in json.dumps(record)
+
+
+def test_parse_prompt_mutation_response_plain_text_inherits_policy_and_preserves_whitespace():
+    response = " \nTask: {task}\n "
+
+    template, policy, metadata = parse_prompt_mutation_response(
+        response,
+        parent_context_policy={"disabled_sections": ["context"]},
+    )
+
+    assert template == response
+    assert policy["disabled_sections"] == ["context"]
+    assert metadata["schema"] == "libreevolve.prompt_mutation_response.v1"
+    assert metadata["format"] == "template_text"
+    assert metadata["context_policy_source"] == "inherited_parent_policy"
+    assert len(metadata["context_policy_sha256"]) == 64
+
+
+def test_parse_prompt_mutation_response_treats_leading_brace_as_json_boundary():
+    with pytest.raises(PromptTemplateError, match="malformed prompt mutation JSON"):
+        parse_prompt_mutation_response("{task}")
+
+
+@pytest.mark.parametrize(
+    ("response", "message"),
+    [
+        (None, "non-empty text"),
+        ("", "non-empty text"),
+        (json.dumps([]), "missing required prompt template fields"),
+        ("{", "malformed prompt mutation JSON"),
+        (
+            json.dumps({"template": "Task: {task}", "unsupported": True}),
+            "unsupported fields",
+        ),
+        (
+            json.dumps({"schema": "other.v1", "template": "Task: {task}"}),
+            "prompt mutation JSON.schema must be",
+        ),
+        (json.dumps({"schema": "libreevolve.prompt_mutation_response.v1"}), "must be text"),
+        (
+            json.dumps(
+                {
+                    "template": "Task: {task}",
+                    "context_policy": {"unsupported": True},
+                }
+            ),
+            "unsupported fields",
+        ),
+    ],
+)
+def test_parse_prompt_mutation_response_rejects_invalid_response_shapes(response, message):
+    with pytest.raises(PromptTemplateError, match=message):
+        parse_prompt_mutation_response(response)
+
+
+def test_prompt_database_nonempty_blank_history_skips_seed_fallback(tmp_path):
+    (tmp_path / "prompt_history.jsonl").write_text("\n", encoding="utf-8")
+
+    db = PromptDatabase(tmp_path, templates=["fallback {task}"])
+
+    assert db.all() == []
+    with pytest.raises(ValueError):
+        db.select()
+
+
+@pytest.mark.parametrize(
+    ("field", "value", "message"),
+    [
+        ("template_sha256", "0" * 64, "template_sha256 does not match template"),
+        ("mean_reward", 1.0, "mean_reward is inconsistent"),
+    ],
+)
+def test_prompt_database_replay_rejects_derived_field_drift(
+    tmp_path,
+    field,
+    value,
+    message,
+):
+    program = PromptProgram(template="a {task}", id="p1").to_dict()
+    program[field] = value
+    record = {
+        "schema_version": ARTIFACT_SCHEMA_VERSION,
+        "record_schema": PROMPT_HISTORY_RECORD_SCHEMA,
+        "event": "add",
+        "program": program,
+    }
+    (tmp_path / "prompt_history.jsonl").write_text(
+        json.dumps(record) + "\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(PromptHistoryReplayError, match=message):
+        PromptDatabase(tmp_path)
+
+
+def test_prompt_database_record_result_rolls_back_when_history_write_fails(
+    tmp_path,
+    monkeypatch,
+):
+    db = PromptDatabase(tmp_path, templates=["a {task}"])
+    program = db.select()
+
+    def fail_write(_event, _program):
+        raise OSError("simulated prompt history write failure")
+
+    monkeypatch.setattr(db, "_write", fail_write)
+
+    with pytest.raises(OSError, match="simulated prompt history write failure"):
+        db.record_result(program.id, 0.5, metadata={"attempt": 1})
+
+    restored = _program_by_id(db, program.id)
+    assert restored.uses == 0
+    assert restored.reward_sum == 0.0
+    assert restored.metadata == {"source": "seed", "seed_index": 0}
+    events = [
+        json.loads(line)["event"]
+        for line in (tmp_path / "prompt_history.jsonl").read_text(
+            encoding="utf-8"
+        ).splitlines()
+    ]
+    assert events == ["add"]
+
+
+def test_prompt_database_rejected_mutation_rolls_back_when_penalty_write_fails(
+    tmp_path,
+    monkeypatch,
+):
+    db = PromptDatabase(tmp_path, templates=["a {task}"])
+    parent = db.select()
+
+    def fail_write(_event, _program):
+        raise OSError("simulated penalty write failure")
+
+    monkeypatch.setattr(db, "_write", fail_write)
+
+    with pytest.raises(OSError, match="simulated penalty write failure"):
+        db.mutate(parent.id, "bad {unknown}", generation=1)
+
+    restored = _program_by_id(db, parent.id)
+    assert restored.uses == 0
+    assert restored.reward_sum == 0.0
+    assert "last_prompt_penalty" not in restored.metadata
+    events = [
+        json.loads(line)["event"]
+        for line in (tmp_path / "prompt_history.jsonl").read_text(
+            encoding="utf-8"
+        ).splitlines()
+    ]
+    assert events == ["add"]
+    quarantine = [
+        json.loads(line)
+        for line in (tmp_path / "prompt_history_invalid.jsonl")
+        .read_text(encoding="utf-8")
+        .splitlines()
+    ]
+    assert quarantine[0]["event"] == "reject"
+
+
+def test_prompt_database_replay_rejects_unterminated_final_record(tmp_path):
+    db = PromptDatabase(tmp_path, templates=["a {task}"])
+    history = tmp_path / "prompt_history.jsonl"
+    with history.open("ab") as handle:
+        handle.write(b'{"event":"add"}')
+
+    with pytest.raises(
+        PromptHistoryReplayError,
+        match="unterminated final JSONL record",
+    ):
+        PromptDatabase(tmp_path)
+
+
+def test_prompt_database_utf8_nested_path_and_ids_are_deterministic(tmp_path):
+    template = "Révise 🧪: {task}"
+    first = PromptDatabase(tmp_path / "one" / "unicode-日志", templates=[template])
+    second = PromptDatabase(tmp_path / "two" / "unicode-日志", templates=[template])
+
+    first_parent = first.select()
+    second_parent = second.select()
+    first_child = first.mutate(
+        first_parent.id,
+        "Révise 🧪: {task} plus",
+        generation=2,
+    )
+    second_child = second.mutate(
+        second_parent.id,
+        "Révise 🧪: {task} plus",
+        generation=2,
+    )
+
+    assert first_parent.id == second_parent.id
+    assert first_child is not None
+    assert second_child is not None
+    assert first_child.id == second_child.id
+    assert first_child.to_dict()["template_sha256"] == second_child.to_dict()[
+        "template_sha256"
+    ]
+    history = (
+        tmp_path / "one" / "unicode-日志" / "prompt_history.jsonl"
+    ).read_text(encoding="utf-8")
+    assert json.loads(history.splitlines()[0])["program"]["template"] == template
+    restored = PromptDatabase(tmp_path / "one" / "unicode-日志")
+    assert [program.id for program in restored.all()] == [
+        first_parent.id,
+        first_child.id,
+    ]
+    assert [program.template for program in restored.all()] == [
+        template,
+        "Révise 🧪: {task} plus",
+    ]

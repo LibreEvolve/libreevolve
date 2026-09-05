@@ -50,6 +50,7 @@ EXCLUDED_MARKDOWN_DIR_PARTS = {
     "__pycache__",
     "build",
     "dist",
+    "planning",
     "runs",
     "venv",
 }
@@ -104,7 +105,7 @@ def roadmap_non_goal_markdown_scan_boundary_record(
         "source_constrained_surface_count": source_boundary[
             "constrained_surface_count"
         ],
-        "markdown_corpus_status": "all_repo_markdown_files_scanned"
+        "markdown_corpus_status": "all_non_planning_repo_markdown_files_scanned"
         if not read_error_records
         else "markdown_corpus_read_errors_recorded",
         "markdown_file_count": len(markdown_files),
@@ -119,9 +120,11 @@ def roadmap_non_goal_markdown_scan_boundary_record(
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
-            "This boundary scans every Markdown file in the repository corpus "
-            "for exact forbidden ROADMAP non-goal support-claim phrases and "
-            "retains line-level hit records. It does not claim runtime metadata "
+            "This boundary scans every non-planning Markdown file in the "
+            "repository corpus for exact forbidden ROADMAP non-goal support-claim "
+            "phrases; coordination and planning Markdown is excluded from the "
+            "product claim surface and line-level hit records are retained. "
+            "It does not claim runtime metadata "
             "scanning, plugin docstring scanning, CI promotion enforcement, an "
             "intentional promotion workflow, joined runtime/plugin/docs/paper "
             "scope proof, or owner-reviewed remediation readiness."
@@ -177,7 +180,7 @@ def validate_roadmap_non_goal_markdown_scan_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "every Markdown file in the repository corpus" not in boundary_text
+        or "every non-planning Markdown file in the repository corpus" not in boundary_text
         or "does not claim runtime metadata scanning" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate Markdown corpus scan from full promotion readiness"))

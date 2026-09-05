@@ -10,6 +10,7 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
+from libreevolve.core import jsonl_storage as _jsonl_storage
 from libreevolve.core.redaction import redact_sensitive_text
 
 
@@ -650,10 +651,15 @@ def _release_jsonl_file_lock(handle, lock_path: Path) -> None:
 
 
 def _append_serialized_jsonl_line(path: Path, line: str) -> None:
-    with open(path, "a", encoding="utf-8") as f:
-        f.write(line + "\n")
-        f.flush()
-        os.fsync(f.fileno())
+    # Keep this façade wrapper as a private compatibility anchor.  In
+    # particular, callers/tests may patch jsonl.open or jsonl.os.fsync while
+    # the storage primitive remains deliberately unaware of JSONL policy.
+    _jsonl_storage.append_serialized_jsonl_line(
+        path,
+        line,
+        open_fn=open,
+        fsync_fn=os.fsync,
+    )
 
 
 def _partial_jsonl_diagnostic(

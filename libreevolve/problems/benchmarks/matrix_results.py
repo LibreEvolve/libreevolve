@@ -22,7 +22,13 @@ from libreevolve.problems.benchmarks.companion_sources import (
     validate_alphaevolve_companion_selection_scope,
     validate_alphaevolve_companion_artifact_rights,
 )
-from libreevolve.problems.benchmarks._path_policy import safe_relative_path
+from libreevolve.problems.benchmarks.matrix_artifact_identity import (
+    file_digest_and_size as _file_digest_and_size,
+    matrix_artifact_inventory_record,
+    safe_relative_artifact_path,
+    stable_json_sha256 as _stable_json_sha256,
+    write_canonical_json as _write_canonical_json,
+)
 
 
 MATRIX_RESULT_SCHEMA = "libreevolve.matrix_result_report.v1"
@@ -3181,21 +3187,6 @@ def _matrix_multiply_tensor_value(left: str, right: str, output: str) -> int:
     )
 
 
-def _write_canonical_json(path: Path, payload: dict[str, Any]) -> tuple[str, int]:
-    raw = json.dumps(payload, sort_keys=True, indent=2).encode("utf-8")
-    raw += b"\n"
-    path.write_bytes(raw)
-    return hashlib.sha256(raw).hexdigest(), len(raw)
-
-
-def _file_digest_and_size(path: Path) -> tuple[str, int]:
-    try:
-        raw = path.read_bytes()
-    except OSError:
-        return "", 0
-    return hashlib.sha256(raw).hexdigest(), len(raw)
-
-
 def matrix_result_artifact_inventory(
     report: object | str | Path,
     artifact_root: str | Path,
@@ -3239,7 +3230,6 @@ def matrix_result_artifact_inventory(
                 "message": "no artifact records were available to verify",
             }
         )
-    payload = json.dumps(records, sort_keys=True, separators=(",", ":"))
     return {
         "schema": MATRIX_ARTIFACT_INVENTORY_SCHEMA,
         "report_schema": data.get("schema") if isinstance(data, dict) else None,
@@ -3252,7 +3242,7 @@ def matrix_result_artifact_inventory(
         "missing_count": missing_count,
         "mismatch_count": mismatch_count,
         "invalid_count": invalid_count,
-        "records_sha256": hashlib.sha256(payload.encode("utf-8")).hexdigest(),
+        "records_sha256": _stable_json_sha256(records),
         "ok": (
             not issues
             and bool(records)
@@ -6428,11 +6418,6 @@ def _lookup_seed_mapping(
     raise ValueError(f"{field_name} missing seed {seed}")
 
 
-def _stable_json_sha256(value: object) -> str:
-    raw = json.dumps(value, sort_keys=True, separators=(",", ":")).encode("utf-8")
-    return hashlib.sha256(raw).hexdigest()
-
-
 def _validate_runtime_artifact_paths(
     value: object,
     label: str,
@@ -7272,91 +7257,15 @@ def _validate_suite_artifact_inventory(
 
 
 def _safe_relative_path(value: object) -> Path | None:
-    return safe_relative_path(value)
+    return safe_relative_artifact_path(value)
 
 
 def _matrix_artifact_inventory_record(artifact: object, root: Path) -> dict[str, Any]:
-    if not isinstance(artifact, dict):
-        return {
-            "kind": "unknown",
-            "path": "",
-            "status": "invalid_artifact",
-            "issues": ["invalid_artifact"],
-        }
-    kind = artifact.get("kind")
-    path = artifact.get("path")
-    expected_sha = artifact.get("sha256")
-    expected_bytes = artifact.get("bytes")
-    rights = artifact.get("source_rights")
-    record: dict[str, Any] = {
-        "kind": kind if isinstance(kind, str) else "unknown",
-        "path": path if isinstance(path, str) else "",
-        "expected_sha256": expected_sha if isinstance(expected_sha, str) else "",
-        "expected_bytes": expected_bytes if isinstance(expected_bytes, int) and not isinstance(expected_bytes, bool) else None,
-        "source_rights": rights if isinstance(rights, dict) else None,
-        "status": "verified",
-        "issues": [],
-    }
-    if not isinstance(rights, dict):
-        record["status"] = "invalid_artifact"
-        record["issues"].append("source_rights_missing")
-    else:
-        rights_report = validate_alphaevolve_companion_artifact_rights(rights)
-        if not rights_report.ok:
-            record["status"] = "invalid_artifact"
-            record["issues"].extend(
-                f"source_rights_{issue.code}"
-                for issue in rights_report.issues
-            )
-    path_obj = _safe_relative_path(path)
-    if path_obj is None:
-        record["status"] = "unsafe_path"
-        record["issues"].append("invalid_artifact_path")
-        return record
-    try:
-        resolved_root = root.resolve()
-        resolved_path = (resolved_root / path_obj).resolve(strict=False)
-    except OSError:
-        record["status"] = "unsafe_path"
-        record["issues"].append("invalid_artifact_path")
-        return record
-    if not resolved_path.is_relative_to(resolved_root):
-        record["status"] = "unsafe_path"
-        record["issues"].append("artifact_path_outside_root")
-        return record
-    if not resolved_path.exists():
-        record["status"] = "missing_file"
-        record["issues"].append("missing_artifact_file")
-        return record
-    if not resolved_path.is_file():
-        record["status"] = "unsafe_path"
-        record["issues"].append("artifact_path_not_file")
-        return record
-    try:
-        raw = resolved_path.read_bytes()
-    except OSError:
-        record["status"] = "read_error"
-        record["issues"].append("artifact_read_error")
-        return record
-    actual_sha = hashlib.sha256(raw).hexdigest()
-    actual_bytes = len(raw)
-    record["actual_sha256"] = actual_sha
-    record["actual_bytes"] = actual_bytes
-    if not isinstance(expected_sha, str) or _SHA256_RE.fullmatch(expected_sha) is None:
-        record["status"] = "hash_mismatch"
-        record["issues"].append("invalid_expected_artifact_hash")
-    elif actual_sha != expected_sha:
-        record["status"] = "hash_mismatch"
-        record["issues"].append("artifact_hash_mismatch")
-    if isinstance(expected_bytes, bool) or not isinstance(expected_bytes, int) or expected_bytes <= 0:
-        if record["status"] == "verified":
-            record["status"] = "bytes_mismatch"
-        record["issues"].append("invalid_expected_artifact_bytes")
-    elif actual_bytes != expected_bytes:
-        if record["status"] == "verified":
-            record["status"] = "bytes_mismatch"
-        record["issues"].append("artifact_bytes_mismatch")
-    return record
+    return matrix_artifact_inventory_record(
+        artifact,
+        root,
+        validate_source_rights=validate_alphaevolve_companion_artifact_rights,
+    )
 
 
 def _text_field(data: dict[str, Any], field: str, issues: list[MatrixResultIssue]) -> str | None:

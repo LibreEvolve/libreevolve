@@ -42,6 +42,10 @@ Built with Windows Python 3.12 from the clean tracked exact candidate:
 - `release_artifact_provenance.json`
   - SHA-256: `bc35ef56f6c50ff234e01d4d7783bbe91188dc7fb27d05924b284fe43a876548`
 
+The wheel and source distribution each contain all 455 files under the
+`libreevolve/` package tree. In the isolated venv, both
+`libreevolve --help` and `python -m libreevolve --help` passed.
+
 A fresh Windows Python 3.12 venv without system packages installed the exact
 wheel and its declared dependencies; `pip check` passed. The documented
 provider-free workflow then passed end to end: CLI help, `alpha init`, offline

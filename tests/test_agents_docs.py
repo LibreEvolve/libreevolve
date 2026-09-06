@@ -100,12 +100,12 @@ def test_readme_and_docs_route_agents_operating_contract():
 
 
 def test_tests_workflow_covers_docs_papers_and_todo_changes():
-    workflow = yaml.safe_load(Path(".github/workflows/tests.yml").read_text(encoding="utf-8"))
+    workflow_path = Path(".github/workflows/tests.yml")
+    workflow_text = workflow_path.read_text(encoding="utf-8")
+    workflow = yaml.safe_load(workflow_text)
     triggers = workflow.get("on", workflow.get(True))
 
     assert "workflow_dispatch" in triggers
-    assert "pull_request" in triggers
-    assert "push" in triggers
 
     required_paths = {
         "AGENTS.md",
@@ -117,8 +117,18 @@ def test_tests_workflow_covers_docs_papers_and_todo_changes():
         "tests/**",
         ".secrets.baseline",
     }
-    for trigger in ("pull_request", "push"):
-        assert required_paths <= set(triggers[trigger]["paths"])
+    automatic_ci_paused = (
+        "Temporary pause while GitHub account billing is unresolved." in workflow_text
+    )
+    if automatic_ci_paused:
+        # The temporary pause is deliberate; restore automatic coverage before
+        # using this workflow as a release gate again.
+        assert set(triggers) == {"workflow_dispatch"}
+    else:
+        assert "pull_request" in triggers
+        assert "push" in triggers
+        for trigger in ("pull_request", "push"):
+            assert required_paths <= set(triggers[trigger]["paths"])
 
     assert "secrets" in workflow["jobs"]
     assert "unit" in workflow["jobs"]

@@ -41,6 +41,9 @@ state, not an authorization to spend or contact participants.
 - Post-merge GitHub runs `34019445028` (Tests) and `34019445056` (Installed
   Alpha) completed before executing jobs because the account has a payment or
   spending-limit failure. They are failures, not green CI or code evidence.
+- Automatic `push`, `pull_request`, and scheduled CI triggers are now paused
+  temporarily in the follow-up commit; both workflows remain manually
+  dispatchable. Restore those triggers after billing is resolved.
 - Real-model validation remains pending an explicitly authorized aggregate
   spending cap, a currently available model, and credential access. The
   three-run protocol uses independent seeds 17, 29, and 43 and retains every

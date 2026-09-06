@@ -24,6 +24,9 @@ state, not an authorization to spend or contact participants.
   - wheel SHA-256: `8271db759a94a5a637539a65d2d9138966a6958c520feaf4f0801e9a3ba7871f`
   - sdist SHA-256: `b5626d897273527e2378236a4fc432d4a8448ebc14fc6559884fee2d905a830d`
   - provenance SHA-256: `bc35ef56f6c50ff234e01d4d7783bbe91188dc7fb27d05924b284fe43a876548`
+- The wheel and sdist each contain all 455 files under `libreevolve/`; both
+  `libreevolve --help` and `python -m libreevolve --help` passed in the
+  isolated venv.
 - A fresh Windows Python 3.12 venv without system packages installed the
   exact wheel; `pip check` passed. The documented offline init, doctor, seed
   run, show, HTML report, and verified export all exited 0.

@@ -26,6 +26,8 @@ paper/source status and claim boundaries.
 
 ## Operational Guides
 
+- [Local Alpha Quickstart](./alpha-quickstart.md): Install, run, report and verify
+  the bounded bin-packing example on Windows Python 3.12.
 - [Architecture](./architecture.md): End-to-end runtime flow and component roles.
 - [Problem Format](./problem-format.md): Required files, seed-primary policy,
   validator contracts, and trusted-local candidate build/runner stages for

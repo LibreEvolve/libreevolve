@@ -50,14 +50,15 @@ def test_roadmap_non_goal_markdown_scan_accepts_current_corpus():
         boundary["markdown_corpus_status"]
         == "all_non_planning_repo_markdown_files_scanned"
     )
-    assert boundary["markdown_file_count"] == 27
-    assert boundary["readable_markdown_file_count"] == 27
+    assert boundary["markdown_file_count"] == 29
+    assert boundary["readable_markdown_file_count"] == 29
     assert boundary["unreadable_markdown_file_count"] == 0
     assert boundary["markdown_read_error_records"] == []
     assert "README.md" in boundary["markdown_files"]
     assert "ROADMAP.md" in boundary["markdown_files"]
     assert "papers/README.md" in boundary["markdown_files"]
     assert "docs/todo/roadmap.md" in boundary["markdown_files"]
+    assert "libreevolve/problems/examples/bin_packing/README.md" in boundary["markdown_files"]
     assert boundary["non_goal_count"] == 3
     assert boundary["forbidden_phrase_count"] == 17
     assert boundary["contradiction_count"] == 0
@@ -120,7 +121,7 @@ def test_render_roadmap_non_goal_markdown_scan_summary_reports_shape():
         "| boundary_status | markdown_corpus_scan_without_runtime_or_promotion_gate |"
         in summary
     )
-    assert "| markdown_file_count | 27 |" in summary
+    assert "| markdown_file_count | 29 |" in summary
     assert "| non_goal_count | 3 |" in summary
     assert "| forbidden_phrase_count | 17 |" in summary
     assert "| contradiction_count | 0 |" in summary

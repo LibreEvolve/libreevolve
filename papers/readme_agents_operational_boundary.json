@@ -18,8 +18,9 @@
   "todo_paths": [
     "docs/todo/readme.md"
   ],
-  "actual_example_count": 11,
+  "actual_example_count": 12,
   "actual_examples": [
+    "bin_packing",
     "candidate_runner_c",
     "candidate_runner_expression",
     "candidate_runner_python_oci",
@@ -32,11 +33,12 @@
     "sorting_network_9",
     "workspace_math"
   ],
-  "listed_example_count": 8,
+  "listed_example_count": 9,
   "listed_examples": [
     "hello_world",
     "circle_packing",
     "sorting",
+    "bin_packing",
     "matrix_multiplication",
     "workspace_math",
     "candidate_runner_expression",

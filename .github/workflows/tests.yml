@@ -3,6 +3,11 @@ name: Tests
 on:
   workflow_dispatch:
     inputs:
+      run_live_integration:
+        description: "Run paid provider tests after separate spending approval"
+        type: boolean
+        required: false
+        default: false
       run_source_refresh_gate:
         description: "Run live AlphaEvolve source refresh drift check"
         required: false
@@ -231,6 +236,7 @@ jobs:
 
   integration:
     name: Integration Tests (Python 3.12)
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_live_integration == true }}
     runs-on: ubuntu-latest
     env:
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}

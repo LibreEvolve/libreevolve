@@ -1,6 +1,9 @@
 name: Tests
 
 on:
+  # Temporary pause while GitHub account billing is unresolved. Restore the
+  # pull_request, push, and schedule triggers before treating CI as a release
+  # gate again.
   workflow_dispatch:
     inputs:
       run_live_integration:
@@ -12,39 +15,6 @@ on:
         description: "Run live AlphaEvolve source refresh drift check"
         required: false
         default: "false"
-  pull_request:
-    paths:
-      - ".github/workflows/tests.yml"
-      - ".gitignore"
-      - ".pre-commit-config.yaml"
-      - ".secrets.baseline"
-      - "AGENTS.md"
-      - "README.md"
-      - "ROADMAP.md"
-      - "docs/**"
-      - "libreevolve/**"
-      - "old/**"
-      - "papers/**"
-      - "pyproject.toml"
-      - "tests/**"
-  push:
-    paths:
-      - ".github/workflows/tests.yml"
-      - ".gitignore"
-      - ".pre-commit-config.yaml"
-      - ".secrets.baseline"
-      - "AGENTS.md"
-      - "README.md"
-      - "ROADMAP.md"
-      - "docs/**"
-      - "libreevolve/**"
-      - "old/**"
-      - "papers/**"
-      - "pyproject.toml"
-      - "tests/**"
-  schedule:
-    - cron: "17 6 * * 1"
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true

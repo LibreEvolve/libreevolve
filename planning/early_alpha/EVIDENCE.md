@@ -65,7 +65,10 @@ improvement.
 PR #1 is merged, but post-merge runs `34019445028` (Tests) and `34019445056`
 (Installed Alpha) failed before job execution because GitHub reported recent
 account payment failure or an insufficient spending limit. Passing CI remains
-unproved; this is an account gate, not a code-failure diagnosis.
+unproved; this is an account gate, not a code-failure diagnosis. Automatic
+push, pull-request, and scheduled triggers are temporarily disabled while that
+account issue is unresolved; both workflows remain available by manual
+dispatch and must be re-enabled before claiming a release gate.
 
 The following acceptance evidence is still missing:
 

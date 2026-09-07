@@ -22,6 +22,26 @@ Each participant receives the quickstart, wheel, and an assigned per-run budget.
 They supply their own credential locally. No credential values enter feedback,
 screenshots, run bundles, or reports.
 
+## Prepared candidate packet (2026-09-07)
+
+- Package commit: `8fdbf5132ed24b2960bde4c9f7acf14b28aadf59`.
+- Wheel: `dist/8fdbf513/libreevolve-0.1.0-py3-none-any.whl`.
+- Wheel SHA-256: `b26f82c66b3397643cd0fc36e6318c6202797b561ac077e78c975031db18d999`.
+- Send the wheel, matching provenance JSON, `docs/alpha-quickstart.md`, this
+  protocol, and the final handoff together; no public package index is implied.
+- Tested live reference: Linux/WSL, Python 3.12.13, Codex CLI 0.153.4,
+  `gpt-5.6-luna`, explicit `high` reasoning, participant-owned ChatGPT login.
+- Proposed allocation per participant, subject to that participant's approval:
+  one default three-call/four-evaluation/900-second run, plus one cancellation
+  exercise capped at one call/two evaluations/240 seconds; each CLI invocation
+  has a 180-second deadline. For 3–5 participants this is at most 12–20 CLI
+  invocations. It is not a subscription charge or token guarantee.
+- Use a separately initialized task for the cancellation exercise and pass
+  `--max-generations 1 --max-llm-calls 1 --max-llm-provider-attempts 1
+  --max-evaluations 2 --max-runtime-seconds 240` to `run` before pressing Ctrl+C.
+- No participant enrollment, contact, authorization, feedback or timing result
+  has been recorded. Prepared materials do not prove unassisted completion.
+
 ## Tasks
 
 1. Install the wheel and create the bin-packing experiment.

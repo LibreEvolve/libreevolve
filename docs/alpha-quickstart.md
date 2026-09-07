@@ -1,8 +1,9 @@
 # Local optimization alpha
 
 LibreEvolve searches for better Python bin-packing heuristics and checks each
-candidate against a deterministic evaluator. The local workflow is an engineering
-preview. The live validation lane is Linux/WSL with Python 3.12.13 and Codex
+candidate against a deterministic evaluator. The documented local workflow is
+trial-ready; see the [validation handoff](../planning/early_alpha/FINAL_HANDOFF.md).
+The live validation lane is Linux/WSL with Python 3.12.13 and Codex
 CLI 0.153.4, using an account with access to `gpt-5.6-luna`. Native Windows
 Python 3.12.10 has clean-install/offline workflow evidence, not a live Codex
 validation claim. Independent user trials remain pending.
@@ -143,6 +144,12 @@ candidate. If persistence fails or the process is forcibly terminated, the lates
 work can remain partial. The report distinguishes run status from candidate
 verification and identifies missing artifacts. Saved history may still support
 an explicit verified export even if the ordinary best export is missing.
+That requires valid run metadata: a versioned manifest missing runtime
+finalization currently makes `show` and `alpha export` fail closed with a
+`missing_runtime` error. `alpha report` can still produce an explanatory
+`no_result` report. The two forcibly interrupted validation runs behaved this
+way; their raw history was retained, but no automatic recovery/export was
+claimed. Do not edit or remove validation metadata to force an export.
 
 Advanced restore composes saved RNG, scheduler, archive and budget state when
 the required artifacts validate. It does not resume pending provider/evaluator

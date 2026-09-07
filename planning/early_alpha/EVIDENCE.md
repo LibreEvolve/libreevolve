@@ -2,10 +2,22 @@
 
 This record separates source-checkout, installed-package, provider, CI, and
 external-usability evidence. The current packaged candidate is
-`04b00a60c2056ef5224918e01dcc92231426e4bd`. Earlier records below are historical;
+`8fdbf5132ed24b2960bde4c9f7acf14b28aadf59`. The authoritative final result is
+[FINAL_HANDOFF.md](FINAL_HANDOFF.md): trial-ready Linux/WSL Luna/high workflow,
+not release-ready; external usability pending and CI excluded by instruction.
+The final exact-head selections yielded 670 passed, 1 platform skip and 10
+inherited CI-routing assertion failures, reproduced on the prior commit and
+excluded under that CI instruction. Final wheel/source/installed Linux package
+byte checks cover all 455 package files; native Windows passed 13 offline
+commands. Three completed real-model cohort exports and the exact-final-wheel
+smoke independently passed 55 training and 30 held-out cases with improvement.
+All attempts, failures and unknown subscription charges remain disclosed.
+Durable evidence is under `runs/alpha-validation-20260907/`.
+
+All records below are historical;
 they must not be read as current-tip full-suite or live-provider evidence.
 
-## Current OAuth candidate: 2026-09-07
+## Historical 04b00a60 OAuth candidate: 2026-09-07
 
 - Exact source archive build: `dist/04b00a60/`; both archives byte-match all
   455 tracked `libreevolve/` files at the candidate commit.
@@ -319,7 +331,8 @@ an existing `OPENAI_API_KEY` (the value was never inspected), so this command
 made one OpenAI Responses attempt against the placeholder model
 `offline-model`. The provider returned authentication failure 401; the run
 retained its redacted `llm_calls.jsonl` and `failure_history.jsonl` records,
-used zero input/output tokens and zero estimated cost, and performed no retry.
+recorded zero input/output tokens and zero estimated cost, and performed no retry.
+These are failed-call accounting values, not a verified billing measurement.
 The run is not part of the real-model cohort and is not improvement evidence;
 the documented seed-only smoke still recorded zero provider attempts.
 

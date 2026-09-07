@@ -143,9 +143,9 @@ nine CLI invocations for this cohort. No prompt or budget tuning based on
 cohort results; reports and exports follow completion of all three runs.
 Failed, unimproved and interrupted attempts remain in the complete inventory.
 
-### Exact final-wheel live smoke
+### Then-current wheel live smoke
 
-Final candidate `cf805a67f904354c5135b79ae52a3bb608988ca0` differs from the
+Then-current candidate `cf805a67f904354c5135b79ae52a3bb608988ca0` differs from the
 cohort's package code only in `alpha_report.py`: reward-update ledger rows no
 longer hide known call usage. Generation, budget, evaluator and validator code
 are byte-identical. A separate clean installed-wheel run under
@@ -178,3 +178,29 @@ selection based on quality (seed 29 had already produced a valid improvement).
 The three completed-cohort rows will be 17, replacement 29 and 43; the original
 29 and seed-71 partials are reported separately, never discarded or treated as
 zero-cost attempts. Reports/holdout verification remain after the replacement.
+
+### Frozen final candidate and additional smoke
+
+The packaged candidate is `8fdbf5132ed24b2960bde4c9f7acf14b28aadf59`.
+Its only package-file change from `c223d127` is `alpha_report.py`; generation,
+budget, evaluation and validator bytes are unchanged. The final report explains
+failed provider calls, partial ledgers and unchanged-seed results explicitly.
+The wheel and sdist byte-match all 455 tracked package files from the exact
+source archive. Artifact hashes and final validation are in `FINAL_HANDOFF.md`.
+
+A fresh Linux/WSL Python 3.12.13 environment at
+`/tmp/libreevolve-alpha-8fdbf513-live.9kC5BV` installed the final wheel and
+passed dependency checks, both entrypoint helps, template creation and local
+OAuth preflight. The additional `luna-high-final-seed-97` smoke used the
+unchanged full prompt, Luna/high, one generation/CLI call/provider attempt,
+two evaluations, a 180-second CLI deadline and a 240-second runtime limit.
+It completed with a valid training improvement from `0.8016472203157172`
+to `0.9782244556113903`. This is a separate package smoke, not a fourth
+predeclared cohort row. No additional model runs are planned.
+
+The completed comparison cohort is seed 17, replacement seed 29 and seed 43.
+The original seed 29 and seed 71 remain interrupted partial attempts. All
+model calls ended before independent report/export/held-out verification
+started. `OAUTH_ATTEMPTS.json` records all attempts and incomplete usage;
+subscription charges and quota remain unknown. No favorable-run selection
+or held-out-informed prompt/budget tuning is claimed.

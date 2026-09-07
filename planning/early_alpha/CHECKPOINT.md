@@ -1,21 +1,27 @@
 # Current continuation checkpoint
 
-## 2026-09-07 OAuth continuation
+## 2026-09-07 final local acceptance
 
-The user authorized Luna at max reasoning through Codex OAuth. A live
-`gpt-5.6-luna` access probe succeeded and returned CLI token usage. Candidate
-`04b00a60c2056ef5224918e01dcc92231426e4bd` includes adapter accounting and
-OAuth onboarding, and its wheel/sdist and clean Windows offline workflow are
-verified in `EVIDENCE.md`. Live bin-packing attempts are in progress as described
-in `CODEX_OAUTH_TRIAL.md`, including retained deadline failures. The earlier requirement
-to ask again for OAuth usage authorization was an overly narrow interpretation.
-CI is excluded by user instruction. External usability can remain explicitly
-pending under the original objective. The sections below record prior evidence.
+Final packaged source is `8fdbf5132ed24b2960bde4c9f7acf14b28aadf59`.
+[FINAL_HANDOFF.md](FINAL_HANDOFF.md) is the authoritative acceptance record:
+trial-ready on the documented Linux/WSL Luna/high route. Exact final package
+installation, real-model optimization, report/export and independent held-out
+verification passed; final Windows installation/offline workflow also passed.
+The 670 passed / 1 skipped / 10 inherited excluded-CI test results are disclosed
+without claiming a full-suite or green CI pass. The three completed comparison
+exports improve training/held-out quality; all failed/partial attempts and the
+incomplete 261,796-token lower bound remain in `OAUTH_ATTEMPTS.json`.
 
-The early-alpha goal remains active because real-provider optimization evidence
-is not complete. External usability is permitted to remain explicitly pending;
-CI is not a completion blocker under the revised scope. No participant contact
-or API-key billing is authorized. All sections below are historical snapshots.
+The user authorized Luna through Codex OAuth; lower-compute `high` reasoning
+completed the task after recorded `max` deadline failures. No API billing
+fallback or fabricated subscription cost is used. CI is excluded by instruction.
+The prepared 3–5 developer trial has zero participants/results; the original
+objective expressly permits that external gate to remain pending. Under this
+revised scope, local engineering acceptance is complete. No more model runs,
+publication, deployment, contact or CI mutation is needed for this handoff.
+
+All sections below are historical snapshots, including superseded blockers and
+authorization interpretations. Do not restart work from them.
 
 ## Exact candidate and repository state
 
@@ -117,7 +123,8 @@ held-out correctness remained true at `0.8016472203157172` and
 
 One separate exploratory one-generation diagnostic inherited an existing
 Windows `OPENAI_API_KEY` and made one request to placeholder model
-`offline-model`; it failed with authentication 401, zero tokens, zero cost,
+`offline-model`; it failed with authentication 401, recorded zero tokens/cost
+(not a verified billing measurement),
 and no retry. Its redacted failure records are retained outside the source
 tree. This was not an authorized cohort run; the documented zero-generation
 smoke remains the provider-free acceptance evidence.

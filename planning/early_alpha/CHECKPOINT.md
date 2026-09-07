@@ -108,3 +108,11 @@ Windows `OPENAI_API_KEY` and made one request to placeholder model
 and no retry. Its redacted failure records are retained outside the source
 tree. This was not an authorized cohort run; the documented zero-generation
 smoke remains the provider-free acceptance evidence.
+
+The 2026-09-07 read-only Codex audit found CLI `0.153.4` and a local ChatGPT
+OAuth session (`codex login status`), without invoking `codex exec`. This is
+session availability, not LibreEvolve real-provider evidence: the `type: codex`
+lane is experimental and lacks live model preflight plus provider-native usage,
+cost, and manifest/report parity. Internal Luna reasoning likewise is not a
+product provider call. Keep the live gate pending unless the user explicitly
+authorizes a bounded Codex OAuth smoke with an exact model and quota policy.

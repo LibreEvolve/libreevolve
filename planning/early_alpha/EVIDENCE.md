@@ -266,3 +266,21 @@ retained its redacted `llm_calls.jsonl` and `failure_history.jsonl` records,
 used zero input/output tokens and zero estimated cost, and performed no retry.
 The run is not part of the real-model cohort and is not improvement evidence;
 the documented seed-only smoke still recorded zero provider attempts.
+
+## Codex OAuth availability audit
+
+On 2026-09-07, a read-only local check found Codex CLI `0.153.4` on `PATH`;
+`codex login status` reported `Logged in using ChatGPT`, and `codex exec
+--help` completed successfully. No `codex exec` request was made during this
+audit. This establishes local executable and session presence only. The Luna
+model used for internal reasoning is not a LibreEvolve provider call and is not
+recorded as a product run.
+
+LibreEvolve's `type: codex` backend remains an experimental authenticated CLI
+lane. It does not perform live model-availability preflight or provide the
+provider-native usage, cost, request-ID, and manifest/report parity required by
+the alpha real-provider gate. The configured Codex fixture is therefore not a
+substitute for the three-run OpenAI protocol. A separately authorized Codex
+OAuth smoke would need an exact configured model, an explicit quota/cost policy,
+a hard logical-call cap, and retained run/transcript evidence; none was run or
+counted here.

@@ -53,6 +53,9 @@ def test_successful_call_with_reward_retains_known_usage(tmp_path, legacy, cost_
     assert (usage["input_tokens"], usage["output_tokens"], usage["total_tokens"]) == (13289, 6412, 19701)
     assert usage["estimated_cost_usd"] == (None if cost_microusd is None else 0.00003)
     assert usage["status"] == ("partial" if cost_microusd is None else "complete")
+    assert usage["attempt_outcomes"]["successful_calls"] == 1
+    assert usage["attempt_outcomes"]["failed_calls"] == 0
+    assert usage["attempt_outcomes"]["status"] == "complete"
 
 
 @pytest.mark.parametrize("record_type", ["unknown", "", None, 1, [], {}])
@@ -98,6 +101,112 @@ def run_fixture(tmp_path, manifest=None, code=None):
     if manifest is not None:
         (tmp_path / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
     return tmp_path
+
+
+def test_completed_run_with_all_timeouts_explains_unchanged_seed(tmp_path, monkeypatch):
+    # Test report composition without adding another execution of the fixture.
+    monkeypatch.setattr(reporting, "_verify", lambda *args: {
+        "status": "completed", "correctness": True, "score": 0.8})
+    manifest = {"runtime": {"status": "completed", "stop_reason": "max_llm_calls",
+                           "consumed": {"llm_calls": 3, "llm_tokens": 0,
+                                        "llm_cost_microusd": 0, "evaluations": 1,
+                                        "seed_evaluations": 1, "candidate_evaluations": 0}}}
+    run_fixture(tmp_path, manifest)
+    call = {"record_type": "call", "status": "error", "error_type": "ProviderCallTimeoutError",
+            "provider_failure_category": "timeout", "usage": None, "cost_estimate": None}
+    (tmp_path / "llm_calls.jsonl").write_text((json.dumps(call) + "\n") * 3, encoding="utf-8")
+    report = reporting.build_report(tmp_path)
+    outcomes = report["usage"]["attempt_outcomes"]
+    assert report["status"] == "verified"  # Verification still describes the exported bytes.
+    assert report["runtime"]["status"] == "completed"
+    assert report["runtime"]["stop_reason"] == "max_llm_calls"
+    assert report["runtime"]["evaluation_counts"]["candidate_evaluations"] == 0
+    assert outcomes["ledger_status"] == outcomes["status"] == "complete"
+    assert outcomes["successful_calls"] == outcomes["unknown_status_calls"] == 0
+    assert outcomes["failed_calls"] == outcomes["timeout_calls"] == 3
+    assert outcomes["failure_groups"] == [{"category": "timeout", "error_type": "ProviderCallTimeoutError", "calls": 3}]
+    assert report["usage"]["total_tokens"] is report["usage"]["estimated_cost_usd"] is None
+    page = reporting.render_html(report)
+    assert "Selected export is unchanged from the bundled seed." in page
+    assert "3 failed (3 timeouts)" in page
+    assert "Every observed provider call failed" in page
+    assert "The run recorded no generated candidate evaluations." in page
+    assert page.index("Every observed provider call failed") < page.index("Usage and estimated cost")
+
+
+def test_mixed_attempts_keep_provider_success_distinct_from_candidate_success(tmp_path):
+    rows = [{"status": "ok"}, {"status": "error", "error_type": "TimeoutError"},
+            {"status": "error", "error_type": "HTTPError", "provider_failure_category": "rate_limit"},
+            {"record_type": "reward", "status": "ok"}]
+    (tmp_path / "llm_calls.jsonl").write_text(
+        "".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8")
+    usage = reporting._usage(tmp_path, {"runtime": {"consumed": {"llm_calls": 3}}}, [])
+    outcomes = usage["attempt_outcomes"]
+    assert outcomes["successful_calls"] == 1
+    assert outcomes["failed_calls"] == 2
+    assert outcomes["timeout_calls"] == 1
+    assert "Every observed provider call failed" not in outcomes["summary"]
+    assert "does not establish a valid, retained or improving candidate" in outcomes["note"]
+
+
+@pytest.mark.parametrize("status", [None, "", "timeout", "success", [], {}, 1])
+def test_unknown_call_status_is_never_inferred_success_or_failure(tmp_path, status):
+    (tmp_path / "llm_calls.jsonl").write_text(json.dumps({
+        "status": status, "error_type": "TimeoutError", "usage": {"total_tokens": 10},
+        "cost_estimate": {"cost_microusd": 30}}) + "\n", encoding="utf-8")
+    usage = reporting._usage(tmp_path, {"runtime": {"consumed": {"llm_calls": 1}}}, [])
+    outcomes = usage["attempt_outcomes"]
+    assert usage["status"] == "complete"  # Usage and outcomes have independent completeness.
+    assert outcomes["ledger_status"] == "complete"
+    assert outcomes["status"] == "partial"
+    assert outcomes["unknown_status_calls"] == 1
+    assert outcomes["successful_calls"] == outcomes["failed_calls"] == outcomes["timeout_calls"] == 0
+
+
+@pytest.mark.parametrize("stream,expected", [(None, "missing"), ("", "partial"), ('{"status":"error"}\n{', "partial")])
+def test_missing_or_incomplete_attempt_ledger_does_not_claim_no_provider_calls(tmp_path, stream, expected):
+    if stream is not None:
+        (tmp_path / "llm_calls.jsonl").write_text(stream, encoding="utf-8")
+    usage = reporting._usage(tmp_path, {"runtime": {"consumed": {"llm_calls": 3}}}, [])
+    outcomes = usage["attempt_outcomes"]
+    assert outcomes["ledger_status"] == expected
+    assert "No provider calls were recorded" not in outcomes["summary"]
+    assert "ledger is missing" in outcomes["summary"] if stream is None else "counts are partial" in outcomes["summary"]
+    assert usage["total_tokens"] is usage["estimated_cost_usd"] is None
+
+
+def test_attempt_error_labels_are_redacted_and_html_escaped(tmp_path):
+    secret = "sk-abcdefghijklmnopqrstuvwxyz"
+    attack = '<script>alert("x")</script> api_key=' + secret
+    rows = [{"status": "error", "error_type": attack, "error": "private provider error",
+             "prompt": "private prompt", "output": "private response"},
+            {"status": "private status " + secret, "error_type": {"secret": secret}}]
+    (tmp_path / "llm_calls.jsonl").write_text(
+        "".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8")
+    usage = reporting._usage(tmp_path, {"runtime": {"consumed": {"llm_calls": 2}}}, [])
+    outcomes = usage["attempt_outcomes"]
+    evidence = json.dumps(outcomes)
+    assert "[REDACTED]" in evidence
+    assert secret not in evidence and "private" not in evidence
+    page = reporting.render_html({"usage": usage})
+    assert "<script" not in page and "&lt;script&gt;" in page
+    assert secret not in page and "private" not in page
+
+
+def test_attempt_summary_groups_and_labels_are_bounded(tmp_path, monkeypatch):
+    monkeypatch.setattr(reporting, "MAX_ATTEMPT_FAILURE_GROUPS", 2)
+    monkeypatch.setattr(reporting, "MAX_ATTEMPT_LABEL_CHARS", 20)
+    monkeypatch.setattr(reporting, "MAX_LLM_STREAM_RECORDS", 5)
+    rows = [{"status": "error", "error_type": f"Error{i}" + "x" * 100} for i in range(6)]
+    (tmp_path / "llm_calls.jsonl").write_text(
+        "".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8")
+    usage = reporting._usage(tmp_path, {"runtime": {"consumed": {"llm_calls": 6}}}, [])
+    outcomes = usage["attempt_outcomes"]
+    assert outcomes["ledger_status"] == "partial"
+    assert outcomes["failed_calls"] == 5
+    assert len(outcomes["failure_groups"]) == 2
+    assert all(len(row["error_type"]) <= 20 for row in outcomes["failure_groups"])
+    assert outcomes["other_failure_calls"] == 3
 
 
 def test_public_verification_hashes_and_both_splits():

@@ -47,6 +47,10 @@ timeouts/interruption can leave usage incomplete. Review the generated config
 and authorize your own subscription use before starting. See cancellation and
 result-interpretation details below.
 
+Codex alpha preflight rejects token and dollar caps: reported usage cannot
+enforce a response-token or subscription-charge limit. Evaluation, CLI-call
+and runtime bounds are the supported controls for this route.
+
 ## Windows installation and optional OpenAI API workflow
 
 Obtain the candidate wheel and its release_artifact_provenance.json together.
@@ -100,23 +104,9 @@ billing cap. Repeated runs each receive their own limits; budget for their total
 
 ## Run and understand the result
 
-### Codex OAuth option
-
-The optional Codex route uses a local Codex CLI authenticated with ChatGPT.
-Run `codex login` once, then create the task with
-`libreevolve alpha init packing-task --provider codex --model gpt-5.6-luna`.
-The Codex default reasoning setting is `max`; use `--reasoning-effort high`
-to explicitly select `high` instead. The chosen model must support the setting.
-Run `libreevolve alpha doctor packing-task` to check local login and task setup.
-Use the same run, report and export commands below.
-
-This route consumes your subscription allowance. The CLI reports token usage,
-but does not report subscription charges or remaining quota. Dollar cost is
-therefore unknown. The default three CLI calls, four evaluations and 900-second
-run limit bound the local experiment; each CLI invocation has a 180-second
-deadline. Token limits are checked after calls and cannot guarantee a maximum
-for an individual response. Local CLI availability and a saved login do not
-guarantee access to the selected model; the first request checks actual access.
+For the optional native Windows/OpenAI task prepared above, use the following
+commands. For Codex OAuth, use the Linux/WSL recipe above with explicit `high`
+reasoning; native Windows Codex execution is not the validated live route.
 
 ```powershell
 .\.venv\Scripts\libreevolve.exe run packing-task --run-name packing-first --progress

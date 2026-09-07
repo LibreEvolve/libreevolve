@@ -142,3 +142,39 @@ wall time but is not a claim of distributed execution. Aggregate allocation is
 nine CLI invocations for this cohort. No prompt or budget tuning based on
 cohort results; reports and exports follow completion of all three runs.
 Failed, unimproved and interrupted attempts remain in the complete inventory.
+
+### Exact final-wheel live smoke
+
+Final candidate `cf805a67f904354c5135b79ae52a3bb608988ca0` differs from the
+cohort's package code only in `alpha_report.py`: reward-update ledger rows no
+longer hide known call usage. Generation, budget, evaluator and validator code
+are byte-identical. A separate clean installed-wheel run under
+`/tmp/libreevolve-alpha-rc.0HDaM0`, named `luna-high-rc-seed-71`, uses Luna/high,
+seed 71, one generation/CLI call, two evaluations, a 180-second CLI deadline
+and a 240-second runtime threshold. It is an additional release-candidate
+smoke, not pooled into the predeclared three-run cohort. No held-out results
+were inspected before choosing it; its outcome will be retained regardless
+of improvement. Exports/reports follow completion of the full cohort and smoke.
+
+### External interruption and bounded replacement
+
+The conversation's forced interruption stopped the remaining background work.
+Current process inspection confirmed no trial CLI or pytest processes remained.
+Persisted manifests prove seeds 17 and 43 completed (398.154 s / 362.623 s),
+so they are retained as completed cohort runs. Seed 29 persisted two completed
+calls but lacks a final runtime manifest; a third invocation cannot be confirmed
+from the persisted call ledger. It is an
+interrupted partial attempt, not a completed run. The final-wheel seed-71 smoke
+started but persisted no call result or final runtime manifest; provider-call
+launch and usage cannot be confirmed from its saved artifacts.
+Both partial attempts remain preserved and counted.
+
+Only seed 29 is replaced, using the exact final `cf805a67` wheel and the same
+default three-call/four-evaluation/900-second high-reasoning configuration,
+under fresh name `luna-high-seed-29-retry`. It also supplies the required
+exact-final-wheel full workflow, replacing the interrupted seed-71 smoke's
+validation purpose. This is an infrastructure-interruption replacement, not
+selection based on quality (seed 29 had already produced a valid improvement).
+The three completed-cohort rows will be 17, replacement 29 and 43; the original
+29 and seed-71 partials are reported separately, never discarded or treated as
+zero-cost attempts. Reports/holdout verification remain after the replacement.

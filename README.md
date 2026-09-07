@@ -330,10 +330,11 @@ Important limits:
   `papers/gemini_provider_parity_boundary.json`.
 - The built-in Codex CLI adapter (`type: codex`) is an experimental local CLI
   lane for authenticated `codex exec` sessions. It records redacted auth/session
-  provenance and optional transcripts, but it is not yet benchmark- or
-  paper-claim-ready because credential-safe live smoke evidence, model
-  availability preflight, manifest/report integration, provider-native
-  token/cost accounting, and parity diagnostics remain open work in
+  provenance, optional transcripts and CLI-reported usage. The bounded
+  [alpha workflow](docs/alpha-quickstart.md) has local OAuth preflight, result
+  reporting and account-specific live evidence; it is not yet benchmark- or
+  paper-claim-ready. Subscription billing/quota, model availability preflight,
+  remote-request cancellation and broad provider parity remain open; see
   [docs/todo/code.md](docs/todo/code.md).
 - Custom import-path backends are extension points. A custom wrapper around a
   local CLI is not portable provider support or benchmark evidence unless it is

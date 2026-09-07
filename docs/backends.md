@@ -25,9 +25,12 @@ Backend support has four distinct lanes:
   `codex exec` command. It supports command discovery, stdin prompt transport,
   `--output-last-message` response capture, sandbox/profile/auth-home
   configuration, local timeout cleanup, optional JSON-output extraction, and
-  optional redacted transcript retention. It does not expose provider-native
-  token usage or cost accounting, live model availability preflight, SDK-style
-  retry diagnostics, or complete manifest/report parity yet.
+  optional redacted transcript retention. Completed CLI JSON events supply
+  reported token usage, which the alpha report can display. Subscription
+  charges/quota, live model availability preflight, internal network-retry
+  counts, remote-request cancellation and complete SDK/benchmark parity
+  remain unverified or unavailable. The bounded alpha workflow is documented
+  separately in [alpha-quickstart.md](alpha-quickstart.md).
 - Custom import-path backends: `type: custom` loads an extension-owned Python
   object by `class_path` and calls its `generate(prompt, **kwargs) -> str`
   method. This is useful for experiments, but the custom backend owns any

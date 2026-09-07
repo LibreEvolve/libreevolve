@@ -22,6 +22,7 @@ import threading
 import time
 
 from libreevolve.core.jsonl import strict_json_dumps, strict_json_loads_object
+from libreevolve.core.redaction import redact_sensitive_text
 from libreevolve.core.run_inspection import inspect_run
 from libreevolve.core.evaluator import (
     _assign_windows_kill_job, _close_windows_job, _terminate_process_tree,
@@ -33,6 +34,8 @@ MAX_OUTPUT_BYTES = 65536
 MAX_SOURCE_BYTES = 1_000_000
 MAX_MANIFEST_BYTES = 16_000_000
 MAX_LLM_STREAM_RECORDS = 100_000
+MAX_ATTEMPT_FAILURE_GROUPS = 8
+MAX_ATTEMPT_LABEL_CHARS = 80
 BUNDLED_PROBLEM = Path(__file__).parent / "problems" / "examples" / "bin_packing"
 
 
@@ -255,6 +258,57 @@ def _verify(code: bytes, validator: bytes, entrypoint: str) -> dict:
     return evidence
 
 
+def _attempt_outcomes(rows: list[dict], ledger_status: str) -> dict:
+    """Summarize observed calls, never provider messages, prompts or outputs."""
+    result = {"source": "llm_calls.jsonl", "ledger_status": ledger_status,
+              "successful_calls": 0, "failed_calls": 0, "timeout_calls": 0,
+              "unknown_status_calls": 0, "failure_groups": [],
+              "other_failure_calls": 0,
+              "note": "Counts describe observed provider calls, including retries; timeouts are a subset of failures. "
+                      "A successful provider response does not establish a valid, retained or improving candidate."}
+    groups = {}
+    categories = {"timeout", "rate_limit", "transport", "provider_response",
+                  "provider_server_error", "provider_client_error", "unknown"}
+    for row in rows:
+        if row.get("status") == "ok":
+            result["successful_calls"] += 1
+        elif row.get("status") == "error":
+            result["failed_calls"] += 1
+            category = row.get("provider_failure_category")
+            if not isinstance(category, str) or category not in categories:
+                category = "unknown"
+            error_type = row.get("error_type")
+            # Older ledgers may lack the category but retain a timeout class.
+            if category == "timeout" or error_type in ("ProviderCallTimeoutError", "TimeoutError", "TimeoutExpired", "APITimeoutError"):
+                result["timeout_calls"] += 1
+                category = "timeout"
+            error_type = (" ".join(redact_sensitive_text(error_type).split())[:MAX_ATTEMPT_LABEL_CHARS]
+                          if isinstance(error_type, str) else "Unknown / unavailable")
+            key = (category, error_type)
+            if key in groups or len(groups) < MAX_ATTEMPT_FAILURE_GROUPS:
+                groups[key] = groups.get(key, 0) + 1
+            else:
+                result["other_failure_calls"] += 1
+        else:
+            result["unknown_status_calls"] += 1
+    result["failure_groups"] = [{"category": category, "error_type": error_type, "calls": count}
+                                for (category, error_type), count in groups.items()]
+    result["status"] = "complete" if ledger_status == "complete" and not result["unknown_status_calls"] else "partial" if rows else "unknown"
+    prefix = {"missing": "Provider call ledger is missing; attempt outcomes are unknown. ",
+              "partial": "Provider call ledger is incomplete or cannot be reconciled with the recorded call count; observed counts are partial. ",
+              "complete": ""}[ledger_status]
+    result["summary"] = prefix + (
+        f"Observed provider attempts: {result['successful_calls']} successful, "
+        f"{result['failed_calls']} failed ({result['timeout_calls']} timeouts), "
+        f"{result['unknown_status_calls']} with unknown status."
+        if rows else ("No provider calls were recorded." if ledger_status == "complete"
+                      else "No provider call outcomes could be established.")
+    )
+    if rows and result["failed_calls"] == len(rows):
+        result["summary"] += " Every observed provider call failed; no successful response was recorded."
+    return result
+
+
 def _usage(run_dir: Path, manifest: dict, issues: list) -> dict:
     runtime = _object(manifest.get("runtime"))
     consumed = _object(runtime.get("consumed"))
@@ -309,6 +363,8 @@ def _usage(run_dir: Path, manifest: dict, issues: list) -> dict:
     result["observed_call_records"] = len(rows)
     expected = result["calls"]
     complete = complete and expected is not None and expected == len(rows)
+    result["attempt_outcomes"] = _attempt_outcomes(
+        rows, "complete" if complete else "partial" if path.exists() else "missing")
     for key in ("input_tokens", "output_tokens", "total_tokens"):
         values = [_number(_object(row.get("usage")).get(key)) for row in rows]
         if complete and all(value is not None for value in values):
@@ -361,9 +417,12 @@ def build_report(run_dir: Path) -> dict:
               "status": "unverified", "manifest_status": manifest_status,
               "runtime": {"status": runtime.get("status"), "stop_reason": runtime.get("stop_reason"),
                           "elapsed_seconds": _number(consumed.get("runtime_seconds")),
+                          "evaluation_counts": {key: _number(consumed.get(key)) for key in
+                                                ("evaluations", "seed_evaluations", "candidate_evaluations", "evaluator_timeouts")},
                           "abort": runtime.get("abort")},
               "usage": _usage(run_dir, manifest, issues), "issues": issues,
               "baseline": None, "best": None, "export_status": "absent",
+              "search_outcome": "No exported result was independently verified.",
               "recoverable_history": None,
               "score_delta": {"training": None, "holdout": None},
               "diff": None, "scope": "Bundled bin_packing training and heldout reevaluation; local subprocess, not a security sandbox. Holdout is reporting-only, not search fitness."}
@@ -403,6 +462,8 @@ def build_report(run_dir: Path) -> dict:
         raw = _bytes(candidate)
         report["export_status"] = "present"
         report["best"] = evaluate(raw, "best_workspace/" + primary)
+        report["search_outcome"] = ("Selected export is unchanged from the bundled seed."
+                                    if raw == baseline else "Selected export differs from the bundled seed; see independent score changes below.")
         report["best"]["primary_evidence"] = "manifest.best_program.primary_file" if best_record.get("primary_file") else "alpha seed.py convention; manifest has no primary declaration"
         exported = _object(_object(_object(runtime.get("best_artifact_export")).get("paths")).get("best.py"))
         expected_sha = exported.get("sha256")
@@ -463,6 +524,16 @@ def render_html(report: dict) -> str:
         return f"<section><h2>{escape(title)}</h2><pre>{escape(text)}</pre></section>"
 
     body = f"<h1>LibreEvolve alpha result</h1><p>{escape(report.get('status'))}</p><p>{escape(report.get('scope'))}</p>"
+    attempts = _object(_object(report.get("usage")).get("attempt_outcomes"))
+    body += '<section><h2>Search and provider attempt outcomes</h2>'
+    body += ''.join(f"<p>{escape(value)}</p>" for value in
+                    (report.get("search_outcome"), attempts.get("summary"), attempts.get("note")))
+    candidate_evaluations = _object(_object(report.get("runtime")).get("evaluation_counts")).get("candidate_evaluations")
+    if candidate_evaluations == 0:
+        body += '<p>The run recorded no generated candidate evaluations.</p>'
+    elif candidate_evaluations is not None:
+        body += f'<p>Generated candidate evaluations recorded by the run: {escape(candidate_evaluations)}. These counts do not establish validity or archive retention.</p>'
+    body += '</section>'
     body += block("Run status", report.get("runtime")) + block("Usage and estimated cost", report.get("usage"))
     body += '<section><h2>Independent reevaluation</h2><table><caption>Higher quality is better; correctness is required</caption><thead><tr><th scope="col">Program / split</th><th scope="col">Status</th><th scope="col">Correctness</th><th scope="col">Score</th></tr></thead><tbody>'
     for name in ("baseline", "best"):

@@ -71,3 +71,10 @@ Python 3.12 package/provenance build from exact follow-up HEAD
 `dist/b2159939/`; its wheel/sdist/provenance hashes and clean Windows
 provider-free workflow are recorded in `EVIDENCE.md`. The follow-up remains
 unpushed.
+
+The current exact package smoke was rebuilt from docs/CI-anchor commit
+`2a472c2d231fe4157f2c6afcb3e309978ccde4f8` under `dist/2a472c2d/` and
+installed into a separate clean Windows Python 3.12.10 venv. Its hashes and
+the provider-free onboarding/report/export result are recorded in
+`EVIDENCE.md`; the branch tip after that package build contains only the
+evidence-record update.

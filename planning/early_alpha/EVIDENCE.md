@@ -26,8 +26,21 @@ The follow-up wheel and sdist each contain all 455 tracked package files, and
 a clean target-directory install passed the documented provider-free
 `--help`, `alpha init`, offline doctor, zero-generation run, show, HTML report,
 and verified export smoke. This is Linux package evidence; the Windows package
-hashes below remain evidence for `8621ea69`, and the follow-up has not been
-pushed or installed on the declared Windows reference environment.
+smoke below is now also recorded for the follow-up. The follow-up has not been
+pushed.
+
+The same follow-up wheel (`f02467d24bda40b9d0dcaa976ba14b0a69e0e8f85b4306f1460b24f421b4a677`)
+was installed with Windows Python 3.12.10 into the clean venv
+`C:\Users\timot\AppData\Local\Temp\libreevolve-alpha-winverify.byuiqP`.
+`pip check`, `libreevolve --help`, and `python -m libreevolve --help` passed.
+From a separate fresh smoke directory
+`C:\Users\timot\AppData\Local\Temp\libreevolve-alpha-win-smoke.1xxHEH`,
+`alpha init`, offline `alpha doctor`, a zero-generation run, `show`, HTML
+`report`, and verified `export` all exited 0. The exported solution hash was
+`a37e6880acd271cbb5ad50b781d95b8e71d9fbbde15701505738d62f51d06507`; training
+and held-out correctness were both true with scores `0.8016472203157172` and
+`0.8121645796064401`. This remains retained-seed evidence with zero provider
+attempts, not model-guided improvement evidence.
 
 ## Implemented workflow
 
@@ -54,6 +67,15 @@ pushed or installed on the declared Windows reference environment.
 - Recorded broad loop/reliability suite: 496 passed, 2 skipped, exit 0.
 - Secret baseline review and configured all-files scan passed without weakening
   detector settings. No provider calls were made by these checks.
+
+After the POSIX cleanup follow-up, a fresh Linux Python 3.12.3 source-copy run
+passed the alpha workflow and reliability/report subset: 122 passed, 1
+Windows-only skip, plus the end-to-end workflow test (123 collected). The
+documentation, release-provenance, release-checklist, and CI-boundary subset
+at the tracked follow-up checkout passed 26/26. The source-copy run was made
+outside the Windows-mounted checkout so subprocess cleanup timing was measured
+on a native Linux filesystem; it does not change the declared Windows support
+claim.
 
 ## Exact-head package and installed verification
 

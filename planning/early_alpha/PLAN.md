@@ -8,8 +8,8 @@ Branch: codex/early-alpha-20260905. Original shared checkout is preserved.
 Candidate: 8621ea69b4d8bc6c2b5aafec75b8a90056a6a338. Merged into the private
 LibreEvolve/libreevolve master at a906b53e138c5598edc40c12154f2d5f9635d6df.
 Local follow-up commit `2b7b7e30` synchronizes POSIX verification-worker
-descendant cleanup. It is not yet pushed or included in the recorded Windows
-package artifacts.
+descendant cleanup. It is not yet pushed; its exact package artifacts and
+Windows Python 3.12.10 clean-install smoke are recorded in `EVIDENCE.md`.
 
 ## Milestones and acceptance evidence
 
@@ -20,7 +20,7 @@ package artifacts.
 | Reliability | Mill + coordinator | baseline | reproduce docs helper fault, inspect cancellation/persistence and prompt compatibility, regression tests | 496 broad loop/reliability tests pass, 2 skip |
 | Report and export verification | Plato + coordinator | example, runtime inspection | baseline/best, held-out checks, diff, usage/cost/status; failure report; HTML escaping and artifact binding | 33 combined tests pass, real offline CLI smoke passes |
 | Repeated real runs | coordinator | supported workflow, spending authorization | all attempts retained, independent seeds, comparable baseline/export reevaluation, actual usage and estimated spend | pending |
-| Package and CI | coordinator | implementation | exact candidate commit, wheel/sdist, coverage/hashes, clean Windows Python 3.12 install, CLI workflow, passing CI | 8621ea69 wheel/sdist and clean Windows Python 3.12 offline workflow verified; CI billing blocked |
+| Package and CI | coordinator | implementation | exact candidate commit, wheel/sdist, coverage/hashes, clean Windows Python 3.12 install, CLI workflow, passing CI | 8621ea69 and local follow-up artifacts plus clean Windows Python 3.12.10 offline workflow verified; CI billing blocked |
 | External usability | coordinator + participants | installed workflow | 3–5 users, time/errors/help/export comprehension, approximately 30 minutes | trial materials prepared; participant evidence pending |
 
 Initial declared reference environment: Windows with Python 3.12. Additional

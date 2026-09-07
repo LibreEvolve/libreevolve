@@ -67,6 +67,6 @@ cleanup; the focused cleanup parameters pass 3/3 and the combined report /
 reliability subset passes 62 tests with 1 Windows-only skip. A Linux Python
 3.12 wheel/sdist/provenance build from exact follow-up HEAD `ba7a4a71` is
 preserved under `dist/ba7a4a71/`; its wheel/sdist/provenance hashes are
-recorded in `EVIDENCE.md`. The installed provider-free smoke also passed from
-that exact wheel. The follow-up has not been pushed or installed on the
-declared Windows reference environment.
+recorded in `EVIDENCE.md`. The exact follow-up wheel was also installed into
+a clean Windows Python 3.12.10 venv and passed the provider-free CLI workflow;
+the follow-up remains unpushed.

@@ -1,5 +1,7 @@
 """Contracts for bounded onboarding without provider requests."""
 
+from pathlib import Path
+
 import pytest
 from click.testing import CliRunner
 
@@ -24,6 +26,211 @@ def test_oversized_budget_is_actionable_cli_error(tmp_path):
     assert result.exit_code == 1
     assert "too large" in result.output
     assert not destination.exists()
+
+
+def test_openai_pricing_options_are_required_by_validation(tmp_path):
+    runner = CliRunner()
+    for index, options, missing in (
+        ("no-price", [], "--token-price"),
+        ("no-budget", ["--token-price", "10"], "--budget-usd"),
+    ):
+        destination = tmp_path / index
+        result = runner.invoke(
+            cli,
+            ["alpha", "init", str(destination), "--model", "account-model", *options],
+        )
+        assert result.exit_code == 1, result.output
+        assert missing in result.output
+        assert not destination.exists()
+
+
+def test_codex_config_uses_bounded_subscription_semantics():
+    settings = alpha_config("gpt-5.6-luna", provider="codex")
+    backend = settings["backends"][0]
+    assert settings["max_generations"] == 3
+    assert settings["max_evaluations"] == 4
+    assert settings["max_runtime_seconds"] == 900
+    assert settings["max_llm_calls"] == 3
+    assert settings["max_llm_provider_attempts"] == 3
+    assert settings["llm_call_timeout_sec"] == 180
+    assert "max_llm_tokens" not in settings
+    assert "max_llm_cost_microusd" not in settings
+    assert backend == {
+        "type": "codex",
+        "model": "gpt-5.6-luna",
+        "cwd": ".codex-alpha-workspace",
+        "sandbox": "read-only",
+        "timeout_sec": 180,
+        "reasoning_effort": "max",
+        "auth_name": "current",
+        "ignore_user_config": True,
+        "ignore_rules": True,
+        "ephemeral": True,
+    }
+
+
+def test_codex_init_creates_empty_isolated_cwd_without_cost_claims(tmp_path):
+    import yaml
+
+    destination = tmp_path / "codex-experiment"
+    result = CliRunner().invoke(
+        cli,
+        [
+            "alpha",
+            "init",
+            str(destination),
+            "--provider",
+            "codex",
+            "--model",
+            "gpt-5.6-luna",
+        ],
+    )
+    assert result.exit_code == 0, result.output
+    config = yaml.safe_load((destination / "config.yaml").read_text())
+    backend = config["backends"][0]
+    assert backend["type"] == "codex"
+    assert backend["model"] == "gpt-5.6-luna"
+    assert backend["reasoning_effort"] == "max"
+    assert backend["sandbox"] == "read-only"
+    assert backend["auth_name"] == "current"
+    assert backend["ignore_user_config"] is True
+    assert backend["ignore_rules"] is True
+    assert backend["ephemeral"] is True
+    assert Path(backend["cwd"]).resolve() == (destination / ".codex-alpha-workspace").resolve()
+    isolated = destination / ".codex-alpha-workspace"
+    assert isolated.is_dir()
+    assert list(isolated.iterdir()) == []
+    assert "max_llm_tokens" not in config
+    assert "max_llm_cost_microusd" not in config
+    assert "per-token price" in result.output
+    assert "dollar cap" in result.output
+
+
+@pytest.mark.parametrize("flag", ["--token-price", "--budget-usd"])
+def test_codex_rejects_dollar_cap_options(tmp_path, flag):
+    destination = tmp_path / flag.lstrip("-")
+    result = CliRunner().invoke(
+        cli,
+        [
+            "alpha",
+            "init",
+            str(destination),
+            "--provider",
+            "codex",
+            "--model",
+            "gpt-5.6-luna",
+            flag,
+            "1",
+        ],
+    )
+    assert result.exit_code == 1, result.output
+    assert "not supported" in result.output
+    assert "dollar cap" in result.output
+    assert not destination.exists()
+
+
+def test_codex_doctor_checks_resolved_oauth_home_without_provider_request(tmp_path, monkeypatch):
+    import subprocess
+    import types
+    import yaml
+
+    import libreevolve.alpha as alpha_module
+    import libreevolve.cli as cli_module
+    import libreevolve.llm.codex_cli as codex_module
+
+    destination = tmp_path / "codex-doctor"
+    created = CliRunner().invoke(
+        cli,
+        [
+            "alpha",
+            "init",
+            str(destination),
+            "--provider",
+            "codex",
+            "--model",
+            "gpt-5.6-luna",
+        ],
+    )
+    assert created.exit_code == 0, created.output
+    config_path = destination / "config.yaml"
+    config = yaml.safe_load(config_path.read_text())
+    auth_home = tmp_path / "oauth-current"
+    config["backends"][0]["auth_homes"] = {"current": str(auth_home)}
+    config_path.write_text(yaml.safe_dump(config))
+
+    seen = {}
+
+    class _StatusResult:
+        returncode = 0
+        stdout = "Logged in using ChatGPT\n"
+        stderr = ""
+
+    def fake_run(command, **kwargs):
+        seen["command"] = command
+        seen.update(kwargs)
+        return _StatusResult()
+
+    fake_subprocess = types.SimpleNamespace(
+        run=fake_run,
+        TimeoutExpired=subprocess.TimeoutExpired,
+    )
+    monkeypatch.setattr(alpha_module, "subprocess", fake_subprocess)
+    monkeypatch.setattr(codex_module, "_resolve_codex_command", lambda: "codex")
+    monkeypatch.setenv("OPENAI_API_KEY", "must-not-reach-codex-status")
+
+    def unexpected_dotenv():
+        raise AssertionError("Codex doctor must not load OpenAI .env credentials")
+
+    monkeypatch.setattr(cli_module, "_load_cli_dotenv", unexpected_dotenv)
+    result = CliRunner().invoke(cli, ["alpha", "doctor", str(destination)])
+    assert result.exit_code == 0, result.output
+    assert seen["command"] == ["codex", "login", "status"]
+    assert seen["timeout"] == 5.0
+    assert seen["env"]["CODEX_HOME"] == str(auth_home.resolve())
+    assert "OPENAI_API_KEY" not in seen["env"]
+    assert "exec" not in seen["command"]
+    assert "Codex executable/login status: passed" in result.output
+    assert "no provider request" in result.output
+    assert "subscription-backed" in result.output
+
+
+def test_codex_doctor_rejects_api_key_status_without_printing_status_output(tmp_path, monkeypatch):
+    import subprocess
+    import types
+
+    import libreevolve.alpha as alpha_module
+    import libreevolve.llm.codex_cli as codex_module
+
+    destination = tmp_path / "codex-api-key"
+    created = CliRunner().invoke(
+        cli,
+        [
+            "alpha",
+            "init",
+            str(destination),
+            "--provider",
+            "codex",
+            "--model",
+            "gpt-5.6-luna",
+        ],
+    )
+    assert created.exit_code == 0, created.output
+
+    class _StatusResult:
+        returncode = 0
+        stdout = "Logged in using an API key: sk-test-secret\n"
+        stderr = ""
+
+    fake_subprocess = types.SimpleNamespace(
+        run=lambda *args, **kwargs: _StatusResult(),
+        TimeoutExpired=subprocess.TimeoutExpired,
+    )
+    monkeypatch.setattr(alpha_module, "subprocess", fake_subprocess)
+    monkeypatch.setattr(codex_module, "_resolve_codex_command", lambda: "codex")
+    result = CliRunner().invoke(cli, ["alpha", "doctor", str(destination)])
+    assert result.exit_code == 1
+    assert "ChatGPT OAuth" in result.output
+    assert "sk-test-secret" not in result.output
 
 
 def test_initialized_task_has_bounded_config_and_no_credentials(tmp_path):

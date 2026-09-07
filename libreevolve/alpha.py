@@ -5,8 +5,10 @@ from __future__ import annotations
 from importlib.resources import files
 import json
 import math
+import os
 from pathlib import Path
 import shutil
+import subprocess
 
 import click
 import yaml
@@ -15,15 +17,28 @@ from libreevolve.core.config import Config
 from libreevolve.core.redaction import redact_sensitive_text
 
 
-def alpha_config(model: str, token_price: float, budget_usd: float) -> dict:
-    """Create explicit limits; prices are supplied by the user, not guessed."""
-    if not math.isfinite(token_price) or token_price <= 0:
-        raise ValueError("Token price must be finite and greater than zero.")
-    if not math.isfinite(budget_usd) or budget_usd < 0.000001:
-        raise ValueError("Estimated budget must be finite and at least $0.000001.")
-    budget_microusd = budget_usd * 1_000_000
-    if not math.isfinite(budget_microusd):
-        raise ValueError("Estimated budget is too large to represent in microdollars.")
+_CODEX_CWD_NAME = ".codex-alpha-workspace"
+_CODEX_LOGIN_STATUS_TIMEOUT_SECONDS = 5.0
+
+
+def alpha_config(
+    model: str,
+    token_price: float | None = None,
+    budget_usd: float | None = None,
+    *,
+    provider: str = "openai",
+    codex_cwd: str | None = None,
+) -> dict:
+    """Create a bounded alpha config for OpenAI or subscription-backed Codex.
+
+    OpenAI requires caller-supplied pricing and an estimated dollar threshold.
+    Codex OAuth has no provider price or dollar-quota signal, so its config
+    deliberately leaves token and cost budgets unset and bounds only local
+    work (calls, evaluations, and wall-clock time).
+    """
+    if provider not in {"openai", "codex"}:
+        raise ValueError("Provider must be either openai or codex.")
+
     settings = {
         "max_generations": 10,
         "max_evaluations": 11,
@@ -31,20 +46,59 @@ def alpha_config(model: str, token_price: float, budget_usd: float) -> dict:
         "eval_timeout_sec": 10,
         "max_llm_calls": 10,
         "max_llm_provider_attempts": 10,
-        "max_llm_tokens": 60000,
-        "max_llm_cost_microusd": int(budget_microusd),
         "llm_max_retries": 0,
         "llm_max_call_attempts": 1,
         "llm_fallback": False,
         "llm_call_timeout_sec": 60,
         "mutation_mode": "full",
         "seed": 42,
-        "backends": [{
-            "type": "openai", "model": model, "api_mode": "responses",
-            "max_tokens": 2048, "timeout_sec": 60, "provider_max_retries": 0,
-            "cost_usd_per_million_tokens": token_price,
-        }],
     }
+
+    if provider == "openai":
+        if token_price is None:
+            raise ValueError("OpenAI alpha init requires --token-price.")
+        if budget_usd is None:
+            raise ValueError("OpenAI alpha init requires --budget-usd.")
+        if not math.isfinite(token_price) or token_price <= 0:
+            raise ValueError("Token price must be finite and greater than zero.")
+        if not math.isfinite(budget_usd) or budget_usd < 0.000001:
+            raise ValueError("Estimated budget must be finite and at least $0.000001.")
+        budget_microusd = budget_usd * 1_000_000
+        if not math.isfinite(budget_microusd):
+            raise ValueError("Estimated budget is too large to represent in microdollars.")
+        settings.update(
+            max_llm_tokens=60000,
+            max_llm_cost_microusd=int(budget_microusd),
+            backends=[{
+                "type": "openai", "model": model, "api_mode": "responses",
+                "max_tokens": 2048, "timeout_sec": 60, "provider_max_retries": 0,
+                "cost_usd_per_million_tokens": token_price,
+            }],
+        )
+    else:
+        if token_price is not None or budget_usd is not None:
+            raise ValueError(
+                "Codex OAuth uses subscription usage; --token-price and --budget-usd "
+                "are not supported and no dollar cap can be claimed."
+            )
+        settings.update(
+            max_generations=3,
+            max_evaluations=4,
+            max_llm_calls=3,
+            max_llm_provider_attempts=3,
+            llm_call_timeout_sec=180,
+            backends=[{
+                "type": "codex", "model": model,
+                "cwd": codex_cwd or _CODEX_CWD_NAME,
+                "sandbox": "read-only",
+                "timeout_sec": 180,
+                "reasoning_effort": "max",
+                "auth_name": "current",
+                "ignore_user_config": True,
+                "ignore_rules": True,
+                "ephemeral": True,
+            }],
+        )
     Config(**settings).validate()
     return settings
 
@@ -56,32 +110,65 @@ def alpha() -> None:
 
 @alpha.command("init")
 @click.argument("destination", type=click.Path(path_type=Path))
-@click.option("--model", required=True, help="OpenAI model available to your account.")
-@click.option("--token-price", required=True, type=float,
+@click.option("--provider", type=click.Choice(["openai", "codex"]), default="openai",
+              show_default=True, help="Provider lane for this alpha task.")
+@click.option("--model", required=True, help="Model available to the selected provider.")
+@click.option("--token-price", required=False, type=float,
               help="Conservative USD per million tokens; use the higher input/output rate.")
-@click.option("--budget-usd", required=True, type=float,
+@click.option("--budget-usd", required=False, type=float,
               help="Estimated per-run cost threshold, not a guaranteed billing cap.")
-def initialize(destination: Path, model: str, token_price: float, budget_usd: float) -> None:
+def initialize(
+    destination: Path,
+    provider: str,
+    model: str,
+    token_price: float | None,
+    budget_usd: float | None,
+) -> None:
     """Create a bin-packing task in a new directory. Makes no provider calls."""
     try:
-        settings = alpha_config(model, token_price, budget_usd)
         if destination.exists() or destination.is_symlink():
             raise ValueError("Destination already exists. Choose a new directory.")
+        codex_cwd = (
+            str((destination / _CODEX_CWD_NAME).resolve())
+            if provider == "codex"
+            else None
+        )
+        settings = alpha_config(
+            model,
+            token_price,
+            budget_usd,
+            provider=provider,
+            codex_cwd=codex_cwd,
+        )
         source = files("libreevolve.problems.examples").joinpath("bin_packing")
         # Wheels are installed as ordinary directories; copy only task assets.
         shutil.copytree(Path(str(source)), destination,
                         ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+        if provider == "codex":
+            # Keep the Codex process rooted in an empty directory rather than
+            # the task root, which contains the evaluator and holdout corpus.
+            (destination / _CODEX_CWD_NAME).mkdir()
         (destination / "config.yaml").write_text(
             yaml.safe_dump(settings, sort_keys=False), encoding="utf-8"
         )
     except (OSError, ValueError) as exc:
         raise click.ClickException(redact_sensitive_text(str(exc))) from exc
     click.echo(f"Created {destination}")
-    click.echo("Set OPENAI_API_KEY, then run:")
+    if provider == "codex":
+        click.echo("Use an existing Codex ChatGPT/OAuth login, then run:")
+    else:
+        click.echo("Set OPENAI_API_KEY, then run:")
     click.echo(f'  libreevolve alpha doctor "{destination}"')
     click.echo(f'  libreevolve run "{destination}" --run-name first-experiment --progress')
-    click.echo("Estimated cost limits use configured prices and reported usage; "
-               "an in-flight call may exceed a threshold. Provider billing can differ.")
+    if provider == "codex":
+        click.echo(
+            "Codex uses subscription usage: token usage may be reported, but no "
+            "per-token price, dollar cap, or hard token bound is configured. "
+            "Call and runtime limits are local bounds; quota and charges remain unknown."
+        )
+    else:
+        click.echo("Estimated cost limits use configured prices and reported usage; "
+                   "an in-flight call may exceed a threshold. Provider billing can differ.")
 
 
 @alpha.command("doctor")
@@ -100,33 +187,126 @@ def doctor(problem_dir: Path, offline: bool) -> None:
         problem = load_problem(problem_dir)
         config = _build_config(problem, None, None, None, None, None, [], [], None)
         config.validate()
-        if len(config.backends) != 1 or config.backends[0]["type"] != "openai":
-            raise ValueError("The alpha onboarding path supports one OpenAI backend.")
-        limits = ("max_evaluations", "max_runtime_seconds", "max_llm_calls",
-                  "max_llm_provider_attempts", "max_llm_tokens", "max_llm_cost_microusd")
+        if len(config.backends) != 1 or config.backends[0].get("type") not in {"openai", "codex"}:
+            raise ValueError("The alpha onboarding path supports one OpenAI or Codex backend.")
+        provider = config.backends[0]["type"]
+        limits = (
+            "max_evaluations",
+            "max_runtime_seconds",
+            "max_llm_calls",
+            "max_llm_provider_attempts",
+        )
         if any(getattr(config, name) is None for name in limits):
-            raise ValueError("Alpha runs require explicit evaluation, runtime, call, token and cost limits.")
-        if not config.backends[0].get("cost_usd_per_million_tokens"):
-            raise ValueError("Set cost_usd_per_million_tokens using current provider pricing.")
+            raise ValueError("Alpha runs require explicit evaluation, runtime, call and provider-attempt limits.")
+        if provider == "openai":
+            limits += ("max_llm_tokens", "max_llm_cost_microusd")
+            if any(getattr(config, name) is None for name in limits):
+                raise ValueError("OpenAI alpha runs require explicit token and cost limits.")
+            if not config.backends[0].get("cost_usd_per_million_tokens"):
+                raise ValueError("Set cost_usd_per_million_tokens using current provider pricing.")
+        else:
+            if (
+                config.max_llm_tokens is not None
+                or config.max_llm_cost_microusd is not None
+                or config.llm_role_token_limits
+                or config.llm_role_cost_microusd_limits
+                or config.backends[0].get("cost_usd_per_million_tokens") is not None
+            ):
+                raise ValueError(
+                    "Codex alpha runs do not support token or dollar caps; "
+                    "subscription usage and cost are not observable."
+                )
         _preflight_run_contracts(problem, config)
         mutation_enabled = _mutation_llm_can_run(problem, config)
         if not offline and mutation_enabled:
-            _load_cli_dotenv()
-            _preflight_llm_backends_if_needed(problem, config)
+            if provider == "codex":
+                ok, status = _codex_login_status(config.backends[0])
+                if not ok:
+                    raise ValueError(f"Codex local setup check failed: {status}")
+            else:
+                _load_cli_dotenv()
+                _preflight_llm_backends_if_needed(problem, config)
     except (OSError, ValueError) as exc:
         raise click.ClickException(redact_sensitive_text(str(exc))) from exc
     click.echo("Task and evaluator contract: passed (local subprocess).")
-    click.echo(f"Provider: openai; model: {config.backends[0]['model']}")
+    click.echo(f"Provider: {provider}; model: {config.backends[0]['model']}")
     for name in limits:
         click.echo(f"{name}: {getattr(config, name)}")
     if offline:
         click.echo("Credential checks: skipped (offline)")
     elif not mutation_enabled:
         click.echo("Local provider setup: skipped (mutation disabled by configured limits)")
+    elif provider == "codex":
+        click.echo("Codex executable/login status: passed (local bounded check; no provider request)")
     else:
         click.echo("Local provider setup: passed")
+    if provider == "codex":
+        click.echo(
+            "Codex usage: subscription-backed; reported tokens are observational only, "
+            "with no hard token bound or per-token price."
+        )
+        click.echo(
+            "Codex cost/quota: unknown; this configuration makes no dollar-cap claim."
+        )
     click.echo("Model access and billing remain unverified until a real request succeeds.")
     click.echo("Candidate execution inherits host access. Use a trusted local task.")
+
+
+def _codex_login_status(backend: dict | None = None) -> tuple[bool, str]:
+    """Check local Codex OAuth status without invoking a model request.
+
+    The status command owns any credential inspection. This helper only sees
+    its exit status and bounded, generic diagnostics; it never opens auth
+    files or prints command output. The selected auth home is resolved from
+    the same backend fields used by the actual Codex adapter, and the child
+    cannot fall back to an inherited OpenAI API key.
+    """
+    backend = backend or {"auth_name": "current"}
+    try:
+        from libreevolve.llm.codex_cli import _resolve_codex_command
+
+        command = _resolve_codex_command()
+    except (OSError, RuntimeError, ValueError):
+        return False, "Codex executable was not found on PATH"
+    try:
+        from libreevolve.llm.codex_cli import _resolve_codex_auth
+
+        auth = _resolve_codex_auth(
+            codex_home=backend.get("codex_home"),
+            auth_name=backend.get("auth_name"),
+            auth_homes=backend.get("auth_homes"),
+            auth_registry_path=backend.get("auth_registry_path"),
+        )
+    except (OSError, RuntimeError, ValueError):
+        return False, "Codex auth selection could not be resolved"
+    env = os.environ.copy()
+    env.pop("OPENAI_API_KEY", None)
+    if auth.home:
+        env["CODEX_HOME"] = auth.home
+    try:
+        result = subprocess.run(
+            [command, "login", "status"],
+            capture_output=True,
+            text=True,
+            timeout=_CODEX_LOGIN_STATUS_TIMEOUT_SECONDS,
+            check=False,
+            env=env,
+        )
+    except subprocess.TimeoutExpired:
+        return False, (
+            "Codex login status timed out after "
+            f"{_CODEX_LOGIN_STATUS_TIMEOUT_SECONDS:g} seconds"
+        )
+    except (FileNotFoundError, OSError):
+        return False, "Codex login status could not be started"
+    if result.returncode != 0:
+        return False, "Codex login status reported no usable local login"
+    status_text = "\n".join(
+        value for value in (result.stdout or "", result.stderr or "") if value
+    )
+    if "chatgpt" not in status_text.casefold():
+        return False, "Codex login status did not report a ChatGPT OAuth login"
+    return True, "Codex login status reported a local login"
 
 
 def register_alpha(cli: click.Group) -> None:

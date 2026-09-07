@@ -1,7 +1,8 @@
 # Real-model validation protocol
 
-Status: pending implementation completion and explicit aggregate spending cap.
-No live requests have been made for this goal.
+Status: OpenAI API cohort pending; the authorized Codex OAuth cohort is specified
+in `CODEX_OAUTH_TRIAL.md`. An OAuth access probe succeeded; a separate earlier
+API diagnostic failed authentication, as recorded in `EVIDENCE.md`.
 
 Use the installed candidate wheel on Windows Python 3.12. Select a currently
 available OpenAI model using account evidence and record the official pricing

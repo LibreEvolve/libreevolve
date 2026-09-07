@@ -11,9 +11,20 @@ from libreevolve.llm.codex_cli import CodexCLIBackend, _resolve_codex_auth
 class _FakeCodexProcess:
     returncode = 0
 
-    def __init__(self, cmd, *args, output_text="OK", seen=None, **kwargs):
+    def __init__(
+        self,
+        cmd,
+        *args,
+        output_text="OK",
+        stdout_text="codex stdout",
+        returncode=0,
+        seen=None,
+        **kwargs,
+    ):
         self.cmd = cmd
         self.output_text = output_text
+        self.stdout_text = stdout_text
+        self.returncode = returncode
         self.seen = seen if seen is not None else {}
         self.seen["cmd"] = cmd
         self.seen["env"] = kwargs["env"]
@@ -25,7 +36,7 @@ class _FakeCodexProcess:
         output_path = self.cmd[self.cmd.index("--output-last-message") + 1]
         with open(output_path, "w", encoding="utf-8") as handle:
             handle.write(self.output_text)
-        return "codex stdout", "codex stderr"
+        return self.stdout_text, "codex stderr"
 
     def poll(self):
         return 0
@@ -267,6 +278,122 @@ def test_codex_backend_extracts_configured_json_output_field(tmp_path, monkeypat
 
     assert backend.generate("Return JSON") == "PATCH"
     assert "--output-schema" in seen["cmd"]
+
+
+def test_codex_backend_captures_completed_json_usage_and_keeps_raw_transcript(
+    tmp_path,
+    monkeypatch,
+):
+    seen = {}
+    stdout = "\n".join(
+        [
+            json.dumps({"type": "thread.started", "thread_id": "thread-1"}),
+            json.dumps(
+                {
+                    "type": "turn.completed",
+                    "usage": {
+                        "input_tokens": 100,
+                        "cached_input_tokens": 40,
+                        "cache_write_input_tokens": 3,
+                        "output_tokens": 20,
+                        "reasoning_output_tokens": 8,
+                    },
+                }
+            ),
+        ]
+    )
+
+    def fake_popen(cmd, *args, **kwargs):
+        return _FakeCodexProcess(
+            cmd,
+            *args,
+            stdout_text=stdout,
+            seen=seen,
+            **kwargs,
+        )
+
+    transcript_dir = tmp_path / "transcripts"
+    monkeypatch.setattr("libreevolve.llm.codex_cli._resolve_codex_command", lambda: "codex")
+    monkeypatch.setattr("libreevolve.llm.codex_cli.subprocess.Popen", fake_popen)
+
+    backend = CodexCLIBackend(
+        model="gpt-5.6-luna",
+        cwd=str(tmp_path),
+        transcript_dir=str(transcript_dir),
+    )
+
+    assert backend.generate("Return OK") == "OK"
+    assert "--json" in seen["cmd"]
+    assert backend.provider_response_metadata["usage"] == {
+        "input_tokens": 100,
+        "output_tokens": 20,
+        "total_tokens": 120,
+    }
+    diagnostics = backend.provider_response_metadata["provider_diagnostics"]
+    assert {
+        item["key"]: item["value"]
+        for item in diagnostics["items"]
+    } == {
+        "adapter_attempt_scope": "codex_cli_process",
+        "cached_input_tokens": 40,
+        "cache_write_input_tokens": 3,
+        "provider_internal_retry_status": "unknown",
+        "reasoning_output_tokens": 8,
+    }
+    assert backend.provider_response_metadata["adapter_retry"] == {
+        "policy": "bounded_provider_internal_retries",
+        "max_retries": 0,
+        "attempts": 1,
+        "failed_attempts": 0,
+        "failures": [],
+    }
+
+    transcript_path = next(transcript_dir.glob("codex_cli_*.json"))
+    transcript = json.loads(transcript_path.read_text(encoding="utf-8"))
+    assert transcript["stdout"] == stdout
+    assert transcript["final_message"] == "OK"
+
+
+def test_codex_backend_records_failed_attempt_without_fabricating_usage(
+    tmp_path,
+    monkeypatch,
+):
+    seen = {}
+    stdout = json.dumps(
+        {
+            "type": "turn.failed",
+            "error": {"message": "provider unavailable"},
+        }
+    )
+
+    def fake_popen(cmd, *args, **kwargs):
+        return _FakeCodexProcess(
+            cmd,
+            *args,
+            output_text="",
+            stdout_text=stdout,
+            returncode=17,
+            seen=seen,
+            **kwargs,
+        )
+
+    monkeypatch.setattr("libreevolve.llm.codex_cli._resolve_codex_command", lambda: "codex")
+    monkeypatch.setattr("libreevolve.llm.codex_cli.subprocess.Popen", fake_popen)
+
+    backend = CodexCLIBackend(model="gpt-5.6-luna", cwd=str(tmp_path))
+
+    with pytest.raises(RuntimeError, match="exit code 17"):
+        backend.generate("Return OK")
+
+    metadata = backend.provider_response_metadata
+    assert metadata.get("usage") is None
+    assert metadata["adapter_retry"] == {
+        "policy": "bounded_provider_internal_retries",
+        "max_retries": 0,
+        "attempts": 1,
+        "failed_attempts": 1,
+        "failures": [{"attempt": 0, "error_type": "RuntimeError"}],
+    }
 
 
 def test_codex_backend_strips_openai_api_key_when_using_codex_home(tmp_path, monkeypatch):

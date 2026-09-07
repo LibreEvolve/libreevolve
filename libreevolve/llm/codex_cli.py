@@ -12,6 +12,19 @@ import time
 from dataclasses import dataclass
 from pathlib import Path
 
+from libreevolve.llm.provider_metadata import (
+    copy_provider_response_metadata,
+    safe_provider_response_metadata,
+)
+from libreevolve.llm.provider_retry import (
+    provider_retry_failure,
+    with_provider_retry_metadata,
+)
+
+
+_CODEX_JSON_MAX_EVENTS = 512
+_CODEX_JSON_MAX_EVENT_CHARS = 100_000
+
 
 class CodexCLIBackend:
     """Custom backend that delegates text generation to the local Codex CLI."""
@@ -63,14 +76,21 @@ class CodexCLIBackend:
         self._output_json_field = output_json_field
         self._enable_features = tuple(_normalize_feature_list(enable_features))
         self._disable_features = tuple(_normalize_feature_list(disable_features))
+        self._provider_response_metadata: dict = {}
 
     @property
     def name(self) -> str:
         return f"codex-cli/{self._model}"
 
+    @property
+    def provider_response_metadata(self) -> dict:
+        return copy_provider_response_metadata(self._provider_response_metadata)
+
     def generate(self, prompt: str, **kwargs) -> str:
         if not isinstance(prompt, str) or not prompt.strip():
             raise ValueError("prompt must be non-empty text")
+
+        self._provider_response_metadata = {}
 
         cwd = Path(self._cwd).resolve()
         with tempfile.NamedTemporaryFile(
@@ -96,6 +116,7 @@ class CodexCLIBackend:
             str(output_path),
             "--color",
             "never",
+            "--json",
         ]
         if self._ignore_user_config:
             cmd.append("--ignore-user-config")
@@ -127,19 +148,26 @@ class CodexCLIBackend:
             creationflags = 0
             if os.name == "nt":
                 creationflags = subprocess.CREATE_NEW_PROCESS_GROUP
-            proc = subprocess.Popen(
-                cmd,
-                stdin=subprocess.PIPE,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                cwd=str(cwd),
-                env=env,
-                text=True,
-                encoding="utf-8",
-                errors="replace",
-                creationflags=creationflags,
-                start_new_session=os.name != "nt",
-            )
+            try:
+                proc = subprocess.Popen(
+                    cmd,
+                    stdin=subprocess.PIPE,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    cwd=str(cwd),
+                    env=env,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    creationflags=creationflags,
+                    start_new_session=os.name != "nt",
+                )
+            except Exception as exc:
+                self._provider_response_metadata = _codex_attempt_metadata(
+                    _codex_json_metadata(""),
+                    failure=exc,
+                )
+                raise
             try:
                 stdout, stderr = proc.communicate(prompt, timeout=self._timeout_sec)
                 returncode = proc.returncode
@@ -155,6 +183,13 @@ class CodexCLIBackend:
                     returncode=proc.returncode if proc.returncode is not None else -9,
                     stdout=stdout or "",
                     stderr=stderr or "",
+                )
+                timeout_error = TimeoutError(
+                    f"codex exec timed out after {self._timeout_sec:g} seconds"
+                )
+                self._provider_response_metadata = _codex_attempt_metadata(
+                    _codex_json_metadata(_codex_text(stdout)),
+                    failure=timeout_error,
                 )
                 try:
                     raw_output = output_path.read_text(encoding="utf-8")
@@ -184,9 +219,7 @@ class CodexCLIBackend:
                     enable_features=list(self._enable_features),
                     disable_features=list(self._disable_features),
                 )
-                raise TimeoutError(
-                    f"codex exec timed out after {self._timeout_sec:g} seconds"
-                ) from exc
+                raise timeout_error from exc
 
             completed = subprocess.CompletedProcess(
                 cmd,
@@ -194,6 +227,7 @@ class CodexCLIBackend:
                 stdout=stdout or "",
                 stderr=stderr or "",
             )
+            self._provider_response_metadata = _codex_json_metadata(completed.stdout)
             try:
                 raw_output = output_path.read_text(encoding="utf-8")
             except OSError:
@@ -231,14 +265,34 @@ class CodexCLIBackend:
             )
             if completed.returncode != 0:
                 stderr = completed.stderr.strip() or completed.stdout.strip()
-                raise RuntimeError(
+                failure = RuntimeError(
                     f"codex exec failed with exit code {completed.returncode}: "
                     f"{stderr[:2000]}"
                 )
+                self._provider_response_metadata = _codex_attempt_metadata(
+                    self._provider_response_metadata,
+                    failure=failure,
+                )
+                raise failure
             if output_error is not None:
-                raise RuntimeError(f"codex exec returned invalid structured output: {output_error}")
+                failure = RuntimeError(
+                    f"codex exec returned invalid structured output: {output_error}"
+                )
+                self._provider_response_metadata = _codex_attempt_metadata(
+                    self._provider_response_metadata,
+                    failure=failure,
+                )
+                raise failure
             if not output.strip():
-                raise RuntimeError("codex exec returned an empty final message")
+                failure = RuntimeError("codex exec returned an empty final message")
+                self._provider_response_metadata = _codex_attempt_metadata(
+                    self._provider_response_metadata,
+                    failure=failure,
+                )
+                raise failure
+            self._provider_response_metadata = _codex_attempt_metadata(
+                self._provider_response_metadata,
+            )
             return output
         finally:
             if proc is not None and proc.poll() is None:
@@ -320,6 +374,121 @@ def _extract_json_field(text: str, field_name: str) -> str:
     value = data.get(field_name)
     if not isinstance(value, str) or not value.strip():
         raise ValueError(f"expected non-empty string field {field_name!r}")
+    return value
+
+
+def _codex_json_metadata(stdout: object) -> dict:
+    """Extract bounded usage data from Codex's JSONL event stream.
+
+    Codex reports cache and reasoning counters alongside the input/output
+    counters, but the shared provider metadata usage schema only has the
+    normalized input/output/total fields.  Keep the extra provider counters as
+    bounded scalar diagnostics rather than inventing new usage fields.
+    """
+    metadata: dict[str, object] = {
+        "usage": None,
+        "provider_diagnostics": {
+            "adapter_attempt_scope": "codex_cli_process",
+            "provider_internal_retry_status": "unknown",
+        },
+    }
+    if not isinstance(stdout, str):
+        return metadata
+
+    completed_metadata: dict[str, object] | None = None
+    try:
+        lines = stdout.splitlines()
+    except Exception:
+        return metadata
+    for line in lines[-_CODEX_JSON_MAX_EVENTS:]:
+        if len(line) > _CODEX_JSON_MAX_EVENT_CHARS:
+            continue
+        try:
+            event = json.loads(line)
+        except (TypeError, ValueError):
+            continue
+        if not isinstance(event, dict) or event.get("type") != "turn.completed":
+            continue
+        candidate = _codex_usage_metadata(event.get("usage"))
+        if candidate is not None:
+            if completed_metadata is None:
+                completed_metadata = {
+                    "usage": None,
+                    "provider_diagnostics": {},
+                }
+            completed_metadata["usage"] = candidate.get("usage")
+            completed_metadata["provider_diagnostics"].update(
+                candidate.get("provider_diagnostics") or {}
+            )
+    if completed_metadata is not None:
+        metadata["usage"] = completed_metadata["usage"]
+        metadata["provider_diagnostics"].update(
+            completed_metadata["provider_diagnostics"]
+        )
+    return safe_provider_response_metadata(metadata)
+
+
+def _codex_usage_metadata(raw_usage: object) -> dict[str, object] | None:
+    if not isinstance(raw_usage, dict):
+        return None
+
+    input_tokens = _safe_nonnegative_int(raw_usage.get("input_tokens"))
+    output_tokens = _safe_nonnegative_int(raw_usage.get("output_tokens"))
+    total_tokens = _safe_nonnegative_int(raw_usage.get("total_tokens"))
+    if total_tokens is None and input_tokens is not None and output_tokens is not None:
+        total_tokens = input_tokens + output_tokens
+
+    usage: dict[str, int] = {}
+    if input_tokens is not None:
+        usage["input_tokens"] = input_tokens
+    if output_tokens is not None:
+        usage["output_tokens"] = output_tokens
+    if total_tokens is not None:
+        usage["total_tokens"] = total_tokens
+
+    diagnostics: dict[str, int] = {}
+    for field_name in (
+        "cached_input_tokens",
+        "cache_write_input_tokens",
+        "reasoning_output_tokens",
+    ):
+        value = _safe_nonnegative_int(raw_usage.get(field_name))
+        if value is not None:
+            diagnostics[field_name] = value
+
+    if not usage and not diagnostics:
+        return None
+    return {
+        "usage": usage or None,
+        "provider_diagnostics": diagnostics or None,
+    }
+
+
+def _codex_attempt_metadata(
+    metadata: object,
+    *,
+    failure: BaseException | None = None,
+) -> dict:
+    try:
+        normalized = safe_provider_response_metadata(metadata)
+    except Exception:
+        normalized = {"usage": None}
+    failures = [provider_retry_failure(0, failure)] if failure is not None else []
+    return with_provider_retry_metadata(
+        normalized,
+        max_retries=0,
+        attempts=1,
+        failures=failures,
+    )
+
+
+def _codex_text(value: object) -> str:
+    return value if isinstance(value, str) else ""
+
+
+def _safe_nonnegative_int(value: object) -> int | None:
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        return None
     return value
 
 

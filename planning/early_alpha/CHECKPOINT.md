@@ -1,5 +1,15 @@
 # Current continuation checkpoint
 
+## 2026-09-07 OAuth continuation
+
+The user authorized Luna at max reasoning through Codex OAuth. A live
+`gpt-5.6-luna` access probe succeeded and returned CLI token usage. Work is
+continuing on adapter accounting and OAuth onboarding before the three-run
+bin-packing cohort described in `CODEX_OAUTH_TRIAL.md`. The earlier requirement
+to ask again for OAuth usage authorization was an overly narrow interpretation.
+CI is excluded by user instruction. External usability can remain explicitly
+pending under the original objective. The sections below record prior evidence.
+
 The early-alpha goal remains active because the required real-provider and
 external-usability gates are not complete. This checkpoint is the current
 state, not an authorization to spend or contact participants.

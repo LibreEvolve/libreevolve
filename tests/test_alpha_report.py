@@ -15,6 +15,20 @@ def baseline():
     return (reporting.BUNDLED_PROBLEM / "initial_programs/seed.py").read_bytes()
 
 
+def test_codex_usage_retains_tokens_without_fabricating_subscription_cost(tmp_path):
+    manifest = {"config": {"backends": [{"type": "codex", "model": "gpt-5.6-luna"}]},
+                "runtime": {"consumed": {"llm_calls": 1, "llm_tokens": 12,
+                                         "llm_cost_microusd": 0}}}
+    (tmp_path / "llm_calls.jsonl").write_text(json.dumps({
+        "backend_name": "codex-cli/gpt-5.6-luna",
+        "usage": {"input_tokens": 9, "output_tokens": 3, "total_tokens": 12},
+    }) + "\n", encoding="utf-8")
+    usage = reporting._usage(tmp_path, manifest, [])
+    assert usage["total_tokens"] == 12
+    assert usage["estimated_cost_usd"] is None
+    assert "does not mean zero cost" in usage["note"]
+
+
 def run_fixture(tmp_path, manifest=None, code=None):
     (tmp_path / "best_workspace").mkdir()
     (tmp_path / "best_workspace/seed.py").write_bytes(baseline() if code is None else code)

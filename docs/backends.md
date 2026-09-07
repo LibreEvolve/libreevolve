@@ -585,6 +585,8 @@ Behavior:
 
 - runs `codex exec` from the local PATH with the prompt on stdin and captures
   the final message through `--output-last-message`
+- reads `--json` completion events for reported input/output/total tokens;
+  cached and reasoning counters are retained as bounded diagnostics when present
 - passes `--model`, `--sandbox`, `--cd`, `--profile`, `--ignore-user-config`,
   `--ignore-rules`, `--ephemeral`, repeated `--enable`/`--disable` flags, and
   selected `-c` config overrides when configured
@@ -606,8 +608,8 @@ Current limitations:
 
 - no credential-safe live smoke test is committed
 - no live Codex model availability preflight is performed before a run
-- no provider-native token usage, cost accounting, finish reason, request id, or
-  SDK-style retry telemetry is available through this adapter yet
+- dollar cost, finish reason, request id, and internal provider retry counts
+  are not reported; attempt accounting counts local CLI invocations
 - no run-manifest/report integration promotes Codex CLI runs to
   benchmark-claim-ready provider evidence
 - cancellation is local process cleanup, not a provider-side cancellation

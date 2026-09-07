@@ -268,6 +268,13 @@ def _usage(run_dir: Path, manifest: dict, issues: list) -> dict:
     if isinstance(backends, list):
         result["configured_models"] = [b["model"] for b in backends
                                        if isinstance(b, dict) and isinstance(b.get("model"), str)]
+        if backends and all(isinstance(b, dict) and b.get("type") == "codex" for b in backends):
+            result["note"] = (
+                "Codex CLI reports token usage. Subscription charges and remaining quota "
+                "are not reported; a missing dollar estimate does not mean zero cost. "
+                "Call and runtime limits bound local work; an in-flight call can exceed "
+                "a token threshold."
+            )
     path = run_dir / "llm_calls.jsonl"
     rows = []
     complete = True

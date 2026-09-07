@@ -101,3 +101,10 @@ clean installed venv passed `pip check`, both CLI help entrypoints, offline
 init/doctor, zero-generation run/show/report, and verified export; training and
 held-out correctness remained true at `0.8016472203157172` and
 `0.8121645796064401`. This is provider-free retained-seed evidence.
+
+One separate exploratory one-generation diagnostic inherited an existing
+Windows `OPENAI_API_KEY` and made one request to placeholder model
+`offline-model`; it failed with authentication 401, zero tokens, zero cost,
+and no retry. Its redacted failure records are retained outside the source
+tree. This was not an authorized cohort run; the documented zero-generation
+smoke remains the provider-free acceptance evidence.

@@ -254,3 +254,15 @@ verification JSON SHA-256
 `0fcb136c10cb2da3feb699fc11e2075e8e7f02fef07ee4c1ade793168ca90516`.
 Provider attempts were zero; this remains retained-seed evidence, not
 model-guided improvement evidence.
+
+## Separate credential-bearing diagnostic
+
+An exploratory one-generation command was run separately from the documented
+zero-generation smoke to check failure persistence. The Windows host inherited
+an existing `OPENAI_API_KEY` (the value was never inspected), so this command
+made one OpenAI Responses attempt against the placeholder model
+`offline-model`. The provider returned authentication failure 401; the run
+retained its redacted `llm_calls.jsonl` and `failure_history.jsonl` records,
+used zero input/output tokens and zero estimated cost, and performed no retry.
+The run is not part of the real-model cohort and is not improvement evidence;
+the documented seed-only smoke still recorded zero provider attempts.

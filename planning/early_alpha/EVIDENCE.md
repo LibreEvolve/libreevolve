@@ -213,3 +213,18 @@ source-refresh cron. With the declared pypdf range and commit `eb4d5eae`, the
 paper-manifest acceptance tests passed in 365.46 seconds. This does not replace
 the earlier completed exact-candidate full-suite result above, and no claim of
 a completed full current-head suite is made.
+
+## Current-head alpha workflow rerun
+
+From the clean local documentation tip `6fba9e27bde5738f808109d7ab9fc808b89c481c`,
+the five alpha bin-packing/onboarding/reliability/report/workflow files were
+rerun in an isolated Linux Python 3.12.13 environment with the declared
+development dependencies (including `pypdf==6.10.2`). The command
+
+```text
+/tmp/libreevolve-alpha-check/bin/pytest tests/test_alpha_bin_packing.py tests/test_alpha_onboarding.py tests/test_alpha_reliability.py tests/test_alpha_report.py tests/test_alpha_workflow.py --tb=short -q
+```
+
+completed with 123 passed and 1 Windows-only skip in 814.46 seconds. This is
+source-checkout, provider-free regression evidence; it does not replace the
+missing real-provider cohort, independent usability trial, or CI evidence.

@@ -82,3 +82,10 @@ installed into a separate clean Windows Python 3.12.10 venv. Its hashes and
 the provider-free onboarding/report/export result are recorded in
 `EVIDENCE.md`; the branch tip after that package build contains only the
 evidence-record update.
+
+The current local documentation tip `6fba9e27bde5738f808109d7ab9fc808b89c481c`
+also passed the five alpha bin-packing/onboarding/reliability/report/workflow
+files: 123 passed and 1 Windows-only skip in 814.46 seconds under an isolated
+Linux Python 3.12.13 environment using `pypdf==6.10.2`. This is an additional
+provider-free source regression check; it does not provide real-model or user
+trial evidence.

@@ -4,6 +4,8 @@ on:
   # Temporary pause while GitHub account billing is unresolved. Restore the
   # pull_request, push, and schedule triggers before treating CI as a release
   # gate again.
+  # When those triggers are restored, retain the existing path scope:
+  #   "docs/**", "papers/**", and "tests/**" (plus source/workflow changes).
   workflow_dispatch:
     inputs:
       run_live_integration:

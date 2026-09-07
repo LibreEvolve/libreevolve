@@ -42,6 +42,39 @@ and held-out correctness were both true with scores `0.8016472203157172` and
 `0.8121645796064401`. This remains retained-seed evidence with zero provider
 attempts, not model-guided improvement evidence.
 
+## Cross-platform cleanup follow-up
+
+Local source commit `b215993954368b1d357d3e19b9b94ed0e6140b5b` extends the
+verification cleanup fix. Darwin workers use a non-reaping `kqueue` exit
+observer because the supported macOS Python path does not expose
+`waitid(..., WNOWAIT)`; POSIX platforms that cannot provide a safe observer now
+fail closed instead of falling back to reaping `poll()`. POSIX `killpg()` and
+an assigned Windows job-close failure are retained as `cleanup_failed` evidence
+after best-effort root cleanup. The five alpha regression files passed 123 tests
+with 1 Windows-only skip in 1607.69 seconds on Linux Python 3.12.3; the focused
+report/workflow subset passed 32 tests with 1 Windows-only skip.
+
+The exact follow-up source commit was packaged with Windows Python 3.12 under
+`dist/b2159939/`:
+
+- wheel: `ae7d8283f895f079927fa058ad3c95a8e45be2a05a69ee3d617d3704aff645c4`
+- source distribution: `f1ca2f489cafc54f8c7491cf16994fe329f5f9a6ed5064f5b95fdccb54292d2a`
+- provenance: `82f93ed276913c9b2ba4d7355e22443539d6a886c480f4593590b242b1b45df1`
+
+The provenance records git commit `b215993954368b1d357d3e19b9b94ed0e6140b5b`
+and a clean tracked tree. Wheel and sdist each contain all 455 tracked package
+files. A fresh Windows Python 3.12.10 venv
+`C:\Users\timot\AppData\Local\Temp\libreevolve-alpha-b215-winverify` passed
+`pip check`, both CLI help entrypoints, and the installed provider-free
+workflow from fresh smoke directory
+`C:\Users\timot\AppData\Local\Temp\libreevolve-alpha-b215-win-smoke`:
+`alpha init`, offline `alpha doctor`, a zero-generation run, `show`, HTML
+`report`, and verified `export` all exited 0. The export hash was
+`a37e6880acd271cbb5ad50b781d95b8e71d9fbbde15701505738d62f51d06507`; training
+and held-out correctness were true with scores `0.8016472203157172` and
+`0.8121645796064401`; provider attempts were 0. This remains retained-seed
+evidence, not model-guided improvement evidence.
+
 ## Implemented workflow
 
 - The supported example is deterministic bin packing with an intentionally

@@ -61,12 +61,13 @@ collect the usability records before revisiting completion.
 
 ## Local follow-up after the merged candidate
 
-Source commit `2b7b7e30` is a local, unpushed reliability follow-up to the
+Source commit `b2159939` is a local, unpushed reliability follow-up to the
 packaged candidate. It synchronizes POSIX verification-worker descendant
-cleanup; the focused cleanup parameters pass 3/3 and the combined report /
-reliability subset passes 62 tests with 1 Windows-only skip. A Linux Python
-3.12 wheel/sdist/provenance build from exact follow-up HEAD `ba7a4a71` is
-preserved under `dist/ba7a4a71/`; its wheel/sdist/provenance hashes are
-recorded in `EVIDENCE.md`. The exact follow-up wheel was also installed into
-a clean Windows Python 3.12.10 venv and passed the provider-free CLI workflow;
-the follow-up remains unpushed.
+cleanup, adds a non-reaping Darwin `kqueue` observer, fails closed when safe
+exit observation is unavailable, and records group/job cleanup failures. The
+five alpha regression files pass 123 tests with 1 Windows-only skip. A Windows
+Python 3.12 package/provenance build from exact follow-up HEAD
+`b215993954368b1d357d3e19b9b94ed0e6140b5b` is preserved under
+`dist/b2159939/`; its wheel/sdist/provenance hashes and clean Windows
+provider-free workflow are recorded in `EVIDENCE.md`. The follow-up remains
+unpushed.

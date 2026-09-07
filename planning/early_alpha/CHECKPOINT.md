@@ -64,6 +64,9 @@ collect the usability records before revisiting completion.
 Source commit `2b7b7e30` is a local, unpushed reliability follow-up to the
 packaged candidate. It synchronizes POSIX verification-worker descendant
 cleanup; the focused cleanup parameters pass 3/3 and the combined report /
-reliability subset passes 62 tests with 1 Windows-only skip. It has not yet
-been rebuilt into the recorded Windows artifacts, so the hashes above still
-identify `8621ea69` and must not be attributed to `2b7b7e30`.
+reliability subset passes 62 tests with 1 Windows-only skip. A Linux Python
+3.12 wheel/sdist/provenance build from follow-up HEAD `aa973ff3` is preserved
+under `dist/aa973ff3/`; its wheel/sdist/provenance hashes are recorded in
+`EVIDENCE.md`. The recorded Windows artifacts still identify `8621ea69`, and
+the follow-up has not been pushed or installed on the declared Windows
+reference environment.

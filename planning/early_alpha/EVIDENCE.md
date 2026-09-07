@@ -13,9 +13,20 @@ process-group leader, the inherited session is killed, and group disappearance
 is boundedly awaited. The focused descendant-cleanup test passes all 3
 parameters, and the combined alpha report/reliability subset passes 62 tests
 with 1 Windows-only skip. These are source-checkout results on Linux Python
-3.12.3 with temporary test dependencies. The Windows package hashes below
-remain evidence for `8621ea69`; this follow-up has not yet been rebuilt into a
-new release artifact or pushed.
+3.12.3 with temporary test dependencies. A fresh Linux Python 3.12 package
+build from `aa973ff3c192242e557421d615f5d161a68994c0` is preserved under
+`dist/aa973ff3/` with these SHA-256 values:
+
+- follow-up wheel: `6587126830c28e7e427cfd5d6aae4882ab3736ff3badf328309518491aca654b`
+- follow-up sdist: `34ec142e405ca216efa935cd2a7369ba05b917fbf70e130e921c36b3a671365a`
+- follow-up provenance: `9f06ccec151bb9dd75850a948e5c6589e2770126b5b6ec280ecac84f9d35808e`
+
+The follow-up wheel and sdist each contain all 455 tracked package files, and
+a clean target-directory install passed the documented provider-free
+`--help`, `alpha init`, offline doctor, zero-generation run, show, HTML report,
+and verified export smoke. This is Linux package evidence; the Windows package
+hashes below remain evidence for `8621ea69`, and the follow-up has not been
+pushed or installed on the declared Windows reference environment.
 
 ## Implemented workflow
 

@@ -75,6 +75,31 @@ and held-out correctness were true with scores `0.8016472203157172` and
 `0.8121645796064401`; provider attempts were 0. This remains retained-seed
 evidence, not model-guided improvement evidence.
 
+## Current exact-head package smoke
+
+The current exact source/CI-anchor commit is
+`2a472c2d231fe4157f2c6afcb3e309978ccde4f8`; it contains the portable cleanup
+fix plus restore-intent CI path anchors. Windows Python 3.12 built one wheel
+and one source distribution under `dist/2a472c2d/`:
+
+- wheel: `d19ef828de690f233b51719a5f4e7e48a06a186711b03f40ea2a734fedcf91ea`
+- source distribution: `c1e94cf512943ddad51b6fa1baabf8377ffe0f95901b422055961d26d241cad9`
+- provenance: `a8fb46be74e083dccfb84b24072861d9a5a1dfb96588a12d7045f356d1d598ca`
+
+The provenance records that exact commit and a clean tracked tree; both
+artifacts contain all 455 tracked package files. A separate clean Windows
+Python 3.12.10 venv
+`C:\Users\timot\AppData\Local\Temp\libreevolve-alpha-2a472-winverify`
+passed `pip check`, `libreevolve --help`, `python -m libreevolve --help`, and
+the fresh provider-free workflow in
+`C:\Users\timot\AppData\Local\Temp\libreevolve-alpha-2a472-win-smoke`:
+`alpha init`, offline `alpha doctor`, zero-generation `run`, `show`, HTML
+`report`, and verified `export` all exited 0. The export hash was
+`a37e6880acd271cbb5ad50b781d95b8e71d9fbbde15701505738d62f51d06507`; training
+and held-out correctness were true with scores `0.8016472203157172` and
+`0.8121645796064401`; provider attempts were 0. This is retained-seed package
+evidence, not model-guided improvement evidence.
+
 ## Implemented workflow
 
 - The supported example is deterministic bin packing with an intentionally

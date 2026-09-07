@@ -58,7 +58,33 @@ def _number(value):
         return None
 
 
-def _process_exited(process: subprocess.Popen) -> bool:
+def _darwin_process_exit_observer(process: subprocess.Popen):
+    """Register a non-reaping exit observer for a Darwin worker."""
+    if sys.platform != "darwin":
+        return None
+    observer = None
+    try:
+        import select
+
+        observer = select.kqueue()
+        event = select.kevent(
+            process.pid,
+            filter=select.KQ_FILTER_PROC,
+            flags=select.KQ_EV_ADD,
+            fflags=select.KQ_NOTE_EXIT,
+        )
+        observer.control([event], 0, 0)
+        return observer
+    except (AttributeError, OSError) as exc:
+        if observer is not None:
+            try:
+                observer.close()
+            except OSError:
+                pass
+        raise OSError("Darwin verification requires a kqueue process observer") from exc
+
+
+def _process_exited(process: subprocess.Popen, observer=None) -> bool:
     """Observe POSIX worker exit without reaping its process group leader.
 
     ``Popen.poll()`` reaps an exited child.  If the worker spawned a
@@ -66,21 +92,29 @@ def _process_exited(process: subprocess.Popen) -> bool:
     a later ``killpg(worker_pid, ...)`` fail on some POSIX implementations,
     leaving that descendant running.  ``waitid(..., WNOWAIT)`` observes the
     exit while retaining the zombie leader until the cleanup path has killed
-    the whole group.  Windows has no equivalent here and keeps the normal
-    ``Popen.poll`` path.
+    the whole group. Darwin uses a ``kqueue`` process event because its Python
+    builds do not expose ``waitid(..., WNOWAIT)``. Windows has no equivalent
+    here and keeps the normal ``Popen.poll`` path.
     """
     if os.name == "nt":
         return process.poll() is not None
+    if sys.platform == "darwin":
+        if observer is None:
+            raise OSError("Darwin verification requires a kqueue process observer")
+        return bool(observer.control(None, 1, 0))
     try:
         observed = os.waitid(
             os.P_PID,
             process.pid,
             os.WEXITED | os.WNOHANG | os.WNOWAIT,
         )
-    except (AttributeError, ChildProcessError, OSError):
-        # This is only a compatibility fallback for POSIX platforms without
-        # waitid/wnowait.  The supported Python 3.11+ platforms provide it.
-        return process.poll() is not None
+    except (AttributeError, ChildProcessError) as exc:
+        # Reaping with poll() here would recreate the process-group race. The
+        # supported Python 3.11+ POSIX platforms provide waitid; unknown
+        # platforms fail closed rather than execute without cleanup proof.
+        raise OSError("POSIX verification requires waitid with WNOWAIT") from exc
+    except OSError as exc:
+        raise OSError("POSIX verification could not observe worker exit safely") from exc
     return observed is not None and observed.si_pid == process.pid
 
 
@@ -123,6 +157,7 @@ def _verify(code: bytes, validator: bytes, entrypoint: str) -> dict:
                     cwd=temp, shell=False, env=env, **containment,
                 )
                 job = None
+                exit_observer = None
                 buffers = [bytearray(), bytearray()]
                 overflow = threading.Event()
 
@@ -138,6 +173,7 @@ def _verify(code: bytes, validator: bytes, entrypoint: str) -> dict:
                 readers = [threading.Thread(target=drain, args=(stream, target), daemon=True)
                            for stream, target in zip((process.stdout, process.stderr), buffers)]
                 try:
+                    exit_observer = _darwin_process_exit_observer(process)
                     job = _assign_windows_kill_job(process)
                     # Fail closed before the worker reads or executes code if
                     # Windows cannot guarantee kill-on-close containment.
@@ -147,7 +183,7 @@ def _verify(code: bytes, validator: bytes, entrypoint: str) -> dict:
                         reader.start()
                     release.touch()
                     deadline = started + VERIFY_TIMEOUT_SECONDS
-                    while not _process_exited(process) and not overflow.is_set():
+                    while not _process_exited(process, exit_observer) and not overflow.is_set():
                         remaining = deadline - time.monotonic()
                         if remaining <= 0:
                             evidence["status"] = "timeout"
@@ -161,6 +197,9 @@ def _verify(code: bytes, validator: bytes, entrypoint: str) -> dict:
                         if job is not None:
                             closed = _close_windows_job(job)
                             if not closed.get("closed"):
+                                if job.get("assigned"):
+                                    evidence["status"] = "cleanup_failed"
+                                    evidence["cleanup_error"] = "Could not close Windows verification job"
                                 _terminate_process_tree(process)
                         else:
                             _terminate_process_tree(process)
@@ -173,6 +212,13 @@ def _verify(code: bytes, validator: bytes, entrypoint: str) -> dict:
                             os.killpg(process.pid, signal.SIGKILL)
                         except ProcessLookupError:
                             pass
+                        except OSError as exc:
+                            evidence["status"] = "cleanup_failed"
+                            evidence["cleanup_error"] = str(exc)[:500]
+                            try:
+                                process.kill()
+                            except (OSError, ProcessLookupError):
+                                pass
                     try:
                         process.wait(timeout=2)
                     except subprocess.TimeoutExpired:
@@ -183,10 +229,12 @@ def _verify(code: bytes, validator: bytes, entrypoint: str) -> dict:
                             reader.join(timeout=1)
                     if os.name != "nt":
                         _wait_for_process_group_exit(process.pid)
+                    if exit_observer is not None:
+                        exit_observer.close()
                     for stream, reader in zip((process.stdout, process.stderr), readers):
                         if reader.ident is None:
                             stream.close()
-                if evidence["status"] == "timeout":
+                if evidence["status"] in {"timeout", "cleanup_failed"}:
                     return evidence
                 if overflow.is_set() or any(reader.is_alive() for reader in readers):
                     evidence["status"] = "output_limit"

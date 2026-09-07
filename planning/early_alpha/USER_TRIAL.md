@@ -11,6 +11,13 @@ provider price source/date, and approved spending ceiling. Use a new virtual
 environment and a fresh task/run directory. Do not silently substitute a source
 checkout for the wheel. Record installation time separately from run time.
 
+For the Codex OAuth reference route, record CLI version, ChatGPT-login route,
+model and reasoning setting instead of inventing a token price. Record explicit
+subscription-use authorization and per-run/aggregate call and runtime limits;
+charges and remaining quota are unknown. The documented live route is
+Linux/WSL Python 3.12 with Luna/high. Native Windows offline installation
+evidence is separate from live-provider and cancellation evidence.
+
 Each participant receives the quickstart, wheel, and an assigned per-run budget.
 They supply their own credential locally. No credential values enter feedback,
 screenshots, run bundles, or reports.

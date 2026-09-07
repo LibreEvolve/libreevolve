@@ -29,6 +29,69 @@ def test_codex_usage_retains_tokens_without_fabricating_subscription_cost(tmp_pa
     assert "does not mean zero cost" in usage["note"]
 
 
+@pytest.mark.parametrize("legacy", [False, True])
+@pytest.mark.parametrize("cost_microusd", [None, 30])
+def test_successful_call_with_reward_retains_known_usage(tmp_path, legacy, cost_microusd):
+    manifest = {"config": {"backends": [{"type": "codex", "model": "gpt-5.6-luna"}]},
+                "runtime": {"consumed": {"llm_calls": 1}}}
+    call = {"id": "successful-call", "backend_name": "codex-cli/gpt-5.6-luna",
+            "backend_metadata": {"model": "gpt-5.6-luna"}, "status": "ok",
+            "usage": {"input_tokens": 13289, "output_tokens": 6412, "total_tokens": 19701},
+            "cost_estimate": None if cost_microusd is None else {"cost_microusd": cost_microusd}}
+    if not legacy:
+        call["record_type"] = "call"
+    reward = {"record_type": "reward", "call_id": "successful-call",
+              "backend_idx": 0, "reward": 0.17657723529567304, "rewarded": True}
+    (tmp_path / "llm_calls.jsonl").write_text(
+        json.dumps(call) + "\n" + json.dumps(reward) + "\n", encoding="utf-8")
+    issues = []
+    usage = reporting._usage(tmp_path, manifest, issues)
+    assert issues == []
+    assert usage["observed_call_records"] == usage["calls"] == 1
+    assert usage["models"] == ["gpt-5.6-luna"]
+    assert usage["observed_backend_names"] == ["codex-cli/gpt-5.6-luna"]
+    assert (usage["input_tokens"], usage["output_tokens"], usage["total_tokens"]) == (13289, 6412, 19701)
+    assert usage["estimated_cost_usd"] == (None if cost_microusd is None else 0.00003)
+    assert usage["status"] == ("partial" if cost_microusd is None else "complete")
+
+
+@pytest.mark.parametrize("record_type", ["unknown", "", None, 1, [], {}])
+def test_unknown_record_type_prevents_complete_usage(tmp_path, record_type):
+    call = {"record_type": "call", "usage": {"input_tokens": 7, "output_tokens": 3, "total_tokens": 10},
+            "cost_estimate": {"cost_microusd": 30}}
+    (tmp_path / "llm_calls.jsonl").write_text(
+        json.dumps(call) + "\n" + json.dumps({"record_type": record_type}) + "\n", encoding="utf-8")
+    issues = []
+    usage = reporting._usage(tmp_path, {"runtime": {"consumed": {"llm_calls": 1}}}, issues)
+    assert usage["observed_call_records"] == 1
+    assert usage["status"] == "partial"
+    assert usage["total_tokens"] is None
+    assert usage["estimated_cost_usd"] is None
+    assert issues[0]["status"] == "corrupt"
+    assert "record_type" in issues[0]["detail"]
+
+
+@pytest.mark.parametrize("ignored_line", ['{"record_type":"reward"}\n', '\n'])
+def test_usage_stream_limit_counts_ignored_lines(tmp_path, monkeypatch, ignored_line):
+    monkeypatch.setattr(reporting, "MAX_LLM_STREAM_RECORDS", 3)
+    call = {"record_type": "call", "usage": {"total_tokens": 10},
+            "cost_estimate": {"cost_microusd": 30}}
+    path = tmp_path / "llm_calls.jsonl"
+    manifest = {"runtime": {"consumed": {"llm_calls": 1}}}
+    path.write_text(json.dumps(call) + "\n" + ignored_line * 2, encoding="utf-8")
+    issues = []
+    assert reporting._usage(tmp_path, manifest, issues)["status"] == "complete"
+    assert issues == []
+    path.write_text(json.dumps(call) + "\n" + ignored_line * 3, encoding="utf-8")
+    usage = reporting._usage(tmp_path, manifest, issues)
+    assert usage["observed_call_records"] == 1
+    assert usage["total_tokens"] is None
+    assert usage["estimated_cost_usd"] is None
+    assert usage["status"] == "partial"
+    assert issues[0]["status"] == "corrupt"
+    assert "exceeds report limit" in issues[0]["detail"]
+
+
 def run_fixture(tmp_path, manifest=None, code=None):
     (tmp_path / "best_workspace").mkdir()
     (tmp_path / "best_workspace/seed.py").write_bytes(baseline() if code is None else code)

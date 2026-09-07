@@ -32,6 +32,7 @@ VERIFY_TIMEOUT_SECONDS = 10.0
 MAX_OUTPUT_BYTES = 65536
 MAX_SOURCE_BYTES = 1_000_000
 MAX_MANIFEST_BYTES = 16_000_000
+MAX_LLM_STREAM_RECORDS = 100_000
 BUNDLED_PROBLEM = Path(__file__).parent / "problems" / "examples" / "bin_packing"
 
 
@@ -281,12 +282,19 @@ def _usage(run_dir: Path, manifest: dict, issues: list) -> dict:
     if path.exists():
         try:
             with path.open("rb") as stream:
+                stream_records = 0
                 while line := stream.readline(MAX_SOURCE_BYTES + 1):
-                    if len(line) > MAX_SOURCE_BYTES or len(rows) >= 100000:
+                    stream_records += 1
+                    if len(line) > MAX_SOURCE_BYTES or stream_records > MAX_LLM_STREAM_RECORDS:
                         raise ValueError("LLM call stream exceeds report limit")
                     if line.strip():
                         row = strict_json_loads_object(line.decode("utf-8"), source="llm_calls.jsonl")
                         strict_json_dumps(row)
+                        record_type = row.get("record_type", "call")
+                        if record_type == "reward":
+                            continue
+                        if record_type != "call":
+                            raise ValueError("LLM call stream has an invalid record_type")
                         rows.append(row)
         except (OSError, ValueError, UnicodeError) as exc:
             complete = False

@@ -113,3 +113,32 @@ fix is independently tested, a separate bounded `high`-reasoning diagnostic on
 the same authorized Luna/OAuth route will test a lower-compute configuration.
 This is not represented as a max-reasoning success, and all max failures remain
 in the record. No other provider or API-key billing fallback is permitted.
+
+### Installed cancellation candidate / high diagnostic
+
+Candidate `c223d12755937e4589c20ec42f8ea6488999fb59` was built from an exact
+source archive; both wheel and sdist byte-match all 455 package files. A clean
+Linux/WSL Python 3.12.13 environment at `/tmp/libreevolve-alpha-high.SJliwk/venv`
+installed that wheel and passed dependency and local OAuth preflight checks.
+Initialization selected `--reasoning-effort high` explicitly. The first run
+uses the unchanged full mutation prompt, seed 17, one generation/logical call/
+CLI invocation, two evaluations, a 180-second CLI deadline and a 240-second
+runtime threshold. No retries or fallback. Run name: `luna-high-diagnostic-17`.
+This is a configuration diagnostic, separate from any subsequent three-seed
+cohort. It consumes the same authorized subscription; charges remain unknown.
+
+The high diagnostic completed one real mutation: training quality improved
+from `0.8016472203157172` to `0.9782244556113903` (the run artifacts are authority
+for full precision), with training correctness passed. Held-out results were
+not inspected before freezing the next cohort.
+
+The high-reasoning cohort uses three fresh runs, seeds 17/29/43, with the same
+installed `c223d127` wheel and initialized task. Each retains the generated
+default limits: three generations/CLI calls, four evaluations, 180 seconds per
+CLI invocation, 900 seconds per run, no retries/fallback. Run names are
+`luna-high-seed-17`, `luna-high-seed-29`, `luna-high-seed-43`. They execute
+concurrently in independent processes/output directories; this reduces cohort
+wall time but is not a claim of distributed execution. Aggregate allocation is
+nine CLI invocations for this cohort. No prompt or budget tuning based on
+cohort results; reports and exports follow completion of all three runs.
+Failed, unimproved and interrupted attempts remain in the complete inventory.

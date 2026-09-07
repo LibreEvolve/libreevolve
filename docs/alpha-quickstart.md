@@ -2,10 +2,52 @@
 
 LibreEvolve searches for better Python bin-packing heuristics and checks each
 candidate against a deterministic evaluator. The local workflow is an engineering
-preview. Real-model improvement trials and independent user trials are pending.
-The reference environment is Windows with Python 3.12.
+preview. The live validation lane is Linux/WSL with Python 3.12.13 and Codex
+CLI 0.153.4, using an account with access to `gpt-5.6-luna`. Native Windows
+Python 3.12.10 has clean-install/offline workflow evidence, not a live Codex
+validation claim. Independent user trials remain pending.
 
-## Install the candidate
+## Linux/WSL: Codex OAuth reference workflow
+
+You need Python 3.12, a working Codex CLI on PATH, and your own authorized
+ChatGPT/Codex account. If using npm to install the tested CLI version, run
+`npm install -g @openai/codex@0.153.4` (requires Node.js/npm). Check
+`codex --version`, then run `codex login` and complete ChatGPT sign-in. Do not
+substitute API-key authentication for this subscription-backed path. Model
+availability is account-specific; a saved login alone does not prove access.
+
+Place the candidate wheel and its `release_artifact_provenance.json` in a
+fresh working directory. Compare the printed SHA-256 to the wheel entry in
+that provenance file, then install and create the task:
+
+```bash
+sha256sum libreevolve-0.1.0-py3-none-any.whl
+python3.12 -m venv .venv
+.venv/bin/python -m pip install ./libreevolve-0.1.0-py3-none-any.whl
+.venv/bin/python -m pip check
+.venv/bin/libreevolve alpha init packing-task --provider codex --model gpt-5.6-luna --reasoning-effort high
+.venv/bin/libreevolve alpha doctor packing-task
+.venv/bin/libreevolve run packing-task --run-name packing-first --progress
+.venv/bin/libreevolve show runs/packing-first
+.venv/bin/libreevolve alpha report runs/packing-first --output packing-first.html
+.venv/bin/libreevolve alpha export runs/packing-first verified-first
+```
+
+Open `packing-first.html` in your browser. `verified-first/solution.py` is the
+export; its sibling `verification.json` binds fresh correctness checks to its
+SHA-256. Keep new run/report/export names for each attempt.
+
+This command explicitly selects `high` reasoning. Tested `max` optimization
+calls timed out at 180 seconds and in a 600-second diagnostic; no max-reasoning
+improvement is claimed. Defaults permit three CLI invocations, four evaluations,
+900 seconds per run and 180 seconds per invocation, with no retries/fallback.
+Subscription charges and remaining quota are unknown; these are local work
+limits, not a dollar guarantee. The CLI reports tokens when a call completes;
+timeouts/interruption can leave usage incomplete. Review the generated config
+and authorize your own subscription use before starting. See cancellation and
+result-interpretation details below.
+
+## Windows installation and optional OpenAI API workflow
 
 Obtain the candidate wheel and its release_artifact_provenance.json together.
 Verify the wheel's SHA-256 against that file before installing it. In PowerShell,

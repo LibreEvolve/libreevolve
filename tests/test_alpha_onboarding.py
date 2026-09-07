@@ -66,6 +66,9 @@ def test_codex_config_uses_bounded_subscription_semantics():
         "ignore_user_config": True,
         "ignore_rules": True,
         "ephemeral": True,
+        "output_json_field": "program",
+        "disable_features": ["shell_tool"],
+        "approval_policy": "never",
     }
 
 

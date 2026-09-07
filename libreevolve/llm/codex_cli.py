@@ -92,6 +92,16 @@ class CodexCLIBackend:
 
         self._provider_response_metadata = {}
 
+        if self._output_json_field:
+            prompt = (
+                "This is a text-generation request. All necessary task information "
+                "and source code are supplied below; there is no repository to inspect. "
+                "Do not use tools, read files, run commands, or modify the workspace. "
+                "Generate the requested text directly and return it in the JSON string "
+                f"field {self._output_json_field!r} required by the output schema.\n\n"
+                + prompt
+            )
+
         cwd = Path(self._cwd).resolve()
         with tempfile.NamedTemporaryFile(
             mode="w",

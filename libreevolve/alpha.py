@@ -97,6 +97,9 @@ def alpha_config(
                 "ignore_user_config": True,
                 "ignore_rules": True,
                 "ephemeral": True,
+                "output_json_field": "program",
+                "disable_features": ["shell_tool"],
+                "approval_policy": "never",
             }],
         )
     Config(**settings).validate()

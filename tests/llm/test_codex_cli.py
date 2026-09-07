@@ -278,6 +278,8 @@ def test_codex_backend_extracts_configured_json_output_field(tmp_path, monkeypat
 
     assert backend.generate("Return JSON") == "PATCH"
     assert "--output-schema" in seen["cmd"]
+    assert "Do not use tools" in seen["stdin_text"]
+    assert seen["stdin_text"].endswith("Return JSON")
 
 
 def test_codex_backend_captures_completed_json_usage_and_keeps_raw_transcript(

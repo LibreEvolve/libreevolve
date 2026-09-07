@@ -35,7 +35,17 @@ results but retained in total experiment accounting. Dollar cost is unknown.
 
 ## Cohort status
 
-Pending adapter usage telemetry and OAuth onboarding verification. This record
+The initial cohort at package commit `51a44454` stopped after seed 17: all three
+calls reached the 180-second ensemble timeout. CLI traces show shell inspection
+of the empty working directory and no final candidate. The baseline remained
+at 0.8016472203157172. Token usage was absent on those timed-out calls; dollar
+charges remain unknown. Seeds 29 and 43 were not initiated with that driver.
+Artifacts are retained under `/tmp/libreevolve-oauth-trial.0XweBf/runs/luna-seed-17`
+and its sibling `transcripts` directory.
+
+The next candidate disables shell tools for alpha generation, requests a JSON
+program field, and explicitly instructs text generation from the supplied prompt.
+A fresh three-run cohort will retain the same numerical limits and seeds. This record
 supersedes the earlier interpretation that the user's Luna/OAuth permission
 covered internal reasoning only. Existing experimental backend limitations
 are implementation work; they do not revoke the user's authorization.

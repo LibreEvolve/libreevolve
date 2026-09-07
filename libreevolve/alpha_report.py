@@ -58,6 +58,45 @@ def _number(value):
         return None
 
 
+def _process_exited(process: subprocess.Popen) -> bool:
+    """Observe POSIX worker exit without reaping its process group leader.
+
+    ``Popen.poll()`` reaps an exited child.  If the worker spawned a
+    descendant that inherited its session, reaping the leader first can make
+    a later ``killpg(worker_pid, ...)`` fail on some POSIX implementations,
+    leaving that descendant running.  ``waitid(..., WNOWAIT)`` observes the
+    exit while retaining the zombie leader until the cleanup path has killed
+    the whole group.  Windows has no equivalent here and keeps the normal
+    ``Popen.poll`` path.
+    """
+    if os.name == "nt":
+        return process.poll() is not None
+    try:
+        observed = os.waitid(
+            os.P_PID,
+            process.pid,
+            os.WEXITED | os.WNOHANG | os.WNOWAIT,
+        )
+    except (AttributeError, ChildProcessError, OSError):
+        # This is only a compatibility fallback for POSIX platforms without
+        # waitid/wnowait.  The supported Python 3.11+ platforms provide it.
+        return process.poll() is not None
+    return observed is not None and observed.si_pid == process.pid
+
+
+def _wait_for_process_group_exit(pgid: int, timeout: float = 2.0) -> None:
+    """Wait briefly for a killed POSIX worker group to disappear."""
+    deadline = time.monotonic() + timeout
+    while True:
+        try:
+            os.killpg(pgid, 0)
+        except (ProcessLookupError, PermissionError):
+            return
+        if time.monotonic() >= deadline:
+            return
+        time.sleep(0.01)
+
+
 def _verify(code: bytes, validator: bytes, entrypoint: str) -> dict:
     evidence = {"code_sha256": _sha(code), "validator_sha256": _sha(validator),
                 "entrypoint": entrypoint, "status": "error", "correctness": None,
@@ -108,7 +147,7 @@ def _verify(code: bytes, validator: bytes, entrypoint: str) -> dict:
                         reader.start()
                     release.touch()
                     deadline = started + VERIFY_TIMEOUT_SECONDS
-                    while process.poll() is None and not overflow.is_set():
+                    while not _process_exited(process) and not overflow.is_set():
                         remaining = deadline - time.monotonic()
                         if remaining <= 0:
                             evidence["status"] = "timeout"
@@ -125,9 +164,11 @@ def _verify(code: bytes, validator: bytes, entrypoint: str) -> dict:
                                 _terminate_process_tree(process)
                         else:
                             _terminate_process_tree(process)
-                    elif process.poll() is None:
-                        _terminate_process_tree(process)
                     else:
+                        # Kill the session group even when the worker has
+                        # already exited.  Its process group leader remains
+                        # unreaped until below, allowing descendants to be
+                        # terminated as well.
                         try:
                             os.killpg(process.pid, signal.SIGKILL)
                         except ProcessLookupError:
@@ -140,6 +181,8 @@ def _verify(code: bytes, validator: bytes, entrypoint: str) -> dict:
                     for reader in readers:
                         if reader.ident is not None:
                             reader.join(timeout=1)
+                    if os.name != "nt":
+                        _wait_for_process_group_exit(process.pid)
                     for stream, reader in zip((process.stdout, process.stderr), readers):
                         if reader.ident is None:
                             stream.close()

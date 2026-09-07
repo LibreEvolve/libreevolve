@@ -6,6 +6,9 @@ on:
   # gate again.
   # When those triggers are restored, retain the existing path scope:
   #   "docs/**", "papers/**", and "tests/**" (plus source/workflow changes).
+  # The retained weekly source-refresh schedule is cron: "17 6 * * 1"; it is
+  # intentionally disabled with the other automatic triggers until billing is
+  # resolved.
   workflow_dispatch:
     inputs:
       run_live_integration:

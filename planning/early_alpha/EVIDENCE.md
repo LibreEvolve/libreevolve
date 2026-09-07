@@ -228,3 +228,29 @@ development dependencies (including `pypdf==6.10.2`). The command
 completed with 123 passed and 1 Windows-only skip in 814.46 seconds. This is
 source-checkout, provider-free regression evidence; it does not replace the
 missing real-provider cohort, independent usability trial, or CI evidence.
+
+## Current-tip Windows package smoke
+
+Windows Python 3.12.10 built a fresh wheel and source distribution from
+`c2a0f8cade18402b75046d487ee0bf81dd449471` (the current local tip when the
+build started) under `dist/c2a0f8ca/`. Linux Python regenerated provenance so
+Git could record the commit; the tracked source tree was clean. The artifact
+hashes are:
+
+- wheel: `a3e4ac5c62f897bd8fe9f7a900877b1aa4bc6493f4c7612e471813b1c9e4d17a`
+- source distribution: `6798eeb3e7cd75fa3dfee5c275411265786265fd0620d5add30f465a4d535955`
+- provenance JSON: `b1ba3f7631a5da6e9598d808d5350c4854ee0589bcfeb110f57d37d79d9325d9`
+
+Both distributions contain all 455 tracked `libreevolve/` files. A clean
+Windows Python 3.12.10 virtual environment with system packages disabled
+installed the wheel; `pip check`, both help entrypoints, `alpha init`, offline
+`alpha doctor`, a zero-generation run, `show`, HTML `report`, and verified
+`export` all passed from a fresh smoke directory. The installed package used
+`pypdf==6.10.2`. The exported seed retained independent correctness on 55
+training and 30 held-out cases (scores `0.8016472203157172` and
+`0.8121645796064401`), with code SHA-256
+`a37e6880acd271cbb5ad50b781d95b8e71d9fbbde15701505738d62f51d06507` and
+verification JSON SHA-256
+`0fcb136c10cb2da3feb699fc11e2075e8e7f02fef07ee4c1ade793168ca90516`.
+Provider attempts were zero; this remains retained-seed evidence, not
+model-guided improvement evidence.

@@ -89,3 +89,15 @@ files: 123 passed and 1 Windows-only skip in 814.46 seconds under an isolated
 Linux Python 3.12.13 environment using `pypdf==6.10.2`. This is an additional
 provider-free source regression check; it does not provide real-model or user
 trial evidence.
+
+An additional Windows Python 3.12.10 package smoke was built from local tip
+`c2a0f8cade18402b75046d487ee0bf81dd449471` before this checkpoint's later
+documentation edits. Artifacts are under `dist/c2a0f8ca/` with wheel SHA-256
+`a3e4ac5c62f897bd8fe9f7a900877b1aa4bc6493f4c7612e471813b1c9e4d17a`, sdist
+SHA-256 `6798eeb3e7cd75fa3dfee5c275411265786265fd0620d5add30f465a4d535955`,
+and provenance SHA-256
+`b1ba3f7631a5da6e9598d808d5350c4854ee0589bcfeb110f57d37d79d9325d9`. The
+clean installed venv passed `pip check`, both CLI help entrypoints, offline
+init/doctor, zero-generation run/show/report, and verified export; training and
+held-out correctness remained true at `0.8016472203157172` and
+`0.8121645796064401`. This is provider-free retained-seed evidence.

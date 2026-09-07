@@ -65,8 +65,8 @@ Source commit `2b7b7e30` is a local, unpushed reliability follow-up to the
 packaged candidate. It synchronizes POSIX verification-worker descendant
 cleanup; the focused cleanup parameters pass 3/3 and the combined report /
 reliability subset passes 62 tests with 1 Windows-only skip. A Linux Python
-3.12 wheel/sdist/provenance build from follow-up HEAD `aa973ff3` is preserved
-under `dist/aa973ff3/`; its wheel/sdist/provenance hashes are recorded in
-`EVIDENCE.md`. The recorded Windows artifacts still identify `8621ea69`, and
-the follow-up has not been pushed or installed on the declared Windows
-reference environment.
+3.12 wheel/sdist/provenance build from exact follow-up HEAD `ba7a4a71` is
+preserved under `dist/ba7a4a71/`; its wheel/sdist/provenance hashes are
+recorded in `EVIDENCE.md`. The installed provider-free smoke also passed from
+that exact wheel. The follow-up has not been pushed or installed on the
+declared Windows reference environment.

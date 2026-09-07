@@ -14,12 +14,13 @@ is boundedly awaited. The focused descendant-cleanup test passes all 3
 parameters, and the combined alpha report/reliability subset passes 62 tests
 with 1 Windows-only skip. These are source-checkout results on Linux Python
 3.12.3 with temporary test dependencies. A fresh Linux Python 3.12 package
-build from `aa973ff3c192242e557421d615f5d161a68994c0` is preserved under
-`dist/aa973ff3/` with these SHA-256 values:
+build from exact follow-up HEAD
+`ba7a4a71e473110e3f1a7eea989812dca45cee64` is preserved under
+`dist/ba7a4a71/` with these SHA-256 values:
 
-- follow-up wheel: `6587126830c28e7e427cfd5d6aae4882ab3736ff3badf328309518491aca654b`
-- follow-up sdist: `34ec142e405ca216efa935cd2a7369ba05b917fbf70e130e921c36b3a671365a`
-- follow-up provenance: `9f06ccec151bb9dd75850a948e5c6589e2770126b5b6ec280ecac84f9d35808e`
+- follow-up wheel: `f02467d24bda40b9d0dcaa976ba14b0a69e0e8f85b4306f1460b24f421b4a677`
+- follow-up sdist: `eb5bbaaf85b423d3e2df494ec7a4fe7f607a9c663c0b816a73741b27854a73ce`
+- follow-up provenance: `8be0f3cee6f1d1ccbb4986da72f9cf198cb0b2df1e52c976bb9d8babbe081028`
 
 The follow-up wheel and sdist each contain all 455 tracked package files, and
 a clean target-directory install passed the documented provider-free

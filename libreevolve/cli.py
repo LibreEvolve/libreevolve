@@ -386,7 +386,7 @@ def show(run_dir, source_display_chars, full_source, redact_source):
         click.echo(
             "Metrics:        "
             f"{json.dumps(inspection.metrics, sort_keys=True, allow_nan=False)}"
-    )
+        )
     if inspection.workspace is None:
         click.echo("\n--- Best program ---\n")
         click.echo(
@@ -429,7 +429,7 @@ def _iter_history_records(path: Path, *, archive_cell_upper_bound: int | None = 
     return _run_inspection._iter_history_records(
         path,
         archive_cell_upper_bound=archive_cell_upper_bound,
-        )
+    )
 
 
 def _validator_boundary_artifact_summary(run_dir: Path) -> str | None:
@@ -471,7 +471,7 @@ def _show_source_text(
         path=path,
         display_limit=display_limit,
         redact=redact,
-        )
+    )
 
 
 

@@ -2726,3 +2726,302 @@ def test_accepts_portable_run_name_components():
 def test_accepts_manifest_safe_run_id():
     config = Config(run_id="run-123.alpha_4")
     assert config.run_id == "run-123.alpha_4"
+
+
+def test_config_default_factories_are_isolated():
+    first = Config()
+    second = Config()
+
+    first.backends[0]["model"] = "changed-model"
+    first.map_elites_descriptor_axes.append("extra-axis")
+    first.prompt_format_options["tone"] = ["Be concise."]
+    first.llm_reward_accounted_roles.append("critique")
+
+    assert second.backends[0]["model"] == "claude-sonnet-4-6"
+    assert second.map_elites_descriptor_axes == [
+        "performance",
+        "complexity",
+        "diversity",
+    ]
+    assert second.prompt_format_options == {}
+    assert second.llm_reward_accounted_roles == ["mutation"]
+
+
+def test_config_combined_nested_contract_fixture_preserves_normalized_boundaries():
+    config = Config(
+        validator_env_allowlist=[" path ", "PATH"],
+        candidate_language_runners=[
+            {
+                "language": "Python",
+                "file_patterns": ["main.py"],
+                "runner_command": ["python", "main.py"],
+                "execution_status": "executable_local_subprocess",
+            }
+        ],
+        candidate_build_systems=[
+            {
+                "name": "Make",
+                "build_files": ["Makefile"],
+                "build_command": ["make"],
+            }
+        ],
+        eval_stages=[
+            {
+                "name": "Smoke",
+                "role": "small_scale_filter",
+                "mode": "candidate_runner",
+                "language_runner": "Python",
+                "samples": 2,
+                "seeds": ["case-a", "case-b"],
+            }
+        ],
+        backends=[{"type": "anthropic", "model": "claude-sonnet-4-6"}],
+        llm_role_call_limits={"feedback:*": 2, "mutation": 1},
+        llm_role_backend_indices={"mutation": [0, 0]},
+        llm_prompt_roles={
+            "mutation": {
+                "system": "Act as a code evolution proposer.",
+                "developer": "Return only a patch.",
+            }
+        },
+        prompt_variants=[DEFAULT_TEMPLATE],
+    )
+
+    assert config.validator_env_allowlist == ["PATH"]
+    assert config.candidate_language_runners[0]["language"] == "python"
+    assert config.candidate_build_systems[0]["name"] == "make"
+    assert config.candidate_build_systems[0]["execution_environment"] == {
+        "type": "host_subprocess_v1"
+    }
+    assert config.eval_stages[0]["name"] == "Smoke"
+    assert config.eval_stages[0]["language_runner"] == "python"
+    assert config.llm_role_call_limits == {"feedback:*": 2, "mutation": 1}
+    assert config.llm_role_backend_indices == {"mutation": [0]}
+    assert config.llm_prompt_roles["mutation"]["developer"] == "Return only a patch."
+    assert config.prompt_variants == [DEFAULT_TEMPLATE]
+
+
+@pytest.mark.parametrize(
+    ("kwargs", "message"),
+    [
+        (
+            {"candidate_language_runners": [{"language": "python", "file_patterns": [1]}]},
+            "non-empty glob patterns",
+        ),
+        (
+            {
+                "candidate_build_systems": [
+                    {
+                        "name": "make",
+                        "execution_environment": {
+                            "type": "host_subprocess_v1",
+                            "network": "none",
+                        },
+                    }
+                ]
+            },
+            "host execution environment only accepts",
+        ),
+        (
+            {
+                "eval_stages": [
+                    {"name": "gate", "metric_thresholds": {"score": []}}
+                ]
+            },
+            r"metric_thresholds\.score must be a mapping",
+        ),
+    ],
+)
+def test_rejects_invalid_nested_config_schema_boundaries(kwargs, message):
+    with pytest.raises(ConfigError, match=message):
+        Config(**kwargs)
+
+
+@pytest.mark.parametrize(
+    ("kwargs", "message"),
+    [
+        ({"log_dir": "runs/../cache"}, "path-safe log directory"),
+        ({"log_dir": "runs/CON/cache"}, "path-safe log directory"),
+        ({"log_dir": "runs/cafe\u0301"}, "path-safe log directory"),
+        ({"problem_name": "bad/name"}, "safe run-name component"),
+        ({"problem_name": "CON"}, "safe run-name component"),
+        ({"run_id": "bad/id"}, "manifest-safe identifier"),
+        (
+            {"validator_env_allowlist": ["not-an-env-name"]},
+            "manifest-safe environment variable names",
+        ),
+    ],
+)
+def test_rejects_non_normalizable_paths_environment_and_identifiers(kwargs, message):
+    with pytest.raises(ConfigError, match=message):
+        Config(**kwargs)
+
+
+def test_repeated_config_validation_is_idempotent_after_normalization():
+    import copy
+
+    config = Config(
+        validator_env_allowlist=[" path ", "PATH"],
+        llm_role_call_limits={"mutation": 2, "critique": 1},
+        llm_role_seconds_limits={"mutation": 3},
+        llm_role_backend_indices={"mutation": [0, 0]},
+    )
+    normalized = copy.deepcopy(config.__dict__)
+
+    config.validate()
+    config.validate()
+    config.validate()
+
+    assert config.__dict__ == normalized
+
+
+def test_cli_yaml_handoff_matches_direct_config_construction(tmp_path):
+    import hashlib
+    from types import SimpleNamespace
+
+    from libreevolve.cli import _build_config
+
+    runs_dir = tmp_path / "runs"
+    config_path = tmp_path / "config.yaml"
+    config_path.write_text(
+        f"max_generations: 8\n"
+        f"max_evaluations: 3\n"
+        f"log_dir: '{runs_dir.as_posix()}'\n"
+        "validator_env_allowlist: [' path ', 'PATH']\n"
+        "backends:\n"
+        "  - type: ollama\n"
+        "    model: llama3\n"
+        "seed: 17\n",
+        encoding="utf-8",
+    )
+    problem = SimpleNamespace(problem_dir=tmp_path, name="cli_problem")
+
+    cli_config = _build_config(
+        problem,
+        max_generations=11,
+        max_evaluations=None,
+        max_evaluator_seconds=None,
+        max_runtime_seconds=None,
+        proposals_per_generation=None,
+        plugins=(),
+        backends=("anthropic:claude-sonnet-4-6",),
+        seed=23,
+    )
+    direct_config = Config(
+        max_generations=11,
+        max_evaluations=3,
+        log_dir=runs_dir.as_posix(),
+        validator_env_allowlist=["path", "PATH"],
+        backends=[{"type": "anthropic", "model": "claude-sonnet-4-6"}],
+        problem_name="cli_problem",
+        seed=23,
+    )
+
+    for field in (
+        "max_generations",
+        "max_evaluations",
+        "log_dir",
+        "validator_env_allowlist",
+        "backends",
+        "problem_name",
+        "seed",
+    ):
+        assert getattr(cli_config, field) == getattr(direct_config, field)
+    assert problem.config_source == {
+        "path": "config.yaml",
+        "status": "ok",
+        "sha256": hashlib.sha256(config_path.read_bytes()).hexdigest(),
+        "bytes": config_path.stat().st_size,
+    }
+
+
+def test_config_manifest_and_runtime_serialization_preserve_normalized_values(tmp_path):
+    import json
+
+    from libreevolve.core.database import ProgramDatabase
+
+    objective_schema = {
+        "metrics": [
+            {
+                "name": "score",
+                "direction": "maximize",
+                "primary": True,
+                "bounds": [0.0, 1.0],
+            }
+        ],
+        "primary_metric": "score",
+        "primary_bounds": [0.0, 1.0],
+        "metric_count": 1,
+    }
+    config = Config(
+        log_dir=(tmp_path / "runs").as_posix(),
+        problem_name="config_manifest",
+        run_id="config-run-1",
+        validator_env_allowlist=[" path ", "PATH"],
+        backends=[{"type": "openai", "model": "gpt-5.1", "api_mode": "auto"}],
+        llm_role_backend_indices={"mutation": [0]},
+        llm_prompt_roles={"mutation": {"system": "Use the configured role."}},
+        prompt_variants=[DEFAULT_TEMPLATE],
+    )
+
+    database = ProgramDatabase(config, objective_schema=objective_schema)
+    manifest_path = Path(config.log_dir) / config.problem_name / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+    assert manifest["config"]["validator_env_allowlist"] == ["PATH"]
+    assert manifest["config"]["run_id"] == "config-run-1"
+    assert manifest["config"]["prompt_variants"] == [DEFAULT_TEMPLATE]
+    assert manifest["config"]["llm_role_backend_indices"] == {"mutation": [0]}
+    assert manifest["config"]["log_dir"] == "<absolute-log-dir>"
+    assert manifest["config"]["log_dir_metadata"]["is_absolute"] is True
+    assert database.startup_manifest_snapshot() == manifest
+
+    runtime = {"status": "characterization", "config": {"run_id": config.run_id}}
+    database.update_manifest_runtime(runtime)
+    reloaded = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+    assert reloaded["config"] == manifest["config"]
+    assert reloaded["runtime"] == runtime
+    json.dumps(reloaded, allow_nan=False)
+
+
+@pytest.mark.parametrize(
+    ("yaml_text", "message"),
+    [
+        ("max_generations: [1\n", "Failed to parse config.yaml"),
+        ("- max_generations\n", "config.yaml must contain a YAML mapping"),
+        (
+            "max_generations: 1\nmax_generations: 2\n",
+            "duplicate key",
+        ),
+        (
+            "defaults: &defaults\n  max_generations: 1\ncopy: *defaults\n",
+            "YAML anchors are not supported",
+        ),
+        ("*missing\n", "YAML aliases are not supported"),
+    ],
+)
+def test_config_yaml_handoff_rejects_malformed_boundaries(tmp_path, yaml_text, message):
+    import yaml
+
+    from libreevolve.cli import _load_problem_config_yaml
+    from libreevolve.core.yaml_utils import safe_load_unique
+
+    path = tmp_path / "config.yaml"
+    path.write_text(yaml_text, encoding="utf-8")
+
+    with pytest.raises(ConfigError, match=message):
+        _load_problem_config_yaml(path, safe_load_unique, yaml)
+
+
+def test_config_yaml_handoff_rejects_invalid_utf8(tmp_path):
+    import yaml
+
+    from libreevolve.cli import _load_problem_config_yaml
+    from libreevolve.core.yaml_utils import safe_load_unique
+
+    path = tmp_path / "config.yaml"
+    path.write_bytes(b"max_generations: \xff\n")
+
+    with pytest.raises(ConfigError, match="Failed to read config.yaml as UTF-8"):
+        _load_problem_config_yaml(path, safe_load_unique, yaml)

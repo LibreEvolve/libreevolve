@@ -3548,6 +3548,158 @@ def test_rejects_seed_workspace_file_symlink_escape(tmp_path):
         load_problem(d)
 
 
+@pytest.mark.parametrize(
+    ("filename", "attribute"),
+    [
+        ("formulation.yaml", "formulation_metadata"),
+        ("codebase_integration.yaml", "codebase_integration_metadata"),
+        ("collaborator_feedback.yaml", "collaborator_feedback_metadata"),
+        ("acknowledgements.yaml", "acknowledgement_metadata"),
+        ("paper_authors.yaml", "paper_author_metadata"),
+        ("title_page.yaml", "title_page_metadata"),
+        ("system_contributions.yaml", "system_contribution_metadata"),
+    ],
+)
+def test_loads_each_optional_problem_metadata_mapping(filename, attribute):
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        expected = {"fixture_label": "metadata-contract"}
+        (d / filename).write_text(yaml.dump(expected), encoding="utf-8")
+
+        problem = load_problem(d)
+
+        assert getattr(problem, attribute) == expected
+
+
+@pytest.mark.parametrize(
+    ("yaml_name", "yml_name", "message"),
+    [
+        (
+            "formulation.yaml",
+            "formulation.yml",
+            "use only one problem formulation metadata file",
+        ),
+        (
+            "codebase_integration.yaml",
+            "codebase_integration.yml",
+            "use only one codebase integration metadata file",
+        ),
+        (
+            "collaborator_feedback.yaml",
+            "collaborator_feedback.yml",
+            "use only one collaborator feedback metadata file",
+        ),
+        (
+            "acknowledgements.yaml",
+            "acknowledgements.yml",
+            "use only one acknowledgement metadata file",
+        ),
+        (
+            "paper_authors.yaml",
+            "paper_authors.yml",
+            "use only one paper author metadata file",
+        ),
+        (
+            "title_page.yaml",
+            "title_page.yml",
+            "use only one title page metadata file",
+        ),
+        (
+            "system_contributions.yaml",
+            "system_contributions.yml",
+            "use only one system contribution metadata file",
+        ),
+    ],
+)
+def test_rejects_conflicting_optional_problem_metadata_files(
+    yaml_name, yml_name, message
+):
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        (d / yaml_name).write_text("fixture: yaml\n", encoding="utf-8")
+        (d / yml_name).write_text("fixture: yml\n", encoding="utf-8")
+
+        with pytest.raises(ValueError, match=message):
+            load_problem(d)
+
+
+def test_embedded_only_validator_exemption_requires_every_stage_to_be_embedded():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        (d / "validate.py").unlink()
+        (d / "config.yaml").write_text(
+            "eval_stages:\n"
+            "  - name: embedded_gate\n"
+            "    mode: embedded_evaluate\n"
+            "  - name: external_gate\n"
+            "    mode: candidate_runner\n",
+            encoding="utf-8",
+        )
+
+        with pytest.raises(FileNotFoundError, match="validate.py"):
+            load_problem(d)
+
+
+def test_required_file_error_precedence_keeps_task_description_first():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        (d / "task_description.txt").unlink()
+        (d / "metrics.yaml").unlink()
+
+        with pytest.raises(FileNotFoundError, match="task_description.txt"):
+            load_problem(d)
+
+
+def test_loads_benchmark_goal_prompt_into_normalized_problem_record():
+    problem = load_problem(
+        Path("libreevolve/problems/examples/sorting_network_9")
+    )
+
+    assert problem.benchmark_goal_prompt["schema"] == (
+        "libreevolve.benchmark_goal_prompt.v1"
+    )
+    assert problem.benchmark_goal_prompt["status"] == "provided"
+    assert problem.benchmark_goal_prompt["prompt_id"] == (
+        "sorting_network_9_codex_spark_clean_checkout_goal_v1"
+    )
+    assert problem.benchmark_goal_prompt["problem_id"] == "sorting_network_9"
+    assert problem.benchmark_goal_prompt["path"] == (
+        "libreevolve/problems/examples/sorting_network_9/benchmark_goal_prompt.json"
+    )
+    assert problem.benchmark_goal_prompt["prompt_character_count"] == 1501
+    assert problem.benchmark_goal_prompt["character_limit"] == 4000
+    assert problem.benchmark_goal_prompt["run_contract_path"] == (
+        "libreevolve/problems/examples/sorting_network_9/run_contract.json"
+    )
+    assert len(problem.benchmark_goal_prompt["sha256"]) == 64
+    assert problem.benchmark_goal_prompt["bytes"] > 0
+
+
+def _problem_tree_snapshot(root: Path) -> dict[str, tuple[str, bytes | None]]:
+    snapshot = {}
+    for path in root.rglob("*"):
+        relative = path.relative_to(root).as_posix()
+        if path.is_dir():
+            snapshot[relative] = ("directory", None)
+        elif path.is_file():
+            snapshot[relative] = ("file", path.read_bytes())
+        else:
+            snapshot[relative] = ("other", None)
+    return snapshot
+
+
+def test_failed_load_has_no_problem_tree_write_side_effects():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        (d / "formulation.yaml").write_text("broken: [", encoding="utf-8")
+        before = _problem_tree_snapshot(d)
+
+        with pytest.raises(ValueError, match="invalid formulation metadata YAML"):
+            load_problem(d)
+
+        assert _problem_tree_snapshot(d) == before
+
+
 def test_rejects_windows_junction_in_seed_workspace(tmp_path):
     if sys.platform != "win32":
         pytest.skip("Windows junction test")

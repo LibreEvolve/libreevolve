@@ -7,6 +7,9 @@ Baseline: 462443213b7391a6622d539a0564f14444e0cfce.
 Branch: codex/early-alpha-20260905. Original shared checkout is preserved.
 Candidate: 8621ea69b4d8bc6c2b5aafec75b8a90056a6a338. Merged into the private
 LibreEvolve/libreevolve master at a906b53e138c5598edc40c12154f2d5f9635d6df.
+Local follow-up commit `2b7b7e30` synchronizes POSIX verification-worker
+descendant cleanup. It is not yet pushed or included in the recorded Windows
+package artifacts.
 
 ## Milestones and acceptance evidence
 

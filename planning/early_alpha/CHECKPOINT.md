@@ -58,3 +58,12 @@ alpha. Resume only after the external state changes: resolve GitHub billing,
 authorize a bounded provider cohort, and authorize participant contact. Then
 rerun the exact-head CI, execute the three documented provider trials, and
 collect the usability records before revisiting completion.
+
+## Local follow-up after the merged candidate
+
+Source commit `2b7b7e30` is a local, unpushed reliability follow-up to the
+packaged candidate. It synchronizes POSIX verification-worker descendant
+cleanup; the focused cleanup parameters pass 3/3 and the combined report /
+reliability subset passes 62 tests with 1 Windows-only skip. It has not yet
+been rebuilt into the recorded Windows artifacts, so the hashes above still
+identify `8621ea69` and must not be attributed to `2b7b7e30`.

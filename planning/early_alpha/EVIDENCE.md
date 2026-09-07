@@ -1,9 +1,21 @@
 # Early alpha implementation evidence
 
 This record separates source-checkout, installed-package, provider, CI, and
-external-usability evidence. The current exact candidate is
+external-usability evidence. The packaged candidate is
 `8621ea69b4d8bc6c2b5aafec75b8a90056a6a338`; the code is merged at
 `a906b53e138c5598edc40c12154f2d5f9635d6df`.
+
+## Follow-up source reliability fix
+
+Local source commit `2b7b7e30` fixes a POSIX verification cleanup race: a
+worker that exits after spawning a child is now observed without reaping its
+process-group leader, the inherited session is killed, and group disappearance
+is boundedly awaited. The focused descendant-cleanup test passes all 3
+parameters, and the combined alpha report/reliability subset passes 62 tests
+with 1 Windows-only skip. These are source-checkout results on Linux Python
+3.12.3 with temporary test dependencies. The Windows package hashes below
+remain evidence for `8621ea69`; this follow-up has not yet been rebuilt into a
+new release artifact or pushed.
 
 ## Implemented workflow
 

@@ -4149,6 +4149,41 @@ def test_generate_records_failed_call_when_exception_repr_breaks():
     assert "[REDACTED]" in record["error"]
 
 
+def test_timeout_cancellation_reaches_late_starting_worker_and_roundtrips_ledger(tmp_path):
+    events = []
+
+    class LocalBackend:
+        name = "local-process"
+        api_mode = None
+
+        def generate(self, prompt, **kwargs):
+            pytest.fail("Deadline worker must use the opted-in cancellation method")
+
+        def generate_cancellable(self, prompt, *, cancel_event, **kwargs):
+            # Simulate delayed entry after the ensemble's deadline has fired.
+            time.sleep(0.03)
+            assert cancel_event.is_set()
+            events.append(cancel_event)
+            raise RuntimeError("local cancellation")
+
+    records = []
+    ens = LLMEnsemble([LocalBackend()], call_timeout_sec=0.001)
+    ens.set_call_record_sink(records.append)
+    for _ in range(2):
+        with pytest.raises(ProviderCallTimeoutError):
+            ens.generate("prompt text", role="mutation")
+    assert len(events) == 2
+    assert events[0] is not events[1]
+    cancellation = records[0]["cancellation_record"]
+    assert cancellation["in_flight_cancellation"] == "cooperative_backend_worker_finished"
+    assert cancellation["hard_cancel_ready"] is False
+    assert cancellation["remaining_gap"] == "remote_provider_cancellation_unverified"
+    ledger = tmp_path / "llm_calls.jsonl"
+    _write_llm_call_ledger(ledger, records)
+    replay = load_llm_call_ledger(ledger, backend_count=1)
+    assert replay["calls"][records[0]["id"]]["cancellation_record"] == cancellation
+
+
 def test_generate_times_out_slow_backend_with_structured_telemetry():
     class SlowBackend:
         name = "slow"

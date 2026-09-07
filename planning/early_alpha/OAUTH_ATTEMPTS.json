@@ -1,0 +1,93 @@
+{
+  "schema": "libreevolve.alpha_oauth_attempt_inventory.v1",
+  "snapshot": "2026-09-07T20:55:21Z",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "auth_route": "Codex ChatGPT OAuth",
+  "additional_api_spending_allocation_usd": 0,
+  "subscription_usage_authorized": true,
+  "subscription_charges_usd": null,
+  "known_probe_input_tokens": 37110,
+  "known_probe_output_tokens": 109,
+  "known_probe_total_tokens": 37219,
+  "optimization_usage_complete": false,
+  "records": [
+    {
+      "kind": "access_probe",
+      "thread_id": "01a07d6b-8cf2-7823-89dc-dc63055965b3",
+      "cli_invocations": 1,
+      "status": "ok",
+      "input_tokens": 13248,
+      "output_tokens": 5,
+      "cached_input_tokens": 8960,
+      "reasoning_output_tokens": 0
+    },
+    {
+      "kind": "optimization_driver_trial",
+      "candidate_commit": "51a444546fba59a93f634ef17a020e98c0a4258d",
+      "run_path": "/tmp/libreevolve-oauth-trial.0XweBf/runs/luna-seed-17",
+      "seed": 17,
+      "cli_invocations": 3,
+      "timeout_seconds": 180,
+      "status": "three_timeouts",
+      "best_quality": 0.8016472203157172,
+      "usage": null
+    },
+    {
+      "kind": "optimization_driver_trial",
+      "candidate_commit": "04b00a60c2056ef5224918e01dcc92231426e4bd",
+      "run_path": "/tmp/libreevolve-oauth-cohort.XjPBLZ/runs/luna-seed-17",
+      "seed": 17,
+      "cli_invocations": 3,
+      "timeout_seconds": 180,
+      "status": "three_timeouts",
+      "best_quality": 0.8016472203157172,
+      "usage": null
+    },
+    {
+      "kind": "optimization_deadline_diagnostic",
+      "candidate_commit": "04b00a60c2056ef5224918e01dcc92231426e4bd",
+      "run_path": "/tmp/libreevolve-oauth-cohort.XjPBLZ/runs/luna-long-seed-17",
+      "seed": 17,
+      "cli_invocations": 2,
+      "timeout_seconds": 600,
+      "status": "one_timeout_then_cancelled_second_invocation",
+      "interrupted_invocation_logged_in_llm_calls": false,
+      "interrupted_invocation_evidence": "Observed live node PID and PGID 2928117 with child2928148 after CLI exit130; operator terminated exact PGID and verified disappearance",
+      "best_quality": 0.8016472203157172,
+      "usage": null
+    },
+    {
+      "kind": "structured_output_access_probe",
+      "thread_id": "01a07da0-7d09-7b50-813a-18678bad8390",
+      "cli_invocations": 1,
+      "status": "ok",
+      "input_tokens": 11897,
+      "output_tokens": 15,
+      "cached_input_tokens": 0,
+      "reasoning_output_tokens": 0
+    },
+    {
+      "kind": "installed_adapter_access_probe",
+      "transcript_path": "/tmp/libreevolve-oauth-cohort.XjPBLZ/adapter-probe",
+      "cli_invocations": 1,
+      "status": "ok",
+      "input_tokens": 11965,
+      "output_tokens": 89,
+      "cached_input_tokens": 0,
+      "reasoning_output_tokens": 72
+    },
+    {
+      "kind": "optimization_compact_prompt_diagnostic",
+      "candidate_commit": "04b00a60c2056ef5224918e01dcc92231426e4bd",
+      "run_path": "/tmp/libreevolve-oauth-cohort.XjPBLZ/runs/luna-compact-seed-17",
+      "seed": 17,
+      "cli_invocations": 1,
+      "timeout_seconds": 180,
+      "status": "timeout",
+      "best_quality": 0.8016472203157172,
+      "usage": null
+    }
+  ],
+  "boundary": "Nine optimization invocations and three probes. Eight optimization timeouts and one interrupted invocation; no model-generated candidate. Max-reasoning seeds29/43 not started after driver failures. Counts are CLI invocations, not independently observed internal provider retry counts. Cached/reasoning token fields are subsets, not additional total tokens. Earlier unrelated Windows OpenAI placeholder401 diagnostic is recorded separately in EVIDENCE.md."
+}

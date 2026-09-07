@@ -1,7 +1,63 @@
 # Early alpha implementation evidence
 
 This record separates source-checkout, installed-package, provider, CI, and
-external-usability evidence. The packaged candidate is
+external-usability evidence. The current packaged candidate is
+`04b00a60c2056ef5224918e01dcc92231426e4bd`. Earlier records below are historical;
+they must not be read as current-tip full-suite or live-provider evidence.
+
+## Current OAuth candidate: 2026-09-07
+
+- Exact source archive build: `dist/04b00a60/`; both archives byte-match all
+  455 tracked `libreevolve/` files at the candidate commit.
+- Wheel SHA-256: `4a1f56d0e274015b7f437497393a48fe958b19906b01b7604bb8229bfc27317d`.
+- Sdist SHA-256: `24d544881e4499c883d617b0df7f0c062c644932f6e16d60cd49309429d0b077`.
+- Provenance SHA-256: `65f9a9297e0cf26960f4e292a8da0599412794c8546fb702420b2013e7acdb8b`.
+- Current source report/onboarding/Codex adapter/provenance regression command:
+  71 passed, 1 Windows-only skip in 15.50 seconds. The other three alpha
+  suites passed 77 tests on this candidate in 355.39 seconds, with JUnit
+  evidence at `/tmp/libreevolve-alpha-04-reliability.xml`. Together these cover
+  all five alpha suites, the Codex adapter and artifact provenance: 148 passed,
+  one skip. No current-tip full-repository-suite pass is claimed.
+- Independent clean Windows Python 3.12.10 verification: all 13 commands exit
+  zero, including dependency check, both help entrypoints, init, offline
+  doctor, zero-generation run, show, HTML report and verified export.
+  Evidence root: `C:\Users\timot\AppData\Local\Temp\libreevolve-alpha-04b00a60-winverify-omKk2dmv`.
+  `verification_summary.json` and `verification_commands.json` retain results.
+  Seed-only export SHA-256:
+  `a37e6880acd271cbb5ad50b781d95b8e71d9fbbde15701505738d62f51d06507`.
+  Training 55/55 correct, quality `0.8016472203157172`; holdout 30/30 correct,
+  quality `0.8121645796064401`. Mutation LLM was not initialized: no provider
+  calls and no improvement claim for this smoke.
+- Clean Linux/WSL Python 3.12.13 wheel install, dependency check, help/init and
+  local Codex OAuth doctor passed. Live experiments are recorded separately
+  in `CODEX_OAUTH_TRIAL.md`; deadline failures remain included.
+- CI is excluded by user instruction. External participant results remain
+  explicitly pending; trial materials are prepared, and no contact is made.
+
+## Historical original candidate
+
+### Post-04b00a60 cancellation follow-up
+
+The live cancellation fault reproduced in an offline CLI subprocess fixture:
+SIGINT saved an aborted run but left the Codex process alive. Disabling only
+the explicit ensemble timeout was insufficient because the runtime budget also
+supplies a wait deadline. The fix adds an opt-in per-call cancellation event,
+bounded cooperative worker shutdown and POSIX process-group force-stop before
+reaping the leader. It also clears metadata before pre-launch cancellation.
+
+The exact follow-up source passed 349 adapter/ensemble/process tests (57.60 s),
+two existing runtime-budget clamp tests (5.46 s), and 73 onboarding/report/
+provenance/agent-documentation tests with one platform skip (21.36 s).
+An independent reviewer reproduced the original SIGTERM-ignoring descendant
+fault, verified its fix and passed 349 tests plus the final three process tests.
+These establish Linux same-process-group cleanup, not remote provider
+cancellation, escaped-session containment or Windows Codex cancellation.
+Initialization now permits explicit `--reasoning-effort high`; the Codex default
+remains `max`. No successful optimization is implied by these offline checks.
+
+### Original package record
+
+The original packaged candidate was
 `8621ea69b4d8bc6c2b5aafec75b8a90056a6a338`; the code is merged at
 `a906b53e138c5598edc40c12154f2d5f9635d6df`.
 

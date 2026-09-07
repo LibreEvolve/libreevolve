@@ -28,6 +28,7 @@ def alpha_config(
     *,
     provider: str = "openai",
     codex_cwd: str | None = None,
+    reasoning_effort: str | None = None,
 ) -> dict:
     """Create a bounded alpha config for OpenAI or subscription-backed Codex.
 
@@ -38,6 +39,11 @@ def alpha_config(
     """
     if provider not in {"openai", "codex"}:
         raise ValueError("Provider must be either openai or codex.")
+    if reasoning_effort is not None:
+        if provider != "codex":
+            raise ValueError("--reasoning-effort is currently supported only for Codex alpha tasks.")
+        if reasoning_effort not in {"low", "medium", "high", "max"}:
+            raise ValueError("Reasoning effort must be low, medium, high, or max.")
 
     settings = {
         "max_generations": 10,
@@ -86,13 +92,16 @@ def alpha_config(
             max_evaluations=4,
             max_llm_calls=3,
             max_llm_provider_attempts=3,
-            llm_call_timeout_sec=180,
+            # Avoid a redundant equal deadline: Codex owns the subprocess
+            # timeout below. The run-wide deadline can still use an ensemble
+            # worker, with cooperative cancellation of the local CLI tree.
+            llm_call_timeout_sec=None,
             backends=[{
                 "type": "codex", "model": model,
                 "cwd": codex_cwd or _CODEX_CWD_NAME,
                 "sandbox": "read-only",
                 "timeout_sec": 180,
-                "reasoning_effort": "max",
+                "reasoning_effort": reasoning_effort or "max",
                 "auth_name": "current",
                 "ignore_user_config": True,
                 "ignore_rules": True,
@@ -116,6 +125,8 @@ def alpha() -> None:
 @click.option("--provider", type=click.Choice(["openai", "codex"]), default="openai",
               show_default=True, help="Provider lane for this alpha task.")
 @click.option("--model", required=True, help="Model available to the selected provider.")
+@click.option("--reasoning-effort", type=click.Choice(["low", "medium", "high", "max"]),
+              default=None, help="Codex reasoning setting; defaults to max. Model support is not preflighted.")
 @click.option("--token-price", required=False, type=float,
               help="Conservative USD per million tokens; use the higher input/output rate.")
 @click.option("--budget-usd", required=False, type=float,
@@ -124,6 +135,7 @@ def initialize(
     destination: Path,
     provider: str,
     model: str,
+    reasoning_effort: str | None,
     token_price: float | None,
     budget_usd: float | None,
 ) -> None:
@@ -142,6 +154,7 @@ def initialize(
             budget_usd,
             provider=provider,
             codex_cwd=codex_cwd,
+            reasoning_effort=reasoning_effort,
         )
         source = files("libreevolve.problems.examples").joinpath("bin_packing")
         # Wheels are installed as ordinary directories; copy only task assets.

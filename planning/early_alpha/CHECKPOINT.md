@@ -3,16 +3,19 @@
 ## 2026-09-07 OAuth continuation
 
 The user authorized Luna at max reasoning through Codex OAuth. A live
-`gpt-5.6-luna` access probe succeeded and returned CLI token usage. Work is
-continuing on adapter accounting and OAuth onboarding before the three-run
-bin-packing cohort described in `CODEX_OAUTH_TRIAL.md`. The earlier requirement
+`gpt-5.6-luna` access probe succeeded and returned CLI token usage. Candidate
+`04b00a60c2056ef5224918e01dcc92231426e4bd` includes adapter accounting and
+OAuth onboarding, and its wheel/sdist and clean Windows offline workflow are
+verified in `EVIDENCE.md`. Live bin-packing attempts are in progress as described
+in `CODEX_OAUTH_TRIAL.md`, including retained deadline failures. The earlier requirement
 to ask again for OAuth usage authorization was an overly narrow interpretation.
 CI is excluded by user instruction. External usability can remain explicitly
 pending under the original objective. The sections below record prior evidence.
 
-The early-alpha goal remains active because the required real-provider and
-external-usability gates are not complete. This checkpoint is the current
-state, not an authorization to spend or contact participants.
+The early-alpha goal remains active because real-provider optimization evidence
+is not complete. External usability is permitted to remain explicitly pending;
+CI is not a completion blocker under the revised scope. No participant contact
+or API-key billing is authorized. All sections below are historical snapshots.
 
 ## Exact candidate and repository state
 

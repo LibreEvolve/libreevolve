@@ -1252,6 +1252,7 @@ class ProviderCallTimeoutError(TimeoutError):
     def __init__(self, timeout_sec: float) -> None:
         super().__init__(f"LLM backend call timed out after {timeout_sec:.6g} seconds")
         self.timeout_sec = timeout_sec
+        self.in_flight_cancellation = "unsupported_daemon_worker_may_continue"
 
 
 class _DuplicateLLMCallJsonNameError(ValueError):
@@ -2133,12 +2134,18 @@ def _validate_provider_cancellation_record(
             "Malformed llm_calls.jsonl at line "
             f"{line_number}: cancellation_record.hard_cancel_ready is unsupported"
         )
-    if value["in_flight_cancellation"] != "unsupported_daemon_worker_may_continue":
+    cancellation_gaps = {
+        "unsupported_daemon_worker_may_continue": "provider_sdk_hard_cancellation_not_implemented",
+        "cooperative_backend_worker_finished": "remote_provider_cancellation_unverified",
+        "cooperative_backend_worker_may_continue": "remote_provider_cancellation_unverified",
+    }
+    cancellation = value["in_flight_cancellation"]
+    if not isinstance(cancellation, str) or cancellation not in cancellation_gaps:
         raise LLMCallLedgerError(
             "Malformed llm_calls.jsonl at line "
             f"{line_number}: cancellation_record.in_flight_cancellation is unsupported"
         )
-    if value["remaining_gap"] != "provider_sdk_hard_cancellation_not_implemented":
+    if value["remaining_gap"] != cancellation_gaps[cancellation]:
         raise LLMCallLedgerError(
             "Malformed llm_calls.jsonl at line "
             f"{line_number}: cancellation_record.remaining_gap is unsupported"
@@ -2912,8 +2919,12 @@ def _provider_cancellation_record(
         "status": "deadline_exceeded",
         "budget_action": budget_action,
         "hard_cancel_ready": False,
-        "in_flight_cancellation": "unsupported_daemon_worker_may_continue",
-        "remaining_gap": "provider_sdk_hard_cancellation_not_implemented",
+        "in_flight_cancellation": exc.in_flight_cancellation,
+        "remaining_gap": (
+            "provider_sdk_hard_cancellation_not_implemented"
+            if exc.in_flight_cancellation == "unsupported_daemon_worker_may_continue"
+            else "remote_provider_cancellation_unverified"
+        ),
     }
 
 
@@ -4891,10 +4902,21 @@ def _call_backend_generate(
         return backend.generate(prompt, role=role)
 
     result_queue: queue.Queue[tuple[str, object]] = queue.Queue(maxsize=1)
+    # Require an explicitly declared method, not a dynamically fabricated
+    # attribute on proxy/mock backends that never opted into cancellation.
+    cancellable_generate = (
+        getattr(backend, "generate_cancellable")
+        if callable(getattr(type(backend), "generate_cancellable", None)) else None
+    )
+    cancel_event = threading.Event() if callable(cancellable_generate) else None
 
     def run_call() -> None:
         try:
-            result_queue.put(("ok", backend.generate(prompt, role=role)))
+            if cancel_event is None:
+                response = backend.generate(prompt, role=role)
+            else:
+                response = cancellable_generate(prompt, cancel_event=cancel_event, role=role)
+            result_queue.put(("ok", response))
         except Exception as exc:
             result_queue.put(("error", exc))
 
@@ -4903,11 +4925,30 @@ def _call_backend_generate(
         name="libreevolve-llm-call",
         daemon=True,
     )
-    worker.start()
+    def cancel_local_worker() -> str:
+        if cancel_event is None:
+            return "unsupported_daemon_worker_may_continue"
+        # Allocate the event before starting: cancellation must not be lost
+        # when the worker has not entered its backend yet. The bounded join
+        # allows the local CLI's five-second bounded reap to finish.
+        cancel_event.set()
+        if worker.ident is not None:
+            worker.join(timeout=6.0)
+        return (
+            "cooperative_backend_worker_may_continue" if worker.is_alive()
+            else "cooperative_backend_worker_finished"
+        )
+
     try:
+        worker.start()
         status, payload = result_queue.get(timeout=timeout_sec)
     except queue.Empty as exc:
-        raise ProviderCallTimeoutError(timeout_sec) from exc
+        error = ProviderCallTimeoutError(timeout_sec)
+        error.in_flight_cancellation = cancel_local_worker()
+        raise error from exc
+    except BaseException:
+        cancel_local_worker()
+        raise
     if status == "error":
         assert isinstance(payload, Exception)
         raise payload

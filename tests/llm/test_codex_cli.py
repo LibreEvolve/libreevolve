@@ -2,10 +2,43 @@ from __future__ import annotations
 
 import json
 import subprocess
+import threading
 
 import pytest
 
 from libreevolve.llm.codex_cli import CodexCLIBackend, _resolve_codex_auth
+
+
+def test_codex_pre_cancelled_call_never_launches_process(tmp_path, monkeypatch):
+    event = threading.Event()
+    event.set()
+    monkeypatch.setattr(
+        subprocess, "Popen", lambda *a, **kw: pytest.fail("Cancelled call launched a process"),
+    )
+    backend = CodexCLIBackend(cwd=str(tmp_path), codex_home=str(tmp_path / "auth"))
+    backend._provider_response_metadata = {"provider_usage": {"total_tokens": 123}}
+    with pytest.raises(RuntimeError, match="cancelled before process launch"):
+        backend.generate_cancellable("prompt", cancel_event=event)
+    assert backend.provider_response_metadata == {}
+
+
+def test_codex_cancellable_communicate_retries_without_resending_prompt():
+    from libreevolve.llm.codex_cli import _communicate_cancellable
+
+    calls = []
+
+    class Process:
+        def communicate(self, prompt, timeout):
+            calls.append((prompt, timeout))
+            if len(calls) < 3:
+                raise subprocess.TimeoutExpired("fake codex", timeout, output="partial")
+            return "complete output", "diagnostics"
+
+    assert _communicate_cancellable(
+        Process(), "original prompt", timeout_sec=1, cancel_event=threading.Event(),
+    ) == ("complete output", "diagnostics")
+    assert [prompt for prompt, _ in calls] == ["original prompt", None, None]
+    assert all(0 < timeout <= 0.1 for _, timeout in calls)
 
 
 class _FakeCodexProcess:

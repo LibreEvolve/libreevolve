@@ -63,6 +63,8 @@ billing cap. Repeated runs each receive their own limits; budget for their total
 The optional Codex route uses a local Codex CLI authenticated with ChatGPT.
 Run `codex login` once, then create the task with
 `libreevolve alpha init packing-task --provider codex --model gpt-5.6-luna`.
+The Codex default reasoning setting is `max`; use `--reasoning-effort high`
+to explicitly select `high` instead. The chosen model must support the setting.
 Run `libreevolve alpha doctor packing-task` to check local login and task setup.
 Use the same run, report and export commands below.
 

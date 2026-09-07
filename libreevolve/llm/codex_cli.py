@@ -8,6 +8,7 @@ import json
 import os
 import re
 import signal
+import threading
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -87,10 +88,20 @@ class CodexCLIBackend:
         return copy_provider_response_metadata(self._provider_response_metadata)
 
     def generate(self, prompt: str, **kwargs) -> str:
+        return self._generate(prompt, cancel_event=None)
+
+    def generate_cancellable(
+        self, prompt: str, *, cancel_event: threading.Event, **kwargs,
+    ) -> str:
+        """Cooperatively stop the local CLI tree, not remote provider work."""
+        return self._generate(prompt, cancel_event=cancel_event)
+
+    def _generate(self, prompt: str, *, cancel_event: threading.Event | None) -> str:
         if not isinstance(prompt, str) or not prompt.strip():
             raise ValueError("prompt must be non-empty text")
-
         self._provider_response_metadata = {}
+        if cancel_event is not None and cancel_event.is_set():
+            raise RuntimeError("Codex local call cancelled before process launch")
 
         if self._output_json_field:
             prompt = (
@@ -179,7 +190,9 @@ class CodexCLIBackend:
                 )
                 raise
             try:
-                stdout, stderr = proc.communicate(prompt, timeout=self._timeout_sec)
+                stdout, stderr = _communicate_cancellable(
+                    proc, prompt, timeout_sec=self._timeout_sec, cancel_event=cancel_event,
+                )
                 returncode = proc.returncode
             except subprocess.TimeoutExpired as exc:
                 _terminate_process_tree(proc)
@@ -305,7 +318,7 @@ class CodexCLIBackend:
             )
             return output
         finally:
-            if proc is not None and proc.poll() is None:
+            if proc is not None and proc.returncode is None:
                 _terminate_process_tree(proc)
             try:
                 output_path.unlink()
@@ -316,6 +329,33 @@ class CodexCLIBackend:
                     schema_path.unlink()
                 except OSError:
                     pass
+
+
+def _communicate_cancellable(
+    proc: subprocess.Popen[str],
+    prompt: str,
+    *,
+    timeout_sec: float,
+    cancel_event: threading.Event | None,
+) -> tuple[str, str]:
+    if cancel_event is None:
+        return proc.communicate(prompt, timeout=timeout_sec)
+    deadline = time.monotonic() + timeout_sec
+    pending_input: str | None = prompt
+    while True:
+        if cancel_event.is_set():
+            # The caller's finally block owns process-tree termination.
+            raise RuntimeError("Codex local call cancelled")
+        try:
+            return proc.communicate(
+                pending_input, timeout=max(0.0, min(0.1, deadline - time.monotonic())),
+            )
+        except subprocess.TimeoutExpired:
+            # communicate retains its buffered input/output across timeout
+            # retries; resubmitting the prompt would fail or duplicate input.
+            pending_input = None
+            if time.monotonic() >= deadline:
+                raise
 
 
 def _resolve_codex_command() -> str:
@@ -330,7 +370,7 @@ def _resolve_codex_command() -> str:
 
 
 def _terminate_process_tree(proc: subprocess.Popen[str]) -> None:
-    if proc.poll() is not None:
+    if proc.returncode is not None:
         return
     if os.name == "nt":
         subprocess.run(
@@ -341,16 +381,15 @@ def _terminate_process_tree(proc: subprocess.Popen[str]) -> None:
         )
         return
     try:
-        os.killpg(proc.pid, signal.SIGTERM)
-    except Exception:
-        proc.terminate()
-    try:
-        proc.wait(timeout=5.0)
-    except subprocess.TimeoutExpired:
-        try:
-            os.killpg(proc.pid, signal.SIGKILL)
-        except Exception:
-            proc.kill()
+        # Force-stop the whole local group before reaping its leader. A TERM
+        # followed by wait/poll can reap the leader while a TERM-ignoring child
+        # survives, and then signaling its old numeric group risks PID reuse.
+        os.killpg(proc.pid, signal.SIGKILL)
+    except ProcessLookupError:
+        pass
+    except OSError:
+        proc.kill()
+    proc.wait(timeout=5.0)
 
 
 def _write_output_schema(field_name: str) -> Path:

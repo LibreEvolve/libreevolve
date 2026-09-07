@@ -52,7 +52,7 @@ def test_codex_config_uses_bounded_subscription_semantics():
     assert settings["max_runtime_seconds"] == 900
     assert settings["max_llm_calls"] == 3
     assert settings["max_llm_provider_attempts"] == 3
-    assert settings["llm_call_timeout_sec"] == 180
+    assert settings["llm_call_timeout_sec"] is None
     assert "max_llm_tokens" not in settings
     assert "max_llm_cost_microusd" not in settings
     assert backend == {
@@ -72,7 +72,21 @@ def test_codex_config_uses_bounded_subscription_semantics():
     }
 
 
-def test_codex_init_creates_empty_isolated_cwd_without_cost_claims(tmp_path):
+def test_codex_reasoning_effort_is_explicit_and_does_not_change_limits():
+    default = alpha_config("gpt-5.6-luna", provider="codex")
+    high = alpha_config("gpt-5.6-luna", provider="codex", reasoning_effort="high")
+    assert default["backends"][0]["reasoning_effort"] == "max"
+    assert high["backends"][0]["reasoning_effort"] == "high"
+    high["backends"][0]["reasoning_effort"] = "max"
+    assert high == default
+    with pytest.raises(ValueError, match="only for Codex"):
+        alpha_config("model", 1.0, 1.0, reasoning_effort="high")
+    with pytest.raises(ValueError, match="Reasoning effort must"):
+        alpha_config("model", provider="codex", reasoning_effort="invalid")
+
+
+@pytest.mark.parametrize("effort", [None, "high"])
+def test_codex_init_creates_empty_isolated_cwd_without_cost_claims(tmp_path, effort):
     import yaml
 
     destination = tmp_path / "codex-experiment"
@@ -86,14 +100,16 @@ def test_codex_init_creates_empty_isolated_cwd_without_cost_claims(tmp_path):
             "codex",
             "--model",
             "gpt-5.6-luna",
-        ],
+        ] + (["--reasoning-effort", effort] if effort else []),
     )
     assert result.exit_code == 0, result.output
     config = yaml.safe_load((destination / "config.yaml").read_text())
     backend = config["backends"][0]
+    assert config["llm_call_timeout_sec"] is None
+    assert backend["timeout_sec"] == 180
     assert backend["type"] == "codex"
     assert backend["model"] == "gpt-5.6-luna"
-    assert backend["reasoning_effort"] == "max"
+    assert backend["reasoning_effort"] == (effort or "max")
     assert backend["sandbox"] == "read-only"
     assert backend["auth_name"] == "current"
     assert backend["ignore_user_config"] is True

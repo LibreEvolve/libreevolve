@@ -188,3 +188,28 @@ The following acceptance evidence is still missing:
 
 The evidence supports an engineering preview. It does not support a
 trial-ready or release-ready alpha, and no broad improvement claim is made.
+
+## Current branch and boundary regression follow-up
+
+The implementation and package-validation tip is
+`eb4d5eaec8fe0a460c7e121d2b9bcbf1a78a0b06`, and the clean local worktree has a
+later documentation-only reconciliation commit. The private
+`LibreEvolve/codex/early-alpha-20260905` remote branch remains at the
+implementation tip; the local documentation commit is intentionally not
+pushed. The branch is not merged into the private `master`
+(`dbf8b210d7743694ef90a0f7fc0942782dc40cbc`).
+The exact Windows package smoke remains intentionally tied to source/CI-anchor
+commit `2a472c2d231fe4157f2c6afcb3e309978ccde4f8`, whose artifacts and
+provenance are recorded above; later commits in this branch are documentation
+only.
+
+A full exact-current native Linux non-integration diagnostic collected 6,670
+tests (6,667 selected) but reached its 5,400-second timeout at 84% before
+pytest could emit a final summary. Its five failures were boundary checks: the
+diagnostic environment selected pypdf 6.17 despite the declared `<6.11` bound,
+and the paused workflow lacked a textual marker for the retained weekly
+source-refresh cron. With the declared pypdf range and commit `eb4d5eae`, the
+14 direct boundary tests passed in 8.24 seconds and the three affected
+paper-manifest acceptance tests passed in 365.46 seconds. This does not replace
+the earlier completed exact-candidate full-suite result above, and no claim of
+a completed full current-head suite is made.

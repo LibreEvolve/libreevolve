@@ -6,9 +6,13 @@ state, not an authorization to spend or contact participants.
 
 ## Exact candidate and repository state
 
-- Candidate source commit: `8621ea69b4d8bc6c2b5aafec75b8a90056a6a338`.
-- Candidate branch: `codex/early-alpha-20260905`, clean and pushed to the
-  private `LibreEvolve/libreevolve` repository.
+- The original packaged candidate was
+  `8621ea69b4d8bc6c2b5aafec75b8a90056a6a338`; the implementation and package-
+  validation tip is `eb4d5eaec8fe0a460c7e121d2b9bcbf1a78a0b06`.
+- Candidate branch: `codex/early-alpha-20260905`. The private remote branch
+  currently points to the implementation tip; the clean local checkout has a
+  later documentation-only reconciliation commit and is intentionally one
+  commit ahead. It is not merged into the private repository's `master`.
 - Merge commit: `a906b53e138c5598edc40c12154f2d5f9635d6df` on that repository's
   `master`; PR #1 is `MERGED`.
 - The shared `CompleteTech-LLC-AI-Research/libreevolve` checkout is a separate,
@@ -61,16 +65,16 @@ collect the usability records before revisiting completion.
 
 ## Local follow-up after the merged candidate
 
-Source commit `b2159939` is a local, unpushed reliability follow-up to the
-packaged candidate. It synchronizes POSIX verification-worker descendant
+Source commit `b2159939` is the reliability follow-up to the packaged
+candidate. It synchronizes POSIX verification-worker descendant
 cleanup, adds a non-reaping Darwin `kqueue` observer, fails closed when safe
 exit observation is unavailable, and records group/job cleanup failures. The
 five alpha regression files pass 123 tests with 1 Windows-only skip. A Windows
 Python 3.12 package/provenance build from exact follow-up HEAD
 `b215993954368b1d357d3e19b9b94ed0e6140b5b` is preserved under
 `dist/b2159939/`; its wheel/sdist/provenance hashes and clean Windows
-provider-free workflow are recorded in `EVIDENCE.md`. The follow-up remains
-unpushed.
+provider-free workflow are recorded in `EVIDENCE.md`. The follow-up is on the
+private feature branch and remains unmerged into `master`.
 
 The current exact package smoke was rebuilt from docs/CI-anchor commit
 `2a472c2d231fe4157f2c6afcb3e309978ccde4f8` under `dist/2a472c2d/` and

@@ -137,7 +137,7 @@ def test_safe_load_unique_rejects_aliases_and_anchors(
 
 
 def test_redacted_yaml_error_redacts_secret_in_duplicate_key_diagnostic():
-    secret_key = "api_key=sk-proj_yamlsecret1234"
+    secret_key = "api_key=sk-proj_yamlsecret1234"  # pragma: allowlist secret
 
     with pytest.raises(yaml.constructor.ConstructorError) as raised:
         safe_load_unique(f"{secret_key}: one\n{secret_key}: two\n")

@@ -176,7 +176,7 @@ def test_missing_or_incomplete_attempt_ledger_does_not_claim_no_provider_calls(t
 
 
 def test_attempt_error_labels_are_redacted_and_html_escaped(tmp_path):
-    secret = "sk-abcdefghijklmnopqrstuvwxyz"
+    secret = "sk-abcdefghijklmnopqrstuvwxyz"  # pragma: allowlist secret
     attack = '<script>alert("x")</script> api_key=' + secret
     rows = [{"status": "error", "error_type": attack, "error": "private provider error",
              "prompt": "private prompt", "output": "private response"},

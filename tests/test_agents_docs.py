@@ -42,9 +42,45 @@ def test_package_has_only_preview_provider_and_example():
         assert removed not in dependencies
 
 
-def test_ci_pause_remains_manual_and_has_no_paid_test_dispatch():
-    for path in Path(".github/workflows").glob("*.yml"):
-        workflow = yaml.load(path.read_text(), Loader=yaml.BaseLoader)
-        assert set(workflow["on"]) == {"workflow_dispatch"}
-        assert "run_live_integration" not in path.read_text()
-        assert "paper_manifest" not in path.read_text()
+def test_ci_trigger_contract_keeps_hosted_workflows_automatic_without_paid_dispatch():
+    tests_path = Path(".github/workflows/tests.yml")
+    tests_text = tests_path.read_text(encoding="utf-8")
+    tests_workflow = yaml.load(tests_text, Loader=yaml.BaseLoader)
+    tests_triggers = tests_workflow.get("on", tests_workflow.get(True))
+
+    assert {"workflow_dispatch", "pull_request", "push", "schedule"} <= set(tests_triggers)
+    required_paths = {
+        ".github/workflows/tests.yml",
+        ".gitignore",
+        ".pre-commit-config.yaml",
+        ".secrets.baseline",
+        "AGENTS.md",
+        "README.md",
+        "ROADMAP.md",
+        "docs/**",
+        "libreevolve/**",
+        "old/**",
+        "papers/**",
+        "pyproject.toml",
+        "tests/**",
+    }
+    for trigger in ("pull_request", "push"):
+        assert required_paths <= set(tests_triggers[trigger]["paths"])
+    assert tests_triggers["schedule"][0]["cron"] == "17 6 * * 1"
+
+    installed_path = Path(".github/workflows/alpha-installed.yml")
+    installed_text = installed_path.read_text(encoding="utf-8")
+    installed_workflow = yaml.load(installed_text, Loader=yaml.BaseLoader)
+    installed_triggers = installed_workflow.get("on", installed_workflow.get(True))
+    assert {"workflow_dispatch", "pull_request", "push"} <= set(installed_triggers)
+    installed_required_paths = {
+        "libreevolve/**",
+        "pyproject.toml",
+        "MANIFEST.in",
+        ".github/workflows/alpha-installed.yml",
+    }
+    for trigger in ("pull_request", "push"):
+        assert installed_required_paths <= set(installed_triggers[trigger]["paths"])
+    for text in (tests_text, installed_text):
+        assert "run_live_integration" not in text
+        assert "paper_manifest" not in text

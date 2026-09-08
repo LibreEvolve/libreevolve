@@ -1,9 +1,39 @@
 name: Tests
 
 on:
-  # Existing account-billing pause: automatic triggers remain disabled.
-  # Restoring hosted CI is a separate authorized task.
   workflow_dispatch:
+  pull_request:
+    paths:
+      - ".github/workflows/tests.yml"
+      - ".gitignore"
+      - ".pre-commit-config.yaml"
+      - ".secrets.baseline"
+      - "AGENTS.md"
+      - "README.md"
+      - "ROADMAP.md"
+      - "docs/**"
+      - "libreevolve/**"
+      - "old/**"
+      - "papers/**"
+      - "pyproject.toml"
+      - "tests/**"
+  push:
+    paths:
+      - ".github/workflows/tests.yml"
+      - ".gitignore"
+      - ".pre-commit-config.yaml"
+      - ".secrets.baseline"
+      - "AGENTS.md"
+      - "README.md"
+      - "ROADMAP.md"
+      - "docs/**"
+      - "libreevolve/**"
+      - "old/**"
+      - "papers/**"
+      - "pyproject.toml"
+      - "tests/**"
+  schedule:
+    - cron: "17 6 * * 1"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

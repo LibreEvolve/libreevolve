@@ -26,8 +26,12 @@ directory outside the checkout, and exercise the seed-only flow in the
 [quickstart](alpha-quickstart.md), including report and verified export.
 Run `pip check` in that environment.
 
-The existing GitHub workflows remain manual-only while the account-billing
-pause is unresolved. A local pass does not mean hosted CI ran or passed.
-Do not expand scoped work into CI/account repair.
+GitHub workflows run on pull requests and pushes, with manual dispatch available
+for additional verification. The offline test matrix covers Python 3.11 and 3.12
+on Linux, Windows, and macOS. The installed-wheel workflow exercises Windows
+onboarding, seed-only evaluation, reporting, and independently verified export
+outside the checkout. These checks do not make live model requests. A local
+pass does not mean hosted CI ran or passed; inspect the checks for the exact
+candidate commit. Account-billing changes require separate authorization.
 
 Preserve unrelated changes. Do not reset, clean or stash a shared checkout.

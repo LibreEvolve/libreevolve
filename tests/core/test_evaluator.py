@@ -47,6 +47,92 @@ class _FakeTimeoutProcess:
         self.killed = True
 
 
+def _directory_alias_or_skip(alias: Path, target: Path) -> str:
+    """Create a directory alias without requiring Windows symlink privilege."""
+    if sys.platform == "win32":
+        result = subprocess.run(
+            ["cmd", "/c", "mklink", "/J", str(alias), str(target)],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if result.returncode != 0:
+            pytest.skip(f"junction creation is unavailable: {result.stderr or result.stdout}")
+        return "junction"
+    try:
+        alias.symlink_to(target, target_is_directory=True)
+    except (OSError, NotImplementedError) as exc:
+        pytest.skip(f"directory symlink creation is unavailable: {exc}")
+    return "symlink"
+
+
+def _remove_directory_alias(alias: Path, kind: str) -> None:
+    """Remove a directory alias before removing its target."""
+    if kind == "junction":
+        if alias.exists():
+            alias.rmdir()
+    elif alias.is_symlink():
+        alias.unlink()
+
+
+@pytest.mark.parametrize("mode", ["external_validator", "embedded_evaluate"])
+def test_evaluator_canonicalizes_internal_temp_root_before_materialization(
+    tmp_path, monkeypatch, mode
+):
+    """Internal roots tolerate a host temporary-directory alias such as macOS /var."""
+    real_root = tmp_path / "real-temp"
+    linked_root = tmp_path / "linked-temp"
+    real_root.mkdir()
+    alias_kind = _directory_alias_or_skip(linked_root, real_root)
+
+    class _LinkedTemporaryDirectory:
+        def __init__(self, *_args, **_kwargs):
+            pass
+
+        def __enter__(self):
+            return str(linked_root)
+
+        def __exit__(self, *_args):
+            return False
+
+    monkeypatch.setattr(
+        evaluator.tempfile,
+        "TemporaryDirectory",
+        _LinkedTemporaryDirectory,
+    )
+    validate_src = "def evaluate(c): return {'score': 0.9, 'is_valid': True}"
+    p, d = _problem(validate_src)
+    try:
+        if mode == "embedded_evaluate":
+            workspace = CandidateWorkspace(
+                files={
+                    "main.py": (
+                        "def evaluate(eval_inputs):\n"
+                        "    return {'score': 0.9, 'is_valid': True}\n"
+                    )
+                },
+                primary_file="main.py",
+            )
+            evaluator_instance = CascadeEvaluator(
+                p,
+                stages=[{"name": "candidate_eval", "mode": mode}],
+            )
+        else:
+            workspace = CandidateWorkspace.from_code("x = 1")
+            evaluator_instance = CascadeEvaluator(p)
+
+        result = evaluator_instance.evaluate(workspace, None)
+
+        assert result.is_valid is True
+        assert result.error is None
+        assert result.fitness == 0.9
+    finally:
+        shutil.rmtree(d)
+        _remove_directory_alias(linked_root, alias_kind)
+        if real_root.exists():
+            shutil.rmtree(real_root)
+
+
 def test_direct_evaluator_rejects_unsafe_configured_stage_labels():
     p, d = _problem("def evaluate(c): return {'score': 1.0, 'is_valid': True}")
     try:
@@ -518,7 +604,9 @@ def test_materialization_collision_returns_invalid_evaluation_result():
 
 def test_static_source_copy_materialization_error_has_structured_metadata():
     p, d = _problem("def evaluate(c): return {'score':1.0,'is_valid':True}")
-    source = d / "external.bin"
+    # Candidate materialization rejects linked ancestors; use the physical
+    # spelling so this test reaches the intended hash-mismatch branch on macOS.
+    source = d.resolve() / "external.bin"
     source.write_bytes(b"actual")
     workspace = CandidateWorkspace(
         files={"main.py": "x = 1\n"},

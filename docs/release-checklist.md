@@ -22,6 +22,7 @@ Keep the product labeled **engineering preview**. Subscription charges may be
 unknown. Candidate execution is a local subprocess, not a security sandbox.
 Do not claim cross-platform live parity from one host.
 
-The GitHub workflows remain manual-only during the existing billing pause.
-Publication does not authorize CI repair, force-pushes or unrelated branch
-deletion.
+The GitHub workflows run offline checks automatically for covered changes and
+also support manual dispatch. Verify successful hosted results for the exact
+candidate commit before publication. Account-billing changes, force-pushes and
+unrelated branch deletion require separate authorization.

@@ -577,7 +577,9 @@ def test_materialization_collision_returns_invalid_evaluation_result():
 
 def test_static_source_copy_materialization_error_has_structured_metadata():
     p, d = _problem("def evaluate(c): return {'score':1.0,'is_valid':True}")
-    source = d / "external.bin"
+    # Candidate materialization rejects linked ancestors; use the physical
+    # spelling so this test reaches the intended hash-mismatch branch on macOS.
+    source = d.resolve() / "external.bin"
     source.write_bytes(b"actual")
     workspace = CandidateWorkspace(
         files={"main.py": "x = 1\n"},

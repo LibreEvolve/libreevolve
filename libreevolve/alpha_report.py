@@ -188,6 +188,10 @@ def _verify(code: bytes, validator: bytes, entrypoint: str) -> dict:
 
                 readers = [threading.Thread(target=drain, args=(stream, target), daemon=True)
                            for stream, target in zip((process.stdout, process.stderr), buffers)]
+                # Darwin can report EPERM while the exited group leader is
+                # still an unreaped zombie. Decide whether cleanup failed
+                # only after wait() and the group-disappearance check below.
+                posix_group_cleanup_error = None
                 try:
                     exit_observer = _darwin_process_exit_observer(process)
                     job = _assign_windows_kill_job(process)
@@ -229,13 +233,11 @@ def _verify(code: bytes, validator: bytes, entrypoint: str) -> dict:
                         except ProcessLookupError:
                             pass
                         except OSError as exc:
-                            if _process_group_exists(process.pid):
-                                evidence["status"] = "cleanup_failed"
-                                evidence["cleanup_error"] = str(exc)[:500]
-                                try:
-                                    process.kill()
-                                except (OSError, ProcessLookupError):
-                                    pass
+                            posix_group_cleanup_error = exc
+                            try:
+                                process.kill()
+                            except (OSError, ProcessLookupError):
+                                pass
                     try:
                         process.wait(timeout=2)
                     except subprocess.TimeoutExpired:
@@ -246,6 +248,12 @@ def _verify(code: bytes, validator: bytes, entrypoint: str) -> dict:
                             reader.join(timeout=1)
                     if os.name != "nt":
                         _wait_for_process_group_exit(process.pid)
+                        if (
+                            posix_group_cleanup_error is not None
+                            and _process_group_exists(process.pid)
+                        ):
+                            evidence["status"] = "cleanup_failed"
+                            evidence["cleanup_error"] = str(posix_group_cleanup_error)[:500]
                     if exit_observer is not None:
                         exit_observer.close()
                     for stream, reader in zip((process.stdout, process.stderr), readers):

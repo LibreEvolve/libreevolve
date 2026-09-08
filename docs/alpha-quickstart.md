@@ -1,89 +1,162 @@
-# Engineering preview quickstart
+# Engineering-preview quickstart
 
-LibreEvolve runs bounded local optimization of a Python bin-packing heuristic.
-The reference model lane is Codex OAuth with `gpt-5.6-luna` and `high` reasoning.
-Earlier live validation used Linux/WSL, Python 3.12.13 and Codex CLI 0.153.4.
-That evidence predates the branch cleanup; offline tests are not new live
-model evidence. External usability remains unvalidated.
+This page is the canonical command source for the public engineering preview.
+It describes a source checkout and keeps offline setup separate from the
+optional Codex OAuth route. The preview searches bounded changes to a small
+Python bin-packing heuristic; it does not promise improvement.
 
-## Install and initialize
+## Support matrix
 
-Use Python 3.12 and install from this checkout:
+| Environment | What is declared or documented | Evidence boundary |
+| --- | --- | --- |
+| Python `>=3.11` | Declared in `pyproject.toml` as the package compatibility floor. | Metadata allowance, not a complete validation matrix. |
+| Python 3.12 on Linux/WSL | Reference installation and command route below. | Earlier live model evidence used this family before the current cleanup; the commands below are not a new live run. |
+| Windows with Python 3.12 | Installation and offline preflight are documented with PowerShell paths. | Native Windows Codex execution and external usability remain unvalidated. |
+| Other Python/OS combinations | Not the documented reference route. | Validate separately before treating them as supported. |
+
+No public package-registry install is advertised. Install from the checked-out
+source tree. Use a fresh clone, virtual environment, task directory and output
+names; the commands protect existing destinations rather than overwriting them.
+
+## 1. Clone and install from source
+
+The public repository target is
+`https://github.com/LibreEvolve/libreevolve`. The commands below use the
+repository's source packaging; they do not claim a PyPI release.
+
+### Linux or WSL
 
 ```bash
+git clone https://github.com/LibreEvolve/libreevolve.git
+cd libreevolve
 python3.12 -m venv .venv
-.venv/bin/python -m pip install .
+.venv/bin/python -m pip install -e '.[dev]'
 .venv/bin/python -m pip check
+```
+
+### Windows PowerShell
+
+```powershell
+git clone https://github.com/LibreEvolve/libreevolve.git
+Set-Location libreevolve
+py -3.12 -m venv .venv
+& .\.venv\Scripts\python.exe -m pip install -e ".[dev]"
+& .\.venv\Scripts\python.exe -m pip check
+```
+
+The examples below use the Linux/WSL executable paths. On Windows, replace
+`.venv/bin/python` and `.venv/bin/libreevolve` with
+`.venv\Scripts\python.exe` and `.venv\Scripts\libreevolve.exe`.
+
+## 2. Initialize and run the offline preflight
+
+Initialization copies the checked-in bin-packing task into a new directory and
+makes no provider call. The offline doctor checks the task and evaluator
+contract, skips credential checks, and still does not request a model response.
+
+```bash
 .venv/bin/libreevolve alpha init packing-task
 .venv/bin/libreevolve alpha doctor packing-task --offline
 ```
 
-On Windows, create the environment with `py -3.12 -m venv .venv` and use
-`.venv\Scripts\python.exe` and `.venv\Scripts\libreevolve.exe`.
-Native Windows Codex execution is not the validated live route.
+The initializer writes `packing-task/config.yaml` with the validated
+Codex OAuth lane (`gpt-5.6-luna`, high reasoning), bounded local call,
+evaluation and runtime settings, and no token or dollar cap. Review the file
+before any live request. A login or offline pass does not establish model
+access, optimization, billing, or external usability.
 
-For optimization, a working Codex CLI must be on PATH with an authorized
-ChatGPT/OAuth login. Use `codex login`; API-key authentication is not the
-supported lane. A saved login does not prove account-specific model access.
-`alpha doctor packing-task` checks local executable/login status without
-requesting a model response.
+## 3. Exercise the seed-only path
 
-## Run, inspect and export
-
-Review `packing-task/config.yaml` and authorize your subscription use before
-running:
+Use a new run name. `--max-generations 0` evaluates only the seed and makes no
+model request; it is an offline pipeline check, not optimization or evidence
+of provider access.
 
 ```bash
-.venv/bin/libreevolve run packing-task --run-name packing-first --progress
-.venv/bin/libreevolve show runs/packing-first
-.venv/bin/libreevolve alpha report runs/packing-first --output packing-first.html
-.venv/bin/libreevolve alpha export runs/packing-first verified-first
+.venv/bin/libreevolve run packing-task --max-generations 0 --run-name seed-check --progress
+.venv/bin/libreevolve show runs/seed-check
+.venv/bin/libreevolve alpha report runs/seed-check --output seed-check.html
+.venv/bin/libreevolve alpha export runs/seed-check verified-seed
 ```
 
-Open the HTML file in your browser. The export contains `solution.py` and
-`verification.json`, which binds fresh training and held-out correctness
-results to the candidate's SHA-256. Existing output files/directories are not
-overwritten. Use fresh run, report and export names each time.
+The inspection reads the saved run. The report writes a new local HTML file
+after reevaluating the on-disk `runs/seed-check/best_workspace/seed.py` in
+timed local subprocesses; it does not make a provider call or substitute a
+history candidate. The export creates `verified-seed/solution.py` and
+`verified-seed/verification.json` after fresh training and held-out checks,
+including the candidate SHA-256 and source-selection evidence. These outputs
+are local artifacts, not a published example.
 
-To exercise the pipeline without a model request, add `--max-generations 0`
-to the run command. This evaluates only the seed: it is not optimization or
-proof of provider access.
+The report has no source selector: it always checks the on-disk workspace when
+that artifact is available and surfaces missing, corrupt or mismatched state.
+Only `alpha export` supports an explicit `--source history` or
+`--source workspace` choice when the saved history and workspace differ.
 
-Defaults allow three CLI calls, four evaluations, 900 seconds per run and
-180 seconds per CLI call, with no retries or fallback. Evaluations have a
-10-second timeout. These are local work bounds. Subscription quota and charges
-may be unknown; no dollar cap or hard token limit is claimed. Reported tokens
-are observational, and interruption or timeout may leave usage incomplete.
+## 4. Optional live Codex route
 
-## Results and cancellation
+Only continue after reviewing the limits and explicitly authorizing your own
+subscription use. The supported public lane requires a Codex CLI on `PATH` and
+an authorized ChatGPT/OAuth login; API-key authentication is not this lane.
 
-The report separates run status, candidate correctness, training quality,
-held-out quality and recorded usage. Higher quality means fewer bins on the
-same corpus. Compare within a split, not across training and held-out splits.
-No improvement is a valid outcome; passing these cases does not prove
-optimality or general performance.
+First check local setup without requesting a model response:
 
-Press Ctrl+C to cancel. The CLI exits with code 130 and points to saved state.
-The engine attempts to finalize an aborted manifest and preserve the latest
-retained candidate. Local cancellation does not prove remote provider
-cancellation or that subscription usage stopped.
+```bash
+codex login
+.venv/bin/libreevolve alpha doctor packing-task
+```
 
-Persistence failure or forced termination can leave incomplete artifacts.
-The report identifies missing state; inspection/export fail closed when
-required validation metadata is absent. Do not edit metadata to force export.
-When workspace and history candidates differ, export requires an explicit
-`--source workspace` or `--source history`, then independently verifies that
-choice.
+Then review `packing-task/config.yaml` and choose a fresh run name before the
+bounded request:
 
-## Task and execution boundary
+```bash
+.venv/bin/libreevolve run packing-task --run-name live-check --progress
+```
+
+The initialized defaults allow three CLI calls, four evaluations, 900 seconds
+per run, 180 seconds per CLI call, 10-second evaluator timeouts, and no retry
+or fallback. These are local work bounds, not hard token or dollar limits.
+Subscription charges, quota, and in-flight usage may remain unknown. A real
+request is live product use; this document does not claim that it succeeds.
+
+## Output collisions and source selection
+
+The CLI fails closed rather than overwriting existing output:
+
+- `alpha init DESTINATION` requires a new task directory.
+- `--run-name NAME` requires a new `runs/NAME` directory.
+- `alpha report ... --output FILE.html` requires a new, non-symlink file.
+- `alpha export RUN DESTINATION` requires a new destination directory.
+
+Export normally selects the saved candidate and checks a matching
+`best_workspace/` copy. If the workspace bytes differ from saved history, the
+command requires an explicit source choice:
+
+```bash
+.venv/bin/libreevolve alpha export RUN DESTINATION --source workspace
+.venv/bin/libreevolve alpha export RUN DESTINATION --source history
+```
+
+Choose the source deliberately; do not edit metadata to bypass a failed
+validation. Export records the selected source and its identity; the report
+records the on-disk workspace it checked and never selects history.
+See [saved artifacts](run-artifacts.md) for the artifact contract and
+[reading results](results.md) for interpretation.
+
+## Cancellation and incomplete state
+
+Press Ctrl+C during a run. The CLI exits with code 130 and attempts to preserve
+an aborted manifest and best-so-far artifacts. Local process cleanup does not
+prove remote provider cancellation or that subscription usage stopped. Forced
+termination or persistence failure can leave incomplete artifacts; inspection
+and export fail closed when required state is absent.
+
+## Candidate and evaluator boundary
 
 The candidate implements `pack(items, capacity)` in
-`packing-task/initial_programs/seed.py`. Each item must appear exactly once,
-and each bin must fit. The evaluator and 30 held-out cases remain outside
-the editable workspace; training uses 55 deterministic cases. Keep held-out
-results out of prompts, tuning and stopping decisions.
+`packing-task/initial_programs/seed.py`. Training and held-out cases are
+separate; holdout results must not drive prompts, selection, tuning or stopping.
+Quality is a bin-packing measure for a named corpus, not accuracy or speed.
 
-Candidate Python executes in timed local subprocesses with host access.
-This is not a security sandbox. Use trusted tasks and a suitable development
-environment. Other providers, research features and examples belong on
-the private [experimental repository](https://github.com/LibreEvolve/libreevolve-experimental).
+Candidate and validator Python execute in timed local subprocesses with host
+access. This is not a security sandbox. Use trusted tasks and an appropriately
+isolated development environment. Review [safety and scope](safety.md) before
+sharing source, logs or HTML.

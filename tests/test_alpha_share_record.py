@@ -47,7 +47,8 @@ def test_source_has_separate_approval():
 
 @pytest.mark.parametrize("url", ["javascript:alert(1)", "http://example.com", "file:///tmp/code",
     "https://localhost/a", "https://127.0.0.1/a", "https://[::1]/a", "https://host.internal/a",
-    "https://user:secret@example.com/a", "https://example.com/a?token=secret", "https://example.com/../a",
+    "https://user:secret@example.com/a",  # pragma: allowlist secret -- synthetic rejected credential URL
+    "https://example.com/a?token=secret", "https://example.com/../a",
     "https://example.com/%2e%2e/a", "https://example.com\\@private.local/a", "https://example.com:bad/a"])
 def test_unsafe_urls(url):
     with pytest.raises(ValueError):

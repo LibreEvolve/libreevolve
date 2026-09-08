@@ -248,6 +248,99 @@ def register_alpha(cli: click.Group) -> None:
     cli.add_command(alpha)
 
 
+@alpha.group("share")
+def share_group() -> None:
+    """Review and render frozen public records; never execute code or upload."""
+
+
+@share_group.command("inspect")
+@click.argument("record_path", type=click.Path(path_type=Path))
+def share_inspect(record_path: Path) -> None:
+    """Validate and print the exact public payload and its approval digest."""
+    from libreevolve.alpha_share_io import load_record
+    from libreevolve.alpha_share_record import payload_sha256
+
+    try:
+        record = load_record(record_path)
+        click.echo(json.dumps(record, indent=2, allow_nan=False))
+        click.echo(f"Payload SHA-256: {payload_sha256(record)}")
+        click.echo("Review every field, including hashes, before approving. No output was published.")
+    except (OSError, ValueError) as exc:
+        raise click.ClickException(redact_sensitive_text(str(exc))) from exc
+
+
+@share_group.command("prepare")
+@click.argument("run_dir", type=click.Path(path_type=Path))
+@click.option("--public-id", required=True, help="Deliberately chosen public identifier, not a private run path.")
+@click.option("--output", required=True, type=click.Path(path_type=Path), help="New local proposal JSON; not approved for publication.")
+@click.option("--evidence", required=True, type=click.Path(path_type=Path), help="New PRIVATE preparation-evidence file.")
+@click.option("--source", type=click.Choice(["auto", "history", "workspace"]), default="auto")
+@click.option("--split", type=click.Choice(["training", "holdout"]), default="training")
+@click.option("--allow-local-execution", is_flag=True, required=True, help="Acknowledge fresh candidate checks execute Python with host access.")
+def share_prepare(run_dir: Path, public_id: str, output: Path, evidence: Path,
+                  source: str, split: str, allow_local_execution: bool) -> None:
+    """Freshly check a saved candidate and prepare an UNAPPROVED proposal.
+
+    Executes candidate code locally. Makes no model request and uploads nothing.
+    Keep both files local until reviewing the proposal and its exact digest.
+    """
+    from libreevolve.alpha_share_io import checked_path
+    from libreevolve.alpha_share_prepare import prepare_run
+    from libreevolve.alpha_share_record import canonical_bytes, payload_sha256
+
+    if not allow_local_execution:
+        raise click.ClickException("Explicit local-execution acknowledgement is required")
+    try:
+        proposal_path = checked_path(output, must_exist=False)
+        evidence_path = checked_path(evidence, must_exist=False)
+        if proposal_path == evidence_path or proposal_path.exists() or evidence_path.exists():
+            raise ValueError("Choose distinct new proposal and private-evidence files")
+        proposal, private = prepare_run(run_dir, public_result_id=public_id, source=source, split=split)
+        for path, value in ((evidence_path, private), (proposal_path, proposal)):
+            descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0), 0o600)
+            with os.fdopen(descriptor, "wb") as stream:
+                stream.write(canonical_bytes(value) + b"\n")
+    except (OSError, ValueError, subprocess.SubprocessError) as exc:
+        raise click.ClickException(redact_sensitive_text(str(exc))) from exc
+    click.echo(f"Unapproved local proposal: {output}")
+    click.echo(f"PRIVATE preparation evidence: {evidence}")
+    click.echo(f"Payload SHA-256: {payload_sha256(proposal)}")
+    click.echo("Review every public field and hash. No publication approval or upload occurred.")
+
+
+@share_group.command("render")
+@click.argument("record_path", type=click.Path(path_type=Path))
+@click.argument("destination", type=click.Path(path_type=Path))
+@click.option("--approve-sha256", required=True, help="Affirm approval of this exact canonical public payload.")
+@click.option("--approved-by", required=True, help="Operator name for the PRIVATE approval receipt, not public files.")
+@click.option("--receipt", required=True, type=click.Path(path_type=Path), help="New PRIVATE receipt file outside the public destination.")
+@click.option("--approve-source-link", is_flag=True, help="Separately approve the record's candidate source link.")
+def share_render(record_path: Path, destination: Path, approve_sha256: str,
+                 approved_by: str, receipt: Path, approve_source_link: bool) -> None:
+    """Write a new static public bundle from a reviewed frozen JSON record.
+
+    No candidate code runs, no remote resources are fetched, and nothing is
+    uploaded. Keep the receipt private. Approval is not authentication.
+    """
+    from libreevolve.alpha_share_io import checked_path, export_public
+
+    try:
+        receipt_path = checked_path(receipt, must_exist=False)
+        target = checked_path(destination, must_exist=False)
+        if receipt_path.exists() or receipt_path == target or target in receipt_path.parents:
+            raise ValueError("Choose a new private receipt file outside the public destination")
+        approval = export_public(record_path, target, approved_sha256=approve_sha256,
+                                 approved_by=approved_by, approve_source_link=approve_source_link)
+        descriptor = os.open(receipt_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0), 0o600)
+        with os.fdopen(descriptor, "w", encoding="utf-8") as stream:
+            json.dump(approval, stream, indent=2, allow_nan=False)
+            stream.write("\n")
+    except (OSError, ValueError) as exc:
+        raise click.ClickException(redact_sensitive_text(str(exc))) from exc
+    click.echo(f"Local public bundle: {destination}. Nothing uploaded.")
+    click.echo(f"Private approval receipt: {receipt}. Do not publish this file.")
+
+
 @alpha.command("report")
 @click.argument("run_dir", type=click.Path(exists=True, file_okay=False, path_type=Path))
 @click.option("--output", required=True, type=click.Path(path_type=Path),

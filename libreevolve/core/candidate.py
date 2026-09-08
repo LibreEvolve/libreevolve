@@ -23,6 +23,7 @@ from libreevolve.core.diff import (
     strip_proposal_metadata,
 )
 from libreevolve.core.redaction import redact_sensitive_text
+from libreevolve.core.path_utils import is_path_link, linked_existing_ancestor
 
 EVOLVE_BLOCK_START = "# EVOLVE-BLOCK-START"
 EVOLVE_BLOCK_END = "# EVOLVE-BLOCK-END"
@@ -904,8 +905,7 @@ def _remove_materialization_tree(path: Path, parent: Path) -> None:
 
 
 def _path_is_link(path: Path) -> bool:
-    is_junction = getattr(path, "is_junction", None)
-    return path.is_symlink() or (is_junction is not None and is_junction())
+    return is_path_link(path)
 
 
 def _reject_linked_materialization_entries(root: Path) -> None:
@@ -938,14 +938,7 @@ def _reject_linked_materialization_entries(root: Path) -> None:
 
 
 def _linked_existing_ancestor(path: Path) -> Path | None:
-    current = path.parent
-    while current != current.parent:
-        if _path_is_link(current):
-            return current
-        current = current.parent
-    if _path_is_link(current):
-        return current
-    return None
+    return linked_existing_ancestor(path)
 
 
 def _validate_candidate_text_utf8(rel_path: str, content: str) -> None:

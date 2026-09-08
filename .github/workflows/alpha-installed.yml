@@ -1,9 +1,19 @@
 name: Installed Alpha
 
 on:
-  # Temporary pause while GitHub account billing is unresolved. Restore the
-  # push/pull_request triggers before treating CI as a release gate again.
   workflow_dispatch:
+  push:
+    paths:
+      - "libreevolve/**"
+      - "pyproject.toml"
+      - "MANIFEST.in"
+      - ".github/workflows/alpha-installed.yml"
+  pull_request:
+    paths:
+      - "libreevolve/**"
+      - "pyproject.toml"
+      - "MANIFEST.in"
+      - ".github/workflows/alpha-installed.yml"
 
 permissions:
   contents: read

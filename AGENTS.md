@@ -22,8 +22,9 @@ py -3.12 -m build --wheel --sdist
 
 See [development](docs/development.md) and
 [release checks](docs/release-checklist.md). Never make model requests as an
-incidental test. Do not restore automatic CI triggers or repair account billing
-without authorization.
+incidental test. Automatic CI validates the offline suite and installed-wheel
+workflow. Changes to account billing or paid provider tests require explicit
+authorization.
 
 ## Runtime ownership and safeguards
 

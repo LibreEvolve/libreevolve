@@ -1,0 +1,7 @@
+*.bin binary
+papers/arxiv_abstract_2506.13131v1.html binary
+papers/2506.13131__AlphaEvolve.pdf binary
+libreevolve/problems/benchmarks/artifacts/matrix_cascade_fixture/** text eol=lf
+libreevolve/problems/benchmarks/artifacts/matrix_evolution_fixture/** text eol=lf
+libreevolve/problems/examples/matrix_multiplication/benchmark_candidates/** text eol=lf
+libreevolve/problems/examples/matrix_multiplication/fixtures/** text eol=lf

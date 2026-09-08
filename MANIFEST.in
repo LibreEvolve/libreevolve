@@ -1,0 +1,4 @@
+recursive-include libreevolve/problems/examples/bin_packing *.md *.txt *.yaml
+recursive-include docs *.md
+recursive-include tests *.py
+include AGENTS.md

@@ -1,0 +1,80 @@
+name: Installed Alpha
+
+on:
+  # Temporary pause while GitHub account billing is unresolved. Restore the
+  # push/pull_request triggers before treating CI as a release gate again.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows-wheel:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build distributions
+        run: |
+          python -m pip install build
+          python -m build --wheel --sdist
+      - name: Record exact candidate provenance
+        shell: pwsh
+        run: |
+          python -m libreevolve.tools.release_artifact_provenance
+          if ($LASTEXITCODE -ne 0) { throw "provenance generation failed" }
+          $provenance = Get-Content dist/release_artifact_provenance.json -Raw | ConvertFrom-Json
+          if ($provenance.source.git_commit -ne $env:GITHUB_SHA) { throw "candidate commit mismatch" }
+          if ($provenance.source.tracked_files_dirty) { throw "tracked source changed during build" }
+          if ($provenance.artifact_count -ne 2) { throw "expected one wheel and one sdist" }
+      - name: Exercise installed onboarding outside checkout
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $wheel = (Get-ChildItem dist/*.whl).FullName
+          if (@($wheel).Count -ne 1) { throw "Expected exactly one wheel" }
+          $alphaRoot = Join-Path $env:RUNNER_TEMP ([guid]::NewGuid().ToString())
+          New-Item -ItemType Directory $alphaRoot | Out-Null
+          "ALPHA_EVIDENCE_ROOT=$alphaRoot" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          python -m venv (Join-Path $alphaRoot "venv")
+          if ($LASTEXITCODE -ne 0) { throw "venv failed" }
+          $alphaPython = Join-Path $alphaRoot "venv/Scripts/python.exe"
+          $alphaCli = Join-Path $alphaRoot "venv/Scripts/libreevolve.exe"
+          & $alphaPython -m pip install $wheel
+          if ($LASTEXITCODE -ne 0) { throw "wheel install failed" }
+          & $alphaPython -m pip check
+          if ($LASTEXITCODE -ne 0) { throw "installed dependency check failed" }
+          Set-Location $alphaRoot
+          & $alphaCli --help
+          if ($LASTEXITCODE -ne 0) { throw "CLI help failed" }
+          & $alphaPython -m libreevolve --help
+          if ($LASTEXITCODE -ne 0) { throw "module help failed" }
+          & $alphaCli alpha init packing
+          if ($LASTEXITCODE -ne 0) { throw "template failed" }
+          & $alphaCli alpha doctor packing --offline
+          if ($LASTEXITCODE -ne 0) { throw "offline preflight failed" }
+          & $alphaCli run packing --max-generations 0 --run-name installed-seed --progress
+          if ($LASTEXITCODE -ne 0) { throw "seed evaluation failed" }
+          & $alphaCli show runs/installed-seed
+          if ($LASTEXITCODE -ne 0) { throw "inspection failed" }
+          if (!(Test-Path runs/installed-seed/best_workspace/seed.py)) { throw "export missing" }
+          & $alphaCli alpha report runs/installed-seed --output result.html
+          if ($LASTEXITCODE -ne 0) { throw "report failed" }
+          & $alphaCli alpha export runs/installed-seed verified
+          if ($LASTEXITCODE -ne 0) { throw "independent export verification failed" }
+          if (!(Test-Path verified/verification.json)) { throw "verification evidence missing" }
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: alpha-windows-distributions
+          path: dist/*
+      - uses: actions/upload-artifact@v4
+        if: always() && env.ALPHA_EVIDENCE_ROOT != ''
+        with:
+          name: alpha-windows-installed-evidence
+          path: |
+            ${{ env.ALPHA_EVIDENCE_ROOT }}/runs/installed-seed
+            ${{ env.ALPHA_EVIDENCE_ROOT }}/result.html
+            ${{ env.ALPHA_EVIDENCE_ROOT }}/verified

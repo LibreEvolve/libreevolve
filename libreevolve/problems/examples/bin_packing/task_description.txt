@@ -1,0 +1,13 @@
+Implement pack(items: list[int], capacity: int) -> list[list[int]] for offline
+one-dimensional integer bin packing. Capacity is a positive integer; each item
+is a positive integer no larger than capacity. Inputs may be empty, repeated,
+sorted, reverse sorted, or unordered. You may reorder or mutate the input list.
+Return a list of nonempty lists containing every original item exactly once,
+including multiplicities. Each bin's sum must be at most capacity. Return []
+for empty input. Return actual Python lists and ints (not bools or floats).
+
+Minimize the total number of bins across deterministic training cases. Quality
+is sum(ceil(sum(items) / capacity)) / total_bins over the corpus, in (0, 1]
+for valid outputs. Any invalid case makes the entire evaluation invalid with
+quality zero. The volume bound is not necessarily an achievable optimum.
+The next-fit seed is intentionally suboptimal. Improve its packing decisions.

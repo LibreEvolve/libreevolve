@@ -50,18 +50,24 @@ def test_ci_trigger_contract_keeps_hosted_workflows_automatic_without_paid_dispa
 
     assert {"workflow_dispatch", "pull_request", "push", "schedule"} <= set(tests_triggers)
     required_paths = {
-        ".github/workflows/tests.yml",
+        ".github/**",
+        ".gitattributes",
         ".gitignore",
         ".pre-commit-config.yaml",
         ".secrets.baseline",
         "AGENTS.md",
+        "LICENSE",
+        "MANIFEST.in",
         "README.md",
         "ROADMAP.md",
+        "assets/**",
+        "brand/**",
         "docs/**",
         "libreevolve/**",
         "old/**",
         "papers/**",
         "pyproject.toml",
+        "site/**",
         "tests/**",
     }
     for trigger in ("pull_request", "push"):

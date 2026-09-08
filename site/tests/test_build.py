@@ -17,11 +17,11 @@ import build as builder
 
 
 APPROVED_BRAND_ASSETS = {
-    "assets/brand/mark-dark.png": ("dominant dark hero mark", "443525a55f45359e1ddcb69fef98754a62eefab7a926e96461475c2411d1ec62"),
-    "assets/brand/mark-light.png": ("light-plane hero sibling", "f5623a8ec07bf534970989596291514ff2bf726c72cf1d3017bd675597dc652d"),
-    "assets/brand/micro-mark.png": ("compact and favicon mark", "1e136500c2d1fba2d16f10fe7b28fd7ebcb342269c31799332014d882f7c1a5f"),
-    "assets/brand/mark-mono-dark.png": ("dark-theme navigation mark", "865657ed1c7575ab985f2071d1bc56eaa1375fbe27af5d998ca54684a0e9ad54"),
-    "assets/brand/mark-mono-light.png": ("light-theme navigation mark", "30d443bd42bd95e7e58f090e843ff001c2644a3a942ff6ffc4a2844e9a0e9f2e"),
+    "assets/brand/mark-dark.png": ("dominant dark hero mark", "443525a55f45359e1ddcb69fef98754a62eefab7a926e96461475c2411d1ec62"),  # pragma: allowlist secret -- public PNG SHA-256
+    "assets/brand/mark-light.png": ("light-plane hero sibling", "f5623a8ec07bf534970989596291514ff2bf726c72cf1d3017bd675597dc652d"),  # pragma: allowlist secret -- public PNG SHA-256
+    "assets/brand/micro-mark.png": ("compact and favicon mark", "1e136500c2d1fba2d16f10fe7b28fd7ebcb342269c31799332014d882f7c1a5f"),  # pragma: allowlist secret -- public PNG SHA-256
+    "assets/brand/mark-mono-dark.png": ("dark-theme navigation mark", "865657ed1c7575ab985f2071d1bc56eaa1375fbe27af5d998ca54684a0e9ad54"),  # pragma: allowlist secret -- public PNG SHA-256
+    "assets/brand/mark-mono-light.png": ("light-theme navigation mark", "30d443bd42bd95e7e58f090e843ff001c2644a3a942ff6ffc4a2844e9a0e9f2e"),  # pragma: allowlist secret -- public PNG SHA-256
 }
 
 
@@ -74,7 +74,7 @@ class SiteBuildTests(unittest.TestCase):
                 brand_page = (output / prefix / "brand/index.html").read_text(encoding="utf-8")
                 self.assertIn(f'href="{base}assets/brand/micro-mark.png"', index)
                 self.assertIn("Public path", brand_page)
-                self.assertIn("443525a55f45359e1ddcb69fef98754a62eefab7a926e96461475c2411d1ec62", brand_page)
+                self.assertIn(APPROVED_BRAND_ASSETS["assets/brand/mark-dark.png"][1], brand_page)
                 for relative, (_, expected) in APPROVED_BRAND_ASSETS.items():
                     emitted = output / prefix / relative
                     self.assertTrue(emitted.is_file(), relative)

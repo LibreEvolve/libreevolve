@@ -1,8 +1,9 @@
 # Preparing a local share bundle
 
-This branch adds an explicit, local-only sharing workflow. It does not upload,
-publish source, configure hosting or grant permission to deploy. A generated
-bundle is not an authentic live-model demonstration merely because it renders.
+LibreEvolve provides an explicit, local-only sharing workflow. It does not
+upload, publish source, configure hosting or grant permission to deploy. A
+generated bundle is not an authentic live-model demonstration merely because
+it renders.
 
 ## Three separate operations
 
@@ -21,7 +22,8 @@ workspace selection when those sources differ.
 
 ## Prepare and review
 
-After installing this branch, use its environment executable. Replace `RUN`
+After installing the engineering-preview checkout, use its environment
+executable. Replace `RUN`
 with a trusted saved run. Choose new paths and a deliberately public identifier;
 do not reuse a private run path or account name as that identifier.
 

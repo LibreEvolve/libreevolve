@@ -4,8 +4,8 @@ Use the [public issue tracker](https://github.com/LibreEvolve/libreevolve/issues
 for non-sensitive preview questions, reproducible bugs and permission-cleared
 experiment reports. Search existing issues before opening another.
 
-The repository includes three issue forms: bug, question and experiment. They
-are proposed source files until present on the default branch; a draft pull
+The repository includes three issue forms on the default branch: bug, question
+and experiment. A draft pull
 request does not activate the issue chooser. Blank issues remain available.
 Forms do not assign people, create labels or enable Discussions.
 

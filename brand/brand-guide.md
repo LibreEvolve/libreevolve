@@ -155,5 +155,8 @@ errors; it does not prove source semantics or replace human content review.
 Revalidate after relevant source, default, provider-access, export, report,
 validator or licensing changes. Keep historical live evidence explicitly
 historical. Do not print frozen test totals or imply paused CI is running.
-New art, public sharing, the website and the proposed Three-Call Challenge
-remain separately tracked work until implemented and verified.
+Final artwork, an approved authentic example, site deployment, publication on
+organization surfaces and the proposed Three-Call Challenge remain separately
+tracked work with their own review and authorization gates. The local share
+workflow and static website source are implemented and independently checked;
+that evidence does not authorize publication or establish live-model evidence.

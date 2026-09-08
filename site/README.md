@@ -1,6 +1,7 @@
 # Static website build
 
-Status: local implementation in progress, not an approved public deployment.
+Status: local implementation is available and independently checked; this is
+not an approved public deployment.
 
 See [deployment and rollback](DEPLOYMENT.md) for the separately gated activation
 and withdrawal procedure.

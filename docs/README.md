@@ -29,6 +29,7 @@ for clone, install, offline, seed-only and live commands.
 
 The public source repository is
 [LibreEvolve/libreevolve](https://github.com/LibreEvolve/libreevolve). The
-documentation describes source and local artifacts only; it does not claim a
-published package, deployed website, hosted CI result, fresh live run or
-external usability.
+documentation describes source and local artifacts only. Hosted CI now covers
+the retained offline suite and installed-wheel workflow for the candidate
+commit; this does not claim a published package, deployed website, fresh live
+run or external usability.

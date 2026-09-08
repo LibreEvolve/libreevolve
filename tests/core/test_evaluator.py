@@ -47,6 +47,34 @@ class _FakeTimeoutProcess:
         self.killed = True
 
 
+def _directory_alias_or_skip(alias: Path, target: Path) -> str:
+    """Create a directory alias without requiring Windows symlink privilege."""
+    if sys.platform == "win32":
+        result = subprocess.run(
+            ["cmd", "/c", "mklink", "/J", str(alias), str(target)],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if result.returncode != 0:
+            pytest.skip(f"junction creation is unavailable: {result.stderr or result.stdout}")
+        return "junction"
+    try:
+        alias.symlink_to(target, target_is_directory=True)
+    except (OSError, NotImplementedError) as exc:
+        pytest.skip(f"directory symlink creation is unavailable: {exc}")
+    return "symlink"
+
+
+def _remove_directory_alias(alias: Path, kind: str) -> None:
+    """Remove a directory alias before removing its target."""
+    if kind == "junction":
+        if alias.exists():
+            alias.rmdir()
+    elif alias.is_symlink():
+        alias.unlink()
+
+
 @pytest.mark.parametrize("mode", ["external_validator", "embedded_evaluate"])
 def test_evaluator_canonicalizes_internal_temp_root_before_materialization(
     tmp_path, monkeypatch, mode
@@ -55,7 +83,7 @@ def test_evaluator_canonicalizes_internal_temp_root_before_materialization(
     real_root = tmp_path / "real-temp"
     linked_root = tmp_path / "linked-temp"
     real_root.mkdir()
-    linked_root.symlink_to(real_root, target_is_directory=True)
+    alias_kind = _directory_alias_or_skip(linked_root, real_root)
 
     class _LinkedTemporaryDirectory:
         def __init__(self, *_args, **_kwargs):
@@ -100,10 +128,9 @@ def test_evaluator_canonicalizes_internal_temp_root_before_materialization(
         assert result.fitness == 0.9
     finally:
         shutil.rmtree(d)
+        _remove_directory_alias(linked_root, alias_kind)
         if real_root.exists():
             shutil.rmtree(real_root)
-        if linked_root.is_symlink():
-            linked_root.unlink()
 
 
 def test_direct_evaluator_rejects_unsafe_configured_stage_labels():

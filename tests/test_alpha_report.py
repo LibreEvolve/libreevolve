@@ -5,7 +5,10 @@ import hashlib
 import json
 import os
 import signal
+import subprocess
+import sys
 import time
+from pathlib import Path
 
 import pytest
 
@@ -233,15 +236,130 @@ def test_invalid_candidates_are_not_verified(code):
         assert result[split]["correctness"] is False
 
 
-def test_timeout_is_unknown_correctness(monkeypatch):
-    monkeypatch.setattr(reporting, "VERIFY_TIMEOUT_SECONDS", 0.3)
-    started = time.monotonic()
-    result = reporting.verify_candidate("while True: pass")
-    assert time.monotonic() - started < 6
-    for split in ("training", "holdout"):
-        assert result[split]["status"] == "timeout"
-        assert result[split]["correctness"] is None
-        assert result[split]["score"] is None
+def test_timeout_is_unknown_correctness(tmp_path, monkeypatch):
+    timeout_seconds = 0.3
+    monkeypatch.setattr(reporting, "VERIFY_TIMEOUT_SECONDS", timeout_seconds)
+    runner_ready = tmp_path / "runner-ready"
+    worker_pids_path = tmp_path / "worker-pids"
+    result_path = tmp_path / "result.json"
+    candidate_path = tmp_path / "candidate.py"
+    runner_path = tmp_path / "run_verify.py"
+    candidate_path.write_text("while True: pass\n", encoding="utf-8")
+    runner_path.write_text(
+        "import json\n"
+        "import sys\n"
+        "from pathlib import Path\n"
+        f"sys.path.insert(0, {str(Path(__file__).resolve().parents[1])!r})\n"
+        "from libreevolve import alpha_report\n"
+        f"worker_pids_path = Path({str(worker_pids_path)!r})\n"
+        "original_popen = alpha_report.subprocess.Popen\n"
+        "def recording_popen(*args, **kwargs):\n"
+        "    process = original_popen(*args, **kwargs)\n"
+        "    command = args[0] if args else kwargs.get('args')\n"
+        "    if isinstance(command, (list, tuple)) and any(\n"
+        "        str(part).endswith('alpha_verify_worker.py') for part in command\n"
+        "    ):\n"
+        "        with worker_pids_path.open('a', encoding='ascii') as stream:\n"
+        "            stream.write(f'{process.pid}\\n')\n"
+        "    return process\n"
+        "alpha_report.subprocess.Popen = recording_popen\n"
+        f"alpha_report.VERIFY_TIMEOUT_SECONDS = {timeout_seconds!r}\n"
+        f"Path({str(runner_ready)!r}).write_text('ready\\n', encoding='ascii')\n"
+        f"result = alpha_report.verify_candidate(Path({str(candidate_path)!r}).read_bytes())\n"
+        f"Path({str(result_path)!r}).write_text(json.dumps(result), encoding='utf-8')\n",
+        encoding="utf-8",
+    )
+    containment = (
+        {"creationflags": subprocess.CREATE_NEW_PROCESS_GROUP}
+        if os.name == "nt"
+        else {"start_new_session": True}
+    )
+    runner = subprocess.Popen(
+        [sys.executable, str(runner_path)],
+        cwd=Path(__file__).resolve().parents[1],
+        stdin=subprocess.DEVNULL,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        **containment,
+    )
+
+    def terminate(pid):
+        if os.name == "nt":
+            try:
+                subprocess.run(
+                    ["taskkill", "/PID", str(pid), "/T", "/F"],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    check=False,
+                    timeout=5,
+                )
+            except subprocess.TimeoutExpired:
+                pass
+        else:
+            try:
+                os.killpg(pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+
+    def recorded_worker_pids():
+        try:
+            return [int(line) for line in worker_pids_path.read_text().splitlines()]
+        except (OSError, ValueError):
+            return []
+
+    try:
+        # Wait for the runner itself before starting the watchdog. Worker
+        # startup is included in the bounded post-ready budget below, but a
+        # slow test interpreter cannot consume it before verification begins.
+        startup_deadline = time.monotonic() + 20.0
+        while not runner_ready.exists() and time.monotonic() < startup_deadline:
+            if runner.poll() is not None:
+                break
+            time.sleep(0.01)
+        assert runner_ready.exists(), "verification runner did not become ready"
+
+        # Each split has the configured deadline, a finite worker-start grace,
+        # process.wait fallback and reader/process-group cleanup. Two splits
+        # run sequentially, followed by a small result-writing grace period.
+        worker_start_grace_seconds = 5.0
+        cleanup_grace_seconds = 8.0  # 2+2s waits, 2s reader joins, 2s group wait.
+        post_start_timeout = 2 * (
+            timeout_seconds + worker_start_grace_seconds + cleanup_grace_seconds
+        ) + 2.0
+        try:
+            runner.wait(timeout=post_start_timeout)
+        except subprocess.TimeoutExpired:
+            pytest.fail(
+                f"verification exceeded the post-start watchdog of {post_start_timeout:.1f}s"
+            )
+        assert result_path.exists(), "verification runner did not write a result"
+        result = json.loads(result_path.read_text(encoding="utf-8"))
+        for split in ("training", "holdout"):
+            assert result[split]["status"] == "timeout"
+            assert result[split]["correctness"] is None
+            assert result[split]["score"] is None
+            assert result[split]["elapsed_seconds"] >= timeout_seconds
+    finally:
+        worker_pids = recorded_worker_pids()
+        if runner.poll() is None:
+            terminate(runner.pid)
+            try:
+                runner.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                runner.kill()
+                runner.wait(timeout=5)
+        # The runner owns workers in separate process groups, so clean up the
+        # PIDs captured immediately after each worker Popen as a final guard
+        # when the outer watchdog has to terminate the runner.
+        for _ in range(10):
+            latest_pids = recorded_worker_pids()
+            if len(latest_pids) > len(worker_pids):
+                worker_pids = latest_pids
+            if runner.poll() is not None and latest_pids:
+                break
+            time.sleep(0.01)
+        for pid in worker_pids:
+            terminate(pid)
 
 
 def test_candidate_never_executes_in_parent_and_prints_are_suppressed():

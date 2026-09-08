@@ -1,5 +1,10 @@
 # LibreEvolve engineering preview
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/logo-mark.svg">
+  <img src="assets/logo-mark-light.svg" alt="LibreEvolve Diff Arrow logo" width="80" height="80">
+</picture>
+
 LibreEvolve improves a small Python bin-packing heuristic through bounded local
 optimization with **Codex OAuth, `gpt-5.6-luna`, high reasoning**.
 
@@ -58,3 +63,5 @@ Documentation: [quickstart](docs/alpha-quickstart.md),
 [release checks](docs/release-checklist.md).
 
 [MIT license](LICENSE).
+
+[Original artwork and branding preview](assets/branding/README.md).

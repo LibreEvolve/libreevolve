@@ -38,6 +38,12 @@ dev = [
 [project.scripts]
 libreevolve = "libreevolve.cli:cli"
 
+[project.urls]
+Homepage = "https://github.com/LibreEvolve/libreevolve"
+Repository = "https://github.com/LibreEvolve/libreevolve"
+Issues = "https://github.com/LibreEvolve/libreevolve/issues"
+Documentation = "https://github.com/LibreEvolve/libreevolve/tree/main/docs"
+
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["libreevolve*"]

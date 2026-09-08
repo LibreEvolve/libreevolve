@@ -1,67 +1,84 @@
-# LibreEvolve engineering preview
+# LibreEvolve
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/logo-mark.svg">
-  <img src="assets/logo-mark-light.svg" alt="LibreEvolve Diff Arrow logo" width="80" height="80">
+  <img src="assets/logo-mark-light.svg" alt="LibreEvolve" width="80" height="80">
 </picture>
 
-LibreEvolve improves a small Python bin-packing heuristic through bounded local
-optimization with **Codex OAuth, `gpt-5.6-luna`, high reasoning**.
+**Evolve code. Show the evidence.**
 
-`main` contains the engineering preview. The complete committed research
-platform, other providers, plugins, examples, papers and experimental tools
-are preserved with their Git history in the private
-[experimental repository](https://github.com/LibreEvolve/libreevolve-experimental).
+LibreEvolve is an open-source workbench for inspectable code-evolution
+experiments. **Engineering preview: bounded Python bin-packing optimization
+with Codex OAuth.** It starts from a small Python heuristic, searches a bounded
+local space of changes, records candidate workspaces and evaluations, and lets
+you inspect a saved run before a fresh export check.
 
-## Start here
+The product is an experiment you can examine, not a promise that every search
+improves code. No improvement is a valid result. A successful named check is
+not proof of universal correctness, optimality, security, or performance.
 
-Use Python 3.12. From this checkout on Linux/WSL:
+## What is available today
 
-```bash
-python3.12 -m venv .venv
-.venv/bin/python -m pip install .
-.venv/bin/libreevolve alpha init packing-task
-.venv/bin/libreevolve alpha doctor packing-task --offline
-```
+- A source install for the public engineering-preview checkout.
+- Local initialization and an offline task/evaluator preflight that makes no
+  provider request.
+- One documented model lane: Codex OAuth with `gpt-5.6-luna` and high
+  reasoning. A local login does not prove account-specific model access.
+- Bounded runs whose saved artifacts can be inspected with their status,
+  validity, quality, retention and usage kept distinct.
+- A local HTML report and an export that freshly checks the selected candidate
+  on named training and held-out cases.
 
-On Windows, use `py -3.12 -m venv .venv` and the executables in
-`.venv\Scripts\`. The earlier live model workflow was validated on Linux/WSL;
-native Windows live Codex execution and external usability remain unvalidated.
+An approved inspectable example viewer is not included in this branch. The
+seed-only flow in the quickstart is an onboarding check, not an optimization
+result or live-model demonstration.
 
-A working Codex CLI and an authorized ChatGPT/OAuth login are required for
-optimization. Read the [quickstart](docs/alpha-quickstart.md) before authorizing
-subscription use.
+The broader research platform, additional providers, plugins, examples, papers
+and experimental tools live in the private
+[experimental repository](https://github.com/LibreEvolve/libreevolve-experimental);
+they are not capabilities of this public engineering preview.
 
-```bash
-.venv/bin/libreevolve alpha doctor packing-task
-.venv/bin/libreevolve run packing-task --run-name first --progress
-.venv/bin/libreevolve show runs/first
-.venv/bin/libreevolve alpha report runs/first --output first.html
-.venv/bin/libreevolve alpha export runs/first verified-first
-```
+## Start with the canonical quickstart
 
-Add `--max-generations 0` to the run command for a seed-only check without a
-model request. This is not optimization or evidence of provider access.
+The complete clone, source-install, offline, seed-only and live authorization
+path is maintained in [the engineering-preview quickstart](docs/alpha-quickstart.md).
+It is the command source for the other docs; use a fresh destination whenever
+the CLI says an output already exists.
 
-## Scope and limits
+Before authorizing subscription use, read [safety and scope](docs/safety.md)
+and [how to read a result](docs/results.md). Candidate execution has host
+access and is not a security sandbox. Local call and runtime bounds are not
+dollar or hard-token limits; subscription charges and quota may remain unknown.
 
-- Defaults: three model calls, four evaluations, 900 seconds per run,
-  180 seconds per Codex call, and no retries or fallback.
-- Subscription quota and charges may be unknown. Reported tokens are
-  observational; there is no hard token or dollar-cap claim.
-- Ctrl+C attempts to stop the local process tree and save an aborted run with
-  its best retained candidate. This does not prove remote work or billing stopped.
-- Inspection and export reject inconsistent required artifacts. Export freshly
-  checks the selected candidate on training and held-out cases and records its hash.
-- Candidate and validator execution are local subprocesses, **not a security
-  sandbox**. Use trusted tasks and an appropriately isolated machine.
-- Earlier live evidence predates this cleanup. Offline tests and package smoke
-  checks do not establish a new live run, general performance, or usability.
+## Support boundary
 
-Documentation: [quickstart](docs/alpha-quickstart.md),
-[saved artifacts](docs/run-artifacts.md), [development](docs/development.md),
-[release checks](docs/release-checklist.md).
+The package metadata declares Python `>=3.11`. The documented reference route
+uses Python 3.12 on Linux/WSL. Windows installation and offline checks are
+documented, while native Windows Codex execution and external usability remain
+unvalidated. See the support matrix in the [quickstart](docs/alpha-quickstart.md)
+for the evidence boundary.
+
+## Read, contribute and release
+
+- [Documentation index](docs/README.md)
+- [Quickstart and command reference](docs/alpha-quickstart.md)
+- [Reading saved results](docs/results.md)
+- [Safety and scope](docs/safety.md)
+- [Saved artifact contract](docs/run-artifacts.md)
+- [Contributing](docs/contributing.md)
+- [Development checks](docs/development.md)
+- [Roadmap and present/future boundary](docs/roadmap.md)
+- [Release checklist](docs/release-checklist.md)
+
+Contributions should preserve the engineering-preview scope, keep training and
+held-out evaluation separate, and include focused offline tests. The project
+does not advertise a public package-registry install; install from a checked-out
+source tree as described in the quickstart.
+
+## Project links
+
+- [Source repository](https://github.com/LibreEvolve/libreevolve)
+- [Issues and requests](https://github.com/LibreEvolve/libreevolve/issues)
+- [Documentation in the repository](https://github.com/LibreEvolve/libreevolve/tree/main/docs)
 
 [MIT license](LICENSE).
-
-[Original artwork and branding preview](assets/branding/README.md).

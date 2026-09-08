@@ -1,19 +1,20 @@
 # Public result rendering boundary
 
-Status: implementation in progress; not a shipping-command announcement.
+Status: local inspect, prepare and render paths are implemented; this is not a
+shipping-command announcement.
 
 Existing `alpha report` builds fresh local verification data and then renders
 HTML. Existing `alpha export` resolves source selection and freshly verifies
 the candidate. Neither operation grants public sharing permission. Their
 execution and history/workspace authority remain unchanged.
 
-The new public-record modules admit a strict frozen allowlist. Public rendering
-will accept that record, not a run directory, candidate module or HTML upload.
-It will not import the verification module, execute source or fetch resources.
-Private-to-public preparation and CLI integration are implemented separately.
-Preparation explicitly executes trusted candidate checks; inspect and render
-consume the frozen record without executing candidate code. Record-only tests
-do not by themselves prove the preparation or command paths.
+The public-record modules admit a strict frozen allowlist. Public rendering
+accepts that record, not a run directory, candidate module or HTML upload. It
+does not import the verification module, execute source or fetch resources.
+Private-to-public preparation and CLI integration are implemented. Preparation
+explicitly executes trusted candidate checks; inspect and render consume the
+frozen record without executing candidate code. Focused tests cover each of
+these command paths without granting publication permission.
 
 ## Approval
 
@@ -53,8 +54,9 @@ Negative reductions remain negative. Run cancellation never overwrites
 candidate validity. Missing usage stays null and displays as unknown.
 
 Projection/source-conflict handling, safe output paths, renderer/CLI integration,
-adversarial tests and retained regressions now have targeted test coverage and
-an independent source review. Remaining acceptance includes installed-package
-validation, current-record rendered accessibility inspection, and independent
-review of the separate local-report presentation changes. Component evidence
-does not establish release, deployment, native Windows support or a live demo.
+adversarial tests, retained regressions, installed-package validation,
+current-record rendered accessibility inspection and independent review of the
+separate local-report presentation changes now have targeted coverage and
+review. These checks establish the local implementation boundary only; they do
+not establish release, deployment, native Windows Codex execution, live
+provider evidence or an authentic live demo.

@@ -473,10 +473,10 @@
         "planning"
       ],
       "kind": "roadmap",
-      "text": "Planned: an explicit sanitized share-export path and a reviewed static result viewer.",
+      "text": "Available locally: an explicit sanitized share-export path and a static result renderer. A reviewed authentic example viewer remains future work.",
       "claim_ids": [],
       "status": "reviewed",
-      "usage_condition": "Future work, not a shipping feature. Do not use as a present-tense capability or imply automatic publication."
+      "usage_condition": "Describe the local implementation separately from the future authentic example; do not imply publication, automatic upload or live-model evidence."
     },
     {
       "id": "roadmap.challenge",

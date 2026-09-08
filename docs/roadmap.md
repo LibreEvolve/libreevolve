@@ -10,6 +10,11 @@ There is no release schedule implied by these notes.
 - The documented Codex OAuth `gpt-5.6-luna`/high lane, subject to account
   access and explicit subscription authorization.
 - Saved-run inspection, local HTML reporting and fresh candidate export checks.
+- A local sanitized share-export workflow that inspects an allowlisted frozen
+  record and renders deterministic static files without executing candidate code
+  during rendering.
+- The static website source and a local preview build. This does not
+  include an approved authentic example or a deployment.
 
 ## Intentionally outside the public lane
 
@@ -18,15 +23,14 @@ There is no release schedule implied by these notes.
 - A hardened or security sandbox for candidate code.
 - Guaranteed improvement, optimality, universal correctness or benchmark wins.
 - Native Windows live parity or an external-usability claim.
-- Automatic upload, telemetry, public sharing or a package-registry release.
+- Automatic upload and telemetry, public sharing without separate approval, or
+  a package-registry release.
 
 ## Planned or proposed work
 
 - A reviewed authentic example viewer with a reproducible, sanitized result.
-- An explicit sanitized share-export path that consumes a frozen report record
-  without executing candidate code during public rendering.
-- Website and organization-surface integration after their destinations,
-  assets and settings receive separate review.
+- Website publication and organization-surface integration after their
+  destinations, assets and settings receive separate review.
 - A separately approved educational Three-Call Challenge with a held-back
   evaluation protocol, if it is pursued.
 

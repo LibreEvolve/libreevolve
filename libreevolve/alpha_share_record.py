@@ -87,6 +87,11 @@ def source_url(value):
             pass
         else:
             raise ValueError("source URL: IP literals are not accepted")
+        # Browsers treat numeric final labels as IPv4, including shortened,
+        # octal and hexadecimal forms that ipaddress deliberately rejects.
+        # https://url.spec.whatwg.org/#ends-in-a-number-checker
+        if re.fullmatch(r"(?:[0-9]+|0x[0-9a-f]*)", host.rsplit(".", 1)[-1], re.IGNORECASE):
+            raise ValueError("source URL: numeric host aliases are not accepted")
     except (ValueError, UnicodeError) as exc:
         raise ValueError("source URL: invalid public link") from exc
     return value

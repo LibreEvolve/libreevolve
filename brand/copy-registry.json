@@ -1,0 +1,508 @@
+{
+  "schema_version": "1.0",
+  "source_commit": "40fb306f85d9b8fe14ee7ff4e994d4681312b568",
+  "units": [
+    {
+      "id": "brand.name",
+      "surfaces": [
+        "organization",
+        "readme",
+        "website",
+        "report",
+        "press-kit"
+      ],
+      "kind": "brand",
+      "text": "LibreEvolve",
+      "claim_ids": [],
+      "status": "reviewed",
+      "usage_condition": "Display name only; preserve the technical identifier libreevolve."
+    },
+    {
+      "id": "brand.headline",
+      "surfaces": [
+        "readme",
+        "website",
+        "press-kit"
+      ],
+      "kind": "brand",
+      "text": "Evolve code. Show the evidence.",
+      "claim_ids": [],
+      "status": "reviewed",
+      "usage_condition": "Brand aspiration, not a promise of improvement; accompany with the preview qualifier."
+    },
+    {
+      "id": "brand.category",
+      "surfaces": [
+        "organization",
+        "website",
+        "press-kit"
+      ],
+      "kind": "product",
+      "text": "An open-source workbench for inspectable code-evolution experiments. Engineering preview: bounded Python bin-packing optimization with Codex OAuth.",
+      "claim_ids": [
+        "C001",
+        "C002",
+        "C003",
+        "C014"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use only with the current engineering-preview qualifier and a verified destination where applicable."
+    },
+    {
+      "id": "preview.qualifier",
+      "surfaces": [
+        "organization",
+        "readme",
+        "website",
+        "press-kit"
+      ],
+      "kind": "product",
+      "text": "Engineering preview: bounded Python bin-packing optimization with Codex OAuth.",
+      "claim_ids": [
+        "C001",
+        "C003"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use only with the current engineering-preview qualifier and a verified destination where applicable."
+    },
+    {
+      "id": "organization.bio",
+      "surfaces": [
+        "organization.bio"
+      ],
+      "kind": "product",
+      "text": "Inspectable code-evolution experiments. Engineering preview: bounded Python bin-packing optimization with Codex OAuth.",
+      "claim_ids": [
+        "C001",
+        "C002",
+        "C003"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use only with the current engineering-preview qualifier and a verified destination where applicable."
+    },
+    {
+      "id": "organization.intro",
+      "surfaces": [
+        "organization.profile"
+      ],
+      "kind": "product",
+      "text": "LibreEvolve explores changes to a small Python bin-packing heuristic and keeps the results inspectable. Start with the engineering preview, review its limits, and contribute through the main project.",
+      "claim_ids": [
+        "C001",
+        "C002"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use only with the current engineering-preview qualifier and a verified destination where applicable."
+    },
+    {
+      "id": "repository.about",
+      "surfaces": [
+        "repository.about"
+      ],
+      "kind": "product",
+      "text": "Engineering preview for bounded Python bin-packing optimization with Codex OAuth. Evolve code. Show the evidence.",
+      "claim_ids": [
+        "C001",
+        "C003"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use only with the current engineering-preview qualifier and a verified destination where applicable."
+    },
+    {
+      "id": "readme.hero",
+      "surfaces": [
+        "readme.hero"
+      ],
+      "kind": "product",
+      "text": "Evolve code. Show the evidence.\n\nRun a bounded experiment on a small Python bin-packing heuristic, inspect its saved results, and export a candidate after fresh named checks. Engineering preview with Codex OAuth.",
+      "claim_ids": [
+        "C001",
+        "C002",
+        "C003",
+        "C007"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use only with the current engineering-preview qualifier and a verified destination where applicable."
+    },
+    {
+      "id": "website.hero",
+      "surfaces": [
+        "website.hero"
+      ],
+      "kind": "product",
+      "text": "A small experiment. An inspectable result.\n\nExplore changes to a Python bin-packing heuristic with bounded local work and Codex OAuth. Engineering preview; no improvement is a valid outcome.",
+      "claim_ids": [
+        "C001",
+        "C002",
+        "C003",
+        "C008"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use only with the current engineering-preview qualifier and a verified destination where applicable."
+    },
+    {
+      "id": "product.explanation",
+      "surfaces": [
+        "website.workflow",
+        "readme.overview",
+        "documentation.overview"
+      ],
+      "kind": "product",
+      "text": "Start from a seed program. Propose and evaluate changes. Inspect retained results, then export a chosen candidate after fresh training and held-out checks. Keep validity, quality, run completion and usage separate.",
+      "claim_ids": [
+        "C001",
+        "C002",
+        "C005",
+        "C007",
+        "C009",
+        "C011",
+        "C012"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use only with the current engineering-preview qualifier and a verified destination where applicable."
+    },
+    {
+      "id": "documentation.intro",
+      "surfaces": [
+        "documentation.index"
+      ],
+      "kind": "product",
+      "text": "Start with installation and offline preflight, then review the execution and usage limits before authorizing a Codex OAuth optimization run. Seed-only checks do not establish model access or improvement.",
+      "claim_ids": [
+        "C001",
+        "C003",
+        "C004",
+        "C013",
+        "C016"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use only with the current engineering-preview qualifier and a verified destination where applicable."
+    },
+    {
+      "id": "cta.inspect",
+      "surfaces": [
+        "readme.cta",
+        "website.primary-cta"
+      ],
+      "kind": "brand",
+      "text": "Inspect an example",
+      "claim_ids": [],
+      "status": "reviewed",
+      "usage_condition": "Only link to an implemented, reviewed example artifact or viewer; do not substitute a mock result or dead destination."
+    },
+    {
+      "id": "cta.run",
+      "surfaces": [
+        "readme.cta",
+        "website.secondary-cta"
+      ],
+      "kind": "brand",
+      "text": "Run the preview",
+      "claim_ids": [],
+      "status": "reviewed",
+      "usage_condition": "Link to the current quickstart. A click is not consent to subscription use."
+    },
+    {
+      "id": "press.short",
+      "surfaces": [
+        "press-kit.short"
+      ],
+      "kind": "product",
+      "text": "LibreEvolve is an engineering preview for bounded Python bin-packing optimization with Codex OAuth and inspectable results.",
+      "claim_ids": [
+        "C001",
+        "C002",
+        "C003"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use only with the current engineering-preview qualifier and a verified destination where applicable."
+    },
+    {
+      "id": "press.medium",
+      "surfaces": [
+        "press-kit.medium",
+        "release.description"
+      ],
+      "kind": "product",
+      "text": "LibreEvolve is an open-source workbench for inspectable code-evolution experiments. Its engineering preview explores changes to a small Python bin-packing heuristic through bounded local optimization with Codex OAuth. Inspect saved results and export a candidate after fresh training and held-out checks. No improvement is a valid outcome.",
+      "claim_ids": [
+        "C001",
+        "C002",
+        "C003",
+        "C007",
+        "C008",
+        "C014"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use only with the current engineering-preview qualifier and a verified destination where applicable."
+    },
+    {
+      "id": "press.long",
+      "surfaces": [
+        "press-kit.long",
+        "article.introduction"
+      ],
+      "kind": "product",
+      "text": "LibreEvolve makes a small code-evolution experiment inspectable. The engineering preview starts with a Python bin-packing heuristic, explores changes through bounded local Codex OAuth work, and records candidate workspaces and evaluation evidence. Saved results separate candidate validity, training quality, held-out quality, run completion and reported usage. Export checks a chosen candidate again on named finite cases and records its identity. Those checks do not establish universal performance or optimality, and no improvement remains a valid outcome. Candidate execution has host access rather than a security sandbox. Usage can be incomplete; local limits are not billing guarantees. Begin with the offline setup path and review the limits before authorizing a live optimization run.",
+      "claim_ids": [
+        "C001",
+        "C002",
+        "C003",
+        "C004",
+        "C005",
+        "C007",
+        "C008",
+        "C009",
+        "C011",
+        "C012",
+        "C013",
+        "C016"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use only with the current engineering-preview qualifier and a verified destination where applicable."
+    },
+    {
+      "id": "report.run-status",
+      "surfaces": [
+        "report.status-label"
+      ],
+      "kind": "brand",
+      "text": "Run status",
+      "claim_ids": [],
+      "status": "reviewed",
+      "usage_condition": "Label the local runtime status; never infer candidate validity from completion."
+    },
+    {
+      "id": "report.training-label",
+      "surfaces": [
+        "report.training-label"
+      ],
+      "kind": "brand",
+      "text": "Training quality",
+      "claim_ids": [],
+      "status": "reviewed",
+      "usage_condition": "Show the named split and definition; do not convert quality to accuracy or speed."
+    },
+    {
+      "id": "report.holdout-label",
+      "surfaces": [
+        "report.holdout-label"
+      ],
+      "kind": "brand",
+      "text": "Held-out quality",
+      "claim_ids": [],
+      "status": "reviewed",
+      "usage_condition": "Keep separate from training; display only actual named held-out checks."
+    },
+    {
+      "id": "report.validity-label",
+      "surfaces": [
+        "report.validity-label"
+      ],
+      "kind": "brand",
+      "text": "Named checks",
+      "claim_ids": [],
+      "status": "reviewed",
+      "usage_condition": "Pair with explicit pass/fail/unknown state and corpus identity."
+    },
+    {
+      "id": "report.no-improvement",
+      "surfaces": [
+        "report.outcome",
+        "share.outcome"
+      ],
+      "kind": "outcome",
+      "text": "No improvement verified. Inspect the separate checks and the search outcome.",
+      "claim_ids": [
+        "C008",
+        "C012"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use when the relevant valid same-corpus comparison establishes no improvement; otherwise use an unverified or incomplete outcome."
+    },
+    {
+      "id": "report.improved",
+      "surfaces": [
+        "report.outcome",
+        "share.outcome"
+      ],
+      "kind": "outcome",
+      "text": "Fewer bins on this checked split.",
+      "claim_ids": [
+        "C009",
+        "C012"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use only when both baseline and candidate are valid on identical cases in this split and candidate total bins is strictly lower. Do not imply held-out or general improvement."
+    },
+    {
+      "id": "report.regressed",
+      "surfaces": [
+        "report.outcome",
+        "share.outcome"
+      ],
+      "kind": "outcome",
+      "text": "More bins on this checked split.",
+      "claim_ids": [
+        "C009",
+        "C012"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use only when both solutions are valid on identical cases in this split and candidate total bins is strictly higher."
+    },
+    {
+      "id": "report.unchanged",
+      "surfaces": [
+        "report.outcome",
+        "share.outcome"
+      ],
+      "kind": "outcome",
+      "text": "Selected source is unchanged from the seed.",
+      "claim_ids": [
+        "C002",
+        "C008"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use only when the selected source bytes match the named seed; unchanged quality alone does not establish unchanged source."
+    },
+    {
+      "id": "report.invalid",
+      "surfaces": [
+        "report.validity",
+        "share.validity"
+      ],
+      "kind": "outcome",
+      "text": "Candidate failed the named checks. Bin placeholders are not a result to compare.",
+      "claim_ids": [
+        "C012"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use for an observed invalid result; unknown or missing validity must use unverified wording."
+    },
+    {
+      "id": "report.incomplete",
+      "surfaces": [
+        "report.outcome",
+        "share.outcome"
+      ],
+      "kind": "outcome",
+      "text": "Run incomplete. Available artifacts do not establish a completed result.",
+      "claim_ids": [
+        "C005",
+        "C010"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use for incomplete or interrupted runtime/artifacts, retaining any separately verified candidate evidence."
+    },
+    {
+      "id": "report.cancelled",
+      "surfaces": [
+        "report.outcome"
+      ],
+      "kind": "outcome",
+      "text": "Local run cancelled. Saved state may be partial; remote cancellation is not confirmed.",
+      "claim_ids": [
+        "C010"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use only for recorded local cancellation; do not infer that provider work or billing stopped."
+    },
+    {
+      "id": "report.unknown-usage",
+      "surfaces": [
+        "report.usage",
+        "share.usage"
+      ],
+      "kind": "outcome",
+      "text": "Usage incomplete or unknown. Missing cost information does not mean zero cost.",
+      "claim_ids": [
+        "C004",
+        "C011"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use when the usage ledger or provider cost/quota information is incomplete or unavailable."
+    },
+    {
+      "id": "report.unverified",
+      "surfaces": [
+        "report.outcome",
+        "share.outcome"
+      ],
+      "kind": "outcome",
+      "text": "No comparable result verified.",
+      "claim_ids": [
+        "C005",
+        "C012"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use when required validity, same-corpus provenance or comparison data is absent or inconsistent."
+    },
+    {
+      "id": "report.export-note",
+      "surfaces": [
+        "report.export",
+        "documentation.export"
+      ],
+      "kind": "product",
+      "text": "Export freshly checks the chosen candidate on named training and held-out cases. The recorded hash identifies source bytes, not universal correctness or independent certification.",
+      "claim_ids": [
+        "C007"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use only with the current engineering-preview qualifier and a verified destination where applicable."
+    },
+    {
+      "id": "report.execution-note",
+      "surfaces": [
+        "report.before-generation",
+        "documentation.report"
+      ],
+      "kind": "product",
+      "text": "Generating the current report reevaluates candidate Python locally. It does not request a provider response, but candidate execution is not a security sandbox.",
+      "claim_ids": [
+        "C006",
+        "C013"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Use only with the current engineering-preview qualifier and a verified destination where applicable."
+    },
+    {
+      "id": "roadmap.share",
+      "surfaces": [
+        "roadmap",
+        "planning"
+      ],
+      "kind": "roadmap",
+      "text": "Planned: an explicit sanitized share-export path and a reviewed static result viewer.",
+      "claim_ids": [],
+      "status": "reviewed",
+      "usage_condition": "Future work, not a shipping feature. Do not use as a present-tense capability or imply automatic publication."
+    },
+    {
+      "id": "roadmap.challenge",
+      "surfaces": [
+        "roadmap",
+        "campaign.planning"
+      ],
+      "kind": "roadmap",
+      "text": "Proposed: the Three-Call Challenge, an educational campaign that records all attempts and honest outcomes.",
+      "claim_ids": [],
+      "status": "reviewed",
+      "usage_condition": "Requires a separately approved experiment and evaluation protocol; not a current feature, contest launch or promise of positive results."
+    },
+    {
+      "id": "documentation.support-boundary",
+      "surfaces": [
+        "documentation.support",
+        "readme.platforms"
+      ],
+      "kind": "product",
+      "text": "Earlier live validation used Linux/WSL and predates this source cleanup. Native Windows live execution and external usability remain unvalidated; offline checks are not new live evidence.",
+      "claim_ids": [
+        "C015"
+      ],
+      "status": "reviewed",
+      "usage_condition": "Revalidate after a separately authorized, documented live platform test; do not infer current account access or cross-platform parity."
+    }
+  ]
+}

@@ -1,0 +1,291 @@
+{
+  "schema_version": "1.0",
+  "source_repository": "https://github.com/LibreEvolve/libreevolve",
+  "source_commit": "40fb306f85d9b8fe14ee7ff4e994d4681312b568",
+  "claims": [
+    {
+      "id": "C001",
+      "wording": "The engineering preview runs bounded local optimization of a small Python bin-packing heuristic.",
+      "scope": "Shipping public preview only; not arbitrary-repository optimization.",
+      "evidence_tier": "source",
+      "source_refs": [
+        {
+          "path": "AGENTS.md",
+          "start_line": 3,
+          "end_line": 10
+        },
+        {
+          "path": "docs/alpha-quickstart.md",
+          "start_line": 3,
+          "end_line": 8
+        }
+      ],
+      "status": "reviewed"
+    },
+    {
+      "id": "C002",
+      "wording": "LibreEvolve records candidate workspaces, evaluations and retained results for inspection.",
+      "scope": "Artifact contracts and source implementation; not a fresh live run or a guarantee of complete persistence.",
+      "evidence_tier": "source",
+      "source_refs": [
+        {
+          "path": "docs/run-artifacts.md",
+          "start_line": 6,
+          "end_line": 23
+        }
+      ],
+      "status": "reviewed"
+    },
+    {
+      "id": "C003",
+      "wording": "The documented product lane uses Codex OAuth with gpt-5.6-luna and high reasoning.",
+      "scope": "Account access is required and not guaranteed; implementation workforce settings do not change the product lane.",
+      "evidence_tier": "source",
+      "source_refs": [
+        {
+          "path": "README.md",
+          "start_line": 8,
+          "end_line": 9
+        },
+        {
+          "path": "docs/alpha-quickstart.md",
+          "start_line": 25,
+          "end_line": 30
+        },
+        {
+          "path": "libreevolve/alpha.py",
+          "start_line": 28,
+          "end_line": 68
+        }
+      ],
+      "status": "reviewed"
+    },
+    {
+      "id": "C004",
+      "wording": "Call and runtime limits bound local work; subscription charges, remaining quota and in-flight token usage may remain unknown.",
+      "scope": "Local bounds are not hard token or dollar caps.",
+      "evidence_tier": "source",
+      "source_refs": [
+        {
+          "path": "docs/alpha-quickstart.md",
+          "start_line": 52,
+          "end_line": 56
+        },
+        {
+          "path": "libreevolve/alpha_report.py",
+          "start_line": 312,
+          "end_line": 332
+        }
+      ],
+      "status": "reviewed"
+    },
+    {
+      "id": "C005",
+      "wording": "Saved-result inspection distinguishes missing or inconsistent required artifacts from verified state.",
+      "scope": "Source-level behavior; unfinished or legacy data is not a completed verified run.",
+      "evidence_tier": "source",
+      "source_refs": [
+        {
+          "path": "docs/run-artifacts.md",
+          "start_line": 20,
+          "end_line": 26
+        }
+      ],
+      "status": "reviewed"
+    },
+    {
+      "id": "C006",
+      "wording": "The report command reevaluates candidate Python in local subprocesses and writes a local HTML report without provider calls.",
+      "scope": "Report generation executes candidate code; rendering an already assembled record is a separate operation.",
+      "evidence_tier": "source",
+      "source_refs": [
+        {
+          "path": "libreevolve/alpha.py",
+          "start_line": 251,
+          "end_line": 268
+        },
+        {
+          "path": "docs/run-artifacts.md",
+          "start_line": 27,
+          "end_line": 29
+        }
+      ],
+      "status": "reviewed"
+    },
+    {
+      "id": "C007",
+      "wording": "Export freshly checks the chosen candidate on training and held-out cases, recording its SHA-256 and source-selection evidence.",
+      "scope": "Named finite checks only. A hash identifies bytes, not authenticity, optimality or independent certification.",
+      "evidence_tier": "source",
+      "source_refs": [
+        {
+          "path": "docs/run-artifacts.md",
+          "start_line": 31,
+          "end_line": 40
+        }
+      ],
+      "status": "reviewed"
+    },
+    {
+      "id": "C008",
+      "wording": "No improvement is a valid outcome; passing the named cases does not prove optimality or general performance.",
+      "scope": "No guarantee of positive search results or improvement outside the checked cases.",
+      "evidence_tier": "source",
+      "source_refs": [
+        {
+          "path": "docs/alpha-quickstart.md",
+          "start_line": 60,
+          "end_line": 64
+        }
+      ],
+      "status": "reviewed"
+    },
+    {
+      "id": "C009",
+      "wording": "Bin-packing quality is the corpus lower-bound sum divided by total bins used.",
+      "scope": "For valid solutions on one corpus; not accuracy, speed or an improvement percentage.",
+      "evidence_tier": "source",
+      "source_refs": [
+        {
+          "path": "libreevolve/problems/examples/bin_packing/README.md",
+          "start_line": 18,
+          "end_line": 23
+        }
+      ],
+      "status": "reviewed"
+    },
+    {
+      "id": "C010",
+      "wording": "Cancellation attempts local process cleanup and preservation of an aborted run; it does not prove remote cancellation or stopped subscription usage.",
+      "scope": "Local cancellation only, with possible persistence failure or incomplete artifacts.",
+      "evidence_tier": "source",
+      "source_refs": [
+        {
+          "path": "docs/alpha-quickstart.md",
+          "start_line": 66,
+          "end_line": 76
+        },
+        {
+          "path": "docs/run-artifacts.md",
+          "start_line": 42,
+          "end_line": 44
+        }
+      ],
+      "status": "reviewed"
+    },
+    {
+      "id": "C011",
+      "wording": "Missing usage or cost information is unknown, not zero cost.",
+      "scope": "Recorded usage may be partial and is not provider billing.",
+      "evidence_tier": "source",
+      "source_refs": [
+        {
+          "path": "docs/run-artifacts.md",
+          "start_line": 46,
+          "end_line": 49
+        },
+        {
+          "path": "libreevolve/alpha_report.py",
+          "start_line": 312,
+          "end_line": 332
+        }
+      ],
+      "status": "reviewed"
+    },
+    {
+      "id": "C012",
+      "wording": "Compare valid solutions on the same corpus within one split; invalid zero placeholders are not improvements.",
+      "scope": "Keep training and held-out comparisons separate; freeze selection before held-out reporting.",
+      "evidence_tier": "source",
+      "source_refs": [
+        {
+          "path": "libreevolve/problems/examples/bin_packing/README.md",
+          "start_line": 7,
+          "end_line": 23
+        },
+        {
+          "path": "libreevolve/problems/examples/bin_packing/README.md",
+          "start_line": 32,
+          "end_line": 36
+        }
+      ],
+      "status": "reviewed"
+    },
+    {
+      "id": "C013",
+      "wording": "Candidate execution uses local subprocesses with host access, not a security sandbox.",
+      "scope": "Trusted tasks and an appropriately isolated development environment are required.",
+      "evidence_tier": "source",
+      "source_refs": [
+        {
+          "path": "docs/alpha-quickstart.md",
+          "start_line": 86,
+          "end_line": 89
+        }
+      ],
+      "status": "reviewed"
+    },
+    {
+      "id": "C014",
+      "wording": "LibreEvolve is MIT-licensed open-source software.",
+      "scope": "Repository license only; not a claim about subscription charges or third-party asset licenses.",
+      "evidence_tier": "source",
+      "source_refs": [
+        {
+          "path": "LICENSE",
+          "start_line": 1,
+          "end_line": 21
+        },
+        {
+          "path": "pyproject.toml",
+          "start_line": 6,
+          "end_line": 10
+        }
+      ],
+      "status": "reviewed"
+    },
+    {
+      "id": "C015",
+      "wording": "Earlier live validation used Linux/WSL; native Windows live execution and external usability remain unvalidated.",
+      "scope": "Historical evidence predates the cleanup; this source inspection is not a new live run or platform-parity test.",
+      "evidence_tier": "source",
+      "source_refs": [
+        {
+          "path": "README.md",
+          "start_line": 27,
+          "end_line": 29
+        },
+        {
+          "path": "docs/alpha-quickstart.md",
+          "start_line": 3,
+          "end_line": 8
+        },
+        {
+          "path": "docs/alpha-quickstart.md",
+          "start_line": 22,
+          "end_line": 24
+        }
+      ],
+      "status": "reviewed"
+    },
+    {
+      "id": "C016",
+      "wording": "A seed-only run with --max-generations 0 exercises the pipeline without requesting a model response.",
+      "scope": "Seed evaluation only; not optimization or proof of provider access.",
+      "evidence_tier": "source",
+      "source_refs": [
+        {
+          "path": "README.md",
+          "start_line": 43,
+          "end_line": 44
+        },
+        {
+          "path": "docs/alpha-quickstart.md",
+          "start_line": 48,
+          "end_line": 50
+        }
+      ],
+      "status": "reviewed"
+    }
+  ]
+}

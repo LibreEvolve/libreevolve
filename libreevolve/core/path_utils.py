@@ -30,7 +30,7 @@ def is_path_link(path: Path) -> bool:
         try:
             if is_junction():
                 return True
-        except OSError:
+        except (AttributeError, OSError, TypeError, ValueError):
             # Fall through to the Python 3.11-compatible lstat check below.
             pass
 
@@ -38,9 +38,15 @@ def is_path_link(path: Path) -> bool:
         return False
     try:
         attributes = os.lstat(path).st_file_attributes
-    except (AttributeError, OSError):
+        return bool(attributes & _WINDOWS_REPARSE_POINT)
+    except FileNotFoundError:
         return False
-    return bool(attributes & _WINDOWS_REPARSE_POINT)
+    except (AttributeError, OSError, TypeError, ValueError):
+        # An inaccessible or unclassifiable existing path must not pass a
+        # link boundary check.  Callers turn this boolean into their normal
+        # structured link rejection; only a genuinely missing path is safe to
+        # classify as not linked.
+        return True
 
 
 def linked_existing_ancestor(path: Path) -> Path | None:

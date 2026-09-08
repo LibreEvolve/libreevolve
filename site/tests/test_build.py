@@ -4,10 +4,11 @@ from html.parser import HTMLParser
 import json
 from pathlib import Path
 import sys
-import tempfile
 import unittest
 from unittest.mock import patch
 from urllib.parse import urlsplit
+
+from _support import temporary_directory
 
 SITE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(SITE))
@@ -38,7 +39,7 @@ class SiteBuildTests(unittest.TestCase):
         self.assertIn('</table></div>', rendered)
 
     def test_determinism_and_no_execution_or_network(self):
-        with tempfile.TemporaryDirectory() as tmp:
+        with temporary_directory() as tmp:
             first, second = Path(tmp) / "one", Path(tmp) / "two"
             with patch("subprocess.Popen", side_effect=AssertionError("no execution")), patch("socket.socket", side_effect=AssertionError("no network")):
                 a = builder.build(first)
@@ -51,12 +52,12 @@ class SiteBuildTests(unittest.TestCase):
 
     def test_routes_assets_fragments_and_base_path(self):
         for base in ("/", "/preview/"):
-            with self.subTest(base=base), tempfile.TemporaryDirectory() as tmp:
+            with self.subTest(base=base), temporary_directory() as tmp:
                 output = Path(tmp) / "site"
                 builder.build(output, base=base)
                 for page in output.rglob("*.html"):
                     document = Links()
-                    document.feed(page.read_text())
+                    document.feed(page.read_text(encoding="utf-8"))
                     for url in document.urls:
                         parsed = urlsplit(url)
                         if parsed.scheme or parsed.netloc:
@@ -72,25 +73,25 @@ class SiteBuildTests(unittest.TestCase):
                         self.assertTrue(target.is_file(), f"{page}: {url}")
                         if parsed.fragment:
                             linked = Links()
-                            linked.feed(target.read_text())
+                            linked.feed(target.read_text(encoding="utf-8"))
                             self.assertIn(parsed.fragment, linked.ids)
 
     def test_local_metadata_does_not_advertise_domain_or_demo(self):
-        with tempfile.TemporaryDirectory() as tmp:
+        with temporary_directory() as tmp:
             output = Path(tmp) / "site"
             builder.build(output)
             for page in output.rglob("*.html"):
-                text = page.read_text()
+                text = page.read_text(encoding="utf-8")
                 self.assertIn('content="noindex,nofollow"', text)
                 self.assertNotIn('rel="canonical"', text)
                 self.assertNotIn("application/ld+json", text)
                 self.assertNotIn("https://libreevolve.com", text)
-            self.assertEqual((output / "robots.txt").read_text(), "User-agent: *\nDisallow: /\n")
-            self.assertIn("no approved live experiment", (output / "index.html").read_text())
+            self.assertEqual((output / "robots.txt").read_text(encoding="utf-8"), "User-agent: *\nDisallow: /\n")
+            self.assertIn("no approved live experiment", (output / "index.html").read_text(encoding="utf-8"))
             self.assertFalse((output / "sitemap.xml").exists())
 
     def test_output_collision_preserves_existing_directory(self):
-        with tempfile.TemporaryDirectory() as tmp:
+        with temporary_directory() as tmp:
             output = Path(tmp) / "site"
             builder.build(output)
             before = (output / "index.html").read_bytes()
@@ -112,7 +113,7 @@ class SiteBuildTests(unittest.TestCase):
         for value in ("//example.test/", "/../", "/x", "/%2e%2e/", "https://example.test/"):
             with self.subTest(value=value), self.assertRaises(ValueError):
                 builder.base_path(value)
-        with tempfile.TemporaryDirectory() as tmp:
+        with temporary_directory() as tmp:
             output = Path(tmp) / "site"
             routes = builder.load_routes(builder.ROOT)
             with patch.object(builder, "read_source", return_value=json.dumps([routes[0], routes[0]])):

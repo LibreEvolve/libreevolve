@@ -7,10 +7,11 @@ from pathlib import Path
 import sys
 import subprocess
 import runpy
-import tempfile
 import unittest
 from unittest.mock import patch
 import xml.etree.ElementTree as ET
+
+from _support import temporary_directory
 
 SITE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(SITE))
@@ -32,7 +33,7 @@ def config(**changes):
 
 class PublicationTests(unittest.TestCase):
     def test_receipt_write_failure_creates_no_release_artifact(self):
-        with tempfile.TemporaryDirectory() as tmp:
+        with temporary_directory() as tmp:
             root = Path(tmp)
             publication = config()
             source = root / "config.json"
@@ -47,11 +48,11 @@ class PublicationTests(unittest.TestCase):
             self.assertFalse(output.exists())
 
     def test_release_example_requires_exact_disclosure_digest_and_stays_noindex(self):
-        with tempfile.TemporaryDirectory() as tmp:
+        with temporary_directory() as tmp:
             root = Path(tmp)
             record = fixture()
             source = root / "record.json"
-            source.write_text(json.dumps(record))
+            source.write_text(json.dumps(record), encoding="utf-8")
             digest = payload_sha256(record)
             example = prepare_example(source, approved_sha256=digest, approved_by="private-example-reviewer", base="/preview/")
             refused = root / "refused"
@@ -60,17 +61,17 @@ class PublicationTests(unittest.TestCase):
             self.assertFalse(refused.exists())
             output = root / "accepted"
             builder.build(output, base="/preview/", example=example, publication=config(public_example_sha256=digest))
-            page = (output / "preview/examples/synthetic-fixture/index.html").read_text()
+            page = (output / "preview/examples/synthetic-fixture/index.html").read_text(encoding="utf-8")
             self.assertIn('content="noindex,nofollow"', page)
             self.assertIn("SYNTHETIC FIXTURE", page)
             self.assertNotIn('rel="canonical"', page)
-            self.assertNotIn("synthetic-fixture", (output / "preview/sitemap.xml").read_text())
+            self.assertNotIn("synthetic-fixture", (output / "preview/sitemap.xml").read_text(encoding="utf-8"))
             for path in output.rglob("*"):
                 if path.is_file():
-                    self.assertNotIn("private-example-reviewer", path.read_text())
+                    self.assertNotIn("private-example-reviewer", path.read_text(encoding="utf-8"))
 
     def test_cli_requires_complete_approval_and_keeps_receipt_private(self):
-        with tempfile.TemporaryDirectory() as tmp:
+        with temporary_directory() as tmp:
             root = Path(tmp)
             publication = config()
             source = root / "private-config.json"
@@ -78,46 +79,46 @@ class PublicationTests(unittest.TestCase):
             output, receipt = root / "output", root / "receipt.json"
             command = [sys.executable, str(SITE / "build.py"), "--output", str(output), "--base-path", "/preview/",
                        "--publication-config", str(source)]
-            rejected = subprocess.run(command, capture_output=True, text=True)
+            rejected = subprocess.run(command, capture_output=True, text=True, encoding="utf-8")
             self.assertEqual(rejected.returncode, 2)
             self.assertFalse(output.exists())
             accepted = subprocess.run(command + ["--publication-sha256", publication.approval_sha256,
                                       "--publication-approved-by", "synthetic-private-operator",
-                                      "--publication-receipt", str(receipt)], capture_output=True, text=True)
+                                      "--publication-receipt", str(receipt)], capture_output=True, text=True, encoding="utf-8")
             self.assertEqual(accepted.returncode, 0, accepted.stderr)
             self.assertIn("release_candidate", accepted.stdout)
-            self.assertEqual(json.loads(receipt.read_text())["approved_by"], "synthetic-private-operator")
+            self.assertEqual(json.loads(receipt.read_text(encoding="utf-8"))["approved_by"], "synthetic-private-operator")
             for path in output.rglob("*"):
                 if path.is_file():
-                    self.assertNotIn("synthetic-private", path.read_text())
+                    self.assertNotIn("synthetic-private", path.read_text(encoding="utf-8"))
 
     def test_cli_receipt_inside_output_or_existing_is_rejected_without_output(self):
-        with tempfile.TemporaryDirectory() as tmp:
+        with temporary_directory() as tmp:
             root = Path(tmp)
             publication = config()
             source = root / "config.json"
             source.write_bytes(publication.configuration_bytes)
             existing = root / "existing.json"
-            existing.write_text("preserve fixture")
+            existing.write_text("preserve fixture", encoding="utf-8")
             for index, receipt in enumerate((existing, root / "output-1" / "receipt.json")):
                 output = root / f"output-{index}"
                 command = [sys.executable, str(SITE / "build.py"), "--output", str(output),
                            "--base-path", "/preview/", "--publication-config", str(source),
                            "--publication-sha256", publication.approval_sha256,
                            "--publication-approved-by", "fixture-reviewer", "--publication-receipt", str(receipt)]
-                result = subprocess.run(command, capture_output=True, text=True)
+                result = subprocess.run(command, capture_output=True, text=True, encoding="utf-8")
                 self.assertNotEqual(result.returncode, 0)
                 self.assertFalse(output.exists())
-            self.assertEqual(existing.read_text(), "preserve fixture")
+            self.assertEqual(existing.read_text(encoding="utf-8"), "preserve fixture")
 
     def test_metadata_sitemap_privacy_and_no_network(self):
-        with tempfile.TemporaryDirectory() as tmp:
+        with temporary_directory() as tmp:
             output = Path(tmp) / "release"
             with patch("socket.socket", side_effect=AssertionError("no network")), patch("subprocess.Popen", side_effect=AssertionError("no execution")):
                 manifest = builder.build(output, base="/preview/", publication=config())
             self.assertEqual(manifest["mode"], "release_candidate")
             for page in output.rglob("*.html"):
-                value = page.read_text()
+                value = page.read_text(encoding="utf-8")
                 relative = page.parent.relative_to(output).as_posix() + "/"
                 self.assertIn(f'rel="canonical" href="https://fixture.example.test/{relative}"', value)
                 self.assertIn('property="og:url"', value)
@@ -125,11 +126,11 @@ class PublicationTests(unittest.TestCase):
                 self.assertNotIn("noindex", value)
             for path in output.rglob("*"):
                 if path.is_file():
-                    self.assertNotIn("synthetic-private", path.read_text())
+                    self.assertNotIn("synthetic-private", path.read_text(encoding="utf-8"))
             sitemap = ET.parse(output / "preview/sitemap.xml")
             self.assertEqual(len(sitemap.getroot()), 14)
-            self.assertNotIn("examples/", (output / "preview/sitemap.xml").read_text())
-            self.assertIn("Disallow: /preview/examples/", (output / "robots.txt").read_text())
+            self.assertNotIn("examples/", (output / "preview/sitemap.xml").read_text(encoding="utf-8"))
+            self.assertIn("Disallow: /preview/examples/", (output / "robots.txt").read_text(encoding="utf-8"))
 
     def test_malformed_origin_configuration_and_hash_rejected(self):
         for origin in ("https://single-label", "https://" + "a" * 64 + ".test", "https://-label.test", "https://label-.test", "https://one..test"):
@@ -149,7 +150,7 @@ class PublicationTests(unittest.TestCase):
                 config(**changes)
 
     def test_modified_config_base_or_example_approval_rejected_before_write(self):
-        with tempfile.TemporaryDirectory() as tmp:
+        with temporary_directory() as tmp:
             for index, publication in enumerate((replace(config(), origin="https://other.example.test"), config(base_path="/"), config(public_example_sha256="a" * 64))):
                 output = Path(tmp) / str(index)
                 with self.subTest(index=index), self.assertRaises(ValueError):

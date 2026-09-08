@@ -47,6 +47,65 @@ class _FakeTimeoutProcess:
         self.killed = True
 
 
+@pytest.mark.parametrize("mode", ["external_validator", "embedded_evaluate"])
+def test_evaluator_canonicalizes_internal_temp_root_before_materialization(
+    tmp_path, monkeypatch, mode
+):
+    """Internal roots tolerate a host temporary-directory alias such as macOS /var."""
+    real_root = tmp_path / "real-temp"
+    linked_root = tmp_path / "linked-temp"
+    real_root.mkdir()
+    linked_root.symlink_to(real_root, target_is_directory=True)
+
+    class _LinkedTemporaryDirectory:
+        def __init__(self, *_args, **_kwargs):
+            pass
+
+        def __enter__(self):
+            return str(linked_root)
+
+        def __exit__(self, *_args):
+            return False
+
+    monkeypatch.setattr(
+        evaluator.tempfile,
+        "TemporaryDirectory",
+        _LinkedTemporaryDirectory,
+    )
+    validate_src = "def evaluate(c): return {'score': 0.9, 'is_valid': True}"
+    p, d = _problem(validate_src)
+    try:
+        if mode == "embedded_evaluate":
+            workspace = CandidateWorkspace(
+                files={
+                    "main.py": (
+                        "def evaluate(eval_inputs):\n"
+                        "    return {'score': 0.9, 'is_valid': True}\n"
+                    )
+                },
+                primary_file="main.py",
+            )
+            evaluator_instance = CascadeEvaluator(
+                p,
+                stages=[{"name": "candidate_eval", "mode": mode}],
+            )
+        else:
+            workspace = CandidateWorkspace.from_code("x = 1")
+            evaluator_instance = CascadeEvaluator(p)
+
+        result = evaluator_instance.evaluate(workspace, None)
+
+        assert result.is_valid is True
+        assert result.error is None
+        assert result.fitness == 0.9
+    finally:
+        shutil.rmtree(d)
+        if real_root.exists():
+            shutil.rmtree(real_root)
+        if linked_root.is_symlink():
+            linked_root.unlink()
+
+
 def test_direct_evaluator_rejects_unsafe_configured_stage_labels():
     p, d = _problem("def evaluate(c): return {'score': 1.0, 'is_valid': True}")
     try:

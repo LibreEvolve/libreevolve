@@ -8,6 +8,7 @@ it is not attestation or a hostile-code security boundary.
 from __future__ import annotations
 
 import difflib
+import errno
 import hashlib
 import html
 import json
@@ -135,6 +136,17 @@ def _wait_for_process_group_exit(pgid: int, timeout: float = 2.0) -> None:
         time.sleep(0.01)
 
 
+def _process_group_exists(pgid: int) -> bool:
+    """Return whether a process group is still observable by this process."""
+    try:
+        os.killpg(pgid, 0)
+    except ProcessLookupError:
+        return False
+    except OSError as exc:
+        return exc.errno != errno.ESRCH
+    return True
+
+
 def _verify(code: bytes, validator: bytes, entrypoint: str) -> dict:
     evidence = {"code_sha256": _sha(code), "validator_sha256": _sha(validator),
                 "entrypoint": entrypoint, "status": "error", "correctness": None,
@@ -217,12 +229,13 @@ def _verify(code: bytes, validator: bytes, entrypoint: str) -> dict:
                         except ProcessLookupError:
                             pass
                         except OSError as exc:
-                            evidence["status"] = "cleanup_failed"
-                            evidence["cleanup_error"] = str(exc)[:500]
-                            try:
-                                process.kill()
-                            except (OSError, ProcessLookupError):
-                                pass
+                            if _process_group_exists(process.pid):
+                                evidence["status"] = "cleanup_failed"
+                                evidence["cleanup_error"] = str(exc)[:500]
+                                try:
+                                    process.kill()
+                                except (OSError, ProcessLookupError):
+                                    pass
                     try:
                         process.wait(timeout=2)
                     except subprocess.TimeoutExpired:

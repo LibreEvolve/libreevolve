@@ -466,6 +466,24 @@ def test_worker_crash_is_not_correctness_failure():
     assert result["training"]["correctness"] is None
 
 
+@pytest.mark.skipif(os.name == "nt", reason="POSIX process-group cleanup")
+def test_vanished_process_group_during_cleanup_is_benign(monkeypatch):
+    real_killpg = reporting.os.killpg
+
+    def killpg(pgid, sig):
+        if sig == signal.SIGKILL:
+            raise OSError("group disappeared")
+        if sig == 0:
+            raise ProcessLookupError
+        return real_killpg(pgid, sig)
+
+    monkeypatch.setattr(reporting.os, "killpg", killpg)
+    validator = (reporting.BUNDLED_PROBLEM / "validate.py").read_bytes()
+    result = reporting._verify(baseline(), validator, "evaluate")
+    assert result["status"] == "completed"
+    assert result["correctness"] is True
+
+
 def test_response_pipe_flood_is_bounded(monkeypatch):
     monkeypatch.setattr(reporting, "VERIFY_TIMEOUT_SECONDS", 2)
     # Write to the worker's retained response descriptor. This intentionally

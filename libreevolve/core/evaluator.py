@@ -1098,7 +1098,7 @@ class CascadeEvaluator:
             self._problem.problem_dir,
         )
         with tempfile.TemporaryDirectory() as tmp:
-            tmp_path = Path(tmp)
+            tmp_path = _canonical_evaluator_temp_path(tmp)
             runner = tmp_path / "_runner.py"
             result_path = tmp_path / "evaluator_result.json"
             stage_context_path = tmp_path / "stage_context.json"
@@ -1382,7 +1382,7 @@ class CascadeEvaluator:
         artifact_policy = artifact_policy or self._artifact_policy({})
         stage_context = _stage_context_with_rng_seed(stage_context)
         with tempfile.TemporaryDirectory() as tmp:
-            tmp_path = Path(tmp)
+            tmp_path = _canonical_evaluator_temp_path(tmp)
             runner = tmp_path / "_embedded_evaluate_runner.py"
             result_path = tmp_path / "evaluator_result.json"
             cand_root = tmp_path / "candidate"
@@ -2360,6 +2360,17 @@ def _run_validator_process(
             timed_out=True,
             cleanup=cleanup,
         )
+
+
+def _canonical_evaluator_temp_path(path: str | Path) -> Path:
+    """Resolve host aliases before using an internal path as a workspace root.
+
+    macOS exposes its temporary directory through a ``/var`` symlink to
+    ``/private/var``.  Candidate workspace materialization deliberately
+    rejects linked ancestors for caller supplied roots, so internal evaluator
+    roots must use the physical spelling before materialization.
+    """
+    return Path(path).resolve()
 
 
 def _terminate_process_tree(proc: subprocess.Popen) -> dict:

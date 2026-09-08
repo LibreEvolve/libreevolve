@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 790" width="1600" height="790" role="img" aria-labelledby="workflow-title workflow-description">
+  <title id="workflow-title">How the LibreEvolve engineering preview moves from a seed to optional local sharing</title>
+  <desc id="workflow-description">A six-stage workflow. First, initialize a seed and run offline preflight without a provider request. Second, after separately authorizing subscription use, run bounded Codex search and candidate evaluation. Third, inspect run status, validity, training quality and retention. Fourth, freeze the selected candidate before checking the separate held-out reporting split. Fifth, perform fresh local checks through a report or a verified export; these are separate authorities and neither implies the other. Sixth, if separately approved, prepare and inspect a frozen allowlisted record, then render local static files. Rendering executes no candidate code, fetches no resources and uploads nothing.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 6 L 0 11 z" fill="#b6f5cd"/>
+    </marker>
+    <filter id="soft-shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity=".24"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="790" fill="#0d1117"/>
+  <path d="M 60 136 H 1540" stroke="#365341" stroke-width="1"/>
+
+  <g fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+    <text x="60" y="66" font-size="34" font-weight="650" letter-spacing="-.02em">How the preview moves</text>
+    <text x="60" y="104" fill="#a8b9ad" font-size="17">Bounded change → inspectable checks → optional local sharing</text>
+    <text x="1540" y="67" text-anchor="end" fill="#b6f5cd" font-size="14" font-weight="650" letter-spacing=".08em">ENGINEERING PREVIEW</text>
+    <text x="1540" y="103" text-anchor="end" fill="#a8b9ad" font-size="14">Illustrative workflow · not a result</text>
+  </g>
+
+  <!-- Connectors are intentionally separate from the cards so the dashed final
+       boundary cannot be read as automatic publication. -->
+  <g fill="none" stroke="#b6f5cd" stroke-width="2.5" marker-end="url(#arrow)">
+    <path d="M 280 390 H 300"/>
+    <path d="M 530 390 H 550"/>
+    <path d="M 780 390 H 800"/>
+    <path d="M 1030 390 H 1050"/>
+  </g>
+  <path d="M 1280 390 H 1300" fill="none" stroke="#b6f5cd" stroke-width="2.5" stroke-dasharray="7 7" marker-end="url(#arrow)"/>
+
+  <!-- 01 -->
+  <g transform="translate(60 180)" filter="url(#soft-shadow)">
+    <rect width="220" height="430" rx="12" fill="#161b22" stroke="#365341" stroke-width="1.5"/>
+    <rect width="220" height="6" rx="3" fill="#b6f5cd"/>
+    <text x="20" y="42" fill="#b6f5cd" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700">01 / START</text>
+    <text x="20" y="76" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" font-weight="650">Seed + offline</text>
+    <text x="20" y="101" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" font-weight="650">preflight</text>
+    <path d="M 20 125 H 200" stroke="#365341"/>
+    <text x="20" y="154" fill="#a8b9ad" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14">Initialize the bundled task.</text>
+    <text x="20" y="181" fill="#a8b9ad" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14">Check contracts locally.</text>
+    <text x="20" y="208" fill="#a8b9ad" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14">Evaluate the seed only.</text>
+    <rect x="20" y="246" width="180" height="58" rx="8" fill="#18231c" stroke="#4f8060"/>
+    <text x="32" y="270" fill="#b6f5cd" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700">NO PROVIDER REQUEST</text>
+    <text x="32" y="291" fill="#a8b9ad" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">offline doctor + seed path</text>
+    <text x="20" y="353" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">The local task and</text>
+    <text x="20" y="374" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">evaluator are the first</text>
+    <text x="20" y="395" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">things to inspect.</text>
+  </g>
+
+  <!-- 02 -->
+  <g transform="translate(310 180)" filter="url(#soft-shadow)">
+    <rect width="220" height="430" rx="12" fill="#161b22" stroke="#365341" stroke-width="1.5"/>
+    <rect width="220" height="6" rx="3" fill="#b6f5cd"/>
+    <text x="20" y="42" fill="#b6f5cd" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700">02 / SEARCH</text>
+    <text x="20" y="76" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" font-weight="650">Authorize a</text>
+    <text x="20" y="101" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" font-weight="650">bounded lane</text>
+    <path d="M 20 125 H 200" stroke="#365341"/>
+    <text x="20" y="154" fill="#a8b9ad" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14">Authorize live Codex use.</text>
+    <text x="20" y="181" fill="#a8b9ad" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14">Codex proposes</text>
+    <text x="20" y="202" fill="#a8b9ad" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14">bounded changes.</text>
+    <text x="20" y="223" fill="#a8b9ad" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14">Candidates are checked.</text>
+    <rect x="20" y="246" width="180" height="58" rx="8" fill="#18231c" stroke="#4f8060"/>
+    <text x="32" y="270" fill="#b6f5cd" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700">BOUNDED WORK</text>
+    <text x="32" y="291" fill="#a8b9ad" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11">calls · evaluations · runtime</text>
+    <text x="20" y="353" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">A successful model response</text>
+    <text x="20" y="374" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">is not yet a valid or</text>
+    <text x="20" y="395" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">retained result.</text>
+  </g>
+
+  <!-- 03 -->
+  <g transform="translate(560 180)" filter="url(#soft-shadow)">
+    <rect width="220" height="430" rx="12" fill="#161b22" stroke="#365341" stroke-width="1.5"/>
+    <rect width="220" height="6" rx="3" fill="#b6f5cd"/>
+    <text x="20" y="42" fill="#b6f5cd" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700">03 / INSPECT</text>
+    <text x="20" y="76" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" font-weight="650">See what</text>
+    <text x="20" y="101" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" font-weight="650">survived</text>
+    <path d="M 20 125 H 200" stroke="#365341"/>
+    <text x="20" y="154" fill="#a8b9ad" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14">Read the saved run and its</text>
+    <text x="20" y="177" fill="#a8b9ad" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14">recorded selection.</text>
+    <g fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14">
+      <text x="28" y="222">• run status</text>
+      <text x="28" y="247">• validity</text>
+      <text x="28" y="272">• training quality</text>
+      <text x="28" y="297">• retention</text>
+    </g>
+    <rect x="20" y="326" width="180" height="58" rx="8" fill="#18231c" stroke="#4f8060"/>
+    <text x="32" y="350" fill="#b6f5cd" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700">KEEP THESE DISTINCT</text>
+    <text x="32" y="371" fill="#a8b9ad" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11">completed ≠ valid ≠ retained</text>
+  </g>
+
+  <!-- 04 -->
+  <g transform="translate(810 180)" filter="url(#soft-shadow)">
+    <rect width="220" height="430" rx="12" fill="#161b22" stroke="#365341" stroke-width="1.5"/>
+    <rect width="220" height="6" rx="3" fill="#b6f5cd"/>
+    <text x="20" y="42" fill="#b6f5cd" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700">04 / FREEZE</text>
+    <text x="20" y="76" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" font-weight="650">Freeze the</text>
+    <text x="20" y="101" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" font-weight="650">selection</text>
+    <path d="M 20 125 H 200" stroke="#365341"/>
+    <rect x="20" y="151" width="180" height="54" rx="8" fill="#18231c" stroke="#4f8060"/>
+    <text x="32" y="175" fill="#b6f5cd" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700">DECISION GATE</text>
+    <text x="32" y="194" fill="#a8b9ad" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">choose before reporting</text>
+    <path d="M 110 218 V 242" stroke="#b6f5cd" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="20" y="278" fill="#a8b9ad" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14">Check held-out cases only</text>
+    <text x="20" y="301" fill="#a8b9ad" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14">after selection is frozen.</text>
+    <text x="20" y="348" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="650">Training → held-out</text>
+    <text x="20" y="375" fill="#a8b9ad" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">The reporting split is not a</text>
+    <text x="20" y="396" fill="#a8b9ad" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">new search objective.</text>
+  </g>
+
+  <!-- 05 -->
+  <g transform="translate(1060 180)" filter="url(#soft-shadow)">
+    <rect width="220" height="430" rx="12" fill="#161b22" stroke="#365341" stroke-width="1.5"/>
+    <rect width="220" height="6" rx="3" fill="#b6f5cd"/>
+    <text x="20" y="42" fill="#b6f5cd" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700">05 / VERIFY</text>
+    <text x="20" y="76" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" font-weight="650">Fresh local</text>
+    <text x="20" y="101" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" font-weight="650">checks</text>
+    <path d="M 20 125 H 200" stroke="#365341"/>
+    <text x="20" y="150" fill="#a8b9ad" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">Separate report + export.</text>
+    <text x="20" y="170" fill="#a8b9ad" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">No order is implied.</text>
+    <rect x="20" y="193" width="180" height="72" rx="8" fill="#18231c" stroke="#4f8060"/>
+    <text x="32" y="218" fill="#b6f5cd" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700">REPORT</text>
+    <text x="32" y="239" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">fresh baseline + workspace</text>
+    <text x="32" y="257" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">checks; local HTML</text>
+    <rect x="20" y="280" width="180" height="82" rx="8" fill="#18231c" stroke="#4f8060"/>
+    <text x="32" y="305" fill="#b6f5cd" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700">EXPORT</text>
+    <text x="32" y="326" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">fresh training + held-out</text>
+    <text x="32" y="344" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">checks; verified artifact</text>
+    <text x="20" y="397" fill="#a8b9ad" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">Host-access subprocesses;</text>
+    <text x="20" y="418" fill="#a8b9ad" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">not a security sandbox.</text>
+  </g>
+
+  <!-- 06 -->
+  <g transform="translate(1310 180)" filter="url(#soft-shadow)">
+    <rect width="230" height="430" rx="12" fill="#161b22" stroke="#4f8060" stroke-width="1.5"/>
+    <rect width="230" height="6" rx="3" fill="#b6f5cd"/>
+    <text x="20" y="42" fill="#b6f5cd" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700">06 / SHARE</text>
+    <text x="20" y="76" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" font-weight="650">Opt in to</text>
+    <text x="20" y="101" fill="#e6edf3" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" font-weight="650">local sharing</text>
+    <path d="M 20 125 H 210" stroke="#365341"/>
+    <rect x="20" y="145" width="190" height="46" rx="7" fill="#18231c" stroke="#4f8060"/>
+    <text x="32" y="173" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12">PREPARE · fresh checks</text>
+    <rect x="20" y="201" width="190" height="46" rx="7" fill="#18231c" stroke="#4f8060"/>
+    <text x="32" y="229" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12">INSPECT · exact digest</text>
+    <rect x="20" y="257" width="190" height="46" rx="7" fill="#18231c" stroke="#4f8060"/>
+    <text x="32" y="285" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11">APPROVE · frozen record</text>
+    <rect x="20" y="313" width="190" height="62" rx="7" fill="#b6f5cd"/>
+    <text x="32" y="339" fill="#0d1117" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700">RENDER</text>
+    <text x="32" y="358" fill="#0d1117" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12">static files only</text>
+    <text x="20" y="397" fill="#b6f5cd" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" font-weight="650">No candidate execution</text>
+    <text x="20" y="414" fill="#b6f5cd" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" font-weight="650">no fetch · no upload.</text>
+  </g>
+
+  <g transform="translate(60 670)" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+    <rect width="1480" height="72" rx="10" fill="#18231c" stroke="#365341"/>
+    <circle cx="26" cy="36" r="8" fill="#b6f5cd"/>
+    <text x="48" y="31" fill="#e6edf3" font-size="14" font-weight="650">Evidence boundary</text>
+    <text x="48" y="52" fill="#a8b9ad" font-size="13">This map explains the reviewed order and boundaries; it contains no run result, metric, benchmark claim or publication authorization.</text>
+    <text x="1452" y="42" text-anchor="end" fill="#b6f5cd" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12">LOCAL · EXPLICIT · INSPECTABLE</text>
+  </g>
+</svg>

@@ -1,0 +1,30 @@
+name: Preview question
+description: Ask a non-sensitive setup, usage or result-interpretation question.
+title: "[Question] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check the quickstart and existing issues first. This public issue is not a private reporting channel.
+        Do not include credentials, OAuth files, account details, raw prompts or private source.
+  - type: input
+    id: version
+    attributes:
+      label: Public version and environment
+      description: Public commit if known, Python version and OS; omit home paths and usernames.
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Question and what you have tried
+      description: Link relevant documentation and give a minimal sanitized example where useful.
+    validations:
+      required: true
+  - type: checkboxes
+    id: disclosure
+    attributes:
+      label: Public disclosure check
+      options:
+        - label: I reviewed this text and its attachments for credentials, OAuth files, account details, raw prompts and private source.
+          required: true

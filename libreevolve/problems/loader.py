@@ -17,6 +17,7 @@ from libreevolve.core.candidate import (
     validate_evolve_blocks,
 )
 from libreevolve.core.redaction import redact_sensitive_text
+from libreevolve.core.path_utils import is_path_link, linked_existing_ancestor
 from libreevolve.core.yaml_utils import redacted_yaml_error, safe_load_unique
 
 _SEED_POLICY_MANIFEST_NAMES = ("seed_policy.yaml", "seed_policy.yml")
@@ -99,7 +100,16 @@ def load_problem(problem_dir: str | Path) -> Problem:
     raw_dir = Path(problem_dir)
     if _is_link(raw_dir):
         raise ValueError(f"Problem directory links are not supported: {raw_dir}")
-    d = raw_dir.resolve()
+    linked_ancestor = linked_existing_ancestor(raw_dir)
+    if linked_ancestor is not None:
+        raise ValueError(
+            f"Problem directory links are not supported: {linked_ancestor}"
+        )
+    # Preserve the caller's absolute spelling.  Windows can expose the same
+    # directory through an 8.3 alias and a long path; retaining that spelling
+    # keeps diagnostics and Path-based access hooks referring to the caller's
+    # path while link checks still reject the root before any read.
+    d = raw_dir.absolute()
     if not d.is_dir():
         raise FileNotFoundError(f"Problem directory not found: {d}")
     task_path = d / "task_description.txt"
@@ -939,5 +949,4 @@ def _validate_seed_evolve_blocks(path: Path, content: str) -> None:
 
 
 def _is_link(path: Path) -> bool:
-    is_junction = getattr(path, "is_junction", None)
-    return path.is_symlink() or (is_junction is not None and is_junction())
+    return is_path_link(path)

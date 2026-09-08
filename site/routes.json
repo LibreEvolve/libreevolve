@@ -1,0 +1,15 @@
+[
+  {"route":"getting-started","title":"Run the preview","source":"docs/alpha-quickstart.md"},
+  {"route":"how-it-works","title":"How it works","source":"site/content/how-it-works.md"},
+  {"route":"results","title":"Read the evidence","source":"docs/results.md"},
+  {"route":"experiments","title":"Experiments","source":"site/content/experiments.md"},
+  {"route":"safety","title":"Safety and scope","source":"docs/safety.md"},
+  {"route":"roadmap","title":"Roadmap","source":"docs/roadmap.md"},
+  {"route":"contributing","title":"Contributing","source":"docs/contributing.md"},
+  {"route":"brand","title":"Brand guide","source":"brand/brand-guide.md"},
+  {"route":"docs","title":"Documentation","source":"docs/README.md"},
+  {"route":"development","title":"Development","source":"docs/development.md"},
+  {"route":"run-artifacts","title":"Run artifacts","source":"docs/run-artifacts.md"},
+  {"route":"release-checklist","title":"Release checks","source":"docs/release-checklist.md"},
+  {"route":"share-export","title":"Local share export","source":"docs/share-export.md"}
+]

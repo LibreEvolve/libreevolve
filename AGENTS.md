@@ -5,7 +5,8 @@
 This branch supports installation, bin-packing initialization and preflight,
 bounded Codex OAuth Luna/high optimization, progress and cancellation,
 saved-result inspection, HTML reporting, and independently validated export.
-Research features and their history belong on `experimental`.
+Research features and their history belong in the private
+[experimental repository](https://github.com/LibreEvolve/libreevolve-experimental).
 Keep the product labeled **engineering preview**.
 
 ## Development

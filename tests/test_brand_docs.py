@@ -72,7 +72,9 @@ def test_development_points_to_matching_venv_and_preserves_ci_boundaries():
     assert ".venv/bin/python -m libreevolve.tools.release_artifact_provenance" in development
     assert "python3.12 -m pytest" not in development
     assert "python3.12 -m build" not in development
-    assert "manual-only" in development
+    assert "workflows run on pull requests and pushes" in development
+    assert "manual dispatch available" in development
+    assert "manual-only" not in development
     assert "Do not reset, clean, stash" in development
 
 

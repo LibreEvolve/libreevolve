@@ -6,6 +6,7 @@ from collections.abc import Mapping
 import fnmatch
 import hashlib
 import math
+import os
 from pathlib import Path
 import re
 import unicodedata
@@ -100,11 +101,16 @@ def load_problem(problem_dir: str | Path) -> Problem:
     raw_dir = Path(problem_dir)
     if _is_link(raw_dir):
         raise ValueError(f"Problem directory links are not supported: {raw_dir}")
-    linked_ancestor = linked_existing_ancestor(raw_dir)
-    if linked_ancestor is not None:
-        raise ValueError(
-            f"Problem directory links are not supported: {linked_ancestor}"
-        )
+    # Windows junctions are reparse points that must not be traversed as
+    # problem roots.  macOS commonly exposes temporary directories through
+    # OS-managed aliases (for example /var -> /private/var); rejecting every
+    # linked ancestor would make ordinary temporary problem paths unusable.
+    if os.name == "nt":
+        linked_ancestor = linked_existing_ancestor(raw_dir)
+        if linked_ancestor is not None:
+            raise ValueError(
+                f"Problem directory links are not supported: {linked_ancestor}"
+            )
     # Preserve the caller's absolute spelling.  Windows can expose the same
     # directory through an 8.3 alias and a long path; retaining that spelling
     # keeps diagnostics and Path-based access hooks referring to the caller's

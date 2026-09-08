@@ -4,4 +4,7 @@ recursive-include brand *.md *.json *.py
 recursive-include tests *.py
 recursive-include .github/ISSUE_TEMPLATE *.yml
 include .github/PULL_REQUEST_TEMPLATE.md
+recursive-include .github/workflows *.yml
+include assets/logo-mark.svg assets/logo-mark-light.svg
+recursive-include assets/branding *.md *.html
 include AGENTS.md

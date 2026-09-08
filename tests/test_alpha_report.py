@@ -1,5 +1,6 @@
 """Independent local verification and truthful artifact reporting contracts."""
 
+import errno
 import hashlib
 import json
 import os
@@ -176,7 +177,7 @@ def test_missing_or_incomplete_attempt_ledger_does_not_claim_no_provider_calls(t
 
 
 def test_attempt_error_labels_are_redacted_and_html_escaped(tmp_path):
-    secret = "sk-abcdefghijklmnopqrstuvwxyz"
+    secret = "sk-abcdefghijklmnopqrstuvwxyz"  # pragma: allowlist secret
     attack = '<script>alert("x")</script> api_key=' + secret
     rows = [{"status": "error", "error_type": attack, "error": "private provider error",
              "prompt": "private prompt", "output": "private response"},
@@ -464,6 +465,64 @@ def test_worker_crash_is_not_correctness_failure():
     assert result["training"]["status"] == "worker_failed"
     assert result["training"]["returncode"] == 9
     assert result["training"]["correctness"] is None
+
+
+@pytest.mark.skipif(os.name == "nt", reason="POSIX process-group cleanup")
+def test_vanished_process_group_during_cleanup_is_benign(monkeypatch):
+    real_killpg = reporting.os.killpg
+
+    def killpg(pgid, sig):
+        if sig == signal.SIGKILL:
+            raise OSError("group disappeared")
+        if sig == 0:
+            raise ProcessLookupError
+        return real_killpg(pgid, sig)
+
+    monkeypatch.setattr(reporting.os, "killpg", killpg)
+    validator = (reporting.BUNDLED_PROBLEM / "validate.py").read_bytes()
+    result = reporting._verify(baseline(), validator, "evaluate")
+    assert result["status"] == "completed"
+    assert result["correctness"] is True
+
+
+@pytest.mark.skipif(os.name == "nt", reason="POSIX process-group cleanup")
+def test_zombie_process_group_permission_error_is_checked_after_reap(monkeypatch):
+    real_popen = reporting.subprocess.Popen
+    waited = False
+
+    class _TrackedProcess:
+        def __init__(self, *args, **kwargs):
+            self._process = real_popen(*args, **kwargs)
+
+        def wait(self, *args, **kwargs):
+            nonlocal waited
+            result = self._process.wait(*args, **kwargs)
+            waited = True
+            return result
+
+        def __getattr__(self, name):
+            return getattr(self._process, name)
+
+    monkeypatch.setattr(
+        reporting.subprocess,
+        "Popen",
+        lambda *args, **kwargs: _TrackedProcess(*args, **kwargs),
+    )
+
+    def killpg(_pgid, sig):
+        if sig == signal.SIGKILL:
+            raise PermissionError(errno.EPERM, "operation not permitted")
+        if sig == 0:
+            if waited:
+                raise ProcessLookupError
+            return None
+        raise AssertionError(f"unexpected signal: {sig}")
+
+    monkeypatch.setattr(reporting.os, "killpg", killpg)
+    validator = (reporting.BUNDLED_PROBLEM / "validate.py").read_bytes()
+    result = reporting._verify(baseline(), validator, "evaluate")
+    assert result["status"] == "completed"
+    assert result["correctness"] is True
 
 
 def test_response_pipe_flood_is_bounded(monkeypatch):

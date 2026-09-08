@@ -21,6 +21,13 @@ from libreevolve.alpha_share_io import checked_path
 from publication import Publication, load_publication, validate_publication, metadata, discovery_files
 SOURCE_URL = "https://github.com/LibreEvolve/libreevolve/blob/fa8ee2769a6e141b95d93043265a5e90c978f26d/"
 PLACEHOLDER_ORIGIN = "https://example.invalid"
+BRAND_ASSETS = {
+    "assets/brand/mark-dark.png": "dominant dark hero mark",
+    "assets/brand/mark-light.png": "light-plane hero sibling",
+    "assets/brand/micro-mark.png": "compact and favicon mark",
+    "assets/brand/mark-mono-dark.png": "dark-theme navigation mark",
+    "assets/brand/mark-mono-light.png": "light-theme navigation mark",
+}
 
 
 def base_path(value: str) -> str:
@@ -29,16 +36,25 @@ def base_path(value: str) -> str:
     return value
 
 
-def read_source(root: Path, relative: str) -> str:
+def source_path(root: Path, relative: str) -> Path:
     path = PurePosixPath(relative)
     if path.is_absolute() or ".." in path.parts or not path.parts:
         raise ValueError("Source must be a repository-relative path.")
     target = root.joinpath(*path.parts)
     if any(p.is_symlink() for p in (target, *target.parents)):
         raise ValueError("Symlink source is not allowed.")
+    return target
+
+
+def read_source_bytes(root: Path, relative: str) -> bytes:
+    target = source_path(root, relative)
     if not target.is_file() or target.stat().st_size > 1_048_576:
         raise ValueError(f"Missing or overlarge source: {relative}")
-    return target.read_text(encoding="utf-8")
+    return target.read_bytes()
+
+
+def read_source(root: Path, relative: str) -> str:
+    return read_source_bytes(root, relative).decode("utf-8")
 
 
 def load_routes(root: Path) -> list[dict]:
@@ -113,10 +129,14 @@ def shell(title: str, content: str, routes: list[dict], base: str, route: str = 
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 {discoverability}<meta name="description" content="{esc(title)} — LibreEvolve engineering preview: bounded Python bin-packing optimization with Codex OAuth.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
-<title>{esc(title)} · LibreEvolve</title><link rel="stylesheet" href="{base}assets/site.css">
+<title>{esc(title)} · LibreEvolve</title><link rel="icon" type="image/png" href="{base}assets/brand/micro-mark.png">
+<link rel="stylesheet" href="{base}assets/site.css">
 <script defer src="{base}assets/site.js"></script></head><body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="masthead"><a class="wordmark" href="{base}">LibreEvolve</a>
+<header class="masthead"><a class="wordmark" href="{base}"><span class="wordmark-mark" aria-hidden="true">
+<img class="brand-mark brand-mark-dark" src="{base}assets/brand/mark-mono-dark.png" width="44" height="44" alt="">
+<img class="brand-mark brand-mark-light" src="{base}assets/brand/mark-mono-light.png" width="44" height="44" alt="">
+</span><span>LibreEvolve</span></a>
 <nav aria-label="Primary"><a href="{base}getting-started/">Run the preview</a><a href="{base}results/">Evidence</a>
 <details><summary>Explore</summary><div class="menu">{navigation}</div></details></nav>
 <button class="theme" type="button" hidden aria-label="Switch color theme">Theme</button></header>
@@ -129,12 +149,16 @@ def shell(title: str, content: str, routes: list[dict], base: str, route: str = 
 
 def homepage(base: str) -> str:
     return f'''<section class="hero"><div class="hero-inner">
+<div class="hero-copy">
 <p class="eyebrow">Engineering preview · Bounded Python bin packing · Codex OAuth</p>
 <h1>LibreEvolve</h1><h2>Evolve code.<br>Show the evidence.</h2>
 <p class="intro">An open-source workbench for inspectable code-evolution experiments.</p>
 <div class="actions"><a class="button" href="{base}results/">Read the evidence guide <span aria-hidden="true">↗</span></a>
 <a href="{base}getting-started/">Run the preview <span aria-hidden="true">→</span></a></div>
-</div></section>
+</div><div class="hero-visual" aria-hidden="true">
+<img class="hero-art hero-art-dark" src="{base}assets/brand/mark-dark.png" width="1254" height="1254" alt="">
+<img class="hero-art hero-art-light" src="{base}assets/brand/mark-light.png" width="1254" height="1254" alt="">
+</div></div></section>
 <section class="section evidence"><p class="eyebrow">Start with what the result actually says</p>
 <h2>A finished run is not<br>a proven improvement.</h2><p>Inspect validity, retention, named checks and missing usage separately. Unchanged and unsuccessful outcomes belong in the record.</p>
 <p><a href="{base}experiments/">Experiment requirements</a> — no approved live experiment is published in this local build.</p></section>
@@ -168,7 +192,7 @@ def build(destination: Path, *, root: Path = ROOT, base: str = "/", example: Pre
         raise ValueError("Build destination requires an existing non-symlink parent.")
     routes = load_routes(root)
     prefix = base.lstrip("/")
-    files = {prefix + "index.html": shell("Evolve code. Show the evidence.", homepage(base), routes, base, publication=publication)}
+    files: dict[str, str | bytes] = {prefix + "index.html": shell("Evolve code. Show the evidence.", homepage(base), routes, base, publication=publication)}
     inputs = {}
     for row in routes:
         source = read_source(root, row["source"])
@@ -179,6 +203,13 @@ def build(destination: Path, *, root: Path = ROOT, base: str = "/", example: Pre
         files[prefix + row["route"] + "/index.html"] = shell(row["title"], '<article class="document">' + body + '</article>', routes, base, row["route"], publication)
     for name in ("site.css", "site.js"):
         files[prefix + "assets/" + name] = read_source(root, "site/assets/" + name)
+    brand_assets = {}
+    for relative, role in BRAND_ASSETS.items():
+        data = read_source_bytes(root, "site/" + relative)
+        files[prefix + relative] = data
+        digest = hashlib.sha256(data).hexdigest()
+        inputs["site/" + relative] = digest
+        brand_assets[relative] = {"role": role, "sha256": digest}
     files["robots.txt"] = "User-agent: *\nDisallow: /\n"
     if publication is not None:
         files.update(discovery_files(publication, routes))
@@ -195,17 +226,25 @@ def build(destination: Path, *, root: Path = ROOT, base: str = "/", example: Pre
         if files.keys() & example.files.keys():
             raise ValueError("Example route collides with site output")
         files.update(example.files)
+    def file_bytes(data: str | bytes) -> bytes:
+        return data if isinstance(data, bytes) else data.encode()
+
     manifest = {"schema_version": "1.0", "mode": "release_candidate" if publication else "local_preview", "placeholder_origin": None if publication else PLACEHOLDER_ORIGIN,
                 "publication": {"origin": publication.origin, "configuration_sha256": publication.approval_sha256} if publication else None,
-                "base_path": base, "input_sha256": inputs, "example": example.public_identity if example else None,
-                "output_sha256": {name: hashlib.sha256(data.encode()).hexdigest() for name, data in sorted(files.items())}}
+                "base_path": base, "input_sha256": inputs, "brand_assets": brand_assets,
+                "example": example.public_identity if example else None,
+                "output_sha256": {name: hashlib.sha256(file_bytes(data)).hexdigest() for name, data in sorted(files.items())}}
     files["build-manifest.json"] = json.dumps(manifest, indent=2, sort_keys=True) + "\n"
     destination.mkdir(mode=0o700)
     for relative, data in files.items():
         target = destination / relative
         target.parent.mkdir(parents=True, exist_ok=True)
-        with target.open("x", encoding="utf-8", newline="\n") as stream:
-            stream.write(data)
+        if isinstance(data, bytes):
+            with target.open("xb") as stream:
+                stream.write(data)
+        else:
+            with target.open("x", encoding="utf-8", newline="\n") as stream:
+                stream.write(data)
     return manifest
 
 

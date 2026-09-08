@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Engineering-preview quickstart
+    url: https://github.com/LibreEvolve/libreevolve/blob/main/docs/alpha-quickstart.md
+    about: Start with offline setup before choosing whether to authorize a live run.
+  - name: Saved-run artifact contract
+    url: https://github.com/LibreEvolve/libreevolve/blob/main/docs/run-artifacts.md
+    about: Understand evidence and source-selection boundaries before sharing a report.

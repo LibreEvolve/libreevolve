@@ -1,0 +1,68 @@
+name: Experiment report
+description: Share a reproducible, permission-cleared result, including unchanged or unsuccessful outcomes.
+title: "[Experiment] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Report what happened, not a required success story. This form does not authorize a live run or source publication.
+        Do not attach raw run directories, prompts, credentials, OAuth files, account details, home paths or private candidate source.
+        Finite checks are not universal correctness; bin-packing quality is not accuracy or speed.
+  - type: input
+    id: version
+    attributes:
+      label: Public source and environment identity
+      description: Public commit, Python version and OS; use unknown for an unrecorded identity.
+    validations:
+      required: true
+  - type: dropdown
+    id: evidence-kind
+    attributes:
+      label: Evidence class
+      options:
+        - Synthetic fixture
+        - Seed-only offline check
+        - Authorized live model experiment
+        - Other or unknown
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction and bounds
+      description: Trusted task, sanitized command, seed, model if used, and call/runtime limits. Do not publish private configuration.
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Run and candidate outcomes
+      description: State completed, cancelled or incomplete separately from validity, retention and improved, unchanged, worse or unknown outcome.
+    validations:
+      required: true
+  - type: textarea
+    id: checks
+    attributes:
+      label: Named checks and comparison basis
+      description: Corpus and split, case counts, baseline and candidate results. Compare valid results on identical cases within one split; freeze selection before held-out checks.
+    validations:
+      required: true
+  - type: textarea
+    id: usage
+    attributes:
+      label: Usage and limitations
+      description: Report observed usage; mark missing tokens or cost unknown. State failures and limitations; local limits are not hard spending caps.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Optional reviewed public evidence
+      description: Link only artifacts and source already approved for sharing. Hashes identify bytes, not independent attestation. Local export is not publication permission.
+  - type: checkboxes
+    id: disclosure
+    attributes:
+      label: Public disclosure check
+      options:
+        - label: I have permission to publish this content and reviewed attachments for secrets, account details, home paths, raw run directories, raw prompts and private source.
+          required: true

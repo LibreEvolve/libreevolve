@@ -523,7 +523,7 @@ def render_html(report: dict) -> str:
         text = json.dumps(value, indent=2, ensure_ascii=False, allow_nan=False) if not isinstance(value, str) else value
         return f"<section><h2>{escape(title)}</h2><pre>{escape(text)}</pre></section>"
 
-    body = f"<h1>LibreEvolve alpha result</h1><p>{escape(report.get('status'))}</p><p>{escape(report.get('scope'))}</p>"
+    body = f"<header><p class=eyebrow>Local evidence report · Engineering preview</p><h1>LibreEvolve alpha result</h1><p>{escape(report.get('status'))}</p><p>{escape(report.get('scope'))}</p><p>This local report can contain source code and sensitive run details. It is not a public share export.</p></header>"
     attempts = _object(_object(report.get("usage")).get("attempt_outcomes"))
     body += '<section><h2>Search and provider attempt outcomes</h2>'
     body += ''.join(f"<p>{escape(value)}</p>" for value in
@@ -535,16 +535,42 @@ def render_html(report: dict) -> str:
         body += f'<p>Generated candidate evaluations recorded by the run: {escape(candidate_evaluations)}. These counts do not establish validity or archive retention.</p>'
     body += '</section>'
     body += block("Run status", report.get("runtime")) + block("Usage and estimated cost", report.get("usage"))
-    body += '<section><h2>Independent reevaluation</h2><table><caption>Higher quality is better; correctness is required</caption><thead><tr><th scope="col">Program / split</th><th scope="col">Status</th><th scope="col">Correctness</th><th scope="col">Score</th></tr></thead><tbody>'
+    body += '<section><h2>Independent reevaluation</h2><div class="table-scroll" role="region" aria-label="Independent reevaluation table" tabindex="0"><table><caption>Higher quality is better; correctness is required</caption><thead><tr><th scope="col">Program / split</th><th scope="col">Status</th><th scope="col">Correctness</th><th scope="col">Score</th></tr></thead><tbody>'
     for name in ("baseline", "best"):
         program = _object(report.get(name))
         for split in ("training", "holdout"):
             row = _object(program.get(split))
             body += f'<tr><th scope="row">{name} / {split}</th>' + ''.join(f'<td>{escape(row.get(key))}</td>' for key in ("status", "correctness", "score")) + '</tr>'
-    body += '</tbody></table></section>'
+    body += '</tbody></table></div></section>'
     body += block("Score change (best minus baseline)", report.get("score_delta"))
     body += block("Artifact issues", report.get("issues")) + block("Source diff", report.get("diff"))
     for name in ("baseline", "best"):
         body += block(name.capitalize() + " code", _object(report.get(name)).get("code"))
     body += block("Machine-readable evidence", report)
-    return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>LibreEvolve alpha result</title><style>body{font:1rem/1.6 system-ui,sans-serif;max-width:72rem;margin:2rem auto;padding:0 1rem;color:#18212b;background:#fff}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f1f4f6;padding:1rem}table{border-collapse:collapse;width:100%}th,td{text-align:left;border:1px solid #8795a1;padding:.5rem}section{margin:2rem 0}</style></head><body><main>' + body + '</main></body></html>'
+    styles = """
+    :root{color-scheme:light dark;--paper:#fafbf9;--ink:#18251f;
+      --muted:#4e6056;--line:#b5c1b8;--surface:#edf1ec;--accent:#176b49}
+    *{box-sizing:border-box}
+    body{font:1rem/1.6 system-ui,sans-serif;margin:0;color:var(--ink);background:var(--paper)}
+    main{max-width:72rem;margin:auto;padding:2.5rem clamp(1rem,4vw,3rem);overflow-wrap:anywhere}
+    header{border-top:.25rem solid var(--accent);padding-top:1.5rem;margin-bottom:3rem}
+    .eyebrow{color:var(--muted);font-size:.875rem}
+    h1{font-size:clamp(1.8rem,4vw,3rem);line-height:1.15;letter-spacing:-.035em}
+    h2{font-size:1.25rem;line-height:1.35;margin:0 0 1rem}
+    p{max-width:75ch}
+    section{margin:2.5rem 0;padding-top:1.5rem;border-top:1px solid var(--line)}
+    pre{font:.875rem/1.65 ui-monospace,monospace;white-space:pre-wrap;overflow-wrap:anywhere;
+      background:var(--surface);padding:1rem;margin:0;tab-size:4}
+    .table-scroll{overflow-x:auto;max-width:100%}
+    .table-scroll:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    table{border-collapse:collapse;width:100%}
+    caption{text-align:left;color:var(--muted);padding:0 0 1rem}
+    th,td{text-align:left;border-bottom:1px solid var(--line);padding:.75rem;white-space:nowrap}
+    th{font-weight:600}thead{background:var(--surface)}
+    @media(prefers-color-scheme:dark){:root{--paper:#111b16;--ink:#e5eee7;
+      --muted:#b0c1b5;--line:#506358;--surface:#1c2a21;--accent:#81d4a7}}
+    @media print{:root{color-scheme:light;--paper:#fff;--ink:#000;--muted:#333;
+      --line:#888;--surface:#f4f4f4;--accent:#000}main{padding:0;max-width:none}
+      .table-scroll{overflow:visible}th,td{white-space:normal}}
+    """
+    return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'unsafe-inline\'; base-uri \'none\'; form-action \'none\'"><title>LibreEvolve alpha result</title><style>' + styles + '</style></head><body><main>' + body + '</main></body></html>'

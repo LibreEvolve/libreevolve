@@ -1,6 +1,0 @@
-Improve the multi-file workspace while preserving the public API and declared
-workspace resources.
-
-`main.py` must expose `solve()` and must depend on `pkg.helpers.base_value()`.
-The workspace includes `data/config.json` and immutable binary
-`assets/offset.bin`; keep those resource contracts intact.

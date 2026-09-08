@@ -2,29 +2,13 @@ from __future__ import annotations
 
 from copy import deepcopy
 
-from libreevolve.llm.request_params import REQUEST_PARAMETER_FIELDS
-
-
-BUILTIN_BACKEND_TYPES = ("anthropic", "codex", "gemini", "openai", "ollama")
+BUILTIN_BACKEND_TYPES = ("codex",)
 BACKEND_REGISTRY_SCHEMA = "libreevolve.backend_registry.v1"
 
 
 def builtin_backend_registry() -> dict[str, dict]:
     """Return metadata for backend types constructed by LibreEvolve."""
     return {
-        "anthropic": {
-            "type": "anthropic",
-            "constructor": "libreevolve.llm.anthropic:AnthropicBackend",
-            "constructor_fields": [
-                "model",
-                "max_tokens",
-                "timeout_sec",
-                "provider_max_retries",
-                "base_url",
-                *sorted(REQUEST_PARAMETER_FIELDS),
-            ],
-            "schema": BACKEND_REGISTRY_SCHEMA,
-        },
         "codex": {
             "type": "codex",
             "constructor": "libreevolve.llm.codex_cli:CodexCLIBackend",
@@ -51,49 +35,6 @@ def builtin_backend_registry() -> dict[str, dict]:
             ],
             "schema": BACKEND_REGISTRY_SCHEMA,
         },
-        "gemini": {
-            "type": "gemini",
-            "constructor": "libreevolve.llm.gemini:GeminiBackend",
-            "constructor_fields": [
-                "model",
-                "max_tokens",
-                "timeout_sec",
-                "provider_max_retries",
-                "api_version",
-                *sorted(REQUEST_PARAMETER_FIELDS),
-            ],
-            "schema": BACKEND_REGISTRY_SCHEMA,
-        },
-        "openai": {
-            "type": "openai",
-            "constructor": "libreevolve.llm.openai:OpenAIBackend",
-            "constructor_fields": [
-                "model",
-                "max_tokens",
-                "timeout_sec",
-                "provider_max_retries",
-                "reasoning_effort",
-                "api_mode",
-                "base_url",
-                "organization",
-                "project",
-                *sorted(REQUEST_PARAMETER_FIELDS),
-            ],
-            "schema": BACKEND_REGISTRY_SCHEMA,
-        },
-        "ollama": {
-            "type": "ollama",
-            "constructor": "libreevolve.llm.ollama:OllamaBackend",
-            "constructor_fields": [
-                "model",
-                "max_tokens",
-                "timeout_sec",
-                "provider_max_retries",
-                "host",
-                *sorted(REQUEST_PARAMETER_FIELDS),
-            ],
-            "schema": BACKEND_REGISTRY_SCHEMA,
-        },
     }
 
 
@@ -110,11 +51,6 @@ def build_registry_backends(specs: object, *, prompt_roles: dict | None = None) 
     backends = []
     for spec in normalized:
         backend_type = spec["type"]
-        if backend_type == "custom":
-            from libreevolve.llm.ensemble import build_custom_backend_from_spec
-
-            backends.append(build_custom_backend_from_spec(spec))
-            continue
         cls = _backend_class(backend_type)
         kwargs = {
             key: value
@@ -132,34 +68,18 @@ def _constructor_fields(backend_type: str) -> set[str]:
     registry = builtin_backend_registry()
     if backend_type not in registry:
         raise ValueError(
-            f"Unknown backend type {backend_type!r}. Valid: ['anthropic', 'codex', 'custom', 'gemini', 'openai', 'ollama']"
+            f"Unknown backend type {backend_type!r}. Valid: ['codex']"
         )
     return set(registry[backend_type]["constructor_fields"])
 
 
 def _backend_class(backend_type: str):
-    if backend_type == "anthropic":
-        from libreevolve.llm.anthropic import AnthropicBackend
-
-        return AnthropicBackend
-    if backend_type == "openai":
-        from libreevolve.llm.openai import OpenAIBackend
-
-        return OpenAIBackend
-    if backend_type == "gemini":
-        from libreevolve.llm.gemini import GeminiBackend
-
-        return GeminiBackend
     if backend_type == "codex":
         from libreevolve.llm.codex_cli import CodexCLIBackend
 
         return CodexCLIBackend
-    if backend_type == "ollama":
-        from libreevolve.llm.ollama import OllamaBackend
-
-        return OllamaBackend
     raise ValueError(
-        f"Unknown backend type {backend_type!r}. Valid: ['anthropic', 'codex', 'custom', 'gemini', 'openai', 'ollama']"
+        f"Unknown backend type {backend_type!r}. Valid: ['codex']"
     )
 
 

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+# Populated after the validators below; prompt.py re-exports this contract.
+
 import math
 import re
 import unicodedata
@@ -33,8 +35,6 @@ _PROMPT_POLICY_TEMPLATE_FIELDS = {
 
 _PROMPT_POLICY_ARTIFACT_CONTENT_MODES = {"excerpt", "bounded_file", "off"}
 PROMPT_CONTEXT_POLICY_SCHEMA = "libreevolve.prompt_context_policy.v1"
-_MAX_PLUGIN_CONTEXT_ALLOWLIST_ITEMS = 20
-_MAX_PLUGIN_CONTEXT_ALLOWLIST_LABEL_CHARS = 200
 PROMPT_CONTEXT_POLICY_DISABLED_SECTIONS = frozenset(
     {
         "context",
@@ -625,17 +625,6 @@ def validate_prompt_context_policy(
         "inspiration_limit",
         "inspiration_sample_count",
         "extra_context_max_chars",
-        "plugin_context_enabled",
-        "plugin_context_allowlist",
-        "plugin_context_excluded_labels",
-        "plugin_context_order",
-        "plugin_context_required_terms",
-        "plugin_context_excluded_terms",
-        "plugin_context_ranking_terms",
-        "plugin_context_limit",
-        "plugin_context_max_chars",
-        "plugin_context_truncation",
-        "plugin_context_max_chars_by_label",
     }
     unsupported = sorted(
         str(key)
@@ -1125,46 +1114,6 @@ def validate_prompt_context_policy(
     extra_context_max_chars = _validate_prompt_context_extra_context_max_chars(
         value.get("extra_context_max_chars")
     )
-    plugin_context_enabled = _validate_prompt_context_plugin_context_enabled(
-        value.get("plugin_context_enabled", True)
-    )
-    plugin_context_allowlist = _validate_prompt_context_plugin_context_allowlist(
-        value.get("plugin_context_allowlist")
-    )
-    plugin_context_excluded_labels = (
-        _validate_prompt_context_plugin_context_excluded_labels(
-            value.get("plugin_context_excluded_labels")
-        )
-    )
-    plugin_context_order = _validate_prompt_context_plugin_context_order(
-        value.get("plugin_context_order")
-    )
-    plugin_context_required_terms = _validate_prompt_context_source_terms(
-        value.get("plugin_context_required_terms"),
-        "plugin_context_required_terms",
-    )
-    plugin_context_excluded_terms = _validate_prompt_context_source_terms(
-        value.get("plugin_context_excluded_terms"),
-        "plugin_context_excluded_terms",
-    )
-    plugin_context_ranking_terms = _validate_prompt_context_source_terms(
-        value.get("plugin_context_ranking_terms"),
-        "plugin_context_ranking_terms",
-    )
-    plugin_context_limit = _validate_prompt_context_plugin_context_limit(
-        value.get("plugin_context_limit")
-    )
-    plugin_context_max_chars = _validate_prompt_context_plugin_context_max_chars(
-        value.get("plugin_context_max_chars")
-    )
-    plugin_context_truncation = _validate_prompt_context_plugin_context_truncation(
-        value.get("plugin_context_truncation", "head")
-    )
-    plugin_context_max_chars_by_label = (
-        _validate_prompt_context_plugin_context_max_chars_by_label(
-            value.get("plugin_context_max_chars_by_label")
-        )
-    )
     return {
         "schema": PROMPT_CONTEXT_POLICY_SCHEMA,
         "disabled_sections": disabled_sections,
@@ -1300,17 +1249,6 @@ def validate_prompt_context_policy(
         "inspiration_limit": inspiration_limit,
         "inspiration_sample_count": inspiration_sample_count,
         "extra_context_max_chars": extra_context_max_chars,
-        "plugin_context_enabled": plugin_context_enabled,
-        "plugin_context_allowlist": plugin_context_allowlist,
-        "plugin_context_excluded_labels": plugin_context_excluded_labels,
-        "plugin_context_order": plugin_context_order,
-        "plugin_context_required_terms": plugin_context_required_terms,
-        "plugin_context_excluded_terms": plugin_context_excluded_terms,
-        "plugin_context_ranking_terms": plugin_context_ranking_terms,
-        "plugin_context_limit": plugin_context_limit,
-        "plugin_context_max_chars": plugin_context_max_chars,
-        "plugin_context_truncation": plugin_context_truncation,
-        "plugin_context_max_chars_by_label": plugin_context_max_chars_by_label,
     }
 
 
@@ -4063,198 +4001,11 @@ def _validate_prompt_context_extra_context_max_chars(value: object) -> int | Non
         )
     return value
 
-
-def _validate_prompt_context_plugin_context_enabled(value: object) -> bool:
-    if not isinstance(value, bool):
-        raise PromptTemplateError(
-            "prompt context_policy.plugin_context_enabled must be boolean"
-        )
-    return value
-
-
-def _validate_prompt_context_plugin_context_allowlist(value: object) -> list[str]:
-    if value is None:
-        return []
-    if not isinstance(value, list):
-        raise PromptTemplateError(
-            "prompt context_policy.plugin_context_allowlist must be a list"
-        )
-    if len(value) > _MAX_PLUGIN_CONTEXT_ALLOWLIST_ITEMS:
-        raise PromptTemplateError(
-            "prompt context_policy.plugin_context_allowlist must contain at most "
-            f"{_MAX_PLUGIN_CONTEXT_ALLOWLIST_ITEMS} entries"
-        )
-    normalized: list[str] = []
-    seen = set()
-    for index, item in enumerate(value):
-        if not isinstance(item, str):
-            raise PromptTemplateError(
-                "prompt context_policy.plugin_context_allowlist"
-                f"[{index}] must be a safe plugin identity label"
-            )
-        label = item.strip()
-        if not label or len(label) > _MAX_PLUGIN_CONTEXT_ALLOWLIST_LABEL_CHARS:
-            raise PromptTemplateError(
-                "prompt context_policy.plugin_context_allowlist"
-                f"[{index}] must be a non-empty safe plugin identity label"
-            )
-        if redact_sensitive_text(label) != label:
-            raise PromptTemplateError(
-                "prompt context_policy.plugin_context_allowlist"
-                f"[{index}] must not look secret-like"
-            )
-        if any(ord(char) < 32 or ord(char) == 127 for char in label):
-            raise PromptTemplateError(
-                "prompt context_policy.plugin_context_allowlist"
-                f"[{index}] must not contain control characters"
-            )
-        if label not in seen:
-            normalized.append(label)
-            seen.add(label)
-    return normalized
-
-
-def _validate_prompt_context_plugin_context_order(value: object) -> list[str]:
-    if value is None:
-        return []
-    if not isinstance(value, list):
-        raise PromptTemplateError(
-            "prompt context_policy.plugin_context_order must be a list"
-        )
-    if len(value) > _MAX_PLUGIN_CONTEXT_ALLOWLIST_ITEMS:
-        raise PromptTemplateError(
-            "prompt context_policy.plugin_context_order must contain at most "
-            f"{_MAX_PLUGIN_CONTEXT_ALLOWLIST_ITEMS} entries"
-        )
-    normalized: list[str] = []
-    seen = set()
-    for index, item in enumerate(value):
-        label = _validate_prompt_context_plugin_identity_label(
-            item,
-            "plugin_context_order",
-        )
-        if label not in seen:
-            normalized.append(label)
-            seen.add(label)
-    return normalized
-
-
-def _validate_prompt_context_plugin_context_excluded_labels(value: object) -> list[str]:
-    if value is None:
-        return []
-    if not isinstance(value, list):
-        raise PromptTemplateError(
-            "prompt context_policy.plugin_context_excluded_labels must be a list"
-        )
-    if len(value) > _MAX_PLUGIN_CONTEXT_ALLOWLIST_ITEMS:
-        raise PromptTemplateError(
-            "prompt context_policy.plugin_context_excluded_labels must contain at most "
-            f"{_MAX_PLUGIN_CONTEXT_ALLOWLIST_ITEMS} entries"
-        )
-    normalized: list[str] = []
-    seen = set()
-    for item in value:
-        label = _validate_prompt_context_plugin_identity_label(
-            item,
-            "plugin_context_excluded_labels",
-        )
-        if label not in seen:
-            normalized.append(label)
-            seen.add(label)
-    return normalized
-
-
-def _validate_prompt_context_plugin_context_limit(value: object) -> int | None:
-    if value is None:
-        return None
-    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
-        raise PromptTemplateError(
-            "prompt context_policy.plugin_context_limit must be a non-negative integer or null"
-        )
-    return value
-
-
-def _validate_prompt_context_plugin_context_max_chars(value: object) -> int | None:
-    if value is None:
-        return None
-    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
-        raise PromptTemplateError(
-            "prompt context_policy.plugin_context_max_chars must be a non-negative integer or null"
-        )
-    return value
-
-
-def _validate_prompt_context_plugin_context_truncation(value: object) -> str:
-    if value not in {"head", "head_tail"}:
-        raise PromptTemplateError(
-            "prompt context_policy.plugin_context_truncation must be one of: head, head_tail"
-        )
-    return str(value)
-
-
-def _validate_prompt_context_plugin_context_max_chars_by_label(
-    value: object,
-) -> dict[str, int]:
-    if value is None:
-        return {}
-    if not isinstance(value, Mapping):
-        raise PromptTemplateError(
-            "prompt context_policy.plugin_context_max_chars_by_label must be a mapping"
-        )
-    if len(value) > _MAX_PLUGIN_CONTEXT_ALLOWLIST_ITEMS:
-        raise PromptTemplateError(
-            "prompt context_policy.plugin_context_max_chars_by_label must contain at most "
-            f"{_MAX_PLUGIN_CONTEXT_ALLOWLIST_ITEMS} entries"
-        )
-    normalized: dict[str, int] = {}
-    for raw_label, raw_max_chars in value.items():
-        label = _validate_prompt_context_plugin_identity_label(
-            raw_label,
-            "plugin_context_max_chars_by_label",
-        )
-        if isinstance(raw_max_chars, bool) or not isinstance(raw_max_chars, int) or raw_max_chars < 0:
-            raise PromptTemplateError(
-                "prompt context_policy.plugin_context_max_chars_by_label"
-                f"[{label!r}] must be a non-negative integer"
-            )
-        normalized[label] = raw_max_chars
-    return normalized
-
-
-def _validate_prompt_context_plugin_identity_label(
-    value: object,
-    field: str,
-) -> str:
-    if not isinstance(value, str):
-        raise PromptTemplateError(
-            f"prompt context_policy.{field} entries must be safe plugin identity labels"
-        )
-    label = value.strip()
-    if not label or len(label) > _MAX_PLUGIN_CONTEXT_ALLOWLIST_LABEL_CHARS:
-        raise PromptTemplateError(
-            f"prompt context_policy.{field} entries must be non-empty safe plugin identity labels"
-        )
-    if redact_sensitive_text(label) != label:
-        raise PromptTemplateError(
-            f"prompt context_policy.{field} entries must not look secret-like"
-        )
-    if any(ord(char) < 32 or ord(char) == 127 for char in label):
-        raise PromptTemplateError(
-            f"prompt context_policy.{field} entries must not contain control characters"
-        )
-    return label
-
-
-
 __all__ = [
     "PromptTemplateError",
     "validate_prompt_context_policy",
     "_validate_direct_context_label",
     "_unsafe_direct_context_label_char",
     *sorted(name for name in globals() if name.startswith("_validate_prompt_context_")),
-    *sorted(
-        name
-        for name in globals()
-        if name.startswith("PROMPT_CONTEXT_POLICY_")
-    ),
+    *sorted(name for name in globals() if name.startswith("PROMPT_CONTEXT_POLICY_")),
 ]

@@ -43,8 +43,6 @@ _RUN_ARTIFACT_MARKER_NAMES = {
     "plugin_artifacts",
 }
 _TREE_PROVENANCE_MAX_FILE_BYTES = 1_000_000
-_PLUGIN_PROVENANCE_MAX_FILE_BYTES = 1_000_000
-_PLUGIN_IDENTITY_MAX_CHARS = 240
 _PYPROJECT_METADATA_MAX_CHARS = 512
 _PYPROJECT_DIAGNOSTIC_MAX_CHARS = 512
 _PYPROJECT_EXTRA_METADATA_MAX_KEYS = 50
@@ -74,26 +72,7 @@ _LOCKFILE_CANDIDATES = (
     "pdm.lock",
     "Pipfile.lock",
 )
-_LLM_PROVIDER_SDK_CANDIDATES = (
-    {
-        "provider": "openai",
-        "package": "openai",
-        "adapter_module": "libreevolve.llm.openai",
-        "api_modes": ["chat_completions", "responses"],
-    },
-    {
-        "provider": "anthropic",
-        "package": "anthropic",
-        "adapter_module": "libreevolve.llm.anthropic",
-        "api_modes": ["messages"],
-    },
-    {
-        "provider": "ollama",
-        "package": "ollama",
-        "adapter_module": "libreevolve.llm.ollama",
-        "api_modes": ["chat"],
-    },
-)
+_LLM_PROVIDER_SDK_CANDIDATES = ()
 _ACCELERATOR_ENV_CANDIDATES = (
     "CUDA_VISIBLE_DEVICES",
     "NVIDIA_VISIBLE_DEVICES",
@@ -1865,140 +1844,11 @@ def _truncate_numerical_runtime_config(value: str) -> str:
     return value[: _NUMERICAL_RUNTIME_CONFIG_MAX_CHARS - len(suffix)] + suffix
 
 
-def plugin_provenance(plugins: list[object]) -> list[dict]:
-    records = []
-    for index, plugin in enumerate(plugins):
-        cls = plugin.__class__
-        module = _module_for_class(cls)
-        path = Path(getattr(module, "__file__", "") or "")
-        record = plugin_identity_record(plugin, index)
-        if path.is_file():
-            record.update(
-                {
-                    **_plugin_path_record(path),
-                    "max_file_bytes": _PLUGIN_PROVENANCE_MAX_FILE_BYTES,
-                }
-            )
-            try:
-                size = path.stat().st_size
-            except OSError as exc:
-                record.update({"status": "read_error"} | _read_error_skip(exc))
-                records.append(record)
-                continue
-            if size > _PLUGIN_PROVENANCE_MAX_FILE_BYTES:
-                record.update(
-                    {
-                        "status": "skipped_max_file_bytes",
-                        "bytes": size,
-                        "max_bytes": _PLUGIN_PROVENANCE_MAX_FILE_BYTES,
-                    }
-                )
-                records.append(record)
-                continue
-            try:
-                raw = path.read_bytes()
-            except OSError as exc:
-                record.update({"status": "read_error"} | _read_error_skip(exc))
-                records.append(record)
-                continue
-            record.update(
-                {
-                    "status": "ok",
-                    "sha256": hashlib.sha256(raw).hexdigest(),
-                    "bytes": len(raw),
-                }
-            )
-        else:
-            record["path"] = None
-            record["status"] = "missing_module_file"
-        records.append(record)
-    return records
-
-
-def plugin_identity_record(plugin: object, index: int) -> dict:
-    cls = plugin.__class__
-    raw_plugin = str(getattr(cls, "__name__", type(plugin).__name__))
-    raw_module = str(getattr(cls, "__module__", "unknown"))
-    raw_qualname = str(getattr(cls, "__qualname__", raw_plugin))
-    raw_class = f"{raw_module}.{raw_qualname}"
-    plugin_name, plugin_metadata = _safe_plugin_identity_label(raw_plugin, "plugin")
-    module_name, module_metadata = _safe_plugin_identity_label(raw_module, "module")
-    class_name, class_metadata = _safe_plugin_identity_label(raw_class, "class")
-    raw_instance_id = f"plugin:{index}:{raw_class}"
-    instance_id = f"plugin:{index}:{class_name}"
-    record = {
-        "plugin": plugin_name,
-        "module": module_name,
-        "class": class_name,
-        "index": index,
-        "instance_id": instance_id,
-    }
-    record.update(plugin_metadata)
-    record.update(module_metadata)
-    record.update(class_metadata)
-    if instance_id != raw_instance_id:
-        record["instance_id_hash"] = _hash_text(raw_instance_id)
-        record["instance_id_redacted"] = True
-    record["version"] = _plugin_version_record(plugin, cls, raw_module)
-    return record
-
-
-def _plugin_version_record(plugin: object, cls: type, module_name: str) -> dict:
-    candidates: list[tuple[str, object]] = []
-    instance_dict = getattr(plugin, "__dict__", {})
-    if isinstance(instance_dict, dict) and "__version__" in instance_dict:
-        candidates.append(("instance", instance_dict["__version__"]))
-    if "__version__" in getattr(cls, "__dict__", {}):
-        candidates.append(("class", getattr(cls, "__version__")))
-    module = sys.modules.get(module_name)
-    if module is not None and hasattr(module, "__version__"):
-        candidates.append(("module", getattr(module, "__version__")))
-    for source, raw in candidates:
-        raw_version = str(raw)
-        version, metadata = _safe_plugin_identity_label(raw_version, "version")
-        record: dict[str, object] = {
-            "status": "present",
-            "source": source,
-            "value": version,
-        }
-        record.update(metadata)
-        return record
-    return {"status": "missing"}
-
-
-def _safe_plugin_identity_label(raw_label: str, field: str) -> tuple[str, dict]:
-    normalized = unicodedata.normalize("NFC", raw_label)
-    escaped = "".join(_safe_identity_char(char) for char in normalized)
-    redacted = redact_sensitive_text(escaped)
-    safe_label = _truncate_identity_label(redacted)
-    metadata: dict = {}
-    if safe_label != raw_label:
-        metadata[f"{field}_hash"] = _hash_text(raw_label)
-        metadata[f"{field}_redacted"] = True
-        if normalized != raw_label:
-            metadata[f"{field}_normalization"] = "NFC"
-        if escaped != normalized:
-            metadata[f"{field}_unsafe_chars_redacted"] = True
-        if redacted != escaped:
-            metadata[f"{field}_secret_redacted"] = True
-        if safe_label != redacted:
-            metadata[f"{field}_truncated"] = True
-            metadata[f"{field}_max_chars"] = _PLUGIN_IDENTITY_MAX_CHARS
-    return safe_label or "unknown", metadata
-
-
 def _safe_identity_char(char: str) -> str:
     category = unicodedata.category(char)
     if ord(char) < 32 or ord(char) == 127 or category == "Cf":
         return f"[U+{ord(char):04X}]"
     return char
-
-
-def _truncate_identity_label(label: str) -> str:
-    if len(label) <= _PLUGIN_IDENTITY_MAX_CHARS:
-        return label
-    suffix = "...<truncated>"
-    return label[: _PLUGIN_IDENTITY_MAX_CHARS - len(suffix)] + suffix
 
 
 def git_state(cwd: Path | None = None) -> dict:
@@ -2317,36 +2167,6 @@ def _root_record(root: Path, label: str) -> dict:
     }
 
 
-def _plugin_path_record(path: Path) -> dict:
-    resolved = path.resolve()
-    raw_path = str(resolved)
-    project_root = Path(__file__).resolve().parents[2]
-    try:
-        raw_display_path = resolved.relative_to(project_root).as_posix()
-        path_scope = "project_relative"
-    except ValueError:
-        raw_display_path = f"<external>/{resolved.name}"
-        path_scope = "external_file_name"
-    escaped_display_path = _escape_unsafe_display_chars(raw_display_path)
-    display_path = redact_sensitive_text(escaped_display_path)
-    unsafe_chars_redacted = escaped_display_path != raw_display_path
-    secret_redacted = display_path != escaped_display_path
-    record = {
-        "path": display_path,
-        "path_scope": path_scope,
-        "path_hash": _hash_text(raw_path),
-        "path_redacted": display_path != raw_path,
-    }
-    if unsafe_chars_redacted:
-        record["path_unsafe_chars_redacted"] = True
-    if secret_redacted:
-        record["path_secret_redacted"] = True
-        record["path_display_hash"] = _hash_text(raw_display_path)
-    return {
-        **record,
-    }
-
-
 def _relative_path(path: Path, root: Path) -> str:
     try:
         return path.relative_to(root).as_posix()
@@ -2378,13 +2198,6 @@ def _hash_records(records: list[dict]) -> str:
 
 def _hash_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
-
-
-def _module_for_class(cls: type) -> ModuleType | None:
-    import sys
-
-    module = sys.modules.get(cls.__module__)
-    return module if isinstance(module, ModuleType) else None
 
 
 def _git(args: list[str], cwd: Path) -> str | None:

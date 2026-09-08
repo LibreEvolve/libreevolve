@@ -1,6 +1,0 @@
-schema=libreevolve.c_toolchain_lock.v1
-language_standard=c11
-optimization=-O2
-source=solution.c
-output=program.exe
-external_dependencies=none

@@ -1,2 +1,0 @@
-Evolve the arithmetic rule inside the marked block so evaluate(eval_inputs)
-scores the candidate-owned implementation against the configured cases.

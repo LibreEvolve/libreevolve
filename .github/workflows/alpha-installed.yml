@@ -51,7 +51,7 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw "CLI help failed" }
           & $alphaPython -m libreevolve --help
           if ($LASTEXITCODE -ne 0) { throw "module help failed" }
-          & $alphaCli alpha init packing --model offline-placeholder --token-price 10 --budget-usd 1
+          & $alphaCli alpha init packing
           if ($LASTEXITCODE -ne 0) { throw "template failed" }
           & $alphaCli alpha doctor packing --offline
           if ($LASTEXITCODE -ne 0) { throw "offline preflight failed" }

@@ -1,25 +1,10 @@
 name: Tests
 
 on:
-  # Temporary pause while GitHub account billing is unresolved. Restore the
-  # pull_request, push, and schedule triggers before treating CI as a release
-  # gate again.
-  # When those triggers are restored, retain the existing path scope:
-  #   "docs/**", "papers/**", and "tests/**" (plus source/workflow changes).
-  # The retained weekly source-refresh schedule is cron: "17 6 * * 1"; it is
-  # intentionally disabled with the other automatic triggers until billing is
-  # resolved.
+  # Existing account-billing pause: automatic triggers remain disabled.
+  # Restoring hosted CI is a separate authorized task.
   workflow_dispatch:
-    inputs:
-      run_live_integration:
-        description: "Run paid provider tests after separate spending approval"
-        type: boolean
-        required: false
-        default: false
-      run_source_refresh_gate:
-        description: "Run live AlphaEvolve source refresh drift check"
-        required: false
-        default: "false"
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -71,69 +56,7 @@ jobs:
         run: python -m pip install -e ".[dev]"
 
       - name: Run unit tests
-        run: python -m pytest tests/ -m "not integration" --tb=short
-
-  paper_docs:
-    name: Paper and Docs Checks
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install package and test dependencies
-        run: python -m pip install -e ".[dev]"
-
-      - name: Validate committed paper manifest
-        run: python -m libreevolve.tools.paper_manifest --root .
-
-      - name: Run docs, paper, and boundary verifier tests
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import subprocess
-          import sys
-
-          test_paths = [Path("tests/test_agents_docs.py")]
-          test_paths.extend(sorted(Path("tests").glob("test_paper_*.py")))
-          test_paths.extend(sorted(Path("tests").glob("test_*boundary.py")))
-          unique_paths = list(dict.fromkeys(test_paths))
-          command = [sys.executable, "-m", "pytest", *(str(path) for path in unique_paths), "-q"]
-          raise SystemExit(subprocess.call(command))
-          PY
-
-  source_refresh_gate:
-    name: AlphaEvolve Source Refresh Gate
-    runs-on: ubuntu-latest
-    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.run_source_refresh_gate == 'true')
-
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install package and test dependencies
-        run: python -m pip install -e ".[dev]"
-
-      - name: Compare live AlphaEvolve source responses to committed boundaries
-        run: |
-          set -o pipefail
-          python -m libreevolve.tools.alphaevolve_source_refresh_gate --live --pretty | tee alphaevolve_source_refresh_report.json
-
-      - name: Upload source refresh report
-        uses: actions/upload-artifact@v4
-        with:
-          name: alphaevolve-source-refresh-report
-          path: alphaevolve_source_refresh_report.json
+        run: python -m pytest tests/ --tb=short
 
   release_artifact:
     name: Release Artifact Smoke
@@ -153,7 +76,6 @@ jobs:
 
       - name: Build wheel and sdist
         run: |
-          rm -rf dist build *.egg-info
           python -m build --wheel --sdist
 
       - name: Check distribution artifacts
@@ -208,32 +130,3 @@ jobs:
           python -m pip install dist/*.whl
           libreevolve --help
           python -m libreevolve --help
-
-  integration:
-    name: Integration Tests (Python 3.12)
-    if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_live_integration == true }}
-    runs-on: ubuntu-latest
-    env:
-      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install package and test dependencies
-        run: python -m pip install -e ".[dev]"
-
-      - name: Skip integration tests when API key is unavailable
-        if: ${{ env.ANTHROPIC_API_KEY == '' }}
-        run: echo "ANTHROPIC_API_KEY is not configured; skipping integration tests."
-
-      - name: Run integration tests
-        if: ${{ env.ANTHROPIC_API_KEY != '' }}
-        env:
-          ANTHROPIC_API_KEY: ${{ env.ANTHROPIC_API_KEY }}
-        run: python -m pytest tests/integration/ -m integration --tb=short -rs

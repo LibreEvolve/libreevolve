@@ -1,26 +1,27 @@
-# Release Checklist
+# Engineering-preview release checks
 
-This checklist defines the local release-smoke evidence that must exist before a
-LibreEvolve release can be considered reviewed. It is not itself signed release
-provenance, and it does not prove a package was published to an index.
+Before publishing a candidate:
 
-## Required Local Evidence
+1. Verify the intended remote and exact source commit. Preserve unrelated
+   work and use an isolated worktree.
+2. Run the complete retained offline test suite.
+3. Build wheel and sdist. Check that both contain the bin-packing assets
+   and required Python modules, with no experimental providers or collections.
+4. Install the wheel into a fresh environment outside the checkout and run
+   `pip check`, CLI/module help, initialization, offline preflight, a
+   zero-generation seed run, inspection, HTML reporting and verified export.
+5. Check the exported candidate hash and fresh training/held-out correctness.
+   Exercise output-collision and source-conflict protection in the tests.
+6. Record exact source and distribution identities with the existing
+   `libreevolve.tools.release_artifact_provenance` command.
+7. Label results accurately: offline verification is not new live model,
+   external-usability or hosted-CI evidence. Any real Codex request needs
+   separate authorization for subscription use.
 
-- Build exactly one wheel and one source distribution with
-  `py -3.12 -m build --wheel --sdist`.
-- Verify every file under the `libreevolve/` package tree is present in both
-  the wheel and source distribution.
-- Install the built wheel into an isolated virtual environment.
-- Smoke both command entrypoints: `libreevolve --help` and
-  `python -m libreevolve --help`.
-- Write `dist/release_artifact_provenance.json` with wheel/sdist hashes and
-  selected source-file hashes.
-- Upload or otherwise preserve the wheel, source distribution, and provenance
-  JSON from the release-smoke run.
+Keep the product labeled **engineering preview**. Subscription charges may be
+unknown. Candidate execution is a local subprocess, not a security sandbox.
+Do not claim cross-platform live parity from one host.
 
-## Evidence Still Outside This Checklist
-
-- Signed release provenance.
-- Published-index or private-index artifact verification.
-- A maintainer-approved release event that ties the reviewed checklist result to
-  a public or private package version.
+The GitHub workflows remain manual-only during the existing billing pause.
+Publication does not authorize CI repair, force-pushes or unrelated branch
+deletion.

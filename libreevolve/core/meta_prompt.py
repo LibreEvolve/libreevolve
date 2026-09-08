@@ -22,16 +22,7 @@ from libreevolve.core.jsonl import (
     iter_strict_jsonl_objects,
     strict_json_dumps,
 )
-from libreevolve.core.prompt import (
-    DEFAULT_TEMPLATE,
-    PromptTemplateError,
-    prompt_context_policy_sha256,
-    prompt_template_fields,
-    validate_configured_prompt_template_semantics,
-    validate_prompt_context_policy,
-    validate_prompt_template,
-    validate_prompt_variant_semantic_policy,
-)
+from libreevolve.core.prompt import DEFAULT_TEMPLATE, PromptTemplateError, prompt_context_policy_sha256, validate_configured_prompt_template_semantics, validate_prompt_context_policy, validate_prompt_template, validate_prompt_variant_semantic_policy
 from libreevolve.core.redaction import redact_sensitive_text
 
 _PROMPT_ID_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}")
@@ -241,61 +232,6 @@ class PromptDatabase:
             program.metadata = previous_metadata
             raise
 
-    def mutate(
-        self,
-        parent_id: str,
-        template: str,
-        generation: int,
-        metadata: dict | None = None,
-        context_policy: dict | None = None,
-    ) -> PromptProgram | None:
-        parent = self._get_program(
-            parent_id,
-            "mutate",
-            generation=generation,
-            template=template,
-            metadata=metadata,
-        )
-        validate_prompt_program(parent)
-        _validate_generation(generation, "prompt mutation generation")
-        try:
-            validate_prompt_template(template)
-            child_context_policy = (
-                validate_prompt_context_policy(context_policy)
-                if context_policy is not None
-                else validate_prompt_context_policy(parent.context_policy)
-            )
-        except PromptTemplateError as exc:
-            self._reject_mutation(parent, template, generation, str(exc), metadata)
-            return None
-        missing_parent_fields = sorted(
-            prompt_template_fields(parent.template) - prompt_template_fields(template)
-        )
-        if missing_parent_fields:
-            self._reject_mutation(
-                parent,
-                template,
-                generation,
-                f"prompt mutation dropped parent placeholders {missing_parent_fields}",
-                metadata,
-            )
-            return None
-        child_index = sum(1 for program in self._programs.values() if program.parent_id == parent.id)
-        child = PromptProgram(
-            template=template,
-            context_policy=child_context_policy,
-            id=_deterministic_mutated_prompt_id(
-                parent_id=parent.id,
-                generation=generation,
-                child_index=child_index,
-                template=template,
-                context_policy=child_context_policy,
-            ),
-            parent_id=parent.id,
-            generation=generation,
-            metadata=metadata or {"source": "mutation"},
-        )
-        return self.add(child)
 
     def all(self) -> list[PromptProgram]:
         return [_copy_prompt_program(program) for program in self._programs.values()]
@@ -440,57 +376,6 @@ class PromptDatabase:
             quarantine_snapshot_retention_mode=self._quarantine_snapshot_retention_mode,
         )
 
-    def _reject_mutation(
-        self,
-        parent: PromptProgram,
-        template: str,
-        generation: int,
-        error: str,
-        metadata: dict | None,
-    ) -> None:
-        rejection_record = {
-            "event": "reject",
-            "parent_id": parent.id,
-            "generation": generation,
-            **_rejected_template_record(template),
-            "error": error,
-            "metadata": metadata or {"source": "mutation"},
-        }
-        append_strict_jsonl(
-            self._quarantine_path,
-            rejection_record,
-            quarantine_path=self._quarantine_path,
-            quarantine_snapshot_retention_mode=self._quarantine_snapshot_retention_mode,
-        )
-        validate_prompt_program(parent)
-        previous_uses = parent.uses
-        previous_reward_sum = parent.reward_sum
-        previous_metadata = dict(parent.metadata)
-        penalty_raw = self._reward_bounds[0]
-        penalty_normalized = self._normalize_reward(penalty_raw)
-        parent.uses += 1
-        parent.reward_sum += penalty_normalized
-        rejected = list(parent.metadata.get("rejected_prompt_mutations", []))
-        rejected.append({"generation": generation, "error": error})
-        parent.metadata = dict(parent.metadata)
-        parent.metadata["rejected_prompt_mutations"] = rejected
-        parent.metadata["last_prompt_penalty"] = {
-            "reason": "invalid_mutation",
-            "generation": generation,
-            "mode": self._reward_mode,
-            "raw": penalty_raw,
-            "normalized": penalty_normalized,
-            "bounds": [self._reward_bounds[0], self._reward_bounds[1]],
-            "error": error,
-        }
-        try:
-            self._write("penalty", parent)
-        except Exception:
-            parent.uses = previous_uses
-            parent.reward_sum = previous_reward_sum
-            parent.metadata = previous_metadata
-            raise
-
 
 def validate_prompt_program(program: PromptProgram) -> None:
     validate_prompt_template(program.template)
@@ -516,70 +401,6 @@ def load_prompt_history_records(path: str | Path) -> list[dict]:
     except StrictJsonlError as exc:
         raise PromptHistoryReplayError(str(exc)) from exc
     return records
-
-
-def parse_prompt_mutation_response(
-    response: str,
-    *,
-    parent_context_policy: dict | None = None,
-) -> tuple[str, dict, dict]:
-    if not isinstance(response, str) or not response.strip():
-        raise PromptTemplateError("prompt mutation response must be non-empty text")
-    text = response.strip()
-    inherited_policy = validate_prompt_context_policy(parent_context_policy)
-    if not text.startswith("{"):
-        validate_prompt_template(response)
-        return (
-            response,
-            inherited_policy,
-            {
-                "schema": "libreevolve.prompt_mutation_response.v1",
-                "format": "template_text",
-                "context_policy_source": "inherited_parent_policy",
-                "context_policy_sha256": prompt_context_policy_sha256(inherited_policy),
-            },
-        )
-    try:
-        payload = json.loads(text)
-    except json.JSONDecodeError as exc:
-        raise PromptTemplateError(f"malformed prompt mutation JSON: {exc}") from exc
-    if not isinstance(payload, dict):
-        raise PromptTemplateError("prompt mutation JSON must be an object")
-    unsupported = sorted(
-        str(key)
-        for key in payload
-        if key not in {"schema", "template", "context_policy"}
-    )
-    if unsupported:
-        raise PromptTemplateError(
-            f"prompt mutation JSON has unsupported fields {unsupported}"
-        )
-    schema = payload.get("schema", "libreevolve.prompt_mutation_response.v1")
-    if schema != "libreevolve.prompt_mutation_response.v1":
-        raise PromptTemplateError(
-            "prompt mutation JSON.schema must be "
-            "'libreevolve.prompt_mutation_response.v1'"
-        )
-    template = payload.get("template")
-    if not isinstance(template, str):
-        raise PromptTemplateError("prompt mutation JSON.template must be text")
-    validate_prompt_template(template)
-    if "context_policy" in payload:
-        policy = validate_prompt_context_policy(payload["context_policy"])
-        policy_source = "mutation_response"
-    else:
-        policy = inherited_policy
-        policy_source = "inherited_parent_policy"
-    return (
-        template,
-        policy,
-        {
-            "schema": "libreevolve.prompt_mutation_response.v1",
-            "format": "json_object",
-            "context_policy_source": policy_source,
-            "context_policy_sha256": prompt_context_policy_sha256(policy),
-        },
-    )
 
 
 def _validate_prompt_history_schema(record: dict, line_number: int) -> None:
@@ -873,22 +694,6 @@ def _bounded_redacted_text(value: str, max_length: int = 500) -> str:
     return text
 
 
-def _rejected_template_record(template: object, max_length: int = 500) -> dict:
-    text = template if isinstance(template, str) else _bounded_redacted_repr(template)
-    redacted = redact_sensitive_text(text)
-    if len(redacted) > max_length:
-        safe_text = redacted[: max_length - 15] + "...<truncated>"
-    else:
-        safe_text = redacted
-    return {
-        "template": safe_text,
-        "template_raw_chars": len(text),
-        "template_sha256": _template_sha256(text),
-        "template_redacted": redacted != text,
-        "template_truncated": len(redacted) > max_length,
-    }
-
-
 def _template_sha256(template: str) -> str:
     return hashlib.sha256(template.encode("utf-8")).hexdigest()
 
@@ -896,24 +701,3 @@ def _template_sha256(template: str) -> str:
 def _deterministic_seed_prompt_id(index: int, template: str) -> str:
     digest = _template_sha256(template)[:16]
     return f"prompt-seed-{index}-{digest}"
-
-
-def _deterministic_mutated_prompt_id(
-    *,
-    parent_id: str,
-    generation: int,
-    child_index: int,
-    template: str,
-    context_policy: dict,
-) -> str:
-    payload = {
-        "parent_id": parent_id,
-        "generation": generation,
-        "child_index": child_index,
-        "template_sha256": _template_sha256(template),
-        "context_policy_sha256": prompt_context_policy_sha256(context_policy),
-    }
-    digest = hashlib.sha256(
-        json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
-    ).hexdigest()[:16]
-    return f"prompt-mut-{generation}-{child_index}-{digest}"

@@ -97,7 +97,7 @@ def test_codex_cleanup_kills_group_before_reaping_already_exited_leader(tmp_path
 def test_codex_alpha_interruption_reaps_child_and_saves_run(tmp_path, interruption, local_child_reaper):
     task = tmp_path / "task"
     created = CliRunner().invoke(cli, [
-        "alpha", "init", str(task), "--provider", "codex", "--model", "fake-model",
+        "alpha", "init", str(task), "--model", "gpt-5.6-luna",
     ])
     assert created.exit_code == 0, created.output
     config_path = task / "config.yaml"

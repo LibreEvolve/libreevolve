@@ -17,9 +17,6 @@ def jsonl_record_families(
     llm_call: str,
     llm_reward: str,
     prompt_history: str,
-    prompt_current_binding_table: str,
-    prompt_prior_score_table: str,
-    duplicate_work_cache_index: str,
     controller_budget_event: str,
 ) -> dict[str, str | dict[str, str]]:
     """Return the versioned JSONL record-family contract."""
@@ -34,9 +31,6 @@ def jsonl_record_families(
             "reward": llm_reward,
         },
         "prompt_history.jsonl": prompt_history,
-        "prompt_current_binding_table.jsonl": prompt_current_binding_table,
-        "prompt_prior_score_table.jsonl": prompt_prior_score_table,
-        "duplicate_work_cache_index.jsonl": duplicate_work_cache_index,
         "controller_budget_events.jsonl": controller_budget_event,
     }
 

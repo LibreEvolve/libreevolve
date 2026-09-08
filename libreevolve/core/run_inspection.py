@@ -13,13 +13,7 @@ import math
 from pathlib import Path
 import re
 
-from libreevolve.core.artifact_schema import (
-    validate_non_jsonl_artifact_policy_manifest,
-    validate_paper_artifact_lifecycle_manifest,
-    validate_quarantine_artifact_policy_manifest,
-    validate_run_artifact_bundle_report,
-    validate_runtime_restore_certification_record,
-)
+from libreevolve.core.artifact_schema import validate_non_jsonl_artifact_policy_manifest, validate_quarantine_artifact_policy_manifest, validate_run_artifact_bundle_report
 from libreevolve.core.candidate import CandidateWorkspace
 from libreevolve.core.redaction import redact_sensitive_text
 from libreevolve.core.validator_policy import (
@@ -55,10 +49,8 @@ class InspectionResult:
     failure_summary: str | None
     validator_boundary_summary: str | None
     run_artifact_bundle_summary: str | None
-    restore_certification_summary: str | None
     quarantine_summary: str | None
     non_jsonl_artifact_summary: str | None
-    paper_artifact_summary: str | None
     metrics: dict | None
     workspace: tuple[str, dict[str, str]] | None
 
@@ -143,10 +135,8 @@ def inspect_run(run_dir: str | Path) -> InspectionResult:
         failure_summary=_failure_statistics_summary(run_path),
         validator_boundary_summary=_validator_boundary_artifact_summary(run_path),
         run_artifact_bundle_summary=_run_artifact_bundle_summary(run_path),
-        restore_certification_summary=_restore_certification_summary(run_path),
         quarantine_summary=_quarantine_stream_summary(run_path),
         non_jsonl_artifact_summary=_non_jsonl_artifact_policy_summary(run_path),
-        paper_artifact_summary=_paper_artifact_lifecycle_summary(run_path),
         metrics=best.get("metrics"),
         workspace=workspace,
     )
@@ -154,10 +144,6 @@ def inspect_run(run_dir: str | Path) -> InspectionResult:
 
 def read_manifest(path: Path) -> dict:
     return _read_show_manifest(path)
-
-
-def manifest_has_paper_artifact_lifecycle_surface(manifest: dict) -> bool:
-    return _manifest_has_paper_artifact_lifecycle_surface(manifest)
 
 
 def validate_manifest_run_artifact_bundle_report(
@@ -267,25 +253,10 @@ def _run_artifact_bundle_summary(run_dir: Path) -> str | None:
                 f"{issue['code']}: {issue['message']}"
             )
         non_jsonl_checked = validation["checked_artifact_count"]
-    paper_paths = 0
-    if _manifest_has_paper_artifact_lifecycle_surface(manifest):
-        validation = validate_paper_artifact_lifecycle_manifest(
-            manifest,
-            run_artifacts_doc_text=run_artifacts_doc_text(),
-        )
-        if not validation["ok"]:
-            issue = validation["issues"][0]
-            raise RunInspectionError(
-                "Run artifact bundle validation failed: "
-                "Paper artifact lifecycle validation failed: "
-                f"{issue['code']}: {issue['message']}"
-            )
-        paper_paths = validation["emitted_path_count"]
     if (
         not accepted_streams
         and quarantine["stream_count"] == 0
         and non_jsonl_checked == 0
-        and paper_paths == 0
     ):
         return None
     return (
@@ -294,37 +265,6 @@ def _run_artifact_bundle_summary(run_dir: Path) -> str | None:
         f"quarantine_streams={quarantine['stream_count']}; "
         f"quarantine_records={quarantine['record_count']}; "
         f"non_jsonl_checked={non_jsonl_checked}; "
-        f"paper_paths={paper_paths}"
-    )
-
-
-def _restore_certification_summary(run_dir: Path) -> str | None:
-    manifest_path = run_dir / "manifest.json"
-    if not manifest_path.exists():
-        return None
-    manifest = _read_show_manifest(manifest_path)
-    runtime = manifest.get("runtime")
-    if not isinstance(runtime, dict):
-        return None
-    certification = runtime.get("restore_certification")
-    if certification is None:
-        return None
-    try:
-        validated = validate_runtime_restore_certification_record(certification)
-    except ValueError as exc:
-        raise RunInspectionError(
-            "Restore certification validation failed: "
-            f"{bounded_redacted_text(str(exc))}"
-        ) from exc
-    surfaces = validated.get("certified_surfaces")
-    surface_count = len(surfaces) if isinstance(surfaces, list) else 0
-    return (
-        "Restore certification: "
-        f"compatible_surfaces={surface_count}; "
-        f"full_replay_ready={str(validated['full_replay_ready']).lower()}; "
-        "provider_output_replay_ready="
-        f"{str(validated['provider_output_replay_ready']).lower()}; "
-        f"pending_work_resume_ready={str(validated['pending_work_resume_ready']).lower()}"
     )
 
 
@@ -383,34 +323,6 @@ def _validate_quarantine_streams(run_dir: Path, artifact_schema: dict) -> dict:
         "record_count": validation["record_count"],
         "streams": validation["present_streams"],
     }
-
-
-def _paper_artifact_lifecycle_summary(run_dir: Path) -> str | None:
-    manifest_path = run_dir / "manifest.json"
-    if not manifest_path.exists():
-        return None
-    manifest = _read_show_manifest(manifest_path)
-    artifact_schema = manifest.get("artifact_schema")
-    if (
-        not isinstance(artifact_schema, dict)
-        or "paper_artifact_subpaths" not in artifact_schema
-    ):
-        return None
-    validation = validate_paper_artifact_lifecycle_manifest(
-        manifest,
-        run_artifacts_doc_text=run_artifacts_doc_text(),
-    )
-    if not validation["ok"]:
-        issue = validation["issues"][0]
-        raise RunInspectionError(
-            "Paper artifact lifecycle validation failed: "
-            f"{issue['code']}: {issue['message']}"
-        )
-    return (
-        "Paper artifacts: "
-        f"checked_paths={validation['emitted_path_count']}; "
-        f"docs_refs={len(validation['documented_refs'])}"
-    )
 
 
 def _non_jsonl_artifact_policy_summary(run_dir: Path) -> str | None:
@@ -535,53 +447,6 @@ def _validate_manifest_run_artifact_bundle_report(
     raise RunInspectionError(
         f"{error_prefix}: run artifact bundle report validation failed: "
         f"{issue['code']}: {issue['message']}"
-    )
-
-
-def _validate_cli_paper_artifact_restore_manifest(
-    path: str | Path,
-    *,
-    error_prefix: str,
-) -> None:
-    try:
-        manifest = _read_show_manifest(Path(path))
-    except RunInspectionError:
-        return
-    if not _manifest_has_paper_artifact_lifecycle_surface(manifest):
-        return
-    validation = validate_paper_artifact_lifecycle_manifest(
-        manifest,
-        run_artifacts_doc_text=run_artifacts_doc_text(),
-    )
-    if validation["ok"]:
-        return
-    issue = validation["issues"][0]
-    raise RunInspectionError(
-        f"{error_prefix}: paper artifact lifecycle validation failed: "
-        f"{issue['code']}: {issue['message']}"
-    )
-
-
-def _manifest_has_paper_artifact_lifecycle_surface(manifest: dict) -> bool:
-    artifact_schema = manifest.get("artifact_schema")
-    if (
-        not isinstance(artifact_schema, dict)
-        or "paper_artifact_subpaths" not in artifact_schema
-    ):
-        return False
-    runtime = manifest.get("runtime")
-    if not isinstance(runtime, dict):
-        return False
-    history = runtime.get("history")
-    if not isinstance(history, dict):
-        return False
-    return any(
-        key in history
-        for key in (
-            "marker_spelling_provenance_report",
-            "alphaevolve_process_exhibit_report",
-            "alphaevolve_table1_capability_exhibit_report",
-        )
     )
 
 

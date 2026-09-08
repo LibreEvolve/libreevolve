@@ -18,37 +18,10 @@ def validate_backend_client_context(
     *,
     field_prefix: str = "backend",
 ) -> dict[str, object]:
-    backend_type = spec.get("type")
-    normalized: dict[str, object] = {}
-    if "base_url" in spec:
-        if backend_type not in {"openai", "anthropic"}:
-            raise ValueError(f"{field_prefix}.base_url is not supported for {backend_type} backends")
-        normalized["base_url"] = validate_endpoint_url(
-            spec["base_url"],
-            field=f"{field_prefix}.base_url",
-        )
-    if "host" in spec:
-        if backend_type != "ollama":
-            raise ValueError(f"{field_prefix}.host is supported only for ollama backends")
-        normalized["host"] = validate_endpoint_url(spec["host"], field=f"{field_prefix}.host")
-    if "api_version" in spec:
-        if backend_type != "gemini":
-            raise ValueError(
-                f"{field_prefix}.api_version is supported only for gemini backends"
-            )
-        from libreevolve.llm.gemini import validate_gemini_api_version
-
-        normalized["api_version"] = validate_gemini_api_version(
-            spec["api_version"],
-            field=f"{field_prefix}.api_version",
-        )
-    for key in ("organization", "project"):
-        if key not in spec:
-            continue
-        if backend_type != "openai":
-            raise ValueError(f"{field_prefix}.{key} is supported only for openai backends")
-        normalized[key] = validate_client_context_label(spec[key], field=f"{field_prefix}.{key}")
-    return normalized
+    unsupported = sorted(set(spec) & CLIENT_CONTEXT_FIELDS)
+    if unsupported:
+        raise ValueError(f"{field_prefix} has unsupported client context fields {unsupported}")
+    return {}
 
 
 def validate_endpoint_url(value: object, *, field: str) -> str:

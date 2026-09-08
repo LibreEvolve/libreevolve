@@ -1,3 +1,0 @@
-Write `sort_list(lst: list) -> list` that sorts integers ascending.
-Handle: empty lists, duplicates, negatives, already-sorted lists.
-Score = proportion of test cases matching sorted(lst).

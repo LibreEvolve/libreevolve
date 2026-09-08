@@ -7,27 +7,14 @@ import unicodedata
 from pathlib import Path
 from uuid import uuid4
 
-from libreevolve.core.candidate import (
-    DEFAULT_MAX_CANDIDATE_FILE_CHARS,
-    DEFAULT_MAX_CANDIDATE_STATIC_FILE_BYTES,
-    DEFAULT_MAX_CANDIDATE_TOTAL_CHARS,
-    DEFAULT_MAX_CANDIDATE_TOTAL_STATIC_BYTES,
-    DEFAULT_MAX_CANDIDATE_WORKSPACE_FILES,
-    MUTATION_MODES,
-    normalize_candidate_path,
-)
+from libreevolve.core.candidate import DEFAULT_MAX_CANDIDATE_FILE_CHARS, DEFAULT_MAX_CANDIDATE_STATIC_FILE_BYTES, DEFAULT_MAX_CANDIDATE_TOTAL_CHARS, DEFAULT_MAX_CANDIDATE_TOTAL_STATIC_BYTES, DEFAULT_MAX_CANDIDATE_WORKSPACE_FILES, MUTATION_MODES
 from libreevolve.core.redaction import redact_sensitive_text
-from libreevolve.llm.openai_compat import (
-    validate_openai_api_mode,
-    validate_openai_reasoning_effort_for_model,
-)
 from libreevolve.llm.client_context import validate_backend_client_context
 from libreevolve.llm.request_params import (
     REQUEST_PARAMETER_FIELDS,
     validate_backend_request_parameters,
 )
 from libreevolve.llm.prompt_roles import validate_prompt_role_policy
-from libreevolve.llm.provider_retry import validate_provider_max_retries
 from libreevolve.population.program import validate_program_metrics
 
 _WINDOWS_RESERVED_NAMES = {
@@ -42,50 +29,8 @@ MAX_LLM_RETRIES = 10
 MAX_LLM_CALL_ATTEMPTS = 32
 MAX_EVAL_STAGE_RETRIES = 10
 MAX_EVALUATOR_STDIN_CHARS = 100_000
-MAX_LLM_FEEDBACK_FAILURE_RETRIES = 3
-MAX_ASYNC_EVALUATOR_WORKERS = 64
-MAX_ASYNC_EVALUATION_QUEUE_CAPACITY = 4096
-MAX_ASYNC_LLM_SAMPLER_WORKERS = 64
-MAX_ASYNC_LLM_QUEUE_CAPACITY = 4096
-MAX_ASYNC_GENERATION_WINDOW = 64
-CONFIGURED_MUTATION_MODES = frozenset({*MUTATION_MODES, "adaptive"})
-ADAPTIVE_MUTATION_TASK_PREFERENCES = frozenset({"auto", "diff", "full"})
+CONFIGURED_MUTATION_MODES = MUTATION_MODES
 MAX_ADAPTIVE_MUTATION_FAILURE_SWITCH_COUNT = 5
-CANDIDATE_RUNNER_EXECUTION_STATUS = "executable_local_subprocess"
-CANDIDATE_HOST_EXECUTION_ENVIRONMENT = "host_subprocess_v1"
-CANDIDATE_OCI_EXECUTION_ENVIRONMENT = "oci_container_v1"
-CANDIDATE_CONTAINER_RUNTIME_HOST_ENV_NAMES = (
-    "SYSTEMROOT",
-    "WINDIR",
-    "TEMP",
-    "TMP",
-    "PATH",
-    "HOME",
-    "USERPROFILE",
-    "APPDATA",
-    "LOCALAPPDATA",
-    "DOCKER_CONFIG",
-    "DOCKER_CONTEXT",
-    "DOCKER_HOST",
-    "DOCKER_TLS_VERIFY",
-    "DOCKER_CERT_PATH",
-    "CONTAINERS_CONF",
-    "CONTAINERS_STORAGE_CONF",
-    "REGISTRY_AUTH_FILE",
-    "XDG_CONFIG_HOME",
-    "XDG_RUNTIME_DIR",
-)
-MAX_CANDIDATE_CONTAINER_TMPFS_MB = 1024
-MAX_CANDIDATE_CONTAINER_MEMORY_MB = 65_536
-MAX_CANDIDATE_CONTAINER_CPUS = 64.0
-MAX_CANDIDATE_CONTAINER_PIDS = 4096
-_OCI_IMAGE_REFERENCE_RE = re.compile(
-    r"[A-Za-z0-9][A-Za-z0-9._:/-]{0,446}@sha256:[0-9a-f]{64}"
-)
-_CUSTOM_BACKEND_CLASS_PATH_RE = re.compile(
-    r"[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)+:[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*"
-)
-_CUSTOM_BACKEND_KWARG_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_]{0,127}")
 
 
 class ConfigError(ValueError):
@@ -94,8 +39,8 @@ class ConfigError(ValueError):
 @dataclass
 class Config:
     # Evolution
-    max_generations:        int   = 1000
-    max_evaluations:        int | None = None
+    max_generations:        int   = 3
+    max_evaluations:        int | None = 4
     max_evaluator_seconds:  float | None = None
     max_evaluator_subprocess_attempts: int | None = None
     max_evaluator_stage_samples: int | None = None
@@ -103,17 +48,10 @@ class Config:
     max_evaluator_timeouts: int | None = None
     max_evaluator_sample_budget_exhaustions: int | None = None
     max_evaluator_stage_budget_exhaustions: int | None = None
-    max_runtime_seconds:    float | None = None
+    max_runtime_seconds:    float | None = 900.0
     proposals_per_generation: int = 1
-    async_candidate_evaluation: bool = False
-    async_evaluator_workers: int = 2
-    async_evaluation_queue_capacity: int = 4
-    async_llm_sampling: bool = False
-    async_llm_sampler_workers: int = 2
-    async_llm_queue_capacity: int = 4
-    async_generation_window: int = 1
     num_inspirations:       int   = 3
-    eval_timeout_sec:       float = 60.0
+    eval_timeout_sec:       float = 10.0
     validator_env_allowlist: list[str] = field(default_factory=list)
     validator_network_policy: str = "host"
     evaluator_artifact_include: list[str] = field(default_factory=list)
@@ -129,21 +67,13 @@ class Config:
     explore_ratio:          float = 0.3
     parent_selection_strategy: str = "mixed"
     inspiration_strategy:   str = "mixed"
-    mutation_mode:          str   = "diff"
-    adaptive_mutation_full_max_chars: int = 2000
-    adaptive_mutation_full_max_files: int = 1
-    adaptive_mutation_full_max_evolve_blocks: int = 1
-    adaptive_mutation_task_preference: str = "auto"
-    adaptive_mutation_failure_switch_count: int = 2
-    adaptive_mutation_parser_fallback: bool = True
+    mutation_mode:          str   = "full"
     initial_program_validity_policy: str = "permissive_baseline"
     max_candidate_workspace_files: int = DEFAULT_MAX_CANDIDATE_WORKSPACE_FILES
     max_candidate_file_chars: int = DEFAULT_MAX_CANDIDATE_FILE_CHARS
     max_candidate_total_chars: int = DEFAULT_MAX_CANDIDATE_TOTAL_CHARS
     max_candidate_static_file_bytes: int = DEFAULT_MAX_CANDIDATE_STATIC_FILE_BYTES
     max_candidate_total_static_bytes: int = DEFAULT_MAX_CANDIDATE_TOTAL_STATIC_BYTES
-    candidate_language_runners: list[dict] = field(default_factory=list)
-    candidate_build_systems: list[dict] = field(default_factory=list)
     eval_stages:            list[dict] = field(default_factory=list)
     prompt_variants:        list[str] = field(default_factory=list)
     prompt_variant_semantic_policy: str = "alphaevolve"
@@ -155,22 +85,11 @@ class Config:
     prompt_artifact_content_max_chars: int = 1000
     mutation_prompt_retention_mode: str = "redacted"
     explicit_context_retention_mode: str = "redacted"
-    meta_prompt_evidence_retention_mode: str = "hash_only"
     quarantine_snapshot_retention_mode: str = "redacted"
-    meta_prompt_evolution:  bool  = False
-    meta_prompt_interval:   int   = 25
     prompt_reward_mode:     str   = "absolute"
     prompt_reward_bounds:   list[float] = field(default_factory=lambda: [0.0, 1.0])
     prompt_explore_coeff:   float = 1.0
-    critique_enabled:       bool  = False
-    critique_prompt:        str   = ""
-    critique_reviewers:     list[dict] = field(default_factory=list)
-    critique_aggregation_policy: str = "first_valid"
-    llm_feedback:           list[dict] = field(default_factory=list)
     capture_proposal_metadata: bool = False
-    critique_retention_mode: str = "redacted"
-    feedback_retention_mode: str = "redacted"
-    plugin_context_retention_mode: str = "redacted"
     # Population
     n_islands:              int   = 5
     migration_interval:     int   = 25
@@ -183,20 +102,20 @@ class Config:
     elite_archive_size:     int   = 50
     # LLM
     backends:               list[dict] = field(default_factory=lambda: [
-                                {"type": "anthropic", "model": "claude-sonnet-4-6"}
+                                {"type": "codex", "model": "gpt-5.6-luna", "reasoning_effort": "high"}
                             ])
     ensemble_explore_coeff: float = 1.0
     ensemble_strategy:      str   = "ucb1"
     llm_max_retries:        int   = 0
-    llm_max_call_attempts:  int   = MAX_LLM_CALL_ATTEMPTS
-    llm_fallback:           bool  = True
+    llm_max_call_attempts:  int   = 1
+    llm_fallback:           bool  = False
     llm_max_response_chars: int   = 100_000
     llm_call_history_max:   int   = 500
     llm_call_timeout_sec:   float | None = None
     provider_response_retention_mode: str = "hash_only"
     provider_error_retention_mode: str = "redacted"
-    max_llm_calls:          int | None = None
-    max_llm_provider_attempts: int | None = None
+    max_llm_calls:          int | None = 3
+    max_llm_provider_attempts: int | None = 3
     max_llm_tokens:         int | None = None
     max_llm_cost_microusd:  int | None = None
     max_llm_seconds:        float | None = None
@@ -211,7 +130,6 @@ class Config:
     llm_role_failure_quarantine_after: dict[str, int] = field(default_factory=dict)
     llm_prompt_roles:       dict  = field(default_factory=dict)
     # Plugins
-    plugins:                list[str | dict] = field(default_factory=list)
     # Logging
     log_dir:                str   = "runs/"
     problem_name:           str   = "unnamed"
@@ -223,6 +141,11 @@ class Config:
         self.validate()
 
     def validate(self) -> None:
+        for name in ("max_evaluations", "max_runtime_seconds", "max_llm_calls", "max_llm_provider_attempts"):
+            if getattr(self, name) is None:
+                raise ConfigError(f"Engineering-preview runs require an explicit {name} limit")
+        if self.max_llm_tokens is not None or self.max_llm_cost_microusd is not None or self.llm_role_token_limits or self.llm_role_cost_microusd_limits:
+            raise ConfigError("Codex preview runs do not support token or dollar caps; subscription charges are unknown")
         _require_int("max_generations", self.max_generations, minimum=0)
         _require_optional_int("max_evaluations", self.max_evaluations, minimum=0)
         _require_optional_positive_number("max_evaluator_seconds", self.max_evaluator_seconds)
@@ -258,58 +181,6 @@ class Config:
         )
         _require_optional_positive_number("max_runtime_seconds", self.max_runtime_seconds)
         _require_int("proposals_per_generation", self.proposals_per_generation, minimum=1)
-        _require_bool("async_candidate_evaluation", self.async_candidate_evaluation)
-        _require_int(
-            "async_evaluator_workers",
-            self.async_evaluator_workers,
-            minimum=1,
-        )
-        if self.async_evaluator_workers > MAX_ASYNC_EVALUATOR_WORKERS:
-            raise ConfigError(
-                "async_evaluator_workers must be an integer between 1 and "
-                f"{MAX_ASYNC_EVALUATOR_WORKERS}"
-            )
-        _require_int(
-            "async_evaluation_queue_capacity",
-            self.async_evaluation_queue_capacity,
-            minimum=1,
-        )
-        if self.async_evaluation_queue_capacity > MAX_ASYNC_EVALUATION_QUEUE_CAPACITY:
-            raise ConfigError(
-                "async_evaluation_queue_capacity must be an integer between 1 and "
-                f"{MAX_ASYNC_EVALUATION_QUEUE_CAPACITY}"
-            )
-        _require_bool("async_llm_sampling", self.async_llm_sampling)
-        _require_int(
-            "async_llm_sampler_workers",
-            self.async_llm_sampler_workers,
-            minimum=1,
-        )
-        if self.async_llm_sampler_workers > MAX_ASYNC_LLM_SAMPLER_WORKERS:
-            raise ConfigError(
-                "async_llm_sampler_workers must be an integer between 1 and "
-                f"{MAX_ASYNC_LLM_SAMPLER_WORKERS}"
-            )
-        _require_int(
-            "async_llm_queue_capacity",
-            self.async_llm_queue_capacity,
-            minimum=1,
-        )
-        if self.async_llm_queue_capacity > MAX_ASYNC_LLM_QUEUE_CAPACITY:
-            raise ConfigError(
-                "async_llm_queue_capacity must be an integer between 1 and "
-                f"{MAX_ASYNC_LLM_QUEUE_CAPACITY}"
-            )
-        _require_int(
-            "async_generation_window",
-            self.async_generation_window,
-            minimum=1,
-        )
-        if self.async_generation_window > MAX_ASYNC_GENERATION_WINDOW:
-            raise ConfigError(
-                "async_generation_window must be an integer between 1 and "
-                f"{MAX_ASYNC_GENERATION_WINDOW}"
-            )
         _require_int("num_inspirations", self.num_inspirations, minimum=0)
         _require_positive_number("eval_timeout_sec", self.eval_timeout_sec)
         self.validator_network_policy = _validate_validator_network_policy(
@@ -368,43 +239,6 @@ class Config:
             self.mutation_mode,
             CONFIGURED_MUTATION_MODES,
         )
-        _require_int(
-            "adaptive_mutation_full_max_chars",
-            self.adaptive_mutation_full_max_chars,
-            minimum=1,
-        )
-        _require_int(
-            "adaptive_mutation_full_max_files",
-            self.adaptive_mutation_full_max_files,
-            minimum=1,
-        )
-        _require_int(
-            "adaptive_mutation_full_max_evolve_blocks",
-            self.adaptive_mutation_full_max_evolve_blocks,
-            minimum=0,
-        )
-        _require_enum(
-            "adaptive_mutation_task_preference",
-            self.adaptive_mutation_task_preference,
-            ADAPTIVE_MUTATION_TASK_PREFERENCES,
-        )
-        _require_int(
-            "adaptive_mutation_failure_switch_count",
-            self.adaptive_mutation_failure_switch_count,
-            minimum=1,
-        )
-        if (
-            self.adaptive_mutation_failure_switch_count
-            > MAX_ADAPTIVE_MUTATION_FAILURE_SWITCH_COUNT
-        ):
-            raise ConfigError(
-                "adaptive_mutation_failure_switch_count must be <= "
-                f"{MAX_ADAPTIVE_MUTATION_FAILURE_SWITCH_COUNT}"
-            )
-        _require_bool(
-            "adaptive_mutation_parser_fallback",
-            self.adaptive_mutation_parser_fallback,
-        )
         _require_enum(
             "initial_program_validity_policy",
             self.initial_program_validity_policy,
@@ -427,27 +261,9 @@ class Config:
             self.max_candidate_total_static_bytes,
             minimum=0,
         )
-        self.candidate_language_runners = _validate_candidate_language_runners(
-            self.candidate_language_runners
-        )
-        self.candidate_build_systems = _validate_candidate_build_systems(
-            self.candidate_build_systems
-        )
-        _require_bool("meta_prompt_evolution", self.meta_prompt_evolution)
-        _require_int("meta_prompt_interval", self.meta_prompt_interval, minimum=0)
         _require_enum("prompt_reward_mode", self.prompt_reward_mode, {"absolute", "improvement"})
         _validate_prompt_reward_bounds(self.prompt_reward_bounds)
         _require_nonnegative_number("prompt_explore_coeff", self.prompt_explore_coeff)
-        _require_bool("critique_enabled", self.critique_enabled)
-        _require_string("critique_prompt", self.critique_prompt, allow_empty=True)
-        self.critique_reviewers = _validate_critique_reviewers(
-            self.critique_reviewers
-        )
-        _require_enum(
-            "critique_aggregation_policy",
-            self.critique_aggregation_policy,
-            {"first_valid", "last_valid"},
-        )
         _require_int("n_islands", self.n_islands, minimum=1)
         _require_int("migration_interval", self.migration_interval, minimum=0)
         _require_probability("migration_ratio", self.migration_ratio)
@@ -525,12 +341,6 @@ class Config:
         )
         self.llm_prompt_roles = _validate_llm_prompt_roles(self.llm_prompt_roles)
         _validate_eval_stages(self.eval_stages)
-        _validate_candidate_runner_stage_bindings(
-            self.eval_stages,
-            self.candidate_language_runners,
-            self.candidate_build_systems,
-            validator_network_policy=self.validator_network_policy,
-        )
         _validate_backends(self.backends)
         self.llm_role_backend_indices = _validate_llm_role_backend_indices(
             self.llm_role_backend_indices,
@@ -588,33 +398,11 @@ class Config:
             {"full", "redacted", "hash_only", "off"},
         )
         _require_enum(
-            "meta_prompt_evidence_retention_mode",
-            self.meta_prompt_evidence_retention_mode,
-            {"full", "redacted", "hash_only", "off"},
-        )
-        _require_enum(
             "quarantine_snapshot_retention_mode",
             self.quarantine_snapshot_retention_mode,
             {"full", "redacted", "hash_only", "off"},
         )
-        _validate_llm_feedback(self.llm_feedback)
         _require_bool("capture_proposal_metadata", self.capture_proposal_metadata)
-        _require_enum(
-            "critique_retention_mode",
-            self.critique_retention_mode,
-            {"full", "redacted", "hash_only", "off"},
-        )
-        _require_enum(
-            "feedback_retention_mode",
-            self.feedback_retention_mode,
-            {"full", "redacted", "hash_only", "off"},
-        )
-        _require_enum(
-            "plugin_context_retention_mode",
-            self.plugin_context_retention_mode,
-            {"full", "redacted", "hash_only", "off"},
-        )
-        self.plugins = _validate_plugin_config_specs(self.plugins)
         self.log_dir = _normalize_path_string("log_dir", self.log_dir)
         self.problem_name = _require_run_name_component("problem_name", self.problem_name)
         _require_integer("seed", self.seed)
@@ -711,550 +499,6 @@ def _validate_evaluator_stdin_source_exclusive(
         raise ConfigError(f"{name} must not set both stdin_text and stdin_file")
 
 
-def _validate_candidate_language_runners(value: object) -> list[dict]:
-    if not isinstance(value, list):
-        raise ConfigError("candidate_language_runners must be a list")
-    normalized: list[dict] = []
-    seen: set[str] = set()
-    for index, item in enumerate(value):
-        path = f"candidate_language_runners[{index}]"
-        if not isinstance(item, dict):
-            raise ConfigError(f"{path} must be a mapping")
-        allowed = {
-            "language",
-            "candidate_role",
-            "file_patterns",
-            "marker_grammar",
-            "runner_command",
-            "execution_status",
-            "notes",
-        }
-        unknown = sorted(str(key) for key in item if key not in allowed)
-        if unknown:
-            raise ConfigError(f"{path} has unknown key(s): {unknown}")
-        if "language" not in item:
-            raise ConfigError(f"{path}.language is required")
-        language = _require_safe_identifier(f"{path}.language", item["language"]).lower()
-        if language in seen:
-            raise ConfigError(f"duplicate candidate language runner declaration {language!r}")
-        seen.add(language)
-        execution_status = item.get("execution_status", "declared_metadata_only")
-        _require_enum(
-            f"{path}.execution_status",
-            execution_status,
-            {
-                "declared_metadata_only",
-                "unsupported",
-                CANDIDATE_RUNNER_EXECUTION_STATUS,
-            },
-        )
-        file_patterns = _validate_candidate_glob_patterns(
-            f"{path}.file_patterns",
-            item.get("file_patterns", []),
-        )
-        runner_command = _validate_candidate_runner_command(
-            f"{path}.runner_command",
-            item.get("runner_command"),
-        )
-        if execution_status == CANDIDATE_RUNNER_EXECUTION_STATUS and not runner_command:
-            raise ConfigError(
-                f"{path}.runner_command is required when execution_status="
-                f"{CANDIDATE_RUNNER_EXECUTION_STATUS!r}"
-            )
-        normalized.append(
-            {
-                "language": language,
-                "candidate_role": _validate_candidate_declaration_text(
-                    f"{path}.candidate_role",
-                    item.get("candidate_role", "supporting_text_workspace_member"),
-                ),
-                "file_patterns": file_patterns,
-                "marker_grammar": _validate_candidate_declaration_text(
-                    f"{path}.marker_grammar",
-                    item.get("marker_grammar", "unsupported"),
-                ),
-                "runner_command": runner_command,
-                "execution_status": execution_status,
-                "notes": _validate_candidate_declaration_text(
-                    f"{path}.notes",
-                    item.get("notes", ""),
-                    allow_empty=True,
-                ),
-            }
-        )
-    return normalized
-
-
-def _validate_candidate_build_systems(value: object) -> list[dict]:
-    if not isinstance(value, list):
-        raise ConfigError("candidate_build_systems must be a list")
-    normalized: list[dict] = []
-    seen: set[str] = set()
-    for index, item in enumerate(value):
-        path = f"candidate_build_systems[{index}]"
-        if not isinstance(item, dict):
-            raise ConfigError(f"{path} must be a mapping")
-        allowed = {
-            "name",
-            "build_files",
-            "build_command",
-            "artifact_patterns",
-            "execution_environment",
-            "toolchain_candidates",
-            "toolchain_version_command",
-            "toolchain_executable_sha256",
-            "toolchain_version_output_sha256",
-            "dependency_lock_sha256",
-            "execution_status",
-            "notes",
-        }
-        unknown = sorted(str(key) for key in item if key not in allowed)
-        if unknown:
-            raise ConfigError(f"{path} has unknown key(s): {unknown}")
-        if "name" not in item:
-            raise ConfigError(f"{path}.name is required")
-        name = _require_safe_identifier(f"{path}.name", item["name"]).lower()
-        if name in seen:
-            raise ConfigError(f"duplicate candidate build system declaration {name!r}")
-        seen.add(name)
-        execution_status = item.get("execution_status", "declared_metadata_only")
-        _require_enum(
-            f"{path}.execution_status",
-            execution_status,
-            {
-                "declared_metadata_only",
-                "unsupported",
-                CANDIDATE_RUNNER_EXECUTION_STATUS,
-            },
-        )
-        build_files = _validate_candidate_glob_patterns(
-            f"{path}.build_files",
-            item.get("build_files", []),
-        )
-        artifact_patterns = _validate_candidate_glob_patterns(
-            f"{path}.artifact_patterns",
-            item.get("artifact_patterns", []),
-        )
-        build_command = _validate_candidate_runner_command(
-            f"{path}.build_command",
-            item.get("build_command"),
-        )
-        toolchain_candidates = _validate_candidate_toolchain_candidates(
-            f"{path}.toolchain_candidates",
-            item.get("toolchain_candidates", []),
-        )
-        raw_toolchain_version_command = item.get("toolchain_version_command")
-        toolchain_version_command = (
-            []
-            if raw_toolchain_version_command is None
-            or raw_toolchain_version_command == []
-            else _validate_candidate_runner_command(
-                f"{path}.toolchain_version_command",
-                raw_toolchain_version_command,
-            )
-        )
-        if toolchain_candidates and not toolchain_version_command:
-            toolchain_version_command = ["{toolchain}", "--version"]
-        toolchain_executable_sha256 = _validate_optional_sha256(
-            f"{path}.toolchain_executable_sha256",
-            item.get("toolchain_executable_sha256"),
-        )
-        toolchain_version_output_sha256 = _validate_optional_sha256(
-            f"{path}.toolchain_version_output_sha256",
-            item.get("toolchain_version_output_sha256"),
-        )
-        dependency_lock_sha256 = _validate_candidate_dependency_lock_sha256(
-            f"{path}.dependency_lock_sha256",
-            item.get("dependency_lock_sha256", {}),
-        )
-        execution_environment = _validate_candidate_execution_environment(
-            f"{path}.execution_environment",
-            item.get("execution_environment"),
-        )
-        _validate_candidate_toolchain_contract(
-            path,
-            build_command=build_command,
-            candidates=toolchain_candidates,
-            version_command=toolchain_version_command,
-            executable_sha256=toolchain_executable_sha256,
-            version_output_sha256=toolchain_version_output_sha256,
-            execution_environment=execution_environment,
-        )
-        if execution_status == CANDIDATE_RUNNER_EXECUTION_STATUS and not build_command:
-            raise ConfigError(
-                f"{path}.build_command is required when execution_status="
-                f"{CANDIDATE_RUNNER_EXECUTION_STATUS!r}"
-            )
-        normalized.append(
-            {
-                "name": name,
-                "build_files": build_files,
-                "build_command": build_command,
-                "artifact_patterns": artifact_patterns,
-                "execution_environment": execution_environment,
-                "toolchain_candidates": toolchain_candidates,
-                "toolchain_version_command": toolchain_version_command,
-                "toolchain_executable_sha256": toolchain_executable_sha256,
-                "toolchain_version_output_sha256": (
-                    toolchain_version_output_sha256
-                ),
-                "dependency_lock_sha256": dependency_lock_sha256,
-                "execution_status": execution_status,
-                "notes": _validate_candidate_declaration_text(
-                    f"{path}.notes",
-                    item.get("notes", ""),
-                    allow_empty=True,
-                ),
-            }
-        )
-    return normalized
-
-
-def _validate_candidate_glob_patterns(path: str, value: object) -> list[str]:
-    _validate_artifact_glob_list(path, value)
-    assert isinstance(value, list)
-    return list(value)
-
-
-def _validate_candidate_declaration_text(
-    path: str,
-    value: object,
-    *,
-    allow_empty: bool = False,
-) -> str:
-    text = _require_string(path, value, allow_empty=allow_empty)
-    if redact_sensitive_text(text) != text:
-        raise ConfigError(f"{path} must not contain secret-like text")
-    if any(ord(ch) < 32 or ord(ch) == 127 for ch in text):
-        raise ConfigError(f"{path} must be manifest-safe text")
-    if any(unicodedata.category(ch) == "Cf" for ch in text):
-        raise ConfigError(f"{path} must be display-safe text")
-    return text
-
-
-def _validate_candidate_runner_command(path: str, value: object) -> list[str]:
-    if value in (None, ""):
-        return []
-    if not isinstance(value, list) or not value:
-        raise ConfigError(f"{path} must be a non-empty list of command tokens")
-    command: list[str] = []
-    for index, token in enumerate(value):
-        command.append(
-            _validate_candidate_declaration_text(f"{path}[{index}]", token)
-        )
-    return command
-
-
-def _validate_candidate_toolchain_candidates(path: str, value: object) -> list[str]:
-    if value is None:
-        return []
-    if not isinstance(value, list):
-        raise ConfigError(f"{path} must be a list of executable names or paths")
-    candidates: list[str] = []
-    seen: set[str] = set()
-    for index, value_item in enumerate(value):
-        candidate = _validate_candidate_declaration_text(
-            f"{path}[{index}]",
-            value_item,
-        )
-        if candidate == "{toolchain}":
-            raise ConfigError(f"{path}[{index}] must name an executable")
-        key = candidate.casefold()
-        if key in seen:
-            raise ConfigError(f"{path} must not contain duplicate candidates")
-        seen.add(key)
-        candidates.append(candidate)
-    return candidates
-
-
-def _validate_candidate_dependency_lock_sha256(
-    path: str,
-    value: object,
-) -> dict[str, str]:
-    if value is None:
-        return {}
-    if not isinstance(value, dict) or not all(
-        isinstance(key, str) for key in value
-    ):
-        raise ConfigError(f"{path} must map candidate paths to sha256 digests")
-    normalized: dict[str, str] = {}
-    for raw_path, digest in value.items():
-        try:
-            candidate_path = normalize_candidate_path(raw_path)
-        except ValueError as exc:
-            raise ConfigError(f"{path} contains an unsafe candidate path") from exc
-        if candidate_path in normalized:
-            raise ConfigError(f"{path} contains duplicate normalized paths")
-        normalized[candidate_path] = _require_sha256(
-            f"{path}.{candidate_path}",
-            digest,
-        )
-    return {key: normalized[key] for key in sorted(normalized)}
-
-
-def _validate_optional_sha256(path: str, value: object) -> str | None:
-    if value is None:
-        return None
-    return _require_sha256(path, value)
-
-
-def _validate_candidate_execution_environment(path: str, value: object) -> dict:
-    if value in (None, {}):
-        return {"type": CANDIDATE_HOST_EXECUTION_ENVIRONMENT}
-    if not isinstance(value, dict):
-        raise ConfigError(f"{path} must be a mapping")
-    allowed = {
-        "type",
-        "runtime_candidates",
-        "runtime_version_command",
-        "runtime_executable_sha256",
-        "runtime_version_output_sha256",
-        "image",
-        "pull_policy",
-        "network",
-        "read_only_rootfs",
-        "tmpfs_mb",
-        "memory_mb",
-        "cpus",
-        "pids_limit",
-    }
-    unknown = sorted(str(key) for key in value if key not in allowed)
-    if unknown:
-        raise ConfigError(f"{path} has unknown key(s): {unknown}")
-    environment_type = value.get("type", CANDIDATE_HOST_EXECUTION_ENVIRONMENT)
-    _require_enum(
-        f"{path}.type",
-        environment_type,
-        {
-            CANDIDATE_HOST_EXECUTION_ENVIRONMENT,
-            CANDIDATE_OCI_EXECUTION_ENVIRONMENT,
-        },
-    )
-    if environment_type == CANDIDATE_HOST_EXECUTION_ENVIRONMENT:
-        if set(value) - {"type"}:
-            raise ConfigError(
-                f"{path} host execution environment only accepts the type field"
-            )
-        return {"type": CANDIDATE_HOST_EXECUTION_ENVIRONMENT}
-
-    runtime_candidates = _validate_candidate_toolchain_candidates(
-        f"{path}.runtime_candidates",
-        value.get("runtime_candidates", []),
-    )
-    if not runtime_candidates:
-        raise ConfigError(f"{path}.runtime_candidates must not be empty")
-    for index, candidate in enumerate(runtime_candidates):
-        basename = Path(candidate).name.casefold()
-        if basename.endswith(".exe"):
-            basename = basename[:-4]
-        if basename not in {"docker", "podman"}:
-            raise ConfigError(
-                f"{path}.runtime_candidates[{index}] must name docker or podman"
-            )
-    raw_version_command = value.get("runtime_version_command")
-    runtime_version_command = (
-        ["{runtime}", "--version"]
-        if raw_version_command in (None, [])
-        else _validate_candidate_runner_command(
-            f"{path}.runtime_version_command",
-            raw_version_command,
-        )
-    )
-    if not runtime_version_command or runtime_version_command[0] != "{runtime}":
-        raise ConfigError(
-            f"{path}.runtime_version_command must begin with '{{runtime}}'"
-        )
-    runtime_executable_sha256 = _validate_optional_sha256(
-        f"{path}.runtime_executable_sha256",
-        value.get("runtime_executable_sha256"),
-    )
-    runtime_version_output_sha256 = _validate_optional_sha256(
-        f"{path}.runtime_version_output_sha256",
-        value.get("runtime_version_output_sha256"),
-    )
-    image = _validate_candidate_oci_image_reference(
-        f"{path}.image",
-        value.get("image"),
-    )
-    pull_policy = value.get("pull_policy", "never")
-    _require_enum(f"{path}.pull_policy", pull_policy, {"never", "if_missing"})
-    network = value.get("network", "none")
-    _require_enum(f"{path}.network", network, {"none"})
-    read_only_rootfs = value.get("read_only_rootfs", True)
-    if read_only_rootfs is not True:
-        raise ConfigError(f"{path}.read_only_rootfs must be true")
-    tmpfs_mb = value.get("tmpfs_mb", 64)
-    _require_int(f"{path}.tmpfs_mb", tmpfs_mb, minimum=1)
-    if tmpfs_mb > MAX_CANDIDATE_CONTAINER_TMPFS_MB:
-        raise ConfigError(
-            f"{path}.tmpfs_mb must be <= {MAX_CANDIDATE_CONTAINER_TMPFS_MB}"
-        )
-    memory_mb = value.get("memory_mb", 512)
-    _require_int(f"{path}.memory_mb", memory_mb, minimum=64)
-    if memory_mb > MAX_CANDIDATE_CONTAINER_MEMORY_MB:
-        raise ConfigError(
-            f"{path}.memory_mb must be <= {MAX_CANDIDATE_CONTAINER_MEMORY_MB}"
-        )
-    cpus = _require_number(f"{path}.cpus", value.get("cpus", 1.0))
-    if cpus <= 0 or cpus > MAX_CANDIDATE_CONTAINER_CPUS:
-        raise ConfigError(
-            f"{path}.cpus must be > 0 and <= {MAX_CANDIDATE_CONTAINER_CPUS:g}"
-        )
-    pids_limit = value.get("pids_limit", 128)
-    _require_int(f"{path}.pids_limit", pids_limit, minimum=16)
-    if pids_limit > MAX_CANDIDATE_CONTAINER_PIDS:
-        raise ConfigError(
-            f"{path}.pids_limit must be <= {MAX_CANDIDATE_CONTAINER_PIDS}"
-        )
-    return {
-        "type": CANDIDATE_OCI_EXECUTION_ENVIRONMENT,
-        "runtime_candidates": runtime_candidates,
-        "runtime_version_command": runtime_version_command,
-        "runtime_executable_sha256": runtime_executable_sha256,
-        "runtime_version_output_sha256": runtime_version_output_sha256,
-        "image": image,
-        "pull_policy": pull_policy,
-        "network": network,
-        "read_only_rootfs": True,
-        "tmpfs_mb": tmpfs_mb,
-        "memory_mb": memory_mb,
-        "cpus": cpus,
-        "pids_limit": pids_limit,
-    }
-
-
-def _validate_candidate_oci_image_reference(path: str, value: object) -> str:
-    image = _validate_candidate_declaration_text(path, value)
-    if _OCI_IMAGE_REFERENCE_RE.fullmatch(image) is None:
-        raise ConfigError(
-            f"{path} must be an immutable OCI image reference ending in "
-            "@sha256:<64 lowercase hex characters>"
-        )
-    return image
-
-
-def _validate_candidate_toolchain_contract(
-    path: str,
-    *,
-    build_command: list[str],
-    candidates: list[str],
-    version_command: list[str],
-    executable_sha256: str | None,
-    version_output_sha256: str | None,
-    execution_environment: dict,
-) -> None:
-    environment_type = execution_environment.get("type")
-    if candidates:
-        if not build_command or build_command[0] != "{toolchain}":
-            raise ConfigError(
-                f"{path}.build_command must begin with '{{toolchain}}' when "
-                "toolchain_candidates are configured"
-            )
-        if not version_command or version_command[0] != "{toolchain}":
-            raise ConfigError(
-                f"{path}.toolchain_version_command must begin with "
-                "'{toolchain}'"
-            )
-        if (
-            environment_type == CANDIDATE_OCI_EXECUTION_ENVIRONMENT
-            and executable_sha256 is not None
-        ):
-            raise ConfigError(
-                f"{path}.toolchain_executable_sha256 is unsupported for OCI "
-                "execution; pin the immutable image and optional version output"
-            )
-        return
-    if environment_type == CANDIDATE_OCI_EXECUTION_ENVIRONMENT:
-        raise ConfigError(
-            f"{path}.toolchain_candidates are required for OCI execution"
-        )
-    if build_command and build_command[0] == "{toolchain}":
-        raise ConfigError(
-            f"{path}.build_command requires toolchain_candidates for "
-            "'{toolchain}'"
-        )
-    if version_command or executable_sha256 or version_output_sha256:
-        raise ConfigError(
-            f"{path} toolchain commands and pins require toolchain_candidates"
-        )
-
-
-def _validate_candidate_runner_stage_bindings(
-    stages: object,
-    language_runners: object,
-    build_systems: object,
-    *,
-    validator_network_policy: str,
-) -> None:
-    if not isinstance(stages, list):
-        return
-    language_by_id = (
-        {
-            record.get("language"): record
-            for record in language_runners
-            if isinstance(record, dict)
-            and isinstance(record.get("language"), str)
-        }
-        if isinstance(language_runners, list)
-        else {}
-    )
-    build_by_id = (
-        {
-            record.get("name"): record
-            for record in build_systems
-            if isinstance(record, dict) and isinstance(record.get("name"), str)
-        }
-        if isinstance(build_systems, list)
-        else {}
-    )
-    for index, stage in enumerate(stages):
-        if (
-            not isinstance(stage, dict)
-            or stage.get("mode", "external_validator") != "candidate_runner"
-        ):
-            continue
-        label = f"eval_stages[{index}]"
-        language_id = stage.get("language_runner")
-        if not isinstance(language_id, str) or not language_id:
-            raise ConfigError(
-                f"{label}.language_runner is required for candidate_runner stages"
-            )
-        language = language_by_id.get(language_id.lower())
-        if language is None:
-            raise ConfigError(
-                f"{label}.language_runner references unknown candidate language "
-                f"runner {language_id!r}"
-            )
-        stage["language_runner"] = language_id.lower()
-        if language.get("execution_status") != CANDIDATE_RUNNER_EXECUTION_STATUS:
-            raise ConfigError(
-                f"{label}.language_runner must reference an "
-                f"{CANDIDATE_RUNNER_EXECUTION_STATUS} declaration"
-            )
-        build_id = stage.get("build_system")
-        if build_id is not None:
-            if not isinstance(build_id, str) or not build_id:
-                raise ConfigError(f"{label}.build_system must be a non-empty identifier")
-            build = build_by_id.get(build_id.lower())
-            if build is None:
-                raise ConfigError(
-                    f"{label}.build_system references unknown candidate build "
-                    f"system {build_id!r}"
-                )
-            stage["build_system"] = build_id.lower()
-            if build.get("execution_status") != CANDIDATE_RUNNER_EXECUTION_STATUS:
-                raise ConfigError(
-                    f"{label}.build_system must reference an "
-                    f"{CANDIDATE_RUNNER_EXECUTION_STATUS} declaration"
-                )
-        if validator_network_policy != "host":
-            raise ConfigError(
-                f"{label}.mode='candidate_runner' requires validator_network_policy="
-                "'host' because arbitrary child-process network denial requires an OS "
-                "sandbox"
-            )
-
-
 def _normalize_path_string(name: str, value: object) -> str:
     if not isinstance(value, (str, os.PathLike)):
         raise ConfigError(f"{name} must be a non-empty path string")
@@ -1326,95 +570,6 @@ def _require_safe_identifier(name: str, value: object) -> str:
     return identifier
 
 
-def _require_plugin_label(name: str, value: object) -> str:
-    label = _require_string(name, value)
-    if redact_sensitive_text(label) != label:
-        raise ConfigError(f"{name} must be a manifest-safe plugin label")
-    if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}", label) is None:
-        raise ConfigError(f"{name} must be a manifest-safe plugin label")
-    return label
-
-
-def _validate_plugin_config_specs(value: object) -> list[str | dict]:
-    if not isinstance(value, list):
-        raise ConfigError("plugins must be a list of plugin labels or plugin spec mappings")
-    normalized: list[str | dict] = []
-    for index, plugin in enumerate(value):
-        path = f"plugins[{index}]"
-        if isinstance(plugin, str):
-            normalized.append(_require_plugin_label(path, plugin))
-            continue
-        if not isinstance(plugin, dict):
-            raise ConfigError(f"{path} must be a plugin label or plugin spec mapping")
-        spec = _validate_plugin_config_spec(path, plugin)
-        normalized.append(spec)
-    _validate_plugin_registry_specs(normalized)
-    return normalized
-
-
-def _validate_plugin_config_spec(path: str, value: dict) -> dict:
-    allowed = {"name", "options"}
-    unknown = sorted(str(key) for key in value if key not in allowed)
-    if unknown:
-        raise ConfigError(f"{path} has unknown key(s): {unknown}")
-    if "name" not in value:
-        raise ConfigError(f"{path}.name is required")
-    name = _require_plugin_label(f"{path}.name", value["name"])
-    options = value.get("options", {})
-    if not isinstance(options, dict):
-        raise ConfigError(f"{path}.options must be a mapping")
-    normalized_options: dict[str, object] = {}
-    for key, option_value in options.items():
-        option_key = _require_plugin_option_key(f"{path}.options", key)
-        normalized_options[option_key] = _validate_plugin_option_value(
-            f"{path}.options.{option_key}",
-            option_value,
-        )
-    return {"name": name, "options": normalized_options}
-
-
-def _validate_plugin_registry_specs(specs: list[str | dict]) -> None:
-    from libreevolve.plugins.registry import validate_plugin_specs
-
-    try:
-        validate_plugin_specs(specs)
-    except ValueError as exc:
-        raise ConfigError(str(exc)) from exc
-
-
-def _require_plugin_option_key(path: str, value: object) -> str:
-    key = _require_string(f"{path} key", value)
-    if redact_sensitive_text(key) != key:
-        raise ConfigError(f"{path} keys must be manifest-safe plugin option names")
-    if re.fullmatch(r"[A-Za-z][A-Za-z0-9_]{0,127}", key) is None:
-        raise ConfigError(f"{path} keys must be manifest-safe plugin option names")
-    return key
-
-
-def _validate_plugin_option_value(path: str, value: object) -> object:
-    if value is None or isinstance(value, (str, int, float, bool)):
-        if isinstance(value, str) and redact_sensitive_text(value) != value:
-            raise ConfigError(f"{path} must not contain secret-like text")
-        if isinstance(value, float) and not math.isfinite(value):
-            raise ConfigError(f"{path} must be finite")
-        return value
-    if isinstance(value, list):
-        return [
-            _validate_plugin_option_value(f"{path}[{index}]", item)
-            for index, item in enumerate(value)
-        ]
-    if isinstance(value, dict):
-        normalized: dict[str, object] = {}
-        for key, nested_value in value.items():
-            nested_key = _require_plugin_option_key(path, key)
-            normalized[nested_key] = _validate_plugin_option_value(
-                f"{path}.{nested_key}",
-                nested_value,
-            )
-        return normalized
-    raise ConfigError(f"{path} must be a scalar, list, or mapping")
-
-
 def _require_model_identifier(name: str, value: object) -> str:
     model = _require_string(name, value)
     if redact_sensitive_text(model) != model:
@@ -1450,17 +605,6 @@ def _require_role_scope_label(name: str, value: object) -> str:
         _require_role_label(name, prefix)
         return value
     return _require_role_label(name, value)
-
-
-def _require_feedback_label(name: str, value: object) -> str:
-    if not isinstance(value, str):
-        raise ConfigError(f"{name} must be a string")
-    label = value
-    if redact_sensitive_text(label) != label:
-        raise ConfigError(f"{name} must be a manifest-safe feedback label")
-    if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}", label) is None:
-        raise ConfigError(f"{name} must be a manifest-safe feedback label")
-    return label
 
 
 def _require_feedback_metric_label(name: str, value: object) -> str:
@@ -1529,29 +673,6 @@ def _require_json_scalar(name: str, value: object) -> None:
     if isinstance(value, (int, float)) and math.isfinite(float(value)):
         return
     raise ConfigError(f"{name} must be a JSON-safe scalar seed")
-
-
-def _require_custom_backend_class_path(name: str, value: object) -> str:
-    if not isinstance(value, str):
-        raise ConfigError(f"{name} must be an import path string")
-    if redact_sensitive_text(value) != value:
-        raise ConfigError(f"{name} must be a manifest-safe import path")
-    if _CUSTOM_BACKEND_CLASS_PATH_RE.fullmatch(value) is None:
-        raise ConfigError(f"{name} must use module.path:ClassName import syntax")
-    return value
-
-
-def _validate_custom_backend_kwargs(name: str, value: object) -> None:
-    if not isinstance(value, dict):
-        raise ConfigError(f"{name} must be a mapping")
-    for key, item in value.items():
-        if not isinstance(key, str) or _CUSTOM_BACKEND_KWARG_RE.fullmatch(key) is None:
-            raise ConfigError(f"{name} keys must be manifest-safe keyword labels")
-        if redact_sensitive_text(key) != key:
-            raise ConfigError(f"{name} keys must be manifest-safe keyword labels")
-        if key in {"model", "max_tokens"}:
-            raise ConfigError(f"{name}.{key} must be configured as a top-level backend field")
-        _validate_json_safe_config_value(f"{name}.{key}", item)
 
 
 def _validate_json_safe_config_value(name: str, value: object) -> None:
@@ -1700,7 +821,7 @@ def _validate_eval_stages(stages: object) -> None:
             _require_enum(
                 f"{label}.mode",
                 stage["mode"],
-                {"external_validator", "embedded_evaluate", "candidate_runner"},
+                {"external_validator", "embedded_evaluate"},
             )
         if mode == "embedded_evaluate":
             if "validate_path" in stage:
@@ -2294,9 +1415,9 @@ def _require_output_check_scalar(name: str, value: object) -> None:
 
 
 def _validate_backends(backends: object) -> None:
-    if not isinstance(backends, list) or not backends:
-        raise ConfigError("backends must be a non-empty list of mappings")
-    allowed_types = {"anthropic", "codex", "custom", "gemini", "openai", "ollama"}
+    if not isinstance(backends, list) or len(backends) != 1:
+        raise ConfigError("The engineering preview requires one Codex gpt-5.6-luna/high backend")
+    allowed_types = {"codex"}
     common_keys = {
         "type",
         "model",
@@ -2319,13 +1440,11 @@ def _validate_backends(backends: object) -> None:
         if backend.get("type") not in allowed_types:
             raise ConfigError(f"{label}.type must be one of {sorted(allowed_types)}")
         _require_model_identifier(f"{label}.model", backend.get("model"))
+        if backend["model"] != "gpt-5.6-luna" or backend.get("reasoning_effort") != "high":
+            raise ConfigError("The engineering preview supports the validated Codex gpt-5.6-luna/high lane")
+        if backend.get("cost_usd_per_million_tokens") is not None:
+            raise ConfigError("Codex subscription charges are unknown; a per-token price is not supported")
         allowed = set(common_keys)
-        if backend["type"] == "openai":
-            allowed.add("reasoning_effort")
-            allowed.add("api_mode")
-            allowed.add("timeout_sec")
-            allowed.add("provider_max_retries")
-            allowed.update({"base_url", "organization", "project"})
         if backend["type"] == "codex":
             allowed.update(
                 {
@@ -2348,40 +1467,13 @@ def _validate_backends(backends: object) -> None:
                     "disable_features",
                 }
             )
-        if backend["type"] == "anthropic":
-            allowed.add("base_url")
-            allowed.add("timeout_sec")
-            allowed.add("provider_max_retries")
-        if backend["type"] == "gemini":
-            allowed.add("api_version")
-            allowed.add("timeout_sec")
-            allowed.add("provider_max_retries")
-        if backend["type"] == "ollama":
-            allowed.add("host")
-            allowed.add("timeout_sec")
-            allowed.add("provider_max_retries")
-        if backend["type"] == "custom":
-            allowed.add("class_path")
-            allowed.add("kwargs")
         unsupported = _unsupported_mapping_keys(label, backend, allowed)
         if unsupported:
             raise ConfigError(f"{label} has unsupported fields {unsupported}")
-        if backend["type"] == "custom":
-            _require_custom_backend_class_path(f"{label}.class_path", backend.get("class_path"))
-            if "kwargs" in backend:
-                _validate_custom_backend_kwargs(f"{label}.kwargs", backend["kwargs"])
         if "max_tokens" in backend:
             _require_int(f"{label}.max_tokens", backend["max_tokens"], minimum=1)
         if "timeout_sec" in backend:
             _require_positive_number(f"{label}.timeout_sec", backend["timeout_sec"])
-        if "provider_max_retries" in backend:
-            try:
-                validate_provider_max_retries(
-                    backend["provider_max_retries"],
-                    field=f"{label}.provider_max_retries",
-                )
-            except ValueError as exc:
-                raise ConfigError(str(exc)) from exc
         for field_name in ("cost", "latency", "depth"):
             if field_name in backend:
                 _require_positive_number(f"{label}.{field_name}", backend[field_name])
@@ -2431,24 +1523,6 @@ def _validate_backends(backends: object) -> None:
             _require_role_label(f"{label}.role", backend["role"])
         if backend["type"] == "codex" and "reasoning_effort" in backend:
             _require_string(f"{label}.reasoning_effort", backend["reasoning_effort"])
-        if backend["type"] == "openai" and "reasoning_effort" in backend:
-            try:
-                validate_openai_reasoning_effort_for_model(
-                    backend["reasoning_effort"],
-                    model=backend["model"],
-                    field=f"{label}.reasoning_effort",
-                )
-            except ValueError as exc:
-                raise ConfigError(str(exc)) from exc
-        if "api_mode" in backend:
-            try:
-                validate_openai_api_mode(
-                    backend["api_mode"],
-                    reasoning_effort=backend.get("reasoning_effort"),
-                    field=f"{label}.api_mode",
-                )
-            except ValueError as exc:
-                raise ConfigError(str(exc)) from exc
         try:
             validate_backend_request_parameters(backend, field_prefix=label)
         except ValueError as exc:
@@ -2457,102 +1531,6 @@ def _validate_backends(backends: object) -> None:
             validate_backend_client_context(backend, field_prefix=label)
         except ValueError as exc:
             raise ConfigError(str(exc)) from exc
-
-
-def _validate_llm_feedback(graders: object) -> None:
-    if not isinstance(graders, list):
-        raise ConfigError("llm_feedback must be a list of mappings")
-    allowed = {
-        "name",
-        "metric",
-        "objective_metric",
-        "weight",
-        "min_score",
-        "bounds",
-        "direction",
-        "prompt",
-        "include_invalid",
-        "failure_policy",
-        "failure_retries",
-        "failure_penalty",
-        "criterion",
-        "criterion_description",
-        "evaluator_gap_rationale",
-        "rubric",
-        "feedback_intent",
-        "calibration_report_id",
-    }
-    for index, grader in enumerate(graders):
-        label = f"llm_feedback[{index}]"
-        if not isinstance(grader, dict):
-            raise ConfigError(f"{label} must be a mapping")
-        unsupported = _unsupported_mapping_keys(label, grader, allowed)
-        if unsupported:
-            raise ConfigError(f"{label} has unsupported fields {unsupported}")
-        for field_name in (
-            "prompt",
-            "criterion_description",
-            "evaluator_gap_rationale",
-            "rubric",
-        ):
-            if field_name in grader and not isinstance(grader[field_name], str):
-                raise ConfigError(f"{label}.{field_name} must be a string")
-        if "criterion" in grader:
-            _require_feedback_label(f"{label}.criterion", grader["criterion"])
-        if "calibration_report_id" in grader:
-            _require_feedback_label(
-                f"{label}.calibration_report_id",
-                grader["calibration_report_id"],
-            )
-        if "feedback_intent" in grader:
-            _require_enum(
-                f"{label}.feedback_intent",
-                grader["feedback_intent"],
-                {"score", "discard", "score_and_discard"},
-            )
-        if "name" in grader:
-            _require_feedback_label(f"{label}.name", grader["name"])
-        if "metric" in grader:
-            _require_feedback_metric_label(f"{label}.metric", grader["metric"])
-        if "objective_metric" in grader and not isinstance(grader["objective_metric"], bool):
-            raise ConfigError(f"{label}.objective_metric must be boolean")
-        if "weight" in grader:
-            _require_probability(f"{label}.weight", grader["weight"])
-        if "min_score" in grader:
-            _require_probability(f"{label}.min_score", grader["min_score"])
-        if "bounds" in grader:
-            _validate_feedback_score_bounds(f"{label}.bounds", grader["bounds"])
-        if "direction" in grader:
-            _require_enum(
-                f"{label}.direction",
-                grader["direction"],
-                {"maximize", "minimize"},
-            )
-        if "include_invalid" in grader and not isinstance(grader["include_invalid"], bool):
-            raise ConfigError(f"{label}.include_invalid must be boolean")
-        if "failure_policy" in grader:
-            _require_enum(
-                f"{label}.failure_policy",
-                grader["failure_policy"],
-                {"ignore", "penalize", "discard"},
-            )
-        if "failure_retries" in grader:
-            _require_int(f"{label}.failure_retries", grader["failure_retries"], minimum=0)
-            if grader["failure_retries"] > MAX_LLM_FEEDBACK_FAILURE_RETRIES:
-                raise ConfigError(
-                    f"{label}.failure_retries must be <= {MAX_LLM_FEEDBACK_FAILURE_RETRIES}"
-                )
-        if "failure_penalty" in grader:
-            _require_probability(f"{label}.failure_penalty", grader["failure_penalty"])
-
-
-def _validate_feedback_score_bounds(label: str, value: object) -> None:
-    if not isinstance(value, (list, tuple)) or len(value) != 2:
-        raise ConfigError(f"{label} must be [lo, hi]")
-    lo = _require_number(f"{label}[0]", value[0])
-    hi = _require_number(f"{label}[1]", value[1])
-    if lo >= hi:
-        raise ConfigError(f"{label} must be strictly increasing [lo, hi]")
 
 
 def _validate_prompt_variants(
@@ -2701,42 +1679,6 @@ def _validate_llm_role_failure_quarantine_after(value: object) -> dict[str, int]
             raise ConfigError(f"{field}[{role!r}] must be a positive integer")
         normalized[role] = raw_count
     return dict(sorted(normalized.items()))
-
-
-def _validate_critique_reviewers(value: object) -> list[dict]:
-    if not isinstance(value, list):
-        raise ConfigError("critique_reviewers must be a list of reviewer specs")
-    if len(value) > 8:
-        raise ConfigError("critique_reviewers must contain at most 8 reviewers")
-    reviewers: list[dict] = []
-    seen_names: set[str] = set()
-    seen_roles: set[str] = set()
-    for index, raw in enumerate(value):
-        if not isinstance(raw, dict):
-            raise ConfigError(f"critique_reviewers[{index}] must be a mapping")
-        unsupported = _unsupported_mapping_keys(
-            f"critique_reviewers[{index}]",
-            raw,
-            {"name", "prompt", "role"},
-        )
-        if unsupported:
-            raise ConfigError(
-                f"critique_reviewers[{index}] has unsupported fields {unsupported}"
-            )
-        raw_name = raw.get("name", f"reviewer_{index}")
-        name = _require_safe_identifier(f"critique_reviewers[{index}].name", raw_name)
-        if name in seen_names:
-            raise ConfigError(f"duplicate critique reviewer name: {name!r}")
-        seen_names.add(name)
-        prompt = raw.get("prompt", "")
-        _require_string(f"critique_reviewers[{index}].prompt", prompt, allow_empty=True)
-        raw_role = raw.get("role", f"critique:{name}")
-        role = _require_role_label(f"critique_reviewers[{index}].role", raw_role)
-        if role in seen_roles:
-            raise ConfigError(f"duplicate critique reviewer role: {role!r}")
-        seen_roles.add(role)
-        reviewers.append({"name": name, "prompt": prompt, "role": role})
-    return reviewers
 
 
 def _validate_prompt_format_options(options: object) -> dict:

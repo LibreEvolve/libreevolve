@@ -11,11 +11,9 @@ from libreevolve.cli import cli
 
 
 def test_seed_run_report_and_verified_export(tmp_path, monkeypatch):
-    monkeypatch.setattr(cli_module, "_load_cli_dotenv", lambda: {})
     runner = CliRunner()
     task = tmp_path / "packing"
-    init = runner.invoke(cli, ["alpha", "init", str(task), "--model", "offline-placeholder",
-                              "--token-price", "10", "--budget-usd", "1"])
+    init = runner.invoke(cli, ["alpha", "init", str(task), "--model", "gpt-5.6-luna"])
     assert init.exit_code == 0, init.output
     config_path = task / "config.yaml"
     config = yaml.safe_load(config_path.read_text())

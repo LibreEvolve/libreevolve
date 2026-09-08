@@ -1,5 +1,0 @@
-Pack exactly 26 disjoint circles inside the unit square to maximize the sum of radii.
-Write a function `solve() -> list[tuple[float, float, float]]` returning circle `(x, y, r)` tuples.
-Constraints: every radius must be positive; every circle must lie fully inside [0.0, 1.0]x[0.0, 1.0];
-every pair of circles must satisfy distance between centers >= r_i + r_j.
-Score = sum of radii for valid 26-circle packings.

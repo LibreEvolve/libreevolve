@@ -9,43 +9,20 @@ from libreevolve.alpha import alpha_config
 from libreevolve.cli import cli
 
 
-@pytest.mark.parametrize("price,budget", [(0, 1), (-1, 1), (float("nan"), 1),
-                                         (1, float("inf")), (1, 0), (1, 1e308)])
-def test_invalid_price_and_budget_do_not_create_task(tmp_path, price, budget):
-    with pytest.raises(ValueError):
-        alpha_config("account-model", price, budget)
-    assert list(tmp_path.iterdir()) == []
-
-
-def test_oversized_budget_is_actionable_cli_error(tmp_path):
+@pytest.mark.parametrize("model", ["account-model", "", "gpt-6-astra"])
+def test_unvalidated_model_does_not_create_task(tmp_path, model):
+    with pytest.raises(ValueError, match="validated"):
+        alpha_config(model)
     destination = tmp_path / "experiment"
     result = CliRunner().invoke(cli, [
-        "alpha", "init", str(destination), "--model", "account-model",
-        "--token-price", "10", "--budget-usd", "1e308",
+        "alpha", "init", str(destination), "--model", model,
     ])
-    assert result.exit_code == 1
-    assert "too large" in result.output
+    assert result.exit_code != 0
     assert not destination.exists()
 
 
-def test_openai_pricing_options_are_required_by_validation(tmp_path):
-    runner = CliRunner()
-    for index, options, missing in (
-        ("no-price", [], "--token-price"),
-        ("no-budget", ["--token-price", "10"], "--budget-usd"),
-    ):
-        destination = tmp_path / index
-        result = runner.invoke(
-            cli,
-            ["alpha", "init", str(destination), "--model", "account-model", *options],
-        )
-        assert result.exit_code == 1, result.output
-        assert missing in result.output
-        assert not destination.exists()
-
-
 def test_codex_config_uses_bounded_subscription_semantics():
-    settings = alpha_config("gpt-5.6-luna", provider="codex")
+    settings = alpha_config("gpt-5.6-luna")
     backend = settings["backends"][0]
     assert settings["max_generations"] == 3
     assert settings["max_evaluations"] == 4
@@ -61,7 +38,7 @@ def test_codex_config_uses_bounded_subscription_semantics():
         "cwd": ".codex-alpha-workspace",
         "sandbox": "read-only",
         "timeout_sec": 180,
-        "reasoning_effort": "max",
+        "reasoning_effort": "high",
         "auth_name": "current",
         "ignore_user_config": True,
         "ignore_rules": True,
@@ -72,21 +49,7 @@ def test_codex_config_uses_bounded_subscription_semantics():
     }
 
 
-def test_codex_reasoning_effort_is_explicit_and_does_not_change_limits():
-    default = alpha_config("gpt-5.6-luna", provider="codex")
-    high = alpha_config("gpt-5.6-luna", provider="codex", reasoning_effort="high")
-    assert default["backends"][0]["reasoning_effort"] == "max"
-    assert high["backends"][0]["reasoning_effort"] == "high"
-    high["backends"][0]["reasoning_effort"] = "max"
-    assert high == default
-    with pytest.raises(ValueError, match="only for Codex"):
-        alpha_config("model", 1.0, 1.0, reasoning_effort="high")
-    with pytest.raises(ValueError, match="Reasoning effort must"):
-        alpha_config("model", provider="codex", reasoning_effort="invalid")
-
-
-@pytest.mark.parametrize("effort", [None, "high"])
-def test_codex_init_creates_empty_isolated_cwd_without_cost_claims(tmp_path, effort):
+def test_codex_init_creates_empty_isolated_cwd_without_cost_claims(tmp_path):
     import yaml
 
     destination = tmp_path / "codex-experiment"
@@ -96,11 +59,9 @@ def test_codex_init_creates_empty_isolated_cwd_without_cost_claims(tmp_path, eff
             "alpha",
             "init",
             str(destination),
-            "--provider",
-            "codex",
             "--model",
             "gpt-5.6-luna",
-        ] + (["--reasoning-effort", effort] if effort else []),
+        ],
     )
     assert result.exit_code == 0, result.output
     config = yaml.safe_load((destination / "config.yaml").read_text())
@@ -109,7 +70,7 @@ def test_codex_init_creates_empty_isolated_cwd_without_cost_claims(tmp_path, eff
     assert backend["timeout_sec"] == 180
     assert backend["type"] == "codex"
     assert backend["model"] == "gpt-5.6-luna"
-    assert backend["reasoning_effort"] == (effort or "max")
+    assert backend["reasoning_effort"] == "high"
     assert backend["sandbox"] == "read-only"
     assert backend["auth_name"] == "current"
     assert backend["ignore_user_config"] is True
@@ -134,17 +95,14 @@ def test_codex_rejects_dollar_cap_options(tmp_path, flag):
             "alpha",
             "init",
             str(destination),
-            "--provider",
-            "codex",
             "--model",
             "gpt-5.6-luna",
             flag,
             "1",
         ],
     )
-    assert result.exit_code == 1, result.output
-    assert "not supported" in result.output
-    assert "dollar cap" in result.output
+    assert result.exit_code == 2, result.output
+    assert "No such option" in result.output
     assert not destination.exists()
 
 
@@ -164,8 +122,6 @@ def test_codex_doctor_checks_resolved_oauth_home_without_provider_request(tmp_pa
             "alpha",
             "init",
             str(destination),
-            "--provider",
-            "codex",
             "--model",
             "gpt-5.6-luna",
         ],
@@ -200,7 +156,6 @@ def test_codex_doctor_checks_resolved_oauth_home_without_provider_request(tmp_pa
     def unexpected_dotenv():
         raise AssertionError("Codex doctor must not load OpenAI .env credentials")
 
-    monkeypatch.setattr(cli_module, "_load_cli_dotenv", unexpected_dotenv)
     result = CliRunner().invoke(cli, ["alpha", "doctor", str(destination)])
     assert result.exit_code == 0, result.output
     assert seen["command"] == ["codex", "login", "status"]
@@ -227,8 +182,6 @@ def test_codex_doctor_rejects_api_key_status_without_printing_status_output(tmp_
             "alpha",
             "init",
             str(destination),
-            "--provider",
-            "codex",
             "--model",
             "gpt-5.6-luna",
         ],
@@ -256,17 +209,15 @@ def test_initialized_task_has_bounded_config_and_no_credentials(tmp_path):
     import yaml
     destination = tmp_path / "experiment"
     runner = CliRunner()
-    result = runner.invoke(cli, ["alpha", "init", str(destination), "--model", "account-model",
-                                 "--token-price", "10", "--budget-usd", "1"])
+    result = runner.invoke(cli, ["alpha", "init", str(destination), "--model", "gpt-5.6-luna"])
     assert result.exit_code == 0, result.output
     config = yaml.safe_load((destination / "config.yaml").read_text())
-    assert config["max_llm_cost_microusd"] == 1_000_000
-    assert config["max_llm_provider_attempts"] == 10
+    assert "max_llm_cost_microusd" not in config
+    assert config["max_llm_provider_attempts"] == 3
     assert "api_key" not in (destination / "config.yaml").read_text()
     assert (destination / "validate.py").is_file()
     assert not (destination / "initial_programs" / "validate.py").exists()
-    again = runner.invoke(cli, ["alpha", "init", str(destination), "--model", "account-model",
-                                "--token-price", "10", "--budget-usd", "1"])
+    again = runner.invoke(cli, ["alpha", "init", str(destination), "--model", "gpt-5.6-luna"])
     assert again.exit_code != 0
     assert "already exists" in again.output
     check = runner.invoke(cli, ["alpha", "doctor", str(destination), "--offline"])
@@ -279,12 +230,11 @@ def test_doctor_rejects_unbounded_config(tmp_path):
     import yaml
     runner = CliRunner()
     destination = tmp_path / "experiment"
-    result = runner.invoke(cli, ["alpha", "init", str(destination), "--model", "account-model",
-                                 "--token-price", "10", "--budget-usd", "1"])
+    result = runner.invoke(cli, ["alpha", "init", str(destination), "--model", "gpt-5.6-luna"])
     assert result.exit_code == 0, result.output
     path = destination / "config.yaml"
     config = yaml.safe_load(path.read_text())
-    del config["max_llm_tokens"]
+    config["max_llm_calls"] = None
     path.write_text(yaml.safe_dump(config))
     result = runner.invoke(cli, ["alpha", "doctor", str(destination), "--offline"])
     assert result.exit_code != 0
@@ -295,10 +245,8 @@ def test_cli_cancellation_points_to_partial_results(tmp_path, monkeypatch):
     import libreevolve.cli as cli_module
     runner = CliRunner()
     destination = tmp_path / "experiment"
-    result = runner.invoke(cli, ["alpha", "init", str(destination), "--model", "account-model",
-                                 "--token-price", "10", "--budget-usd", "1"])
+    result = runner.invoke(cli, ["alpha", "init", str(destination), "--model", "gpt-5.6-luna"])
     assert result.exit_code == 0, result.output
-    monkeypatch.setattr(cli_module, "_load_cli_dotenv", lambda: {})
     monkeypatch.setattr(cli_module, "_preflight_llm_backends_if_needed", lambda *a: None)
     monkeypatch.setattr(cli_module, "_prepare_run_dir_for_cli", lambda *a: None)
     def cancel(*args, **kwargs):
@@ -311,15 +259,13 @@ def test_cli_cancellation_points_to_partial_results(tmp_path, monkeypatch):
 
 
 @pytest.mark.parametrize("limit", ["max_generations", "max_llm_calls",
-                                   "max_llm_provider_attempts", "max_llm_tokens",
-                                   "max_llm_cost_microusd"])
+                                   "max_llm_provider_attempts"])
 def test_doctor_does_not_claim_skipped_provider_setup_passed(tmp_path, monkeypatch, limit):
     import yaml
     import libreevolve.cli as cli_module
     runner = CliRunner()
     destination = tmp_path / "experiment"
-    result = runner.invoke(cli, ["alpha", "init", str(destination), "--model", "account-model",
-                                 "--token-price", "10", "--budget-usd", "1"])
+    result = runner.invoke(cli, ["alpha", "init", str(destination), "--model", "gpt-5.6-luna"])
     assert result.exit_code == 0, result.output
     path = destination / "config.yaml"
     config = yaml.safe_load(path.read_text())
@@ -327,7 +273,6 @@ def test_doctor_does_not_claim_skipped_provider_setup_passed(tmp_path, monkeypat
     path.write_text(yaml.safe_dump(config))
     def unexpected():
         raise AssertionError("Disabled mutation must not inspect credential files")
-    monkeypatch.setattr(cli_module, "_load_cli_dotenv", unexpected)
     result = runner.invoke(cli, ["alpha", "doctor", str(destination)])
     assert result.exit_code == 0, result.output
     assert "skipped (mutation disabled" in result.output

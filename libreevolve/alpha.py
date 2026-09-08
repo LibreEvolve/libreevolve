@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from importlib.resources import files
 import json
-import math
 import os
 from pathlib import Path
 import shutil
@@ -23,85 +22,42 @@ _CODEX_LOGIN_STATUS_TIMEOUT_SECONDS = 5.0
 
 def alpha_config(
     model: str,
-    token_price: float | None = None,
-    budget_usd: float | None = None,
     *,
-    provider: str = "openai",
     codex_cwd: str | None = None,
-    reasoning_effort: str | None = None,
 ) -> dict:
-    """Create a bounded alpha config for OpenAI or subscription-backed Codex.
+    """Create a bounded engineering-preview config for subscription-backed Codex.
 
-    OpenAI requires caller-supplied pricing and an estimated dollar threshold.
-    Codex OAuth has no provider price or dollar-quota signal, so its config
+    Codex OAuth has no provider price or dollar-quota signal, so this config
     deliberately leaves token and cost budgets unset and bounds only local
     work (calls, evaluations, and wall-clock time).
     """
-    if provider not in {"openai", "codex"}:
-        raise ValueError("Provider must be either openai or codex.")
-    if reasoning_effort is not None:
-        if provider != "codex":
-            raise ValueError("--reasoning-effort is currently supported only for Codex alpha tasks.")
-        if reasoning_effort not in {"low", "medium", "high", "max"}:
-            raise ValueError("Reasoning effort must be low, medium, high, or max.")
+    if model != "gpt-5.6-luna":
+        raise ValueError("The engineering preview supports the validated gpt-5.6-luna/high lane.")
 
     settings = {
-        "max_generations": 10,
-        "max_evaluations": 11,
+        "max_generations": 3,
+        "max_evaluations": 4,
         "max_runtime_seconds": 900,
         "eval_timeout_sec": 10,
-        "max_llm_calls": 10,
-        "max_llm_provider_attempts": 10,
+        "max_llm_calls": 3,
+        "max_llm_provider_attempts": 3,
         "llm_max_retries": 0,
         "llm_max_call_attempts": 1,
         "llm_fallback": False,
-        "llm_call_timeout_sec": 60,
+        # Codex owns the subprocess timeout; the run deadline can also cancel
+        # the CLI process tree through the ensemble worker.
+        "llm_call_timeout_sec": None,
         "mutation_mode": "full",
         "seed": 42,
     }
 
-    if provider == "openai":
-        if token_price is None:
-            raise ValueError("OpenAI alpha init requires --token-price.")
-        if budget_usd is None:
-            raise ValueError("OpenAI alpha init requires --budget-usd.")
-        if not math.isfinite(token_price) or token_price <= 0:
-            raise ValueError("Token price must be finite and greater than zero.")
-        if not math.isfinite(budget_usd) or budget_usd < 0.000001:
-            raise ValueError("Estimated budget must be finite and at least $0.000001.")
-        budget_microusd = budget_usd * 1_000_000
-        if not math.isfinite(budget_microusd):
-            raise ValueError("Estimated budget is too large to represent in microdollars.")
-        settings.update(
-            max_llm_tokens=60000,
-            max_llm_cost_microusd=int(budget_microusd),
-            backends=[{
-                "type": "openai", "model": model, "api_mode": "responses",
-                "max_tokens": 2048, "timeout_sec": 60, "provider_max_retries": 0,
-                "cost_usd_per_million_tokens": token_price,
-            }],
-        )
-    else:
-        if token_price is not None or budget_usd is not None:
-            raise ValueError(
-                "Codex OAuth uses subscription usage; --token-price and --budget-usd "
-                "are not supported and no dollar cap can be claimed."
-            )
-        settings.update(
-            max_generations=3,
-            max_evaluations=4,
-            max_llm_calls=3,
-            max_llm_provider_attempts=3,
-            # Avoid a redundant equal deadline: Codex owns the subprocess
-            # timeout below. The run-wide deadline can still use an ensemble
-            # worker, with cooperative cancellation of the local CLI tree.
-            llm_call_timeout_sec=None,
-            backends=[{
+    settings.update(
+        backends=[{
                 "type": "codex", "model": model,
                 "cwd": codex_cwd or _CODEX_CWD_NAME,
                 "sandbox": "read-only",
                 "timeout_sec": 180,
-                "reasoning_effort": reasoning_effort or "max",
+                "reasoning_effort": "high",
                 "auth_name": "current",
                 "ignore_user_config": True,
                 "ignore_rules": True,
@@ -109,8 +65,8 @@ def alpha_config(
                 "output_json_field": "program",
                 "disable_features": ["shell_tool"],
                 "approval_policy": "never",
-            }],
-        )
+        }],
+    )
     Config(**settings).validate()
     return settings
 
@@ -122,22 +78,11 @@ def alpha() -> None:
 
 @alpha.command("init")
 @click.argument("destination", type=click.Path(path_type=Path))
-@click.option("--provider", type=click.Choice(["openai", "codex"]), default="openai",
-              show_default=True, help="Provider lane for this alpha task.")
-@click.option("--model", required=True, help="Model available to the selected provider.")
-@click.option("--reasoning-effort", type=click.Choice(["low", "medium", "high", "max"]),
-              default=None, help="Codex reasoning setting; defaults to max. Model support is not preflighted.")
-@click.option("--token-price", required=False, type=float,
-              help="Conservative USD per million tokens; use the higher input/output rate.")
-@click.option("--budget-usd", required=False, type=float,
-              help="Estimated per-run cost threshold, not a guaranteed billing cap.")
+@click.option("--model", type=click.Choice(["gpt-5.6-luna"]), default="gpt-5.6-luna",
+              show_default=True, help="Validated engineering-preview model; reasoning is high.")
 def initialize(
     destination: Path,
-    provider: str,
     model: str,
-    reasoning_effort: str | None,
-    token_price: float | None,
-    budget_usd: float | None,
 ) -> None:
     """Create a bin-packing task in a new directory. Makes no provider calls."""
     try:
@@ -145,46 +90,31 @@ def initialize(
             raise ValueError("Destination already exists. Choose a new directory.")
         codex_cwd = (
             str((destination / _CODEX_CWD_NAME).resolve())
-            if provider == "codex"
-            else None
         )
         settings = alpha_config(
             model,
-            token_price,
-            budget_usd,
-            provider=provider,
             codex_cwd=codex_cwd,
-            reasoning_effort=reasoning_effort,
         )
         source = files("libreevolve.problems.examples").joinpath("bin_packing")
         # Wheels are installed as ordinary directories; copy only task assets.
         shutil.copytree(Path(str(source)), destination,
                         ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
-        if provider == "codex":
-            # Keep the Codex process rooted in an empty directory rather than
-            # the task root, which contains the evaluator and holdout corpus.
-            (destination / _CODEX_CWD_NAME).mkdir()
+        # Keep the Codex process rooted outside the evaluator/holdout directory.
+        (destination / _CODEX_CWD_NAME).mkdir()
         (destination / "config.yaml").write_text(
             yaml.safe_dump(settings, sort_keys=False), encoding="utf-8"
         )
     except (OSError, ValueError) as exc:
         raise click.ClickException(redact_sensitive_text(str(exc))) from exc
     click.echo(f"Created {destination}")
-    if provider == "codex":
-        click.echo("Use an existing Codex ChatGPT/OAuth login, then run:")
-    else:
-        click.echo("Set OPENAI_API_KEY, then run:")
+    click.echo("Use an existing Codex ChatGPT/OAuth login, then run:")
     click.echo(f'  libreevolve alpha doctor "{destination}"')
     click.echo(f'  libreevolve run "{destination}" --run-name first-experiment --progress')
-    if provider == "codex":
-        click.echo(
-            "Codex uses subscription usage: token usage may be reported, but no "
-            "per-token price, dollar cap, or hard token bound is configured. "
-            "Call and runtime limits are local bounds; quota and charges remain unknown."
-        )
-    else:
-        click.echo("Estimated cost limits use configured prices and reported usage; "
-                   "an in-flight call may exceed a threshold. Provider billing can differ.")
+    click.echo(
+        "Codex uses subscription usage: token usage may be reported, but no "
+        "per-token price, dollar cap, or hard token bound is configured. "
+        "Call and runtime limits are local bounds; quota and charges remain unknown."
+    )
 
 
 @alpha.command("doctor")
@@ -194,17 +124,22 @@ def doctor(problem_dir: Path, offline: bool) -> None:
     """Check task/configuration and local provider setup without generating candidates."""
     # Lazy import avoids coupling module registration to the CLI's helpers.
     from libreevolve.cli import (
-        _build_config, _load_cli_dotenv, _preflight_llm_backends_if_needed,
+        _build_config,
         _preflight_run_contracts, _mutation_llm_can_run,
     )
     from libreevolve.problems.loader import load_problem
 
     try:
         problem = load_problem(problem_dir)
-        config = _build_config(problem, None, None, None, None, None, [], [], None)
+        config = _build_config(problem)
         config.validate()
-        if len(config.backends) != 1 or config.backends[0].get("type") not in {"openai", "codex"}:
-            raise ValueError("The alpha onboarding path supports one OpenAI or Codex backend.")
+        if (
+            len(config.backends) != 1
+            or config.backends[0].get("type") != "codex"
+            or config.backends[0].get("model") != "gpt-5.6-luna"
+            or config.backends[0].get("reasoning_effort") != "high"
+        ):
+            raise ValueError("The engineering preview supports one Codex gpt-5.6-luna/high backend.")
         provider = config.backends[0]["type"]
         limits = (
             "max_evaluations",
@@ -214,34 +149,23 @@ def doctor(problem_dir: Path, offline: bool) -> None:
         )
         if any(getattr(config, name) is None for name in limits):
             raise ValueError("Alpha runs require explicit evaluation, runtime, call and provider-attempt limits.")
-        if provider == "openai":
-            limits += ("max_llm_tokens", "max_llm_cost_microusd")
-            if any(getattr(config, name) is None for name in limits):
-                raise ValueError("OpenAI alpha runs require explicit token and cost limits.")
-            if not config.backends[0].get("cost_usd_per_million_tokens"):
-                raise ValueError("Set cost_usd_per_million_tokens using current provider pricing.")
-        else:
-            if (
-                config.max_llm_tokens is not None
-                or config.max_llm_cost_microusd is not None
-                or config.llm_role_token_limits
-                or config.llm_role_cost_microusd_limits
-                or config.backends[0].get("cost_usd_per_million_tokens") is not None
-            ):
-                raise ValueError(
-                    "Codex alpha runs do not support token or dollar caps; "
-                    "subscription usage and cost are not observable."
-                )
+        if (
+            config.max_llm_tokens is not None
+            or config.max_llm_cost_microusd is not None
+            or config.llm_role_token_limits
+            or config.llm_role_cost_microusd_limits
+            or config.backends[0].get("cost_usd_per_million_tokens") is not None
+        ):
+            raise ValueError(
+                "Codex alpha runs do not support token or dollar caps; "
+                "subscription usage and cost are not observable."
+            )
         _preflight_run_contracts(problem, config)
         mutation_enabled = _mutation_llm_can_run(problem, config)
         if not offline and mutation_enabled:
-            if provider == "codex":
-                ok, status = _codex_login_status(config.backends[0])
-                if not ok:
-                    raise ValueError(f"Codex local setup check failed: {status}")
-            else:
-                _load_cli_dotenv()
-                _preflight_llm_backends_if_needed(problem, config)
+            ok, status = _codex_login_status(config.backends[0])
+            if not ok:
+                raise ValueError(f"Codex local setup check failed: {status}")
     except (OSError, ValueError) as exc:
         raise click.ClickException(redact_sensitive_text(str(exc))) from exc
     click.echo("Task and evaluator contract: passed (local subprocess).")
@@ -252,18 +176,13 @@ def doctor(problem_dir: Path, offline: bool) -> None:
         click.echo("Credential checks: skipped (offline)")
     elif not mutation_enabled:
         click.echo("Local provider setup: skipped (mutation disabled by configured limits)")
-    elif provider == "codex":
-        click.echo("Codex executable/login status: passed (local bounded check; no provider request)")
     else:
-        click.echo("Local provider setup: passed")
-    if provider == "codex":
-        click.echo(
-            "Codex usage: subscription-backed; reported tokens are observational only, "
-            "with no hard token bound or per-token price."
-        )
-        click.echo(
-            "Codex cost/quota: unknown; this configuration makes no dollar-cap claim."
-        )
+        click.echo("Codex executable/login status: passed (local bounded check; no provider request)")
+    click.echo(
+        "Codex usage: subscription-backed; reported tokens are observational only, "
+        "with no hard token bound or per-token price."
+    )
+    click.echo("Codex cost/quota: unknown; this configuration makes no dollar-cap claim.")
     click.echo("Model access and billing remain unverified until a real request succeeds.")
     click.echo("Candidate execution inherits host access. Use a trusted local task.")
 

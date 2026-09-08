@@ -11,7 +11,6 @@ import pytest
 import libreevolve.core.loop as loop_module
 from libreevolve.core.config import Config
 from libreevolve.core.loop import evolve
-from libreevolve.plugins.base import PluginBase
 from libreevolve.problems.loader import Problem
 
 
@@ -115,25 +114,6 @@ class _FakeLLM:
         }
 
 
-class _TracePlugin(PluginBase):
-    def __init__(self, trace):
-        self.trace = trace
-
-    def on_generation_start(self, generation, db):
-        self.trace.append(("generation_start", generation))
-
-    def build_extra_context(self, parent, inspirations):
-        self.trace.append(("context", parent.id))
-        return "trace context"
-
-    def on_evaluated(self, program, score):
-        self.trace.append(("evaluated", program.id))
-        return score
-
-    def on_generation_end(self, generation, best):
-        self.trace.append(("generation_end", generation))
-
-
 def test_zero_generation_has_seed_only_terminal_trace(tmp_path):
     problem = _problem(tmp_path)
     run_dir = tmp_path / "runs" / "zero"
@@ -161,170 +141,6 @@ def test_zero_generation_has_seed_only_terminal_trace(tmp_path):
     }
 
 
-def test_multiple_proposals_preserve_hook_and_stream_order(tmp_path):
-    trace = []
-    llm = _FakeLLM(
-        (DIFF, "<<<SEARCH\nx=2\n===\nx=3\n>>>REPLACE")
-    )
-    problem = _problem(tmp_path)
-    config = _config(tmp_path, "multiple", proposals_per_generation=2)
-
-    with patch.object(loop_module, "build_llm", return_value=llm):
-        evolve(problem, config, plugins=[_TracePlugin(trace)])
-
-    run_dir = tmp_path / "runs" / "multiple"
-    history = _rows(run_dir, "history.jsonl")
-    prompt_history = _rows(run_dir, "prompt_history.jsonl")
-    budget_events = _rows(run_dir, "controller_budget_events.jsonl")
-
-    assert [row["generation"] for row in history] == [0, 1, 1]
-    assert [row["metadata"]["proposal_batch"]["proposal_index"] for row in history[1:]] == [0, 1]
-    assert [kind for kind, _ in trace] == [
-        "generation_start",
-        "context",
-        "evaluated",
-        "context",
-        "evaluated",
-        "generation_end",
-    ]
-    assert [event["kind"] for event in budget_events] == [
-        "seed_evaluation",
-        "generation_started",
-        "llm_call",
-        "candidate_evaluation",
-        "llm_call",
-        "candidate_evaluation",
-        "generation_completed",
-        "stop",
-    ]
-    assert [event["event"] for event in prompt_history if "event" in event] == [
-        "add",
-        "score",
-        "score",
-    ]
-
-
-@pytest.mark.parametrize(
-    ("mode", "extra"),
-    [
-        ("sync", {}),
-        ("evaluation", {"async_candidate_evaluation": True}),
-        ("sampler", {"async_llm_sampling": True}),
-        (
-            "combined",
-            {"async_candidate_evaluation": True, "async_llm_sampling": True},
-        ),
-    ],
-)
-def test_async_modes_keep_submission_and_admission_order(tmp_path, mode, extra):
-    problem = _problem(tmp_path)
-    config = _config(tmp_path, mode, proposals_per_generation=2, **extra)
-    created = []
-
-    def make_llm(config):
-        llm = _FakeLLM()
-        created.append(llm)
-        return llm
-
-    with patch.object(loop_module, "build_llm", side_effect=make_llm):
-        evolve(problem, config)
-
-    run_dir = tmp_path / "runs" / mode
-    history = _rows(run_dir, "history.jsonl")
-    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
-    runtime_history = manifest["runtime"]["history"]
-
-    assert len(history) == 3
-    assert [row["metadata"]["proposal_batch"]["proposal_index"] for row in history[1:]] == [0, 1]
-    if extra.get("async_candidate_evaluation"):
-        controller = runtime_history["async_candidate_evaluation_controller"]
-        assert controller["validation"]["ok"] is True
-        assert [row["submission_order"] for row in controller["admission_records"]] == [0, 1]
-    if extra.get("async_llm_sampling"):
-        sampler = runtime_history["async_llm_sampler_controller"]
-        assert sampler["validation"]["ok"] is True
-        assert [row["submission_order"] for row in sampler["merge_records"]] == [0, 1]
-        assert len(created) == 1 + config.async_llm_sampler_workers
-
-
-def test_admission_states_remain_distinct_and_rewards_follow_contract(tmp_path):
-    cases = [
-        ("invalid", DIFF, "invalid_evaluation", False, False, True),
-        ("below", DIFF, "below_threshold", False, False, True),
-        ("not_improving", "<<<SEARCH\nx=1\n===\nx=1.0\n>>>REPLACE", "not_improving_cell", False, False, False),
-        ("retained", DIFF, "empty_cell", True, True, False),
-    ]
-    for name, response, reason, admitted, rewardable, failure_expected in cases:
-        problem = _problem(tmp_path / name)
-        trace_plugin = None
-        if name == "invalid":
-            class InvalidPlugin(PluginBase):
-                def on_evaluated(self, program, score):
-                    program.evaluation["is_valid"] = False
-                    return score
-
-            trace_plugin = InvalidPlugin()
-        elif name == "below":
-            class BelowPlugin(PluginBase):
-                def on_evaluated(self, program, score):
-                    return -0.25
-
-            trace_plugin = BelowPlugin()
-        response_llm = _FakeLLM((response,))
-        with patch.object(loop_module, "build_llm", return_value=response_llm):
-            options = {}
-            if name == "not_improving":
-                options.update(n_islands=1, map_elites_bins=1, elite_archive_size=1)
-            evolve(
-                problem,
-                _config(tmp_path / name, name, **options),
-                plugins=[trace_plugin] if trace_plugin is not None else None,
-            )
-
-        run_dir = tmp_path / name / "runs" / name
-        child = _rows(run_dir, "history.jsonl")[-1]
-        admission = child["metadata"]["archive_admission"]
-        reward = child["metadata"]["backend_reward"]
-        failures = _rows(run_dir, "failure_history.jsonl")
-
-        assert admission["admitted"] is admitted, (name, admission)
-        assert admission["cell_admitted"] is admitted
-        assert admission["sampling_eligible"] is admitted
-        assert admission["reason"] == reason
-        assert reward["eligible"] is rewardable
-        assert reward["reward"] == (0.75 if rewardable else 0.0)
-        assert bool(failures) is failure_expected
-
-
-def test_async_fatal_commit_closes_controller_and_persists_abort(tmp_path):
-    class FailingPlugin(PluginBase):
-        def on_evaluated(self, program, score):
-            raise RuntimeError("commit fault")
-
-    problem = _problem(tmp_path)
-    config = _config(tmp_path, "async_abort", async_candidate_evaluation=True)
-    with (
-        patch.object(loop_module, "build_llm", return_value=_FakeLLM()),
-        pytest.raises(RuntimeError, match="commit fault"),
-    ):
-        evolve(problem, config, plugins=[FailingPlugin()])
-
-    manifest = json.loads(
-        (tmp_path / "runs" / "async_abort" / "manifest.json").read_text(encoding="utf-8")
-    )
-    runtime = manifest["runtime"]
-    controller = runtime["history"]["async_candidate_evaluation_controller"]
-
-    assert runtime["status"] == "aborted"
-    assert runtime["abort"]["exception_type"] == "RuntimeError"
-    assert runtime["abort"]["phase"] == "generation:0:async_evaluation_drain"
-    assert controller["pending_work"] == {
-        "queued_evaluations": 0,
-        "running_evaluations": 0,
-        "pending_admissions": 0,
-    }
-
-
 def test_finalization_fault_is_recorded_as_terminal_abort_metadata(tmp_path):
     problem = _problem(tmp_path)
     config = _config(tmp_path, "export_fault")
@@ -342,27 +158,6 @@ def test_finalization_fault_is_recorded_as_terminal_abort_metadata(tmp_path):
     assert runtime["abort"]["phase"] == "normal_finalization"
     assert runtime["abort"]["exception_type"] == "OSError"
     assert "export fault" in runtime["abort"]["message"]
-
-
-def test_runtime_rng_restore_isolated_from_process_global_random(tmp_path):
-    source = random.Random(73)
-    source.random()
-    snapshot = loop_module._runtime_rng_state(source, 73)
-    expected = random.Random()
-    expected.setstate(source.getstate())
-    global_state = random.getstate()
-
-    restored, status = loop_module._initial_run_rng(
-        Config(max_generations=0, seed=73, log_dir=str(tmp_path)), snapshot
-    )
-
-    assert status == "snapshot_restored_into_evolve"
-    assert random.getstate() == global_state
-    assert restored.random() == expected.random()
-    with pytest.raises(ValueError, match="seed must match"):
-        loop_module._initial_run_rng(
-            Config(max_generations=0, seed=74, log_dir=str(tmp_path)), snapshot
-        )
 
 
 def test_durable_streams_and_runtime_summary_are_ordered_and_joinable(tmp_path):

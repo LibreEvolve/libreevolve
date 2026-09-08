@@ -166,34 +166,6 @@ def test_redacted_yaml_error_redacts_secret_in_duplicate_key_diagnostic():
         pytest.param("null\n", id="null"),
     ],
 )
-def test_context_manifest_rejects_falsey_non_mapping_documents(
-    tmp_path: Path,
-    yaml_text: str,
-):
-    problem = _make_problem(tmp_path)
-    context_dir = problem / "context"
-    context_dir.mkdir()
-    manifest = context_dir / "context.yaml"
-    manifest.write_text(yaml_text, encoding="utf-8")
-
-    with pytest.raises(ValueError) as raised:
-        load_problem(problem)
-
-    expected = f"{manifest.resolve()} must contain a mapping"
-    assert type(raised.value) is ValueError
-    assert str(raised.value) == expected
-    assert raised.value.__cause__ is None
-
-
-@pytest.mark.parametrize(
-    "yaml_text",
-    [
-        pytest.param("[]\n", id="list"),
-        pytest.param("false\n", id="boolean"),
-        pytest.param("0\n", id="numeric"),
-        pytest.param("null\n", id="null"),
-    ],
-)
 def test_metrics_loader_rejects_falsey_non_mapping_documents(
     tmp_path: Path,
     yaml_text: str,
@@ -225,47 +197,6 @@ _OPTIONAL_METADATA_BOUNDARIES = (
 )
 
 
-@pytest.mark.parametrize(
-    ("filename", "label"),
-    _OPTIONAL_METADATA_BOUNDARIES,
-)
-@pytest.mark.parametrize(
-    "yaml_text",
-    [
-        pytest.param("[]\n", id="list"),
-        pytest.param("false\n", id="boolean"),
-        pytest.param("0\n", id="numeric"),
-    ],
-)
-def test_optional_metadata_loaders_reject_falsey_non_mapping_documents(
-    tmp_path: Path,
-    filename: str,
-    label: str,
-    yaml_text: str,
-):
-    problem = _make_problem(tmp_path)
-    metadata_path = problem / filename
-    metadata_path.write_text(yaml_text, encoding="utf-8")
-
-    with pytest.raises(ValueError) as raised:
-        load_problem(problem)
-
-    expected = f"{metadata_path.resolve()}: {label} must be a mapping"
-    assert type(raised.value) is ValueError
-    assert str(raised.value) == expected
-    assert raised.value.__cause__ is None
-
-
-def test_optional_metadata_null_document_is_the_empty_mapping_default(tmp_path: Path):
-    problem = _make_problem(tmp_path)
-    metadata_path = problem / "formulation.yaml"
-    metadata_path.write_text("null\n", encoding="utf-8")
-
-    loaded = load_problem(problem)
-
-    assert loaded.formulation_metadata == {}
-
-
 def test_seed_policy_rejects_falsey_non_mapping_documents(tmp_path: Path):
     problem = _make_problem(tmp_path)
     policy_path = problem / "initial_programs" / "seed_policy.yaml"
@@ -295,59 +226,3 @@ def test_seed_policy_null_document_is_the_default_policy(tmp_path: Path):
         "exclude": [],
         "exclude_precedence": True,
     }
-
-
-def test_context_manifest_empty_document_defaults_to_empty_mapping(tmp_path: Path):
-    problem = _make_problem(tmp_path)
-    context_dir = problem / "context"
-    context_dir.mkdir()
-    (context_dir / "context.yaml").write_text("\n  \n", encoding="utf-8")
-
-    loaded = load_problem(problem)
-
-    assert loaded.context_files == {}
-    assert loaded.context_policy["present"] is True
-    assert loaded.context_policy["include"] is None
-    assert loaded.context_policy["exclude"] == []
-
-
-def test_context_manifest_mapping_preserves_unicode_and_loader_shape(tmp_path: Path):
-    problem = _make_problem(tmp_path)
-    context_dir = problem / "context"
-    context_dir.mkdir()
-    content = "café 東京 🌱\n"
-    (context_dir / "notes.md").write_text(content, encoding="utf-8")
-    (context_dir / "context.yaml").write_text(
-        'include: ["notes.md"]\n',
-        encoding="utf-8",
-    )
-
-    loaded = load_problem(problem)
-
-    assert loaded.context_files == {"notes.md": content}
-    assert loaded.context_policy["include"] == ["notes.md"]
-
-
-def test_context_manifest_wraps_malformed_yaml_with_path_and_cause(tmp_path: Path):
-    problem = _make_problem(tmp_path)
-    context_dir = problem / "context"
-    context_dir.mkdir()
-    manifest = context_dir / "context.yaml"
-    manifest.write_text("include: [\n", encoding="utf-8")
-
-    with pytest.raises(ValueError) as raised:
-        load_problem(problem)
-
-    parser_diagnostic = (
-        "while parsing a flow node\n"
-        "expected the node content, but found '<stream end>'\n"
-        '  in "<unicode string>", line 2, column 1:\n'
-        "    \n"
-        "    ^"
-    )
-    assert str(raised.value) == (
-        f"{manifest.resolve()}: invalid context manifest YAML: "
-        f"{parser_diagnostic}"
-    )
-    assert type(raised.value.__cause__) is yaml.parser.ParserError
-    assert str(raised.value.__cause__) == parser_diagnostic

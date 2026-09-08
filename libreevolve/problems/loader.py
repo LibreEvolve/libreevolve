@@ -5,7 +5,6 @@ from types import MappingProxyType
 from collections.abc import Mapping
 import fnmatch
 import hashlib
-import json
 import math
 from pathlib import Path
 import re
@@ -19,42 +18,10 @@ from libreevolve.core.candidate import (
 )
 from libreevolve.core.redaction import redact_sensitive_text
 from libreevolve.core.yaml_utils import redacted_yaml_error, safe_load_unique
-from libreevolve.problems.context_loader import load_context_files as _load_context_files_impl
 
 _SEED_POLICY_MANIFEST_NAMES = ("seed_policy.yaml", "seed_policy.yml")
 _CONTEXT_MANIFEST_NAMES = ("context.yaml", "context.yml")
-_FORMULATION_METADATA_NAMES = ("formulation.yaml", "formulation.yml")
-_CODEBASE_INTEGRATION_METADATA_NAMES = (
-    "codebase_integration.yaml",
-    "codebase_integration.yml",
-)
-_COLLABORATOR_FEEDBACK_METADATA_NAMES = (
-    "collaborator_feedback.yaml",
-    "collaborator_feedback.yml",
-)
-_ACKNOWLEDGEMENT_METADATA_NAMES = ("acknowledgements.yaml", "acknowledgements.yml")
-_PAPER_AUTHOR_METADATA_NAMES = ("paper_authors.yaml", "paper_authors.yml")
-_TITLE_PAGE_METADATA_NAMES = ("title_page.yaml", "title_page.yml")
-_SYSTEM_CONTRIBUTION_METADATA_NAMES = (
-    "system_contributions.yaml",
-    "system_contributions.yml",
-)
-_BENCHMARK_GOAL_PROMPT_NAME = "benchmark_goal_prompt.json"
-_BENCHMARK_GOAL_PROMPT_SCHEMA = "libreevolve.benchmark_goal_prompt.v1"
 _METRIC_NAME_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*){0,7}")
-
-
-def _load_context_files(
-    problem_dir: Path,
-    *,
-    task_description: str = "",
-) -> tuple[dict[str, str], list[dict], dict]:
-    """Compatibility wrapper for the extracted context ingestion seam."""
-
-    return _load_context_files_impl(
-        problem_dir,
-        task_description=task_description,
-    )
 
 
 @dataclass
@@ -74,14 +41,6 @@ class Problem:
     initial_workspace_sources: list[dict] = field(default_factory=list)
     initial_workspace_skipped: list[dict] = field(default_factory=list)
     initial_workspace_policy: dict = field(default_factory=dict)
-    formulation_metadata: dict = field(default_factory=dict)
-    codebase_integration_metadata: dict = field(default_factory=dict)
-    collaborator_feedback_metadata: dict = field(default_factory=dict)
-    acknowledgement_metadata: dict = field(default_factory=dict)
-    paper_author_metadata: dict = field(default_factory=dict)
-    title_page_metadata: dict = field(default_factory=dict)
-    system_contribution_metadata: dict = field(default_factory=dict)
-    benchmark_goal_prompt: dict = field(default_factory=dict)
     config_source:    dict = field(
         default_factory=lambda: {"path": "config.yaml", "status": "not_loaded"}
     )
@@ -180,18 +139,7 @@ def load_problem(problem_dir: str | Path) -> Problem:
             f"No seed programs (*.py) or configured seed workspaces found in "
             f"{seed_dir}{detail}"
         )
-    context_files, context_sources, context_policy = _load_context_files(
-        d,
-        task_description=task,
-    )
-    formulation_metadata = _load_formulation_metadata(d)
-    codebase_integration_metadata = _load_codebase_integration_metadata(d)
-    collaborator_feedback_metadata = _load_collaborator_feedback_metadata(d)
-    acknowledgement_metadata = _load_acknowledgement_metadata(d)
-    paper_author_metadata = _load_paper_author_metadata(d)
-    title_page_metadata = _load_title_page_metadata(d)
-    system_contribution_metadata = _load_system_contribution_metadata(d)
-    benchmark_goal_prompt = _load_benchmark_goal_prompt(d)
+    context_files, context_sources, context_policy = {}, [], {}
     return Problem(name=d.name, task_description=task, metrics=metrics,
                    primary_metric=primary_metric,
                    primary_bounds=primary_bounds,
@@ -203,18 +151,7 @@ def load_problem(problem_dir: str | Path) -> Problem:
                    initial_workspace_sources=seed_sources,
                    initial_workspace_skipped=seed_skipped,
                    initial_workspace_policy=seed_policy,
-                   formulation_metadata=formulation_metadata,
-                   codebase_integration_metadata=codebase_integration_metadata,
-                   collaborator_feedback_metadata=collaborator_feedback_metadata,
-                   acknowledgement_metadata=acknowledgement_metadata,
-                   paper_author_metadata=paper_author_metadata,
-                   title_page_metadata=title_page_metadata,
-                   system_contribution_metadata=system_contribution_metadata,
-                   benchmark_goal_prompt=benchmark_goal_prompt)
-
-
-def _validate_metric_schema(metrics: list[dict], problem_dir: Path) -> list[dict]:
-    return _normalize_metric_schema(metrics, problem_dir)[0]
+                   )
 
 
 def _normalize_metric_schema(
@@ -282,10 +219,10 @@ def _normalize_metric_schema(
             primary_names.append(name)
 
         source = metric.get("source", "evaluator")
-        if source not in {"evaluator", "feedback", "plugin", "final_fitness"}:
+        if source not in {"evaluator", "final_fitness"}:
             raise ValueError(
                 f"metrics.yaml in {problem_dir}: metric {name!r} source must be "
-                "'evaluator', 'feedback', 'plugin', or 'final_fitness'"
+                "'evaluator' or 'final_fitness'"
             )
         if primary_value and source != "evaluator":
             raise ValueError(
@@ -457,418 +394,6 @@ def _problem_config_declares_embedded_only_evaluation(problem_dir: Path) -> bool
         ):
             return False
     return True
-
-
-def _load_formulation_metadata(problem_dir: Path) -> dict:
-    paths = [problem_dir / name for name in _FORMULATION_METADATA_NAMES]
-    existing = [path for path in paths if path.exists()]
-    if not existing:
-        return {}
-    if len(existing) > 1:
-        labels = [path.name for path in existing]
-        raise ValueError(
-            f"{problem_dir}: use only one problem formulation metadata file from {labels}"
-        )
-    path = existing[0]
-    if _is_link(path):
-        raise ValueError(f"{path}: formulation metadata links are not supported")
-    if not path.is_file():
-        raise ValueError(f"{path}: formulation metadata must be a file")
-    try:
-        text = path.read_text(encoding="utf-8")
-    except OSError as exc:
-        raise ValueError(
-            f"{path}: formulation metadata could not be read: "
-            f"{redact_sensitive_text(str(exc))}"
-        ) from exc
-    except UnicodeDecodeError as exc:
-        raise ValueError(f"{path}: formulation metadata must be valid UTF-8") from exc
-    try:
-        raw = safe_load_unique(text) if text.strip() else {}
-    except yaml.YAMLError as exc:
-        raise ValueError(
-            f"{path}: invalid formulation metadata YAML: {redacted_yaml_error(exc)}"
-        ) from exc
-    if raw is None:
-        return {}
-    if not isinstance(raw, dict):
-        raise ValueError(f"{path}: formulation metadata must be a mapping")
-    if not all(isinstance(key, str) for key in raw):
-        raise ValueError(f"{path}: formulation metadata keys must be strings")
-    return dict(raw)
-
-
-def _load_codebase_integration_metadata(problem_dir: Path) -> dict:
-    paths = [problem_dir / name for name in _CODEBASE_INTEGRATION_METADATA_NAMES]
-    existing = [path for path in paths if path.exists()]
-    if not existing:
-        return {}
-    if len(existing) > 1:
-        labels = [path.name for path in existing]
-        raise ValueError(
-            f"{problem_dir}: use only one codebase integration metadata file from {labels}"
-        )
-    path = existing[0]
-    if _is_link(path):
-        raise ValueError(f"{path}: codebase integration metadata links are not supported")
-    if not path.is_file():
-        raise ValueError(f"{path}: codebase integration metadata must be a file")
-    try:
-        text = path.read_text(encoding="utf-8")
-    except OSError as exc:
-        raise ValueError(
-            f"{path}: codebase integration metadata could not be read: "
-            f"{redact_sensitive_text(str(exc))}"
-        ) from exc
-    except UnicodeDecodeError as exc:
-        raise ValueError(
-            f"{path}: codebase integration metadata must be valid UTF-8"
-        ) from exc
-    try:
-        raw = safe_load_unique(text) if text.strip() else {}
-    except yaml.YAMLError as exc:
-        raise ValueError(
-            f"{path}: invalid codebase integration metadata YAML: "
-            f"{redacted_yaml_error(exc)}"
-        ) from exc
-    if raw is None:
-        return {}
-    if not isinstance(raw, dict):
-        raise ValueError(f"{path}: codebase integration metadata must be a mapping")
-    if not all(isinstance(key, str) for key in raw):
-        raise ValueError(f"{path}: codebase integration metadata keys must be strings")
-    return dict(raw)
-
-
-def _load_collaborator_feedback_metadata(problem_dir: Path) -> dict:
-    paths = [problem_dir / name for name in _COLLABORATOR_FEEDBACK_METADATA_NAMES]
-    existing = [path for path in paths if path.exists()]
-    if not existing:
-        return {}
-    if len(existing) > 1:
-        labels = [path.name for path in existing]
-        raise ValueError(
-            f"{problem_dir}: use only one collaborator feedback metadata file from {labels}"
-        )
-    path = existing[0]
-    if _is_link(path):
-        raise ValueError(f"{path}: collaborator feedback metadata links are not supported")
-    if not path.is_file():
-        raise ValueError(f"{path}: collaborator feedback metadata must be a file")
-    try:
-        text = path.read_text(encoding="utf-8")
-    except OSError as exc:
-        raise ValueError(
-            f"{path}: collaborator feedback metadata could not be read: "
-            f"{redact_sensitive_text(str(exc))}"
-        ) from exc
-    except UnicodeDecodeError as exc:
-        raise ValueError(
-            f"{path}: collaborator feedback metadata must be valid UTF-8"
-        ) from exc
-    try:
-        raw = safe_load_unique(text) if text.strip() else {}
-    except yaml.YAMLError as exc:
-        raise ValueError(
-            f"{path}: invalid collaborator feedback metadata YAML: "
-            f"{redacted_yaml_error(exc)}"
-        ) from exc
-    if raw is None:
-        return {}
-    if not isinstance(raw, dict):
-        raise ValueError(f"{path}: collaborator feedback metadata must be a mapping")
-    if not all(isinstance(key, str) for key in raw):
-        raise ValueError(f"{path}: collaborator feedback metadata keys must be strings")
-    return dict(raw)
-
-
-def _load_acknowledgement_metadata(problem_dir: Path) -> dict:
-    paths = [problem_dir / name for name in _ACKNOWLEDGEMENT_METADATA_NAMES]
-    existing = [path for path in paths if path.exists()]
-    if not existing:
-        return {}
-    if len(existing) > 1:
-        labels = [path.name for path in existing]
-        raise ValueError(
-            f"{problem_dir}: use only one acknowledgement metadata file from {labels}"
-        )
-    path = existing[0]
-    if _is_link(path):
-        raise ValueError(f"{path}: acknowledgement metadata links are not supported")
-    if not path.is_file():
-        raise ValueError(f"{path}: acknowledgement metadata must be a file")
-    try:
-        text = path.read_text(encoding="utf-8")
-    except OSError as exc:
-        raise ValueError(
-            f"{path}: acknowledgement metadata could not be read: "
-            f"{redact_sensitive_text(str(exc))}"
-        ) from exc
-    except UnicodeDecodeError as exc:
-        raise ValueError(f"{path}: acknowledgement metadata must be valid UTF-8") from exc
-    try:
-        raw = safe_load_unique(text) if text.strip() else {}
-    except yaml.YAMLError as exc:
-        raise ValueError(
-            f"{path}: invalid acknowledgement metadata YAML: "
-            f"{redacted_yaml_error(exc)}"
-        ) from exc
-    if raw is None:
-        return {}
-    if not isinstance(raw, dict):
-        raise ValueError(f"{path}: acknowledgement metadata must be a mapping")
-    if not all(isinstance(key, str) for key in raw):
-        raise ValueError(f"{path}: acknowledgement metadata keys must be strings")
-    return dict(raw)
-
-
-def _load_paper_author_metadata(problem_dir: Path) -> dict:
-    paths = [problem_dir / name for name in _PAPER_AUTHOR_METADATA_NAMES]
-    existing = [path for path in paths if path.exists()]
-    if not existing:
-        return {}
-    if len(existing) > 1:
-        labels = [path.name for path in existing]
-        raise ValueError(
-            f"{problem_dir}: use only one paper author metadata file from {labels}"
-        )
-    path = existing[0]
-    if _is_link(path):
-        raise ValueError(f"{path}: paper author metadata links are not supported")
-    if not path.is_file():
-        raise ValueError(f"{path}: paper author metadata must be a file")
-    try:
-        text = path.read_text(encoding="utf-8")
-    except OSError as exc:
-        raise ValueError(
-            f"{path}: paper author metadata could not be read: "
-            f"{redact_sensitive_text(str(exc))}"
-        ) from exc
-    except UnicodeDecodeError as exc:
-        raise ValueError(f"{path}: paper author metadata must be valid UTF-8") from exc
-    try:
-        raw = safe_load_unique(text) if text.strip() else {}
-    except yaml.YAMLError as exc:
-        raise ValueError(
-            f"{path}: invalid paper author metadata YAML: "
-            f"{redacted_yaml_error(exc)}"
-        ) from exc
-    if raw is None:
-        return {}
-    if not isinstance(raw, dict):
-        raise ValueError(f"{path}: paper author metadata must be a mapping")
-    if not all(isinstance(key, str) for key in raw):
-        raise ValueError(f"{path}: paper author metadata keys must be strings")
-    return dict(raw)
-
-
-def _load_title_page_metadata(problem_dir: Path) -> dict:
-    paths = [problem_dir / name for name in _TITLE_PAGE_METADATA_NAMES]
-    existing = [path for path in paths if path.exists()]
-    if not existing:
-        return {}
-    if len(existing) > 1:
-        labels = [path.name for path in existing]
-        raise ValueError(
-            f"{problem_dir}: use only one title page metadata file from {labels}"
-        )
-    path = existing[0]
-    if _is_link(path):
-        raise ValueError(f"{path}: title page metadata links are not supported")
-    if not path.is_file():
-        raise ValueError(f"{path}: title page metadata must be a file")
-    try:
-        text = path.read_text(encoding="utf-8")
-    except OSError as exc:
-        raise ValueError(
-            f"{path}: title page metadata could not be read: "
-            f"{redact_sensitive_text(str(exc))}"
-        ) from exc
-    except UnicodeDecodeError as exc:
-        raise ValueError(f"{path}: title page metadata must be valid UTF-8") from exc
-    try:
-        raw = safe_load_unique(text) if text.strip() else {}
-    except yaml.YAMLError as exc:
-        raise ValueError(
-            f"{path}: invalid title page metadata YAML: "
-            f"{redacted_yaml_error(exc)}"
-        ) from exc
-    if raw is None:
-        return {}
-    if not isinstance(raw, dict):
-        raise ValueError(f"{path}: title page metadata must be a mapping")
-    if not all(isinstance(key, str) for key in raw):
-        raise ValueError(f"{path}: title page metadata keys must be strings")
-    return dict(raw)
-
-
-def _load_system_contribution_metadata(problem_dir: Path) -> dict:
-    paths = [problem_dir / name for name in _SYSTEM_CONTRIBUTION_METADATA_NAMES]
-    existing = [path for path in paths if path.exists()]
-    if not existing:
-        return {}
-    if len(existing) > 1:
-        labels = [path.name for path in existing]
-        raise ValueError(
-            f"{problem_dir}: use only one system contribution metadata file from {labels}"
-        )
-    path = existing[0]
-    if _is_link(path):
-        raise ValueError(f"{path}: system contribution metadata links are not supported")
-    if not path.is_file():
-        raise ValueError(f"{path}: system contribution metadata must be a file")
-    try:
-        text = path.read_text(encoding="utf-8")
-    except OSError as exc:
-        raise ValueError(
-            f"{path}: system contribution metadata could not be read: "
-            f"{redact_sensitive_text(str(exc))}"
-        ) from exc
-    except UnicodeDecodeError as exc:
-        raise ValueError(
-            f"{path}: system contribution metadata must be valid UTF-8"
-        ) from exc
-    try:
-        raw = safe_load_unique(text) if text.strip() else {}
-    except yaml.YAMLError as exc:
-        raise ValueError(
-            f"{path}: invalid system contribution metadata YAML: "
-            f"{redacted_yaml_error(exc)}"
-        ) from exc
-    if raw is None:
-        return {}
-    if not isinstance(raw, dict):
-        raise ValueError(f"{path}: system contribution metadata must be a mapping")
-    if not all(isinstance(key, str) for key in raw):
-        raise ValueError(f"{path}: system contribution metadata keys must be strings")
-    return dict(raw)
-
-
-def _load_benchmark_goal_prompt(problem_dir: Path) -> dict:
-    path = problem_dir / _BENCHMARK_GOAL_PROMPT_NAME
-    if not path.exists():
-        return {}
-    if _is_link(path):
-        raise ValueError(f"{path}: benchmark goal prompt links are not supported")
-    if not path.is_file():
-        raise ValueError(f"{path}: benchmark goal prompt must be a file")
-    try:
-        text = path.read_text(encoding="utf-8")
-    except OSError as exc:
-        raise ValueError(
-            f"{path}: benchmark goal prompt could not be read: "
-            f"{redact_sensitive_text(str(exc))}"
-        ) from exc
-    except UnicodeDecodeError as exc:
-        raise ValueError(f"{path}: benchmark goal prompt must be valid UTF-8") from exc
-    try:
-        raw = json.loads(text)
-    except json.JSONDecodeError as exc:
-        raise ValueError(f"{path}: invalid benchmark goal prompt JSON: {exc.msg}") from exc
-    if not isinstance(raw, dict):
-        raise ValueError(f"{path}: benchmark goal prompt must be a JSON object")
-    if not all(isinstance(key, str) for key in raw):
-        raise ValueError(f"{path}: benchmark goal prompt keys must be strings")
-    if raw.get("schema") != _BENCHMARK_GOAL_PROMPT_SCHEMA:
-        raise ValueError(
-            f"{path}: benchmark goal prompt schema must be {_BENCHMARK_GOAL_PROMPT_SCHEMA!r}"
-        )
-    prompt_id = _benchmark_goal_prompt_token(path, raw.get("prompt_id"), "prompt_id")
-    problem_id = _benchmark_goal_prompt_token(path, raw.get("problem_id"), "problem_id")
-    if problem_id != problem_dir.name:
-        raise ValueError(f"{path}: problem_id must match the problem directory name")
-    prompt = raw.get("prompt")
-    if not isinstance(prompt, str) or not prompt:
-        raise ValueError(f"{path}: prompt must be non-empty text")
-    if redact_sensitive_text(prompt) != prompt:
-        raise ValueError(f"{path}: prompt must not contain secret-like text")
-    prompt_character_count = raw.get("prompt_character_count")
-    if (
-        isinstance(prompt_character_count, bool)
-        or not isinstance(prompt_character_count, int)
-        or prompt_character_count != len(prompt)
-    ):
-        raise ValueError(f"{path}: prompt_character_count must equal prompt length")
-    character_limit = raw.get("character_limit")
-    if (
-        isinstance(character_limit, bool)
-        or not isinstance(character_limit, int)
-        or character_limit <= 0
-        or prompt_character_count > character_limit
-    ):
-        raise ValueError(f"{path}: character_limit must be positive and cover prompt length")
-    run_contract_path = _benchmark_goal_prompt_path(
-        path,
-        raw.get("run_contract_path"),
-        "run_contract_path",
-    )
-    if run_contract_path != f"libreevolve/problems/examples/{problem_dir.name}/run_contract.json":
-        raise ValueError(f"{path}: run_contract_path must reference this problem")
-    return {
-        "schema": raw["schema"],
-        "status": "provided",
-        "prompt_id": prompt_id,
-        "problem_id": problem_id,
-        "path": _problem_relative_benchmark_prompt_path(problem_dir),
-        "sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
-        "bytes": len(text.encode("utf-8")),
-        "prompt_character_count": prompt_character_count,
-        "character_limit": character_limit,
-        "run_contract_path": run_contract_path,
-        "claim_boundary": _benchmark_goal_prompt_text(
-            path,
-            raw.get("claim_boundary"),
-            "claim_boundary",
-            max_chars=500,
-        ),
-    }
-
-
-def _benchmark_goal_prompt_token(path: Path, value: object, field_name: str) -> str:
-    if not isinstance(value, str) or not value:
-        raise ValueError(f"{path}: {field_name} must be non-empty text")
-    if len(value) > 160:
-        raise ValueError(f"{path}: {field_name} must be <= 160 characters")
-    if redact_sensitive_text(value) != value:
-        raise ValueError(f"{path}: {field_name} must not contain secret-like text")
-    if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.:-]*", value) is None:
-        raise ValueError(f"{path}: {field_name} must be a safe token")
-    return value
-
-
-def _benchmark_goal_prompt_path(path: Path, value: object, field_name: str) -> str:
-    if not isinstance(value, str) or not value:
-        raise ValueError(f"{path}: {field_name} must be a non-empty path")
-    if len(value) > 512:
-        raise ValueError(f"{path}: {field_name} must be <= 512 characters")
-    if "\\" in value or value.startswith("/") or ".." in value.split("/"):
-        raise ValueError(f"{path}: {field_name} must be a safe repository-relative path")
-    if redact_sensitive_text(value) != value:
-        raise ValueError(f"{path}: {field_name} must not contain secret-like text")
-    return value
-
-
-def _benchmark_goal_prompt_text(
-    path: Path,
-    value: object,
-    field_name: str,
-    *,
-    max_chars: int,
-) -> str:
-    if not isinstance(value, str) or not value.strip():
-        raise ValueError(f"{path}: {field_name} must be non-empty text")
-    text = value.strip()
-    if len(text) > max_chars:
-        raise ValueError(f"{path}: {field_name} must be <= {max_chars} characters")
-    if redact_sensitive_text(text) != text:
-        raise ValueError(f"{path}: {field_name} must not contain secret-like text")
-    if any(ord(char) < 32 or ord(char) == 127 for char in text):
-        raise ValueError(f"{path}: {field_name} must not contain control characters")
-    return text
-
-
-def _problem_relative_benchmark_prompt_path(problem_dir: Path) -> str:
-    return f"libreevolve/problems/examples/{problem_dir.name}/{_BENCHMARK_GOAL_PROMPT_NAME}"
 
 
 def _require_problem_file(path: Path, label: str) -> None:

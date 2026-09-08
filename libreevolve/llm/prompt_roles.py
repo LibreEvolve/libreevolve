@@ -62,10 +62,6 @@ def validate_prompt_role_text(value: object, *, field: str) -> str:
     return value
 
 
-def copy_prompt_role_policy(policy: dict | None) -> dict:
-    return deepcopy(validate_prompt_role_policy(policy or {}))
-
-
 def prompt_role_spec_for_role(policy: dict | None, role: str | None) -> dict:
     if not isinstance(role, str):
         return {}
@@ -95,51 +91,6 @@ def prompt_role_policy_record(policy: dict | None, role: str | None) -> dict:
             for name in fields
         },
     }
-
-
-def openai_chat_messages(prompt: str, policy: dict | None, role: str | None) -> list[dict]:
-    spec = prompt_role_spec_for_role(policy, role)
-    messages = []
-    for name in ("system", "developer"):
-        if name in spec:
-            messages.append({"role": name, "content": spec[name]})
-    messages.append({"role": "user", "content": prompt})
-    return messages
-
-
-def openai_responses_input(prompt: str, policy: dict | None, role: str | None) -> list[dict]:
-    return openai_chat_messages(prompt, policy, role)
-
-
-def anthropic_messages(prompt: str) -> list[dict]:
-    return [{"role": "user", "content": prompt}]
-
-
-def anthropic_system(policy: dict | None, role: str | None) -> str | None:
-    spec = prompt_role_spec_for_role(policy, role)
-    return _joined_instruction_text(spec, fields=("system", "developer"))
-
-
-def gemini_system(policy: dict | None, role: str | None) -> str | None:
-    spec = prompt_role_spec_for_role(policy, role)
-    return _joined_instruction_text(spec, fields=("system", "developer"))
-
-
-def ollama_messages(prompt: str, policy: dict | None, role: str | None) -> list[dict]:
-    spec = prompt_role_spec_for_role(policy, role)
-    messages = []
-    system = _joined_instruction_text(spec, fields=("system", "developer"))
-    if system is not None:
-        messages.append({"role": "system", "content": system})
-    messages.append({"role": "user", "content": prompt})
-    return messages
-
-
-def _joined_instruction_text(spec: dict, *, fields: Iterable[str]) -> str | None:
-    parts = [spec[name] for name in fields if name in spec]
-    if not parts:
-        return None
-    return "\n\n".join(parts)
 
 
 def _text_metadata(text: str) -> dict:

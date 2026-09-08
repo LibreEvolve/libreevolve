@@ -1,9 +1,6 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Mapping
-import importlib
-
-from libreevolve.core.redaction import redact_sensitive_text
 
 
 PROMPT_TOKEN_COUNTER_CAPABILITY_SCHEMA = (
@@ -128,62 +125,4 @@ def _backend_prompt_token_counter(
         "counter_name": None,
         "reason": "no_local_tokenizer_registered",
     }
-    if backend_type != "openai":
-        return None, record
-    return _openai_tiktoken_counter(record)
-
-
-def _openai_tiktoken_counter(
-    record: dict,
-) -> tuple[Callable[[str], int] | None, dict]:
-    try:
-        tokenizer_pkg = importlib.import_module("tiktoken")
-    except Exception:
-        record.update(
-            {
-                "reason": "optional_dependency_missing",
-                "source": "tiktoken",
-            }
-        )
-        return None, record
-    model = record.get("model")
-    try:
-        encoding = tokenizer_pkg.encoding_for_model(model)
-        encoding_source = "model_encoding"
-    except Exception:
-        try:
-            encoding = tokenizer_pkg.get_encoding("cl100k_base")
-            encoding_source = "fallback_cl100k_base"
-        except Exception:
-            record.update(
-                {
-                    "reason": "tokenizer_encoding_unavailable",
-                    "source": "tiktoken",
-                }
-            )
-            return None, record
-    encoding_name = getattr(encoding, "name", None) or "unknown"
-    counter_name = f"openai:encoding:{encoding_name}"
-    if redact_sensitive_text(counter_name) != counter_name:
-        record.update(
-            {
-                "reason": "unsafe_counter_name",
-                "source": "tiktoken",
-            }
-        )
-        return None, record
-
-    def count_tokens(text: str) -> int:
-        return len(encoding.encode(text))
-
-    record.update(
-        {
-            "status": "ready",
-            "source": "tiktoken",
-            "encoding_source": encoding_source,
-            "encoding": encoding_name,
-            "counter_name": counter_name,
-            "reason": "available",
-        }
-    )
-    return count_tokens, record
+    return None, record

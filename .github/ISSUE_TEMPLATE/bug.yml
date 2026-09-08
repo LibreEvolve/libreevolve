@@ -1,0 +1,57 @@
+name: Bug report
+description: Report a reproducible problem in the engineering preview.
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Search existing issues first. This public form is not a private security channel.
+        Do not include credentials, OAuth files, account details, raw prompts or private source.
+        Share only a minimal reproduction you have permission to publish.
+  - type: input
+    id: version
+    attributes:
+      label: Public commit or version
+      description: Include the full public commit when working from source.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Python version and operating system
+      description: Include native Windows, WSL or Linux; omit usernames and home paths.
+    validations:
+      required: true
+  - type: dropdown
+    id: evidence-kind
+    attributes:
+      label: Observation type
+      options:
+        - Offline setup or seed-only check
+        - Authorized live Codex run
+        - Saved-result report or export
+        - Documentation or interface
+        - Other or unknown
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal sanitized reproduction
+      description: Give the command and steps using generic paths. Do not upload an entire run directory.
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior
+      description: Include a short redacted error if useful. Keep run completion, candidate validity and retention separate.
+    validations:
+      required: true
+  - type: checkboxes
+    id: disclosure
+    attributes:
+      label: Public disclosure check
+      options:
+        - label: I reviewed the text and attachments for credentials, OAuth files, account details, raw prompts and private source.
+          required: true

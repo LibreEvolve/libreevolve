@@ -33,7 +33,11 @@ def test_missing_approval_creates_nothing(tmp_path):
     assert not (tmp_path / "public").exists()
 
 
-@pytest.mark.parametrize("content", ['{"a":1,"a":2}', '{"a":NaN}', '{"a":Infinity}', '{"a":1e999}', '[]', '[[' * 1000, 'x' * (MAX_RECORD_BYTES + 1)])
+@pytest.mark.parametrize(
+    "content",
+    ['{"a":1,"a":2}', '{"a":NaN}', '{"a":Infinity}', '{"a":1e999}', '[]', '[[' * 1000, 'x' * (MAX_RECORD_BYTES + 1)],
+    ids=["duplicate-key", "nan", "infinity", "overflow", "array", "deep-nesting", "oversized"],
+)
 def test_bad_json(tmp_path, content):
     path = tmp_path / "bad.json"
     path.write_text(content, encoding="utf-8")

@@ -1,6 +1,7 @@
 import base64
 import tempfile
 import hashlib
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -213,6 +214,37 @@ def test_rejects_junction_problem_root(tmp_path):
 
     with pytest.raises(ValueError, match="Problem directory links are not supported"):
         load_problem(link)
+
+
+def test_allows_problem_path_under_non_windows_linked_ancestor(tmp_path):
+    if os.name == "nt":
+        pytest.skip("Windows linked ancestors are rejected")
+    target_root = tmp_path / "target_root"
+    problem = target_root / "problem"
+    problem.mkdir(parents=True)
+    _make(problem)
+    linked_parent = tmp_path / "linked_parent"
+    _symlink_or_skip(linked_parent, target_root, target_is_directory=True)
+
+    assert load_problem(linked_parent / "problem").name == "problem"
+
+
+def test_rejects_windows_junction_problem_ancestor(tmp_path):
+    if os.name != "nt":
+        pytest.skip("Windows junction test")
+    target_root = tmp_path / "target_root"
+    problem = target_root / "problem"
+    problem.mkdir(parents=True)
+    _make(problem)
+    junction_parent = tmp_path / "junction_parent"
+    _junction_or_skip(junction_parent, target_root)
+
+    try:
+        with pytest.raises(ValueError, match="Problem directory links are not supported"):
+            load_problem(junction_parent / "problem")
+    finally:
+        if junction_parent.exists():
+            junction_parent.rmdir()
 
 
 def test_raises_on_no_seeds():

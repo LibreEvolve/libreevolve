@@ -42,6 +42,8 @@ candidate head, then obtain the required approval for each action. The public
 source target is [LibreEvolve/libreevolve](https://github.com/LibreEvolve/libreevolve);
 no package-registry availability or deployment is implied by this link.
 
-Keep workflows manual-only while the existing billing pause is unresolved. Do
-not force-push, repair unrelated CI, publish private research, or infer
-cross-platform live parity from one host.
+The GitHub workflows run offline checks automatically for covered changes and
+also support manual dispatch. Verify successful hosted results for the exact
+candidate commit before publication. Account-billing changes, force-pushes and
+unrelated branch deletion require separate authorization.
+Do not publish private research or infer cross-platform live parity from one host.

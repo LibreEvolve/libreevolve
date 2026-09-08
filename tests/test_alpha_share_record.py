@@ -54,6 +54,24 @@ def test_unsafe_urls(url):
         source_url(url)
 
 
+@pytest.mark.parametrize("host", [
+    "127.1", "127.0.1", "0177.0.0.1", "0x7f.0x0.0x0.0x1",
+    "0X7F.0X1", "127.0x", "10.1", "192.168.1", "169.254.1",
+    "0.0", "0300.0250.1", "8.8", "example.09", "example.0x",
+])
+def test_numeric_host_aliases_cannot_enter_public_records(host):
+    data = record()
+    data["approved_source_url"] = f"https://{host}/a"
+    with pytest.raises(ValueError, match="invalid public link"):
+        admit_record(data)
+
+
+@pytest.mark.parametrize("host", ["github.com", "123.example.com", "0x7f.example.com"])
+def test_numeric_subdomains_of_ordinary_domains_remain_supported(host):
+    url = f"https://{host}/a"
+    assert source_url(url) == url
+
+
 @pytest.mark.parametrize("path,value", [
     (("usage", "tokens"), True), (("usage", "cost_usd"), float("nan")),
     (("usage", "cost_usd"), float("inf")), (("observed_activity", "calls"), -1),

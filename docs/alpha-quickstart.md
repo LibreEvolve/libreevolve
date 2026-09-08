@@ -86,4 +86,4 @@ results out of prompts, tuning and stopping decisions.
 Candidate Python executes in timed local subprocesses with host access.
 This is not a security sandbox. Use trusted tasks and a suitable development
 environment. Other providers, research features and examples belong on
-`experimental`.
+the private [experimental repository](https://github.com/LibreEvolve/libreevolve-experimental).

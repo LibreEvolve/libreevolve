@@ -5,7 +5,8 @@ optimization with **Codex OAuth, `gpt-5.6-luna`, high reasoning**.
 
 `main` contains the engineering preview. The complete committed research
 platform, other providers, plugins, examples, papers and experimental tools
-are preserved on `experimental`, with their Git history.
+are preserved with their Git history in the private
+[experimental repository](https://github.com/LibreEvolve/libreevolve-experimental).
 
 ## Start here
 

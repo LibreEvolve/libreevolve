@@ -6,4 +6,5 @@
 - [Development](development.md): offline tests and packaging.
 - [Release checks](release-checklist.md): evidence required before publication.
 
-The complete research platform and its documentation are on `experimental`.
+The complete research platform and its documentation are in the private
+[experimental repository](https://github.com/LibreEvolve/libreevolve-experimental).

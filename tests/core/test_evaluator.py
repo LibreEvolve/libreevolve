@@ -5,6 +5,7 @@ import shutil, tempfile
 import subprocess
 import sys
 import time
+from types import SimpleNamespace
 from pathlib import Path
 import libreevolve.core.evaluator as evaluator
 from libreevolve.core.candidate import CandidateWorkspace
@@ -3800,15 +3801,62 @@ def test_configured_sample_wall_clock_budget_limits_long_attempt():
         shutil.rmtree(d)
 
 
-def test_configured_sample_wall_clock_budget_resets_for_each_sample():
+def test_configured_sample_wall_clock_budget_resets_for_each_sample(monkeypatch):
     p, d = _problem(
-        "import time\n"
         "def evaluate(code, workspace, stage):\n"
-        "    time.sleep(0.55)\n"
         "    return {'score': 1.0, 'is_valid': True}\n"
     )
     try:
-        # Each sample fits its own budget; their combined sleep exceeds it.
+        class _ControlledClock:
+            def __init__(self):
+                self.now = 0.0
+
+            def __call__(self):
+                return self.now
+
+            def advance(self, seconds):
+                self.now += seconds
+
+        clock = _ControlledClock()
+        timeouts = []
+
+        monkeypatch.setattr(evaluator, "time", SimpleNamespace(perf_counter=clock))
+
+        def controlled_deadline_from_config(cls, value):
+            return cls(None if value is None else float(value), started=clock())
+
+        monkeypatch.setattr(
+            evaluator._StageDeadline,
+            "from_config",
+            classmethod(controlled_deadline_from_config),
+        )
+
+        def fake_run_subprocess(self, *, timeout_sec, stage_name, **_kwargs):
+            timeouts.append(timeout_sec)
+            clock.advance(0.75)
+            metrics = {"score": 1.0, "is_valid": True}
+            return EvaluationResult(
+                fitness=1.0,
+                metrics=metrics,
+                is_valid=True,
+                stages=[
+                    EvaluationStageResult(
+                        name=stage_name,
+                        passed=True,
+                        score=1.0,
+                        metrics=metrics,
+                        elapsed_sec=0.75,
+                    )
+                ],
+                elapsed_sec=0.75,
+                metadata={"evaluator_mode": "external_validator"},
+            )
+
+        monkeypatch.setattr(CascadeEvaluator, "_run_subprocess", fake_run_subprocess)
+
+        # Each deterministic sample fits its own budget. Reusing the first
+        # sample deadline would clip the second timeout below the fake work
+        # duration and make this assertion fail.
         ev = CascadeEvaluator(
             p,
             stages=[{"name": "sample_budget", "samples": 2, "timeout_sec": 2.0, "max_sample_seconds": 1.0}],
@@ -3817,6 +3865,7 @@ def test_configured_sample_wall_clock_budget_resets_for_each_sample():
 
         assert result.is_valid is True
         assert result.error is None
+        assert timeouts == pytest.approx([1.0, 1.0])
         assert result.metadata["sample_count"] == 2
         assert [sample["error"] for sample in result.metadata["samples"]] == [None, None]
         assert [stage.name for stage in result.stages[-2:]] == [

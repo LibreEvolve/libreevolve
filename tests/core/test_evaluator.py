@@ -5,7 +5,6 @@ import shutil, tempfile
 import subprocess
 import sys
 import time
-from types import SimpleNamespace
 from pathlib import Path
 import libreevolve.core.evaluator as evaluator
 from libreevolve.core.candidate import CandidateWorkspace
@@ -3802,6 +3801,8 @@ def test_configured_sample_wall_clock_budget_limits_long_attempt():
 
 
 def test_configured_sample_wall_clock_budget_resets_for_each_sample(monkeypatch):
+    from types import SimpleNamespace
+
     p, d = _problem(
         "def evaluate(code, workspace, stage):\n"
         "    return {'score': 1.0, 'is_valid': True}\n"

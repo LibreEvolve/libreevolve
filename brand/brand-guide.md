@@ -91,6 +91,22 @@ Retain the existing Diff Arrow concept. Existing source assets are
 [light mark](../assets/logo-mark-light.svg). These links identify the current
 assets, not newly generated masters or final artwork approval.
 
+The approved static-site family is integrated as unchanged raster PNGs with
+explicit roles: the four-part core and light treatment anchor the identity
+plane, the two-form micro treatment carries compact identity, and neutral
+monochrome siblings follow the theme. The public-safe fingerprints below
+identify bytes only; they are not signatures, vector-master claims, product
+evidence, or deployment approval. This bounded integration does not convert
+the private concept masters into production-approved destination exports.
+
+| Public path | Role | SHA-256 |
+| --- | --- | --- |
+| `assets/brand/mark-dark.png` | Dominant dark hero mark | `443525a55f45359e1ddcb69fef98754a62eefab7a926e96461475c2411d1ec62` |
+| `assets/brand/mark-light.png` | Light-plane hero sibling | `f5623a8ec07bf534970989596291514ff2bf726c72cf1d3017bd675597dc652d` |
+| `assets/brand/micro-mark.png` | Compact and favicon mark | `1e136500c2d1fba2d16f10fe7b28fd7ebcb342269c31799332014d882f7c1a5f` |
+| `assets/brand/mark-mono-dark.png` | Dark-theme navigation mark | `865657ed1c7575ab985f2071d1bc56eaa1375fbe27af5d998ca54684a0e9ad54` |
+| `assets/brand/mark-mono-light.png` | Light-theme navigation mark | `30d443bd42bd95e7e58f090e843ff001c2644a3a942ff6ffc4a2844e9a0e9f2e` |
+
 Keep the mark's proportions and contrast. Do not stretch, skew, add glow,
 redraw a mascot or place it over busy text. Pair the mark with the display name
 where the product would otherwise be ambiguous. Use a plain text name when

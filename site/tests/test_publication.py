@@ -68,7 +68,7 @@ class PublicationTests(unittest.TestCase):
             self.assertNotIn("synthetic-fixture", (output / "preview/sitemap.xml").read_text(encoding="utf-8"))
             for path in output.rglob("*"):
                 if path.is_file():
-                    self.assertNotIn("private-example-reviewer", path.read_text(encoding="utf-8"))
+                    self.assertNotIn(b"private-example-reviewer", path.read_bytes())
 
     def test_cli_requires_complete_approval_and_keeps_receipt_private(self):
         with temporary_directory() as tmp:
@@ -90,7 +90,7 @@ class PublicationTests(unittest.TestCase):
             self.assertEqual(json.loads(receipt.read_text(encoding="utf-8"))["approved_by"], "synthetic-private-operator")
             for path in output.rglob("*"):
                 if path.is_file():
-                    self.assertNotIn("synthetic-private", path.read_text(encoding="utf-8"))
+                    self.assertNotIn(b"synthetic-private", path.read_bytes())
 
     def test_cli_receipt_inside_output_or_existing_is_rejected_without_output(self):
         with temporary_directory() as tmp:
@@ -126,7 +126,7 @@ class PublicationTests(unittest.TestCase):
                 self.assertNotIn("noindex", value)
             for path in output.rglob("*"):
                 if path.is_file():
-                    self.assertNotIn("synthetic-private", path.read_text(encoding="utf-8"))
+                    self.assertNotIn(b"synthetic-private", path.read_bytes())
             sitemap = ET.parse(output / "preview/sitemap.xml")
             self.assertEqual(len(sitemap.getroot()), 14)
             self.assertNotIn("examples/", (output / "preview/sitemap.xml").read_text(encoding="utf-8"))

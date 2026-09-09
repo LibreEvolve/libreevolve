@@ -19,10 +19,13 @@ Interaction thesis: a short identity entrance, focused link/CTA transitions and
 native expandable navigation. Respect reduced motion; no scroll hijacking,
 background animation, remote fonts or analytics. Core content works without JS.
 
-The frontend skill guides composition and utility copy. The package's explicit
-text-only allowance applies while approved brand artwork is unavailable; this
-does not close the final artwork gate. An authentic live example also remains
-separately gated and must not be replaced by a synthetic success story.
+The frontend skill guides composition and utility copy. The site now integrates
+the five approved raster family PNGs in `assets/brand/`, using the exact
+public-safe roles and hashes recorded in
+[`brand/approved-family.md`](../brand/approved-family.md). The remaining
+catalog artwork, derivative/export and evidence gates stay separately reviewed
+and open. No authentic live example or public demo is implied, and no synthetic
+success story substitutes for one.
 
 No suitable static stack exists in the reviewed product tree. Use a small
 Python build with hash-locked markdown-it-py and mdurl, separate from runtime

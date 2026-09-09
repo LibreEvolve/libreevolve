@@ -118,7 +118,7 @@ class ExampleTests(unittest.TestCase):
             self.assertTrue((output / "examples/synthetic-fixture/index.html").is_file())
             for file in output.rglob("*"):
                 if file.is_file():
-                    self.assertNotIn("private-cli-reviewer", file.read_text(encoding="utf-8"))
+                    self.assertNotIn(b"private-cli-reviewer", file.read_bytes())
 
     def test_modified_public_projection_rejected_before_any_write(self):
         with temporary_directory() as tmp:

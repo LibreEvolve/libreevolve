@@ -7,15 +7,27 @@
 
 **Evolve code. Show the evidence.**
 
-LibreEvolve is an open-source workbench for inspectable code-evolution
-experiments. **Engineering preview: bounded Python bin-packing optimization
-with Codex OAuth.** It starts from a small Python heuristic, searches a bounded
-local space of changes, records candidate workspaces and evaluations, and lets
-you inspect a saved run before a fresh export check.
+LibreEvolve is an **open-source workbench for inspectable code-evolution
+experiments**. **Engineering preview: bounded Python bin-packing optimization
+with Codex OAuth.**
+
+It starts from a deliberately simple Python bin-packing heuristic, searches a
+bounded local space of changes, and saves every candidate workspace and
+evaluation so you can read the evidence yourself — before a fresh export check
+re-runs the candidate you chose.
 
 The product is an experiment you can examine, not a promise that every search
 improves code. No improvement is a valid result. A successful named check is
 not proof of universal correctness, optimality, security, or performance.
+
+## What makes it worth inspecting
+
+| | |
+| --- | --- |
+| **Bounded by design** | Local call, evaluation and runtime limits keep a run small enough to follow. They are not token or dollar caps, and subscription usage may stay unknown. |
+| **Saved, not summarized** | Candidate workspaces, evaluations, archive events and LLM calls land in a run directory you can read. |
+| **Honest by construction** | Run status, validity, quality, retention and usage stay separate, so a finished run is never mistaken for a win. |
+| **Checked again before use** | Reports and exports re-run the selected candidate in fresh local subprocesses instead of trusting old metadata. |
 
 ## What is available today
 
@@ -33,10 +45,22 @@ An approved inspectable example viewer is not included in this branch. The
 seed-only flow in the quickstart is an onboarding check, not an optimization
 result or live-model demonstration.
 
-The broader research platform, additional providers, plugins, examples, papers
-and experimental tools live in the private
-[experimental repository](https://github.com/LibreEvolve/libreevolve-experimental);
-they are not capabilities of this public engineering preview.
+Research features, additional providers, plugins, papers and experimental tools
+are out of scope for this checkout; they are not capabilities of this public engineering preview.
+
+## How a run moves
+
+1. **Seed.** Initialize the bundled bin-packing task and inspect its
+   intentionally simple heuristic.
+2. **Change.** Propose and evaluate bounded local changes — optionally through
+   the Codex OAuth lane, after you authorize your own subscription use.
+3. **Inspect.** Read the saved run. Completion, validity, training quality,
+   retention and recorded usage are separate dimensions, so a finished run is
+   not the same as a retained win.
+4. **Verify.** Freeze your selection, then let a fresh export check it on named
+   training and held-out cases and record its identity.
+
+**Run the preview** through the [canonical quickstart](docs/alpha-quickstart.md).
 
 ## Start with the canonical quickstart
 

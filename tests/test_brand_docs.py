@@ -168,7 +168,7 @@ def test_docs_keep_future_items_and_example_slot_unpublished():
     readme = _read("README.md")
     roadmap = _read("docs/roadmap.md")
     assert "approved inspectable example viewer is not included" in readme
-    assert "private\n[experimental repository](https://github.com/LibreEvolve/libreevolve-experimental)" in readme
+    assert "libreevolve-experimental" not in readme
     assert "not capabilities of this public engineering preview" in readme
     assert "Planned or proposed work" in roadmap
     assert "not current capabilities" in roadmap
